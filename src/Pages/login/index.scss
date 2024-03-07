@@ -1,0 +1,53 @@
+.login_area {
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.login_from {
+  max-width: 552px;
+  margin: 0 auto;
+
+  .form_holder {
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.12),
+      0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.2);
+    padding: 32px 16px 17px 17px;
+    border-radius: 4px;
+    font-family: "Roboto", sans-serif;
+
+    h1 {
+      margin: 0 0 17px;
+      color: #000000de;
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 1.33;
+    }
+
+    .email_field {
+      margin-bottom: 25px;
+    }
+
+    .login_discription {
+      font-size: 12px;
+      font-weight: 400;
+      color: #00000099;
+      line-height: 1.66;
+    }
+
+    p {
+      margin: 0 0 22px;
+    }
+  }
+}
+
+.login_logo {
+  display: block;
+  width: 118px;
+  position: relative;
+  margin-bottom: 12px;
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
