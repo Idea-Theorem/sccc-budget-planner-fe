@@ -1,4 +1,5 @@
 import React from "react";
+import './index.scss'
 
 interface LoginFormProps {
   value?: string;
@@ -11,12 +12,14 @@ const TextInput: React.FC<LoginFormProps> = ({ value, onChange }) => {
   };
 
   return (
-    <input
-      type="text"
-      value={value}
-      onChange={handleChange}
-      placeholder="Email address"
-    />
+    <div className="input-wrapper">
+      <input
+        className="form-control"
+        value={value}
+        onChange={handleChange}
+        placeholder="Email address"
+      />
+    </div>
   );
 };
 

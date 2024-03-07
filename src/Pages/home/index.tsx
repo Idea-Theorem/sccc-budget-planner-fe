@@ -1,4 +1,3 @@
-import ButtonComponent from "../../components/Buttton";
 import SideBar from "../../components/SiderBar";
 import SideBarOptions from "../../components/SiderBar/options";
 
@@ -11,7 +10,6 @@ const Home = () => {
         <SideBarOptions to="#" title="Programs" />
         <SideBarOptions to="#" title="Hr" />
       </SideBar>
-      <ButtonComponent />
     </>
   );
 };
