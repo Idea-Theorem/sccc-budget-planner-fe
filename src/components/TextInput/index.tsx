@@ -1,24 +1,12 @@
-import React from "react";
-import './index.scss'
+import React, { InputHTMLAttributes } from "react";
+import "./index.scss";
 
-interface LoginFormProps {
-  value?: string;
-  onChange: (value: string) => void;
-}
+interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {}
 
-const TextInput: React.FC<LoginFormProps> = ({ value, onChange }) => {
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(event.target.value);
-  };
-
+const TextInput: React.FC<TextInputProps> = ({ ...rest }) => {
   return (
     <div className="input-wrapper">
-      <input
-        className="form-control"
-        value={value}
-        onChange={handleChange}
-        placeholder="Email address"
-      />
+      <input className="form-control" placeholder="Email address" {...rest} />
     </div>
   );
 };

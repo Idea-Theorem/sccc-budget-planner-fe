@@ -5,20 +5,21 @@ import ButtonComponent from "../../components/Buttton";
 
 const Login = () => {
   const [email, setEmail] = useState("");
-  const handleUsernameChange = (value: string) => {
-    setEmail(value);
-  };
 
   return (
     <div className="login_area d-flex">
       <div className="login_from">
         <strong className="login_logo">
-          <img src="./assets/svgs/logo.svg" alt="Logo" />
+          <img src="../../src/assets/svgs/logo.svg" alt="Logo" />
         </strong>
         <div className="form_holder">
           <h1>Continue with email</h1>
           <div className="email_field">
-            <TextInput value={email} onChange={handleUsernameChange} />
+            <TextInput
+              value={email}
+              placeholder="Email Address"
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </div>
           <div className="login_discription">
             <p>
