@@ -6,7 +6,11 @@ interface SideBarProps {
 }
 
 const SideBar: React.FC<SideBarProps> = ({ children }) => {
-  return <div className="sidebar">{children}</div>;
+  return (
+    <div className="sidebar">
+      <ul className="sidebar_lists">{children}</ul>
+    </div>
+  );
 };
 
 export default SideBar;

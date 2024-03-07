@@ -7,7 +7,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   text?: string;
   rightIcon?: IconType;
   leftIcon?: IconType;
-  variant?: "warning" | "success";
+  variant?: "primary" | "secondary" | "error" | "warning" | "info" | "success";
   customeClass?: string;
   className?: string;
   size?: "small" | "medium" | "large";
@@ -28,7 +28,11 @@ const ButtonComponent: React.FC<ButtonProps> = (props) => {
   const prefixCls = customeClass || "btn";
   const classes = classNames(className, size, prefixCls, {
     [`${prefixCls}-${variant ?? "default"}`]: true,
+    [`${prefixCls}-primary`]: variant === "primary",
+    [`${prefixCls}-secondary`]: variant === "secondary",
+    [`${prefixCls}-error`]: variant === "error",
     [`${prefixCls}-warning`]: variant === "warning",
+    [`${prefixCls}-info`]: variant === "info",
     [`${prefixCls}-success`]: variant === "success",
   });
 

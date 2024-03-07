@@ -6,6 +6,7 @@
   font-weight: 500;
   font-family: "Roboto", sans-serif;
   display: inline-block;
+  min-width: 121px;
   height: 42px;
   border-radius: 4px;
   text-align: center;
@@ -19,6 +20,27 @@
     background: #4087de;
   }
 
-  &.btn-small {
+  &.btn-primary {
+    background: var(--primary);
+  }
+
+  &.btn-secondary {
+    background: var(--secondary);
+  }
+
+  &.btn-error {
+    background: var(--error);
+  }
+
+  &.btn-warning {
+    background: var(--warning);
+  }
+
+  &.btn-info {
+    background: var(--info);
+  }
+
+  &.btn-success {
+    background: var(--success);
   }
 }
