@@ -1,12 +1,12 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
-interface LiLinkProps {
-  to: any;
+interface ILinkProps {
+  to: string;
   title: string;
 }
 
-const SideBarOptions: React.FC<LiLinkProps> = ({ to, title }) => {
+const SideBarOptions: React.FC<ILinkProps> = ({ to, title }) => {
   return (
     <li>
       <Link to={to}>{title}</Link>

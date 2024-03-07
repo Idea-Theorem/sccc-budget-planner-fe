@@ -27,7 +27,7 @@ const Login = () => {
               Policy.
             </p>
           </div>
-          <ButtonComponent text="Continue" variant="success" size="large" />
+          <ButtonComponent text="Continue" variant="primary" size="large" />
         </div>
       </div>
     </div>
