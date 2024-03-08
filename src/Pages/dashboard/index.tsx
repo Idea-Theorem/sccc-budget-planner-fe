@@ -1,4 +1,5 @@
 import BudgetBoxDetails from "../../components/BudgetBoxDetails";
+import Department from "../../components/Department";
 import MainHeader from "../../components/MainHeader";
 import ProgressProgram from "../../components/ProgressProgram";
 import Dropdown from "../../components/Select";
@@ -15,7 +16,7 @@ const DashBoard = () => {
         select={<Dropdown defaultValue="Actions" option={Options} />}
       />
       <BudgetBoxDetails />
-      <ProgressProgram />
+      <Department />
     </div>
   );
 };
