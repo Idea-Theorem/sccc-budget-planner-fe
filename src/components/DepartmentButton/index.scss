@@ -1,67 +1,65 @@
-.btn-wrap {
-  .dboard-btn {
-    background: var(--gray);
-    color: var(--btntext);
-    font-size: 12px;
-    margin-right: 5px;
-    font-weight: 500;
-    font-family: "Lato", sans-serif;
-    display: inline-block;
-    padding: 8px 16px;
-    border-radius: 4px;
-    line-height: 14.4px;
-    margin-bottom: 5px;
-    text-align: center;
-    border: none;
-    display: flex;
-    align-items: center;
+.department_btn {
+  background: var(--athensgray);
+  color: var(--btntext);
+  font-size: 12px;
+  margin-right: 5px;
+  font-weight: 500;
+  font-family: "Lato", sans-serif;
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 4px;
+  line-height: 14.4px;
+  margin-bottom: 5px;
+  text-align: center;
+  border: none;
+  display: flex;
+  align-items: center;
+}
+
+.department_icon {
+  width: 9px;
+  height: 9px;
+  display: block;
+  margin-right: 5px;
+  border-radius: 100%;
+
+  &.purple {
+    background-color: #6200ee;
   }
 
-  .icon {
-    width: 9px;
-    height: 9px;
-    display: block;
-    margin-right: 5px;
-    border-radius: 100%;
+  &.mainly-green {
+    background: #26a69a;
+  }
 
-    &.purple {
-      background-color: #6200ee;
-    }
+  &.titanium-yellow {
+    background-color: #ee6002;
+  }
 
-    &.mainly-green {
-      background: #26a69a;
-    }
+  &.light-yellow {
+    background-color: #ffc107;
+  }
 
-    &.titanium-yellow {
-      background-color: #ee6002;
-    }
+  &.sky-blue {
+    background-color: #07c3ff;
+  }
 
-    &.light-yellow {
-      background-color: #ffc107;
-    }
+  &.similar-pantone {
+    background-color: #073eff;
+  }
 
-    &.sky-blue {
-      background-color: #07c3ff;
-    }
+  &.dark-green {
+    background-color: #26a69a;
+  }
 
-    &.similar-pantone {
-      background-color: #073eff;
-    }
+  &.indigo {
+    background-color: #ee6002;
+  }
 
-    &.dark-green {
-      background-color: #26a69a;
-    }
+  &.light-yellow {
+    background-color: #ffc107;
+  }
 
-    &.indigo {
-      background-color: #ee6002;
-    }
-
-    &.light-yellow {
-      background-color: #ffc107;
-    }
-
-    &.deep-sky-blue {
-      background-color: #07C3FF;
-    }
+  &.deep-sky-blue {
+    background-color: #07c3ff;
   }
 }
