@@ -18,9 +18,7 @@ const Layout = (props: any) => {
 
   return (
     <div className="main_layout">
-      <div className="sidebar-wrap">
-        <SideBar menuItems={menuItems} />
-      </div>
+      <SideBar menuItems={menuItems} />
       <div className="content_box">{children}</div>
     </div>
   );
