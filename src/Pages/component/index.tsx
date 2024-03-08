@@ -1,3 +1,4 @@
+import DepartmentButton from "../../components/DepartmentButton";
 import TableComponent from "../../components/Table";
 import TabsComponent from "../../components/Tabs";
 
@@ -83,6 +84,39 @@ const Component = () => {
     <>
       <TabsComponent items={tabItems} defaultActiveKey="0" />
       <TableComponent data={data} columns={columns} />
+      <div className="btn-area">
+        <DepartmentButton
+          iconColor="purple"
+          buttonText="Recreation & Culture"
+        />
+        <DepartmentButton
+          iconColor="mainly-green"
+          buttonText="Health & Wellness"
+        />
+        <DepartmentButton iconColor="titanium-yellow" buttonText="Finance" />
+        <DepartmentButton
+          iconColor="light-yellow"
+          buttonText="Human Resources"
+        />
+        <DepartmentButton
+          iconColor="sky-blue"
+          buttonText="Events & Community"
+        />
+        <DepartmentButton
+          iconColor="similar-pantone"
+          buttonText="Department 3"
+        />
+        <DepartmentButton iconColor="dark-green" buttonText="Department 6" />
+        <DepartmentButton iconColor="indigo" buttonText="Department 8" />
+        <DepartmentButton
+          iconColor="light-yellow"
+          buttonText="Department Name"
+        />
+        <DepartmentButton
+          iconColor="deep-sky-blue"
+          buttonText="Department Name"
+        />
+      </div>
     </>
   );
 };
