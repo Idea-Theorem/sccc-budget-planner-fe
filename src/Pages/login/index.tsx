@@ -10,7 +10,7 @@ const Login = () => {
     <div className="login_area d-flex">
       <div className="login_from">
         <strong className="login_logo">
-          <img src="../../src/assets/svgs/logo.svg" alt="Logo" />
+          <img src="../../src/assets/images/logo.png" alt="Logo" />
         </strong>
         <div className="form_holder">
           <h1>Continue with email</h1>
