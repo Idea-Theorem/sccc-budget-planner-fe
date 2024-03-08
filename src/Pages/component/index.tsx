@@ -1,3 +1,4 @@
+import Checkbox from "../../components/Checkbox";
 import DepartmentButton from "../../components/DepartmentButton";
 import TableComponent from "../../components/Table";
 import TabsComponent from "../../components/Tabs";
@@ -117,6 +118,7 @@ const Component = () => {
           buttonText="Department Name"
         />
       </div>
+      <Checkbox />
     </>
   );
 };
