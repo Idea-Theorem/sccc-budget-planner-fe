@@ -1,5 +1,6 @@
 import BudgetBoxDetails from "../../components/BudgetBoxDetails";
 import MainHeader from "../../components/MainHeader";
+import ProgressProgram from "../../components/ProgressProgram";
 import Dropdown from "../../components/Select";
 
 const Options = ["Approve", "Reject"];
@@ -14,6 +15,7 @@ const DashBoard = () => {
         select={<Dropdown defaultValue="Actions" option={Options} />}
       />
       <BudgetBoxDetails />
+      <ProgressProgram />
     </div>
   );
 };
