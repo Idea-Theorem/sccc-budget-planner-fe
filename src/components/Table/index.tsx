@@ -1,4 +1,5 @@
 import Table, { ColumnsType, TableProps } from "rc-table";
+import "./table.scss";
 
 interface RowData {
   name?: string;
@@ -21,7 +22,7 @@ const TableComponent: React.FC<ExtendedTableProps> = ({
   data,
   ...restProps
 }) => {
-  return <Table columns={columns} data={data} {...restProps} />;
+  return <div className="table_holder"><Table columns={columns} data={data} {...restProps} /></div>;
 };
 
 export default TableComponent;

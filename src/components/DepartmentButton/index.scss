@@ -1,0 +1,67 @@
+.btn-wrap {
+  .dboard-btn {
+    background: var(--gray);
+    color: var(--btntext);
+    font-size: 12px;
+    margin-right: 5px;
+    font-weight: 500;
+    font-family: "Lato", sans-serif;
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 4px;
+    line-height: 14.4px;
+    margin-bottom: 5px;
+    text-align: center;
+    border: none;
+    display: flex;
+    align-items: center;
+  }
+
+  .icon {
+    width: 9px;
+    height: 9px;
+    display: block;
+    margin-right: 5px;
+    border-radius: 100%;
+
+    &.purple {
+      background-color: #6200ee;
+    }
+
+    &.mainly-green {
+      background: #26a69a;
+    }
+
+    &.titanium-yellow {
+      background-color: #ee6002;
+    }
+
+    &.light-yellow {
+      background-color: #ffc107;
+    }
+
+    &.sky-blue {
+      background-color: #07c3ff;
+    }
+
+    &.similar-pantone {
+      background-color: #073eff;
+    }
+
+    &.dark-green {
+      background-color: #26a69a;
+    }
+
+    &.indigo {
+      background-color: #ee6002;
+    }
+
+    &.light-yellow {
+      background-color: #ffc107;
+    }
+
+    &.deep-sky-blue {
+      background-color: #07C3FF;
+    }
+  }
+}
