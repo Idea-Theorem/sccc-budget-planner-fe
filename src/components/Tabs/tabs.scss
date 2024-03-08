@@ -12,9 +12,9 @@
     line-height: 18px;
     letter-spacing: 0.4px;
     font-weight: 500;
-    color: rgba(#000 , 0.6);
+    color: rgba(#000, 0.6);
     cursor: pointer;
-    border-bottom: 1px solid #BFBFBF;
+    border-bottom: 1px solid var(--silver);
 
     @media (max-width: 767px) {
       border: none;
@@ -30,14 +30,14 @@
 
       @media (max-width: 767px) {
         width: 50%;
-        border-bottom: 1px solid #BFBFBF;
+        border-bottom: 1px solid var(--silver);
         text-align: center;
         padding: 11px 40px;
       }
 
       + li {
         @media (max-width: 767px) {
-          border-left: 1px solid #BFBFBF;
+          border-left: 1px solid var(--silver);
         }
       }
 
@@ -76,14 +76,13 @@
     }
   }
   .react-tabs__tab-panel {
-    
     h2 {
       margin: 0;
       font-size: 18px;
       line-height: 22px;
       font-weight: 500;
       letter-spacing: 0.25px;
-      color: rgba(#000 , 0.87);
+      color: rgba(#000, 0.87);
     }
   }
 }

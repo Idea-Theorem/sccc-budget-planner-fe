@@ -10,25 +10,25 @@ const Progress: React.FC<IProgress> = () => {
   const progressData = [
     {
       completed: 50,
-      bgColor: "#3B00ED",
+      bgColor: "var(--blue)",
       label: "Progress 1",
       amount: "$00,000",
     },
     {
       completed: 40,
-      bgColor: "#9C27B0",
+      bgColor: "var(--seance)",
       label: "Progress 2",
       amount: "$00,000",
     },
     {
       completed: 25,
-      bgColor: "#D81B60",
+      bgColor: "var(--amaranth)",
       label: "Progress 3",
       amount: "$00,000",
     },
     {
       completed: 30,
-      bgColor: "#FFC107",
+      bgColor: "var(--amber)",
       label: "Progress 4",
       amount: "$00,000",
     },

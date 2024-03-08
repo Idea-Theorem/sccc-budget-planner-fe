@@ -38,7 +38,7 @@ const Dropdown: React.FC<ExtendedSelectProps> = (props) => {
         defaultValue={defaultValue}
         showSearch={showSearch}
         notFoundContent={null}
-        suffixIcon={<ChevronDown width="10px" height="10px" fillColor="#000" />}
+        suffixIcon={<ChevronDown width="10px" height="10px" fillColor="var(--black)" />}
         onChange={onChange}
         className={classnames({ select_error: error && touched })}
       >

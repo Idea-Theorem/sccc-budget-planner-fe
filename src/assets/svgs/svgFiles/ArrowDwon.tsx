@@ -4,17 +4,20 @@ interface IArrowDownProps {
   width?: string;
   height?: string;
   fillColor?: string;
+  classname?: string
 }
 
 const ArrowDown: React.FC<IArrowDownProps> = ({
   width = "9",
   height = "6",
   fillColor ='currentColor',
+  classname= "",
 }) => {
   return (
     <svg
       width={width}
       height={height}
+      className={classname}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 512 512"
       fill="none"

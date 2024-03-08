@@ -15,7 +15,7 @@
 
     thead {
       font-size: 16px;
-      border-bottom: 1px solid #303030;
+      border-bottom: 1px solid var(--mineshaft);
     }
 
     th,
@@ -45,12 +45,12 @@
         border: none;
 
         &:nth-child(4) {
-          border-top: 1px solid #d9d9d9;
-          border-bottom: 1px solid #d9d9d9;
+          border-top: 1px solid var(--alto);
+          border-bottom: 1px solid var(--alto);
         }
 
         &:last-child {
-          border-top: 1px solid #303030;
+          border-top: 1px solid var(--mineshaft);
         }
       }
     }
