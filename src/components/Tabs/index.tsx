@@ -1,5 +1,6 @@
 import React from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import "./tabs.scss";
 
 interface TabItem {
   key: string;
@@ -17,17 +18,19 @@ const TabsComponent: React.FC<TabsComponentProps> = ({
   defaultActiveKey,
 }) => {
   return (
-    <Tabs defaultIndex={defaultActiveKey}>
-      <TabList>
-        {items.map((item) => (
-          <Tab key={item.key}>{item.tab}</Tab>
-        ))}
-      </TabList>
+    <div className="tabs_holder">
+      <Tabs defaultIndex={defaultActiveKey}>
+        <TabList>
+          {items.map((item) => (
+            <Tab key={item.key}>{item.tab}</Tab>
+          ))}
+        </TabList>
 
-      {items.map((item) => (
-        <TabPanel key={item.key}>{item.content}</TabPanel>
-      ))}
-    </Tabs>
+        {items.map((item) => (
+          <TabPanel key={item.key}>{item.content}</TabPanel>
+        ))}
+      </Tabs>
+    </div>
   );
 };
 
