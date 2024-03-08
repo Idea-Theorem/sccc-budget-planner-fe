@@ -1,7 +1,7 @@
 import "./index.scss";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import ProgressBar from "@ramonak/react-progress-bar";
+import Progress from "../Progress";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -30,10 +30,7 @@ const ProgressProgram = () => {
         </div>
       </div>
       <div className="progressbars_wrap">
-        <ProgressBar completed={50} bgColor="#3B00ED" isLabelVisible={false} />
-        <ProgressBar completed={40} bgColor="#9C27B0" isLabelVisible={false}/>
-        <ProgressBar completed={25} bgColor="#D81B60" isLabelVisible={false}/>
-        <ProgressBar completed={30} bgColor="#FFC107" isLabelVisible={false}/>
+        <Progress />
       </div>
     </div>
   );

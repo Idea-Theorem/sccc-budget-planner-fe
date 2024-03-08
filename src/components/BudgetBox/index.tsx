@@ -48,7 +48,14 @@ const BudgetBox: React.FC<IBudgetBox> = ({
         )}
         {value && (
           <div className="budget_progressbar">
-            <ProgressBar completed={value} />
+            <ProgressBar
+              completed={value}
+              isLabelVisible={false}
+              height="4px"
+              bgColor="#2196F3"
+              baseBgColor="#a6d5fa"
+              borderRadius="4px"
+            />
           </div>
         )}
       </div>
