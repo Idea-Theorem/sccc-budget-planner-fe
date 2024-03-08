@@ -1,0 +1,17 @@
+.progress_program_area {
+  align-items: center;
+  .progress_chart_holder {
+    width: 303px;
+  }
+
+  .progress_chart {
+    width: 156px;
+    height: 156px;
+  }
+
+  .progressbars_wrap {
+    flex-grow: 1;
+    flex-basis: 0;
+    min-width: 0;
+  }
+}
