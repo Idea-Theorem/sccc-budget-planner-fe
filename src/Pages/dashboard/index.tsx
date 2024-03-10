@@ -1,7 +1,7 @@
 import BudgetBoxDetails from "../../components/BudgetBoxDetails";
 import Department from "../../components/Department";
 import MainHeader from "../../components/MainHeader";
-import ProgressProgram from "../../components/ProgressProgram";
+import NestedTable from "../../components/NestedTable";
 import Dropdown from "../../components/Select";
 
 const Options = ["Approve", "Reject"];
@@ -17,6 +17,7 @@ const DashBoard = () => {
       />
       <BudgetBoxDetails />
       <Department />
+      <NestedTable />
     </div>
   );
 };

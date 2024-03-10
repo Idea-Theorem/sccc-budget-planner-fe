@@ -52,8 +52,8 @@ const BudgetBox: React.FC<IBudgetBox> = ({
               completed={value}
               isLabelVisible={false}
               height="4px"
-              bgColor="#2196F3"
-              baseBgColor="#a6d5fa"
+              bgColor="var(--doderblue)"
+              baseBgColor="var(--sail)"
               borderRadius="4px"
             />
           </div>
