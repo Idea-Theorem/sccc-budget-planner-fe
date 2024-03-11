@@ -68,6 +68,8 @@
       }
 
       &.react-tabs__tab--selected {
+        box-shadow: none;
+        outline: none;
         &:after {
           opacity: 1;
           visibility: visible;
