@@ -1,6 +1,7 @@
 import Checkbox from "../../components/Checkbox";
 import DepartmentButton from "../../components/DepartmentButton";
 import TableComponent from "../../components/Table";
+import TableWithPagination from "../../components/TableWithPagination";
 import TabsComponent from "../../components/Tabs";
 
 const Component = () => {
@@ -85,6 +86,7 @@ const Component = () => {
     <>
       <TabsComponent items={tabItems} defaultActiveKey="0" />
       <TableComponent data={data} columns={columns} />
+      <TableWithPagination />
       <div className="btn-area">
         <DepartmentButton
           iconColor="purple"
