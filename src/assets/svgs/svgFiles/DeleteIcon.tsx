@@ -1,15 +1,15 @@
 import React from "react";
 
 interface DeleteIconProps {
-  width: string;
-  height: string;
-  fillColor: string;
+  width?: string;
+  height?: string;
+  fillColor?: string;
 }
 
 const DeleteIcon: React.FC<DeleteIconProps> = ({
-  width,
-  height,
-  fillColor,
+  width="18px",
+  height="18px",
+  fillColor="currentColor",
 }) => {
   return (
     <svg

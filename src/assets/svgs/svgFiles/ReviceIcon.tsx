@@ -1,15 +1,15 @@
 import React from "react";
 
 interface ReviceIconProps {
-  width: string;
-  height: string;
-  fillColor: string;
+  width?: string;
+  height?: string;
+  fillColor?: string;
 }
 
 const ReviceIcon: React.FC<ReviceIconProps> = ({
-  width,
-  height,
-  fillColor,
+  width="16",
+  height="14",
+  fillColor="currentColor",
 }) => {
   return (
     <svg

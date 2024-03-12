@@ -1,15 +1,15 @@
 import React from "react";
 
 interface SubmitIconProps {
-  width: string;
-  height: string;
-  fillColor: string;
+  width?: string;
+  height?: string;
+  fillColor?: string;
 }
 
 const SubmitIcon: React.FC<SubmitIconProps> = ({
-  width,
-  height,
-  fillColor,
+  width="14px",
+  height="18px",
+  fillColor="currentColor",
 }) => {
   return (
     <svg

@@ -1,21 +1,21 @@
 import React from "react";
 
 interface IChevronDownProps {
-  width: string;
-  height: string;
-  fillColor: string;
+  width?: string;
+  height?: string;
+  fillColor?: string;
 }
 
 const ChevronDown: React.FC<IChevronDownProps> = ({
-  width,
-  height,
-  fillColor,
+  width = "10px",
+  height = "6px",
+  fillColor ="currentColor",
 }) => {
   return (
     <svg
       width={width}
       height={height}
-      viewBox="0 0 14 18"
+      viewBox="0 0 10 7"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >

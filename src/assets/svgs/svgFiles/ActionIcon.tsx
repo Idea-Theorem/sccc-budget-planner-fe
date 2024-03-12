@@ -1,15 +1,15 @@
 import React from "react";
 
 interface ActionIconProps {
-  width: string;
-  height: string;
-  fillColor: string;
+  width?: string;
+  height?: string;
+  fillColor?: string;
 }
 
 const ActionIcon: React.FC<ActionIconProps> = ({
-  width,
-  height,
-  fillColor,
+  width = "10px",
+  height = "8px",
+  fillColor ="currentColor",
 }) => {
   return (
     <svg

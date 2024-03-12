@@ -1,9 +1,14 @@
 .main_layout {
   display: flex;
-  gap: 40px;
+
+  &.no-sidebar {
+    .content_box {
+      padding-left: 40px;
+    }
+  }
 
   .content_box {
-    padding: 30px 40px 0 0;
+    padding: 30px 40px 0 248px;
     flex-grow: 1;
     flex-basis: 0;
     min-width: 0;

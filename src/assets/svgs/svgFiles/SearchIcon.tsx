@@ -1,15 +1,15 @@
 import React from "react";
 
 interface SearchIconProps {
-  width: string;
-  height: string;
-  fillColor: string;
+  width?: string;
+  height?: string;
+  fillColor?: string;
 }
 
 const SearchIcon: React.FC<SearchIconProps> = ({
-  width,
-  height,
-  fillColor,
+  width='18px',
+  height='18px',
+  fillColor='currentColor;',
 }) => {
   return (
     <svg

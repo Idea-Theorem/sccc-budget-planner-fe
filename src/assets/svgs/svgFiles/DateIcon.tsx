@@ -1,12 +1,12 @@
 import React from "react";
 
 interface DateIconProps {
-  width: string;
-  height: string;
-  fillColor: string;
+  width?: string;
+  height?: string;
+  fillColor?: string;
 }
 
-const DateIcon: React.FC<DateIconProps> = ({ width, height, fillColor }) => {
+const DateIcon: React.FC<DateIconProps> = ({ width="19", height="21", fillColor="currentColor" }) => {
   return (
     <svg
       width={width}

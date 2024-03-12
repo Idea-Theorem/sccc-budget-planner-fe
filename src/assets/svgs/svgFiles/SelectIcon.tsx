@@ -1,12 +1,12 @@
 import React from "react";
 
 interface SelectIconProps {
-  width: string;
-  height: string;
-  fillColor: string;
+  width?: string;
+  height?: string;
+  fillColor?: string;
 }
 
-const SelectIcon: React.FC<SelectIconProps> = ({ width, height, fillColor }) => {
+const SelectIcon: React.FC<SelectIconProps> = ({ width="10", height="5", fillColor="currentColor" }) => {
   return (
     <svg
       width={width}

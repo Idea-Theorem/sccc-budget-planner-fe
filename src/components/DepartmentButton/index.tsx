@@ -11,10 +11,12 @@ const DepartmentButton: React.FC<DepartmentButtonProps> = ({
   buttonText,
 }) => {
   return (
-    <button className="department_btn">
-      <span className={`department_icon ${iconColor}`}></span>
-      {buttonText}
-    </button>
+      <li>
+        <button className="department_btn">
+          <span className={`department_icon ${iconColor}`}></span>
+          {buttonText}
+        </button>
+      </li>
   );
 };
 

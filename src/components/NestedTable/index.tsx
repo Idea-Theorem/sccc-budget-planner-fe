@@ -92,7 +92,7 @@ const NestedTable = () => {
             <td>$00,000.00</td>
             <td>$00,000.00</td>
           </tr>
-          <tr>
+          <tr className="last-row">
             <td>Profit</td>
             <td>$00,000.00</td>
             <td>$00,000.00</td>

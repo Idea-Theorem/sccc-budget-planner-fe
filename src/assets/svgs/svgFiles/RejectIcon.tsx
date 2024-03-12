@@ -1,15 +1,15 @@
 import React from "react";
 
 interface RejectIconProps {
-  width: string;
-  height: string;
-  fillColor: string;
+  width?: string;
+  height?: string;
+  fillColor?: string;
 }
 
 const RejectIcon: React.FC<RejectIconProps> = ({
-  width,
-  height,
-  fillColor,
+  width="12px",
+  height="12px",
+  fillColor="currentColor",
 }) => {
   return (
     <svg

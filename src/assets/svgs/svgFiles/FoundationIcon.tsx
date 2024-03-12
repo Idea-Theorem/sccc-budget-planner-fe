@@ -1,15 +1,15 @@
 import React from "react";
 
 interface FoundationIconProps {
-  width: string;
-  height: string;
-  fillColor: string;
+  width?: string;
+  height?: string;
+  fillColor?: string;
 }
 
 const FoundationIcon: React.FC<FoundationIconProps> = ({
-  width,
-  height,
-  fillColor,
+  width="20px",
+  height="20px",
+  fillColor="currentColor",
 }) => {
   return (
     <svg

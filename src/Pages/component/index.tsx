@@ -1,8 +1,12 @@
+import ButtonComponent from "../../components/Buttton";
 import Checkbox from "../../components/Checkbox";
 import DepartmentButton from "../../components/DepartmentButton";
+import Dropdown from "../../components/Select";
 import TableComponent from "../../components/Table";
 import TableWithPagination from "../../components/TableWithPagination";
 import TabsComponent from "../../components/Tabs";
+
+const Options = ["Approve", "Reject"];
 
 const Component = () => {
   const tabItems = [
@@ -83,45 +87,55 @@ const Component = () => {
     },
   ];
   return (
-    <>
-      <TabsComponent items={tabItems} defaultActiveKey="0" />
-      <TableComponent data={data} columns={columns} />
-      <TableWithPagination />
-      <div className="btn-area">
-        <DepartmentButton
-          iconColor="purple"
-          buttonText="Recreation & Culture"
-        />
-        <DepartmentButton
-          iconColor="mainly-green"
-          buttonText="Health & Wellness"
-        />
-        <DepartmentButton iconColor="titanium-yellow" buttonText="Finance" />
-        <DepartmentButton
-          iconColor="light-yellow"
-          buttonText="Human Resources"
-        />
-        <DepartmentButton
-          iconColor="sky-blue"
-          buttonText="Events & Community"
-        />
-        <DepartmentButton
-          iconColor="similar-pantone"
-          buttonText="Department 3"
-        />
-        <DepartmentButton iconColor="dark-green" buttonText="Department 6" />
-        <DepartmentButton iconColor="indigo" buttonText="Department 8" />
-        <DepartmentButton
-          iconColor="light-yellow"
-          buttonText="Department Name"
-        />
-        <DepartmentButton
-          iconColor="deep-sky-blue"
-          buttonText="Department Name"
-        />
+    <div className="main_layout no-sidebar">
+      <div className="content_box">
+        <TabsComponent items={tabItems} defaultActiveKey="0" />
+        <TableComponent data={data} columns={columns} />
+        <TableWithPagination />
+        <div className="btn-area">
+          <ul className="btn-list d-flex flex-wrap">
+            <DepartmentButton
+              iconColor="purple"
+              buttonText="Recreation & Culture"
+            />
+            <DepartmentButton
+              iconColor="mainly-green"
+              buttonText="Health & Wellness"
+            />
+            <DepartmentButton iconColor="titanium-yellow" buttonText="Finance" />
+            <DepartmentButton
+              iconColor="light-yellow"
+              buttonText="Human Resources"
+            />
+            <DepartmentButton
+              iconColor="sky-blue"
+              buttonText="Events & Community"
+            />
+            <DepartmentButton
+              iconColor="similar-pantone"
+              buttonText="Department 3"
+            />
+            <DepartmentButton iconColor="dark-green" buttonText="Department 6" />
+            <DepartmentButton iconColor="indigo" buttonText="Department 8" />
+            <DepartmentButton
+              iconColor="light-yellow"
+              buttonText="Department Name"
+            />
+            <DepartmentButton
+              iconColor="deep-sky-blue"
+              buttonText="Department Name"
+            />
+          </ul>
+          <div className="parent-class">
+            <Dropdown defaultValue="Actions" option={Options} />
+            </div>
+          <Dropdown defaultValue="Actions" option={Options} />
+        </div>
+        <Checkbox />
+        <ButtonComponent className="info" text="Edit" />
+        <ButtonComponent className="error" text="Edit" />
       </div>
-      <Checkbox />
-    </>
+    </div>
   );
 };
 
