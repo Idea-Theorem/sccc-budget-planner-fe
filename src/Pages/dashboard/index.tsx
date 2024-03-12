@@ -10,7 +10,7 @@ const DashBoard = () => {
     <div className="dashboard_block">
       <MainHeader
         heading="Dashboard"
-        text="Welcome"
+        text="Welcome,"
         name="Tomohiro"
         date="Monday, 5-Mar"
         select={<Dropdown defaultValue="Actions" option={Options} />}

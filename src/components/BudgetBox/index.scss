@@ -1,0 +1,132 @@
+.budgetbox_details {
+  flex-wrap: wrap;
+  margin: 0 -12px 23px;
+}
+
+.budget_box {
+  padding: 0 12px;
+  
+  &:nth-child(1) {
+    flex-grow: 1;
+    flex-basis: 0;
+    min-width: 0;
+  }
+
+  &:nth-child(2) {
+    width: 33.3%;
+  }
+
+  &:nth-child(3) {
+    width: 25%;
+
+    .budget_content {
+      .total_approved_amount {
+        margin-left: 14px;
+      }
+    }
+  }
+}
+
+.budget_content {
+  border-radius: 4px;
+  height: 100%;
+  box-shadow: 0px 0.5px 1.75px 0px rgba(0, 0, 0, 0.06),
+              0px 1.85px 6.25px 0px rgba(0, 0, 0, 0.19);
+  padding: 20px 24px 16px;
+  background: var(--white);
+
+  h2 {
+    margin: 0;
+    flex-grow: 1;
+    flex-basis: 0;
+    min-width: 0;
+    letter-spacing: -0.7px;
+  }
+
+  p {
+    margin: 0 0 11px;
+  }
+
+  .budget_wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .budget_edit {
+    color: var(--primary);
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 13px;
+    margin-right: 7px;
+    display: block;
+    margin-top: 7px;
+
+    &:hover {
+      color: var(--black);
+    }
+  }
+
+  .discription {
+    color: var(--graydark);
+  }
+
+  .budget_amount {
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    color: var(--block);
+    margin: 11px 0 15px;
+
+    .amount {
+      font-size: 20px;
+      font-weight: 500;
+    }
+
+    .total_amount {
+      font-size: 16px;
+      font-weight: 400;
+      display: block;
+      position: relative;
+      padding: 0 0 4px 16px;
+      margin: 0 0 0 10px;
+
+      &:before {
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: var(--block);
+        content: '/';
+      }
+    }
+  }
+
+  .approved_amount {
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .total_approved_amount {
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1.2;
+    display: block;
+    position: relative;
+    padding: 0 0 10px 16px;
+    margin: 0 0 -2px 5px;
+
+    &:before {
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--block);
+      content: '/';
+    }
+  }
+
+  .budget_progressbar {
+    width: 90%;
+  }
+}

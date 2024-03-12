@@ -1,15 +1,15 @@
 import React from "react";
 
 interface ArrowrightIconProps {
-  width: string;
-  height: string;
-  fillColor: string;
+  width?: string;
+  height?: string;
+  fillColor?: string;
 }
 
 const ArrowrightIcon: React.FC<ArrowrightIconProps> = ({
-  width,
-  height,
-  fillColor,
+  width = "8px",
+  height = "12px",
+  fillColor ="currentColor",
 }) => {
   return (
     <svg

@@ -1,52 +1,46 @@
 :root {
-  --primary: #2a9d8f;
-  --secondary: #9c27b0;
-  --error: #d32f2f;
-  --warning: #ef6c00;
-  --info: #0288d1;
-  --success: #2e7d32;
+  --primary: #2A9D8F;
+  --secondary: #9C27B0;
+  --error: #D32F2F;
+  --warning: #EF6C00;
+  --info: #0288D1;
+  --success: #2E7D32;
   --gunPowder: #414158;
   --white: #fff;
-  --junglegreen: #2a9d8f;
-  --wildsand: #f5f5f5;
-  --athensgray: #e7eaee;
-  --btntext: #2d2d2d;
-  --doderblue: #2196f3;
-  --sail: #a6d5fa;
-  --royalblue: #4087de;
-  --alto: #d9d9d9;
+  --junglegreen: #2A9D8F;
+  --wildsand: #F5F5F5;
+  --athensgray: #E7EAEE;
+  --btntext: #2D2D2D;
+  --doderblue: #2196F3;
+  --sail: #A6D5FA;
+  --royalblue: #4087DE;
+  --alto: #D9D9D9;
   --mineshaft: #303030;
-  --blue: #3b00ed;
-  --seance: #9c27b0;
-  --amaranth: #d81b60;
-  --amber: #ffc107;
+  --blue: #3B00ED;
+  --seance: #9C27B0;
+  --amaranth: #D81B60;
+  --amber: #FFC107;
   --silver: #BFBFBF;
-
-  --primary-hover: #2a9d8f;
-  --secondary-hover: #7b1fa2;
-  --error-hover: #c62828;
-  --wraning-hover: #c62828;
-  --info-hover: #01579b;
-  --success-hover: #1b5e20;
+  --primary-hover: #2A9D8F;
+  --secondary-hover: #7B1FA2;
+  --error-hover: #C62828;
+  --wraning-hover: #C62828;
+  --info-hover: #01579B;
+  --success-hover: #1B5E20;
   --sidebar-hover: #41415866;
 }
-
 .d-flex {
   display: flex;
 }
-
 .flex-wrap {
   flex-wrap: wrap;
 }
-
 .large {
   min-width: 121px;
 }
-
 .medium {
   min-width: 72px;
 }
-
 .small {
   min-width: 61px;
 }

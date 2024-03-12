@@ -1,15 +1,15 @@
 import React from "react";
 
 interface ExportIconProps {
-  width: string;
-  height: string;
-  fillColor: string;
+  width?: string;
+  height?: string;
+  fillColor?: string;
 }
 
 const ExportIcon: React.FC<ExportIconProps> = ({
-  width,
-  height,
-  fillColor,
+  width="14px",
+  height="14px",
+  fillColor="currentColor",
 }) => {
   return (
     <svg

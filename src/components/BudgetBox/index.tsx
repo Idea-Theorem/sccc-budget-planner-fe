@@ -1,5 +1,6 @@
 import React from "react";
 import ProgressBar from "@ramonak/react-progress-bar";
+import './index.scss';
 
 interface IBudgetBox {
   heading: string;
@@ -26,7 +27,7 @@ const BudgetBox: React.FC<IBudgetBox> = ({
     <div className="budget_box">
       <div className="budget_content">
         <div className="budget_wrap">
-          <h1>{heading}</h1>
+          <h2>{heading}</h2>
           {edittext && <span className="budget_edit">{edittext}</span>}
         </div>
         {discription && (

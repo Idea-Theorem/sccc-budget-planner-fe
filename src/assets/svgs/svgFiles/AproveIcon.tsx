@@ -1,15 +1,15 @@
 import React from "react";
 
 interface AproveIconProps {
-  width: string;
-  height: string;
-  fillColor: string;
+  width?: string;
+  height?: string;
+  fillColor?: string;
 }
 
 const AproveIcon: React.FC<AproveIconProps> = ({
-  width,
-  height,
-  fillColor,
+  width = "16px",
+  height = "12px",
+  fillColor ="currentColor",
 }) => {
   return (
     <svg

@@ -1,15 +1,15 @@
 import React from "react";
 
 interface FilterIconProps {
-  width: string;
-  height: string;
-  fillColor: string;
+  width?: string;
+  height?: string;
+  fillColor?: string;
 }
 
 const FilterIcon: React.FC<FilterIconProps> = ({
-  width,
-  height,
-  fillColor,
+  width="14px",
+  height="10px",
+  fillColor="currentColor",
 }) => {
   return (
     <svg

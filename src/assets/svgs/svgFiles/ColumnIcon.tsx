@@ -1,12 +1,12 @@
 import React from "react";
 
 interface ColumnIconProps {
-  width: string;
-  height: string;
-  fillColor: string;
+  width?: string;
+  height?: string;
+  fillColor?: string;
 }
 
-const ColumnIcon: React.FC<ColumnIconProps> = ({ width, height, fillColor }) => {
+const ColumnIcon: React.FC<ColumnIconProps> = ({ width="14", height="12", fillColor="currentColor" }) => {
   return (
     <svg
       width={width}

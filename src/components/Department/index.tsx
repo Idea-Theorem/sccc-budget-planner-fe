@@ -1,5 +1,6 @@
 import DepartmentButton from "../DepartmentButton";
 import ProgressProgram from "../ProgressProgram";
+import './index.scss';
 
 const Department = () => {
   const departmentData = [
@@ -18,7 +19,7 @@ const Department = () => {
   return (
     <div className="department_block">
       <h2>Department %</h2>
-      <div className="department_list_wrap d-flex flex-wrap">
+      <ul className="btn-list d-flex flex-wrap">
         {departmentData.map((department, index) => (
           <DepartmentButton
             key={index}
@@ -26,7 +27,7 @@ const Department = () => {
             buttonText={department.buttonText}
           />
         ))}
-      </div>
+      </ul>
       <ProgressProgram />
     </div>
   );

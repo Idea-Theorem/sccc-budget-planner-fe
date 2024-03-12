@@ -43,6 +43,74 @@
       border-color: rgba(#000, 0.12);
     }
   }
+
+  .MuiDataGrid-columnSeparator {
+    display: none !important;
+  }
+
+  .MuiDataGrid-columnHeadersInner {
+    > div {
+      width: 100%;
+
+      div {
+        width: inherit !important;
+        min-width: inherit !important;
+        max-width: inherit !important;
+
+        &:nth-child(2) {
+          width: 270px !important;
+        }
+
+        &:nth-child(3) {
+          width: 132px !important;
+        }
+
+        &:nth-child(4) {
+          width: 142px !important;
+        }
+
+        &:nth-child(5) {
+          width: 160px !important;
+        }
+
+        &:nth-child(6) {
+          width: 146px !important;
+        }
+
+        &:nth-child(7) {
+          width: 156px !important;
+        }
+
+      }
+
+      .MuiDataGrid-columnHeaderCheckbox {
+        width: 50px !important;
+        min-width: 50px !important;
+        max-width: 50px !important;
+      }
+    }
+  }
+
+  .MuiDataGrid-row {
+    .MuiDataGrid-cell {
+      width: auto !important;
+      min-width: inherit !important;
+      max-width: inherit !important;
+      flex: 1;
+    }
+  }
+
+  .MuiDataGrid-virtualScrollerContent {
+    div {
+      width: 100%;
+    }
+
+    .MuiDataGrid-cellCheckbox {
+      width: 50px !important;
+      min-width: 50px !important;
+      max-width: 50px !important;
+    }
+  }
 }
 
 .icon-wrap {
@@ -54,3 +122,4 @@
     cursor: pointer;
   }
 }
+

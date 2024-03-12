@@ -1,12 +1,12 @@
 import React from "react";
 
 interface ArrowleftIconProps {
-  width: string;
-  height: string;
-  fillColor: string;
+  width?: string;
+  height?: string;
+  fillColor?: string;
 }
 
-const ArrowleftIcon: React.FC<ArrowleftIconProps> = ({ width, height, fillColor }) => {
+const ArrowleftIcon: React.FC<ArrowleftIconProps> = ({ width="8px", height="12px", fillColor="currentColor" }) => {
   return (
     <svg
       width={height}

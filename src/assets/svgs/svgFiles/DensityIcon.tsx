@@ -1,15 +1,15 @@
 import React from "react";
 
 interface IdensityIconProps {
-  width: string;
-  height: string;
-  fillColor: string;
+  width?: string;
+  height?: string;
+  fillColor?: string;
 }
 
 const DensityIcon: React.FC<IdensityIconProps> = ({
-  width,
-  height,
-  fillColor,
+  width="14px",
+  height="12px",
+  fillColor="currentColor",
 }) => {
   return (
     <svg
