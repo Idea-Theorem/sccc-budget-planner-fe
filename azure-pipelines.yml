@@ -38,7 +38,7 @@ stages:
     - script: |
         npm install -g yarn
         yarn
-        yarn build --if-present
+        yarn build
       displayName: 'npm install and build'
 
     - task: ArchiveFiles@2
