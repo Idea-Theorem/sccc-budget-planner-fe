@@ -80,4 +80,4 @@ stages:
           - script: |
               cd /home/azureuser/app/budget-planner-fe
               unzip $(Build.BuildId).zip
-              cd /home/azureuser/app/.htaccess /home/home/azureuser/app/budget-planner-fe/dist
+              cp /home/azureuser/app/.htaccess /home/home/azureuser/app/budget-planner-fe/dist
