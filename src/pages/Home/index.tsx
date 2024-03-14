@@ -1,5 +1,11 @@
+import { Box, Typography } from "@mui/material";
+
 const HomeScreen = () => {
-  return <div>HomeScreen</div>;
+  return (
+    <Box>
+      <Typography variant="h5">hihs</Typography>
+    </Box>
+  );
 };
 
 export default HomeScreen;
