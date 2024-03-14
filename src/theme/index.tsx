@@ -13,12 +13,6 @@ import type {} from "@mui/x-date-pickers/themeAugmentation";
 import useThemeToggle from "../hooks/useThemeToggle";
 import { CssBaseline } from "@mui/material";
 
-// ----------------------------------------------------------------------
-// const theme = {
-//   // Add your theme configuration here
-//   themeMode: "light",
-//   themeDirection: "ltr",
-// };
 type IThemeProvider = {
   children: ReactNode;
 };
