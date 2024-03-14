@@ -80,4 +80,5 @@ stages:
           - script: |
               cd /home/azureuser/app/budget-planner-fe
               unzip $(Build.BuildId).zip
-              cp /home/azureuser/app/.htaccess /home/home/azureuser/app/budget-planner-fe/dist
+              sudo chmod -R 755 /home/home/azureuser/app/budget-planner-fe/dist/
+              cp /home/azureuser/app/.htaccess /home/home/azureuser/app/budget-planner-fe/dist/
