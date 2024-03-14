@@ -3,6 +3,7 @@ import { Theme } from "@mui/material/styles";
 // ----------------------------------------------------------------------
 
 export default function Checkbox(theme: Theme) {
+  console.log(theme);
   return {
     MuiCheckbox: {
       defaultProps: {},

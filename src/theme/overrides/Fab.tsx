@@ -3,6 +3,7 @@
 import { Theme } from "@mui/material/styles";
 
 export default function Fab(theme: Theme) {
+  console.log(theme);
   return {
     MuiFab: {
       defaultProps: {},

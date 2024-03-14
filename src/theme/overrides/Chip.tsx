@@ -3,6 +3,7 @@ import { Theme } from "@mui/material/styles";
 // ----------------------------------------------------------------------
 
 export default function Chip(theme: Theme) {
+  console.log(theme);
   // theme.palette.grey.
   return {
     MuiChip: {

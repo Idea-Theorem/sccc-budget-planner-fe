@@ -3,6 +3,7 @@
 import { Theme } from "@mui/material";
 
 export default function Accordion(theme: Theme) {
+  console.log(theme);
   return {
     MuiAccordion: {
       styleOverrides: {

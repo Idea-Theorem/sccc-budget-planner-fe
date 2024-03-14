@@ -3,6 +3,7 @@ import { Theme } from "@mui/material/styles";
 // ----------------------------------------------------------------------
 
 export default function Alert(theme: Theme) {
+  console.log(theme);
   // const standardStyle = (color: PaletteColorKeys) => ({
   //   "& .MuiAlert-icon": {},
   // });
