@@ -4,6 +4,7 @@
 import { Theme } from "@mui/material/styles";
 
 export default function Rating(theme: Theme) {
+  console.log(theme);
   return {
     MuiRating: {
       defaultProps: {

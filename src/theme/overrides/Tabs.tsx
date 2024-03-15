@@ -2,6 +2,7 @@
 import { Theme } from "@mui/material/styles";
 
 export default function Tabs(theme: Theme) {
+  console.log(theme);
   return {
     MuiTabs: {
       styleOverrides: {

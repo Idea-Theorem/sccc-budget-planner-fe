@@ -3,6 +3,7 @@ import { Theme } from "@mui/material/styles";
 // ----------------------------------------------------------------------
 
 export default function ToggleButton(theme: Theme) {
+  console.log(theme);
   const style = (color: PaletteColorKeys) => ({
     props: { color },
     style: {
