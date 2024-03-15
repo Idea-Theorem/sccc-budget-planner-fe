@@ -1,6 +1,5 @@
 // const lightPallete = lightTheme.palette;
 import Appthemes from "../theme/palette";
-import tinycolor from "tinycolor2";
 
 export const appThemeModes = [
   {
@@ -25,24 +24,5 @@ export default function getThemeMode(presetsKey: string, routeModule?: string) {
     themeModes = appThemeModes[colorIndex];
   }
 
-  const color = tinycolor("rgba(140, 59, 45, 1)");
-
-  // console.log(color.setAlpha(0.08).toRgbString());
-  themeModes.theme.palette.primary.main = color.toRgbString();
-  themeModes.theme.palette.primary.light = color
-    .clone()
-    .lighten(10)
-    .toRgbString();
-  themeModes.theme.palette.primary.dark = color
-    .clone()
-    .darken(10)
-    .toRgbString();
-  themeModes.theme.palette.primary.shades = {
-    "8p": color.clone().setAlpha(0.08).toRgbString(),
-    "12p": color.clone().setAlpha(0.12).toRgbString(),
-    "16p": color.clone().setAlpha(0.16).toRgbString(),
-    "30p": color.clone().setAlpha(0.3).toRgbString(),
-    "50p": color.clone().setAlpha(0.5).toRgbString(),
-  };
   return themeModes;
 }
