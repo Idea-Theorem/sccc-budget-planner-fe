@@ -1,13 +1,13 @@
-import { styled } from "@mui/material";
+import { Box, styled } from "@mui/material";
 
-const DotStyle = styled("div")(({ theme }) => ({
+const DotStyle = styled(Box)(({ theme }) => ({
   // top: 8,
   width: 100,
   height: 100,
 
   borderRadius: "50%",
 
-  backgroundColor: theme.palette.error.main,
+  backgroundColor: theme.palette.secondary.main,
 }));
 const LoginScreen = () => {
   return (
