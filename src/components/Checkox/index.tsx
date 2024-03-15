@@ -4,7 +4,7 @@ import { Box, styled } from "@mui/material";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const StyledCheckbox = styled(Checkbox)(({ theme }) => ({
-  color: theme.palette.success.main,
+  color: theme.palette.primary.main,
 }));
 
 const Checkboxes = () => {
