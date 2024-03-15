@@ -3,6 +3,7 @@ import SelectComponent from "../../components/Select";
 import TableComponent from "../../components/Table";
 import Buttons from "../../components/Button";
 import Checkboxes from "../../components/Checkox";
+import ResponsiveDrawer from "../../components/Sidebar";
 
 const ComponentsScreen = () => {
   return (
@@ -11,6 +12,7 @@ const ComponentsScreen = () => {
       <TableComponent />
       <Buttons />
       <Checkboxes />
+      <ResponsiveDrawer />
     </Box>
   );
 };

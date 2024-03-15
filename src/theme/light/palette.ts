@@ -12,7 +12,7 @@ export const lightPallete: any = {
   mode: "light",
   primary: {
     // ...defaultPalette.primary,
-    main: "rgba(140, 59, 45, 1)",
+    main: "rgba(42, 157, 143, 1)",
     light: "rgba(151, 78, 65, 1)",
 
     contrastText: "rgba(255, 255, 255, 1)",
@@ -26,7 +26,7 @@ export const lightPallete: any = {
   },
   secondary: {
     // ...defaultPalette.secondary,
-    main: "rgba(10, 140, 164, 1)",
+    main: "rgba(33, 150, 243, 1)",
     light: "rgba(34, 151, 173, 1)",
 
     contrastText: "rgba(66, 66, 66, 1)",
@@ -86,7 +86,7 @@ export const lightPallete: any = {
 
   info: {
     // ...defaultPalette.info,
-    main: "rgba(10, 140, 164, 1)",
+    main: "rgba(59, 0, 237, 1)",
     light: "rgba(34, 151, 173, 1)",
 
     contrastText: "rgba(255, 255, 255, 1)",
@@ -103,7 +103,8 @@ export const lightPallete: any = {
     // ...defaultPalette.text,
     primary: "rgba(0, 0, 0, 0.87)",
     secondary: "rgba(0, 0, 0, 0.7)",
-    disabled: "rgba(0, 0, 0, 0.38)",
+    disabled: "rgba(152, 152, 152, 1)",
+    light: "rgba(113, 122, 126, 1)",
   },
 
   action: {
@@ -213,7 +214,7 @@ export const lightPallete: any = {
   },
   orange: {
     ...palleteWithExtraColors.orange,
-    GFOrange: "rgba(168, 74, 6, 1)",
+    GFOrange: "rgba(255, 193, 7, 1)",
     GFOrangeLight: "rgba(92, 55, 27, 1)",
     GFOrangeBright: "rgba(187, 114, 34, 1)",
     Status: "rgba(255, 145, 0, 1)",
@@ -243,12 +244,12 @@ export const lightPallete: any = {
   },
   red: {
     ...palleteWithExtraColors.red,
-    GFRed: "rgba(107, 32, 19, 1)",
+    GFRed: "rgba(216, 27, 96, 1)",
     Error: "rgba(255, 23, 68, 1)",
   },
   purple: {
     ...palleteWithExtraColors.purple,
-    GFPurple: "rgba(89, 46, 132, 1)",
+    GFPurple: "rgba(156, 39, 176, 1)",
     GFPurpleLight: "rgba(44, 23, 66, 1)",
   },
   ...commonPalleteColors,
