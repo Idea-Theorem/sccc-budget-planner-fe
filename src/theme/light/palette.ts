@@ -189,8 +189,8 @@ export const lightPallete: any = {
   },
   gfGrey: {
     ...palleteWithExtraColors.gfGrey,
-    GF50: "rgba(234, 238, 244, 1)",
-    GF75: "rgba(212, 218, 226, 1)",
+    GF50: "rgba(0, 0, 0, 0.6)",
+    GF75: "rgba(0, 0, 0, 0.6)",
     GF100: "rgba(217, 219, 223, 1)",
     AvatarOutline: "rgba(90, 90, 96, 1)",
     "GF60%": "rgba(160, 160, 160, 1)",

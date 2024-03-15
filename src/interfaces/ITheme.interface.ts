@@ -128,6 +128,7 @@ declare module "@mui/material/styles" {
       "GF15%": string;
       GFBoxer: string;
       Groups: string;
+      LightGrey: string;
       AvatarOutline: string;
     };
     indigo: Partial<Color>;
@@ -229,6 +230,8 @@ declare module "@mui/material/Typography" {
     groups: true;
     tab: true;
     tabSelected: true;
+    selectLabel: true;
+    selectValue: true;
     // h3: false;
   }
 }

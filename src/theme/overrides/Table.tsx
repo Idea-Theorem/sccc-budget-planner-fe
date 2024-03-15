@@ -1,39 +1,56 @@
-// ----------------------------------------------------------------------
+// Table.js (or your override file)
 import { Theme } from "@mui/material/styles";
 
 export default function Table(theme: Theme) {
   return {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          color: "rgba(42, 157, 143, 1)", // Change the color here
+        },
+      },
+    },
     MuiTableRow: {
       styleOverrides: {
         root: {
+          // Example: Add different background color for selected rows
           "&.Mui-selected": {
-            "&:hover": {},
+            backgroundColor: theme.palette.primary.main,
+            "&:hover": {
+              backgroundColor: theme.palette.primary.dark,
+            },
           },
         },
       },
     },
     MuiTableCell: {
       styleOverrides: {
-        root: {},
-        head: {
-          "&:first-of-type": {},
-          "&:last-of-type": {},
+        root: {
+          // Add your cell styles here
+          background: "#f00",
         },
-        stickyHeader: {},
+        head: {
+          // Add your header cell styles here
+        },
         body: {
-          "&:first-of-type": {},
-          "&:last-of-type": {},
+          // Add your body cell styles here
         },
       },
     },
     MuiTablePagination: {
       styleOverrides: {
-        root: {},
-        toolbar: {},
-        select: {
-          "&:focus": {},
+        root: {
+          // Add your table pagination root styles here
         },
-        selectIcon: {},
+        toolbar: {
+          // Add your table pagination toolbar styles here
+        },
+        select: {
+          // Add your table pagination select styles here
+        },
+        selectIcon: {
+          // Add your table pagination select icon styles here
+        },
       },
     },
   };

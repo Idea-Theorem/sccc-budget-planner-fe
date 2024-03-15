@@ -1,45 +1,56 @@
-import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
+import * as React from "react";
 import FormControl from "@mui/material/FormControl";
-import NativeSelect from "@mui/material/NativeSelect";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
 import { styled } from "@mui/material/styles";
 
-const StyledBox = styled(Box)({
-  // Add your styling here
-});
-const StyledInputLabel = styled(InputLabel)({
-  // Add your styling here
-});
-
 const StyledFormControl = styled(FormControl)({
-  // Add your styling here
+  width: "100%",
+  margin: "50px 0",
+  borderBottom: "1px solid #0000006B",
 });
 
-const StyledNativeSelect = styled(NativeSelect)({
-  // Add your styling here
-});
+const StyledInputLabel = styled(InputLabel)(({ theme }) => ({
+  fontSize: "12px",
+  lineHeight: "1",
+  fontWeight: "400",
+  fontFamily: "Roboto, sans-serif",
+  color: theme.palette.primary.main,
+  position: "static",
+  transform: "none",
+}));
 
-const SelectComponent = () => {
+const StyledSelect = styled(Select)(({ theme }) => ({
+  fontFamily: "Roboto, sans-serif",
+  fontSize: "16px",
+  lineHeight: "1.5",
+  fontWeight: "400",
+  color: theme.palette.gfGrey.GF75,
+}));
+
+export default function SelectDemo() {
+  const [value, selectValue] = React.useState("");
+
+  const handleChange = (event) => {
+    selectValue(event.target.value);
+  };
+
   return (
-    <StyledBox>
-      <StyledFormControl fullWidth>
-        <StyledInputLabel variant="standard" htmlFor="uncontrolled-native">
-          Role
-        </StyledInputLabel>
-        <StyledNativeSelect
-          defaultValue={30}
-          inputProps={{
-            name: "value",
-            id: "uncontrolled-native",
-          }}
-        >
-          <option value={10}>Super admin</option>
-          <option value={20}>Admin</option>
-          <option value={30}>Department Head</option>
-          <option value={30}>Program Head</option>
-        </StyledNativeSelect>
-      </StyledFormControl>
-    </StyledBox>
+    <StyledFormControl size="medium" variant="standard">
+      <StyledInputLabel>Department</StyledInputLabel>
+      <StyledSelect
+        labelId="select-label"
+        id="select-demo"
+        defaultValue={10}
+        label="Label"
+        onChange={handleChange}
+        className="select-list"
+      >
+        <MenuItem value={10}>Ten</MenuItem>
+        <MenuItem value={20}>Twenty</MenuItem>
+        <MenuItem value={30}>Thirty</MenuItem>
+      </StyledSelect>
+    </StyledFormControl>
   );
-};
-export default SelectComponent;
+}
