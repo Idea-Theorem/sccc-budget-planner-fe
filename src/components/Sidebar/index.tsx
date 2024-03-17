@@ -1,3 +1,4 @@
+import { styled } from "@mui/material/styles";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -7,6 +8,38 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 
+// Assuming SideArea is defined elsewhere
+const SideArea = styled(Box)(({ theme }) => ({
+  background: theme.palette.primary.main,
+
+  "& .MuiPaper-root": {
+    background: `${theme.palette.primary.main} !important`,
+    width: "208px",
+  },
+
+  "& .MuiListItemButton-root": {
+    transition: "0.3s",
+    color: theme.palette.background.ContentArea,
+    
+    "&:hover": {
+      background: theme.palette.background.DarkGray,
+    },
+  },
+
+  "& .siteLogo": {
+    width: "100%",
+    height: "60px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    background: theme.palette.background.default,
+
+    "& img": {
+      width: "118px",
+      display: "block",
+    },
+  },
+}));
 
 interface Props {
   window?: () => Window;
@@ -28,6 +61,9 @@ export default function ResponsiveDrawer(props: Props) {
 
   const drawer = (
     <Box>
+      <div className="siteLogo">
+        <img src="/src/assets/logo.png" alt="Description image" />
+      </div>
       <List>
         {["Dashboard", "Review Budgets", "Programs", "Drafts"].map((text) => (
           <ListItem key={text} disablePadding>
@@ -44,7 +80,7 @@ export default function ResponsiveDrawer(props: Props) {
     window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box >
+    <SideArea>
       <CssBaseline />
       <Box>
         <Drawer
@@ -59,10 +95,10 @@ export default function ResponsiveDrawer(props: Props) {
         >
           {drawer}
         </Drawer>
-        <Drawer variant="permanent"  open>
+        <Drawer variant="permanent" open>
           {drawer}
         </Drawer>
       </Box>
-    </Box>
+    </SideArea>
   );
 }

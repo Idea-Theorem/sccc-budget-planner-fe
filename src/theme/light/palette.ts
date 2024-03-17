@@ -118,6 +118,7 @@ export const lightPallete: any = {
   },
   background: {
     // ...defaultPalette.background,
+    DarkGray: "#414158",
     default: "rgba(255, 255, 255, 1)",
     paper: "rgba(255, 255, 255, 1)",
     GFBackground: "rgba(29, 26, 38, 1)",
