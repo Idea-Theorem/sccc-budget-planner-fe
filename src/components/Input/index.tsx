@@ -1,8 +1,10 @@
-import { styled } from "@mui/system";
-import { Box, Input, InputAdornment } from "@mui/material";
+import Input from "@mui/material/Input";
+import { styled } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import InputAdornment from "@mui/material/InputAdornment";
 import { Search } from "@mui/icons-material";
 
-interface InputProps  {
+interface InputProps {
   placeholder: string;
   type?: string;
 }

@@ -1,5 +1,6 @@
+import Box  from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
-import { Box, styled } from "@mui/material";
+import { styled } from "@mui/material/styles"; 
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 

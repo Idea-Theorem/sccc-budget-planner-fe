@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import  Box from "@mui/material/Box";
 import SelectComponent from "../../components/Select";
 import TableComponent from "../../components/Table";
 import Buttons from "../../components/Button";
