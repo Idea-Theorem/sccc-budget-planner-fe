@@ -27,7 +27,7 @@ export const lightPallete: any = {
   secondary: {
     // ...defaultPalette.secondary,
     main: "rgba(33, 150, 243, 1)",
-    light: "rgba(34, 151, 173, 1)",
+    light: "rgba(64, 135, 222, 1)",
 
     contrastText: "rgba(66, 66, 66, 1)",
     shades: {

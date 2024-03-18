@@ -61,9 +61,9 @@ export default function ResponsiveDrawer(props: Props) {
 
   const drawer = (
     <Box>
-      <div className="siteLogo">
+      <Box className="siteLogo">
         <img src="/src/assets/logo.png" alt="Description image" />
-      </div>
+      </Box>
       <List>
         {["Dashboard", "Review Budgets", "Programs", "Drafts"].map((text) => (
           <ListItem key={text} disablePadding>

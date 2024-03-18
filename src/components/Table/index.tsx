@@ -1,11 +1,19 @@
 import { styled } from "@mui/material/styles";
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
+import InputSearch from "../Input";
 const StyledBox = styled(Box)({
   width: "100%",
 });
 const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
   width: "100%",
+  "&.MuiDataGrid-root": {
+    borderWidth: "0 !important",
+    borderStyle: "none",
+  },
+  ".MuiDataGrid-footerContainer": {
+    border: "none",
+  },
   "& .MuiDataGrid-row": {
     "&.Mui-selected": {
       background: "none",
@@ -197,21 +205,24 @@ const rows = [
 
 const TableComponent = () => {
   return (
-    <StyledBox>
-      <StyleDataGrid
-        rows={rows}
-        columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
-          },
-        }}
-        pageSizeOptions={[5, 10, 15]}
-        checkboxSelection
-        disableRowSelectionOnClick
-        slots={{ toolbar: GridToolbar }}
-      />
-    </StyledBox>
+    <>
+      <StyledBox>
+        <InputSearch placeholder="Search..." />
+        <StyleDataGrid
+          rows={rows}
+          columns={columns}
+          initialState={{
+            pagination: {
+              paginationModel: { page: 0, pageSize: 5 },
+            },
+          }}
+          pageSizeOptions={[5, 10, 15]}
+          checkboxSelection
+          disableRowSelectionOnClick
+          slots={{ toolbar: GridToolbar }}
+        />
+      </StyledBox>
+    </>
   );
 };
 export default TableComponent;
