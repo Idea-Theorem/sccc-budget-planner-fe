@@ -69,6 +69,7 @@ declare module "@mui/material/styles" {
     article?: React.CSSProperties;
   }
   interface TypeBackground {
+    DarkGray: TypeBackground["default"];
     neutral: TypeBackground["default"];
     GFBackground: TypeBackground["default"];
     GFForeground: TypeBackground["default"];
