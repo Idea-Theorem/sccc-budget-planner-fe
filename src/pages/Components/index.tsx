@@ -7,6 +7,8 @@ import Input from "../../components/Input";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SendIcon from "@mui/icons-material/Send";
 import TabsArea from "../../components/Tabs";
+import BasicPie from "../../components/PieChart";
+import LinearWithValueLabel from "../../components/ProgressBar";
 // import ResponsiveDrawer from "../../components/Sidebar";
 
 const ComponentsScreen = () => {
@@ -25,6 +27,8 @@ const ComponentsScreen = () => {
       {/* <ResponsiveDrawer /> */}
       <Input placeholder="Email" type="email" />
       <TabsArea />
+      <BasicPie/>
+      <LinearWithValueLabel/>
     </Box>
   );
 };
