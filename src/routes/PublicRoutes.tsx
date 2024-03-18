@@ -6,6 +6,8 @@ import Layout from "../layouts/SimpleLayout";
 import SecureLayout from "../layouts/SecureLayout";
 import SideBarLayout from "../layouts/SideBar";
 import ComponentsScreen from "../pages/Components";
+import ProgramHeadScreen from "../pages/Dashboards/ProgramHead";
+import AdminScreen from "../pages/Dashboards/Admin";
 const authRoutes: RouteObject = {
   path: "*",
   children: [
@@ -34,6 +36,22 @@ const normalRoutes: RouteObject = {
         {
           path: "/components",
           element: <ComponentsScreen />,
+        },
+        {
+          path: "/program-head",
+          element: (
+            <SideBarLayout>
+              <ProgramHeadScreen />
+            </SideBarLayout>
+          ),
+        },
+        {
+          path: "/admin",
+          element: (
+            <SideBarLayout>
+              <AdminScreen />
+            </SideBarLayout>
+          ),
         },
       ],
     },

@@ -30,10 +30,10 @@ const Input = () => {
         </FormControl>
       </form>
       <Box>
-        <Link color="primary" underline="none" variant="subtitle2">
+        <Link color="primary" href="#" underline="none" variant="subtitle2">
           Create account
         </Link>
-        <Link color="primary" underline="none" variant="subtitle2">
+        <Link color="primary" href="#" underline="none" variant="subtitle2">
           Forgot password?
         </Link>
       </Box>
