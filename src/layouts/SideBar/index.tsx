@@ -1,8 +1,11 @@
+import  Box from "@mui/material/Box";
+import ResponsiveDrawer from "../../components/Sidebar";
+
 const SideBarLayout = ({ children }: Children) => {
   return (
     <>
-      <div>SideBarLayout</div>
-      <div>{children}</div>
+      <Box><ResponsiveDrawer /></Box>
+      <Box>{children}</Box>
     </>
   );
 };

@@ -298,11 +298,11 @@ export const commonTypography = {
   h1: {
     fontStyle: "normal",
     fontFamily: "Work Sans, sans-serif",
-    fontWeight: 400,
-    fontSize: "96px",
+    fontWeight: 500,
+    fontSize: "40px",
     letterSpacing: "0px",
     textDecoration: "none",
-    lineHeight: "116.70000553131104%",
+    lineHeight: "1.16",
     textTransform: "none",
   },
   h2: {
