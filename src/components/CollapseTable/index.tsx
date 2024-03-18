@@ -19,6 +19,114 @@ const CollapseableTable = styled(Box)(({ theme }) => ({
     background: "none",
     border: "none",
   },
+
+  "&.dashboardTable": {
+    padding: "30px",
+    boxShadow: "0 1.85px 6.25px 0 rgba(0, 0, 0, 0.19), 0 0.5px 1.75px 0 rgba(0, 0, 0, 0.04)",
+
+    "& .MuiPaper-rounded": {
+      borderRadius: "0",
+      boxShadow: "none",
+
+      "& .MuiTableHead-root": {
+        borderBottom: "1px solid #000",
+      },
+
+      "& .totalRow": {
+        borderTop: "1px solid #d9d9d9",
+
+        "&.last": {
+          borderColor: "#000",
+        },
+      },
+
+      "& .MuiTableCell-head": {
+        color: theme.palette.text.primary,
+        fontFamily: "Work Sans",
+        fontSize: "16px",
+        fontWeight: "600",
+        lineHeight: "1.3",
+        borderBottom: "1px solid theme.palette.text.primary",
+
+        "& span": {
+          fontSize: "14px",
+          fontWeight: "400",
+        },
+
+        "&:first-child": {
+          width: "5% !important",
+        },
+
+        "&:nth-child(2)": {
+          width: "50%",
+        },
+
+        "&:nth-child(3)": {
+          width: "15%",
+          textAlign: "right",
+        },
+
+        "&:nth-child(4)": {
+          width: "15%",
+          textAlign: "right",
+        },
+
+        "&:nth-child(5)": {
+          width: "15%",
+          textAlign: "right",
+        },
+      },
+
+      "& .MuiTableCell-body": {
+        fontFamily: "Work Sans",
+        fontSize: "18px",
+        fontWeight: "600",
+        lineHeight: "1.3",
+        color: "#303030",
+
+        "&:first-child": {
+          width: "5% !important",
+        },
+
+        "&:nth-child(2)": {
+          width: "50%",
+        },
+
+        "&:nth-child(3)": {
+          width: "15%",
+          textAlign: "right",
+        },
+
+        "&:nth-child(4)": {
+          width: "15%",
+          textAlign: "right",
+        },
+
+        "&:nth-child(5)": {
+          width: "15%",
+          textAlign: "right",
+        },
+      },
+
+      "& .MuiCollapse-wrapperInner": {
+        "& .MuiTableRow-root": {
+          borderTop: "none",
+        },
+
+        "& .MuiBox-root": {
+          margin: "0",
+        },
+
+        "& .MuiTableCell-body": {
+          fontFamily: "Work Sans",
+          fontSize: "16px",
+          fontWeight: "500",
+          lineHeight: "1.3",
+          color: "#303030",
+        },
+      },
+    },
+  },
 }));
 
 // Custom styled component for bottom table cells
@@ -95,7 +203,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
         <TableCell>{row.calories}</TableCell>
         <TableCell>{row.fat}</TableCell>
         <TableCell>{row.carbs}</TableCell>
-        <TableCell>{row.protein}</TableCell>
+        {/* <TableCell>{row.protein}</TableCell> */}
       </TableRow>
       <TableRow>
         <TableCell padding="none" colSpan={6}>
@@ -105,6 +213,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                 <TableBody>
                   {row.history.map((historyRow) => (
                     <TableRow key={historyRow.date}>
+                      <TableCell>&nbsp;</TableCell>
                       <TableCell component="th" scope="row">
                         {historyRow.date}
                       </TableCell>
@@ -136,14 +245,15 @@ const rows = [
 
 export default function CollapsibleTable() {
   return (
-    <CollapseableTable>
+    <CollapseableTable className="dashboardTable">
       <TableContainer component={Paper}>
         <Table aria-label="collapsible table">
           <TableHead>
             <TableRow>
+              <TableCell>&nbsp;</TableCell>
               <TableCell>Item</TableCell>
-              <TableCell>Projection (Jan-Jun)</TableCell>
-              <TableCell>Mid-year (July-Dec)</TableCell>
+              <TableCell>Projection <span>(Jan-Jun)</span></TableCell>
+              <TableCell>Mid-year <span>(July-Dec)</span></TableCell>
               <TableCell>Year-end</TableCell>
             </TableRow>
           </TableHead>
@@ -151,19 +261,22 @@ export default function CollapsibleTable() {
             {rows.map((row) => (
               <Row key={row.name} row={row} />
             ))}
-            <TableRow>
+            <TableRow className="totalRow">
+              <TableCell>&nbsp;</TableCell>
               <TableCell>Total Supplies & Services</TableCell>
               <TableCell>$00,000.00</TableCell>
               <TableCell>$00,000.00</TableCell>
               <TableCell>$00,000.00</TableCell>
             </TableRow>
-            <TableRow>
+            <TableRow className="totalRow">
+              <TableCell>&nbsp;</TableCell>
               <TableCell>Total Salaries</TableCell>
               <TableCell>$00,000.00</TableCell>
               <TableCell>$00,000.00</TableCell>
               <TableCell>$00,000.00</TableCell>
             </TableRow>
-            <TableRow>
+            <TableRow className="totalRow last">
+              <TableCell>&nbsp;</TableCell>
               <TableCell>Profit</TableCell>
               <TableCell>$00,000.00</TableCell>
               <TableCell>$00,000.00</TableCell>

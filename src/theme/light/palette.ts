@@ -28,6 +28,7 @@ export const lightPallete: any = {
     // ...defaultPalette.secondary,
     main: "rgba(33, 150, 243, 1)",
     light: "rgba(64, 135, 222, 1)",
+    mainLight: "rgba(33, 150, 243, 0.4)",
 
     contrastText: "rgba(66, 66, 66, 1)",
     shades: {
@@ -115,6 +116,7 @@ export const lightPallete: any = {
     disabled: "rgba(0, 0, 0, 0.26)",
     disabledBackground: "rgba(0, 0, 0, 0.12)",
     focus: "rgba(0, 0, 0, 0.12)",
+    inputPlaceholder: "rgba(0, 0, 0, 0.6)",
   },
   background: {
     // ...defaultPalette.background,
@@ -191,6 +193,7 @@ export const lightPallete: any = {
   },
   gfGrey: {
     ...palleteWithExtraColors.gfGrey,
+    textGray: "#989898",
     GF50: "rgba(0, 0, 0, 0.6)",
     GF75: "rgba(0, 0, 0, 0.6)",
     GF100: "rgba(217, 219, 223, 1)",
@@ -262,6 +265,7 @@ export const lightTheme: Theme = createTheme({
   shadows: shadows.light as typeof defaultLightTheme.shadows,
   typography: {
     // ...defaultLightTheme.typography,
+    fontRaboto: "Roboto",
     ...commonTypography,
   } as any,
   customShadows: customShadows.light,
