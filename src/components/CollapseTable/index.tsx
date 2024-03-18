@@ -141,7 +141,6 @@ export default function CollapsibleTable() {
         <Table aria-label="collapsible table">
           <TableHead>
             <TableRow>
-              <TableCell />
               <TableCell>Item</TableCell>
               <TableCell>Projection (Jan-Jun)</TableCell>
               <TableCell>Mid-year (July-Dec)</TableCell>
@@ -152,39 +151,25 @@ export default function CollapsibleTable() {
             {rows.map((row) => (
               <Row key={row.name} row={row} />
             ))}
-          </TableBody>
-        </Table>
-        <Table aria-label="collapsible table">
-          <TableRow>
-            <TableCell />
-            <TableCell />
-            <StyledBottomTableCell>
+            <TableRow>
               <TableCell>Total Supplies & Services</TableCell>
               <TableCell>$00,000.00</TableCell>
               <TableCell>$00,000.00</TableCell>
               <TableCell>$00,000.00</TableCell>
-            </StyledBottomTableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell />
-            <TableCell />
-            <StyledBottomTableCell>
+            </TableRow>
+            <TableRow>
               <TableCell>Total Salaries</TableCell>
               <TableCell>$00,000.00</TableCell>
               <TableCell>$00,000.00</TableCell>
               <TableCell>$00,000.00</TableCell>
-            </StyledBottomTableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell />
-            <TableCell />
-            <StyledBottomTableCell>
+            </TableRow>
+            <TableRow>
               <TableCell>Profit</TableCell>
               <TableCell>$00,000.00</TableCell>
               <TableCell>$00,000.00</TableCell>
               <TableCell>$00,000.00</TableCell>
-            </StyledBottomTableCell>
-          </TableRow>
+            </TableRow>
+          </TableBody>
         </Table>
       </TableContainer>
     </CollapseableTable>
