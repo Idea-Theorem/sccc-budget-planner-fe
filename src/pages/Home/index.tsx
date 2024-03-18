@@ -9,6 +9,7 @@ import { Grid } from "../Components/MUIComponents/index"
 import BackButton from "../../components/Button/backButton";
 import SelectDemo from "../../components/Select";
 import BasicDatePicker from "../../components/DatePicker";
+import { useState } from "react";
 
 
 
@@ -33,14 +34,13 @@ const DateStack = styled(Stack)({
 
 
 const HomeScreen = () => { 
-   
+  const [firstLevel,setFirstLevel] =useState(false)
   
-
-   
+  const [secondLevel,setSecondLevel] =useState(false)
 
   return (
     <>
-      <StyledBox sx={{ paddingLeft: "250px" }}>
+      {!firstLevel ?<StyledBox sx={{ paddingLeft: "250px" }}>
         <Stack
           direction={"row"}
           justifyContent={"space-between"}
@@ -48,14 +48,14 @@ const HomeScreen = () => {
           gap={"20px"}
         >
           <Typography variant="h3">Programs</Typography>
-          <Buttons startIcon={<AddIcon />} btntext3="Create New Program"   />
+          <Buttons startIcon={<AddIcon />} btntext3="Create New Program" onClick={() => setFirstLevel(true)}  />
         </Stack>
         <TabsArea />
-      </StyledBox>
-      <StyledBox sx={{ paddingLeft: "250px" }}>
+      </StyledBox>:null}
+      {firstLevel&&!secondLevel?<StyledBox sx={{ paddingLeft: "250px" }}>
         <Grid container spacing={2}>
           <Grid item xs={12} >
-            <BackButton />
+            <BackButton onClick={() => setFirstLevel(false)} />
           </Grid>
           <Grid item xs={3} >
             <DateStack
@@ -76,7 +76,7 @@ const HomeScreen = () => {
                 alignItems={"center"}
               >
                 <Typography variant="h5" >Youth Swimming Class1</Typography>
-                <Buttons startIcon={<AddIcon />} btntext3="Revise" />
+                <Buttons startIcon={<AddIcon />} btntext3="Revise" onClick={() => setSecondLevel(true)}  />
               </Stack>
             </Grid>
             <Grid item xs={8} spacing={6}>
@@ -108,11 +108,11 @@ const HomeScreen = () => {
 
         </Grid>
 
-      </StyledBox> 
-      <StyledBox sx={{ paddingLeft: "250px" }}>
+      </StyledBox> :null}
+      {secondLevel?<StyledBox sx={{ paddingLeft: "250px" }}>
         <Grid container spacing={2}>
           <Grid item xs={12} >
-            <BackButton />
+            <BackButton onClick={() => setSecondLevel(false)} />
           </Grid>
           <Grid item xs={3} >
             <DateStack
@@ -169,7 +169,7 @@ const HomeScreen = () => {
 
         </Grid>
 
-      </StyledBox>
+      </StyledBox>:null}
     </>
   );
 };

@@ -8,9 +8,9 @@ const StyledBackButton = styled(Button)({
 });
 
 // Functional component for BackButton
-const BackButton = () => {
+const BackButton = ({onClick}:any) => {
   return (
-    <StyledBackButton>
+    <StyledBackButton onClick={onClick}>
       <ArrowBackIosIcon/>
       back
     </StyledBackButton>

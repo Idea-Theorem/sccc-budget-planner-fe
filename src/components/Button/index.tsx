@@ -42,7 +42,8 @@ const Buttons = ({
   btntext3,
   startIcon,
   endIcon,
-}: StyledButtonProps) => {
+  onClick,
+}: any) => {
   return (
     <Stack direction="row" spacing={2}>
       {btntext1 && (
@@ -68,6 +69,7 @@ const Buttons = ({
           color="success"
           endIcon={endIcon}
           startIcon={startIcon}
+          onClick={onClick}
         >
           {btntext3}
         </StyledButton>
