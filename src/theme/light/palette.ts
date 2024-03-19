@@ -112,11 +112,10 @@ export const lightPallete: any = {
     // ...defaultPalette.action,
     active: "rgba(0, 0, 0, 0.54)",
     hover: "rgba(255, 255, 255, 0.08)",
-    selected: "rgba(0, 0, 0, 0.08)",
+    selected: "rgba(0, 0, 0, 0.6)",
     disabled: "rgba(0, 0, 0, 0.26)",
     disabledBackground: "rgba(0, 0, 0, 0.12)",
     focus: "rgba(0, 0, 0, 0.12)",
-    inputPlaceholder: "rgba(0, 0, 0, 0.6)",
   },
   background: {
     // ...defaultPalette.background,

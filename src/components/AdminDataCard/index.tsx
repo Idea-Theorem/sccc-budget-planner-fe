@@ -133,7 +133,7 @@ const AdminDataCard = (props: AdminDataCardProps) => {
     <StyledBox className="dashboardStatsCard">
       <Box className="dashboardStatsCardHead">
         <Typography variant="h3">{props?.title}</Typography>
-        {props?.edit && <Typography className="linkEdit">edit</Typography>}
+        {props?.edit && <Typography className="linkEdit">Edit</Typography>}
       </Box>
       {props?.detail && <Typography className="textNote">{props?.detail}</Typography>}
 

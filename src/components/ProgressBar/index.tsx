@@ -1,17 +1,20 @@
-import * as React from 'react';
-import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import LinearProgress, {
+  LinearProgressProps,
+} from "@mui/material/LinearProgress";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 
-function LinearProgressWithLabel(props: LinearProgressProps & { value: number }) {
+function LinearProgressWithLabel(
+  props: LinearProgressProps & { value: number }
+) {
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <Box sx={{ width: '100%', mr: 1 }}>
+    <Box display="flex" alignItems="center">
+      <Box width="100%" mr="1">
         <LinearProgress variant="determinate" {...props} />
       </Box>
-      <Box sx={{ minWidth: 35 }}>
+      <Box minWidth="35">
         <Typography variant="body2" color="text.secondary">{`${Math.round(
-          props.value,
+          props.value
         )}%`}</Typography>
       </Box>
     </Box>
@@ -19,10 +22,8 @@ function LinearProgressWithLabel(props: LinearProgressProps & { value: number })
 }
 
 export default function LinearWithValueLabel() {
-
-
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box width="100%">
       <LinearProgressWithLabel value={20} />
     </Box>
   );
