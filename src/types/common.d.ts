@@ -6,6 +6,5 @@ interface SidebarAction {
   role: string;
   title: string;
   path?: string;
-  icon?: string;
-  more?: { title: string }[];
+  more?: { title: string; path?: string }[];
 }

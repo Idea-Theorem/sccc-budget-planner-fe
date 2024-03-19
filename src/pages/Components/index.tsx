@@ -34,9 +34,15 @@ const ComponentsScreen = () => {
       <Checkboxes />
       {/* <ResponsiveDrawer /> */}
       <Input placeholder="Email" type="email" />
-      <TabsArea />
-      <CollapsibleTable />
-      <BasicPie />
+      <TabsArea
+        tabsTitleArray={[
+          { title: "Pending" },
+          { title: "Rejected" },
+          { title: "Approved" },
+          { title: "Drafts" },
+          { title: "History" },
+        ]}
+      />
       <LinearWithValueLabel value={40} />
       <ThreadPopups />
 
@@ -51,7 +57,6 @@ const ComponentsScreen = () => {
       <CollapsibleMenu />
       <CollapsibleTable />
       <BasicPie />
-      <LinearWithValueLabel />
       <DepartmentInfo
         heading="Add New Department"
         subheading="Deparrtment Information"

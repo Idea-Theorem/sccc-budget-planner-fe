@@ -11,6 +11,12 @@ interface TabPanelProps {
   index: number;
   value: number;
 }
+interface TabTitle {
+  title?: string;
+}
+interface BasicTabsProps {
+  tabsTitleArray: TabTitle[];
+}
 
 const CustomTabPanel = (props: TabPanelProps) => {
   const { children, value, index, ...other } = props;
@@ -39,7 +45,7 @@ function a11yProps(index: number) {
   };
 }
 
-const BasicTabs = () => {
+const BasicTabs = (props: BasicTabsProps) => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -55,11 +61,15 @@ const BasicTabs = () => {
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          <Tab label="Pending" {...a11yProps(0)} />
+          {props?.tabsTitleArray?.map((item, index) => (
+            <Tab key={index} label={item?.title} {...a11yProps(index)} />
+          ))}
+
+          {/* <Tab label="Pending" {...a11yProps(0)} />
           <Tab label="Rejected" {...a11yProps(1)} />
           <Tab label="Approved" {...a11yProps(2)} />
           <Tab label="Drafts" {...a11yProps(3)} />
-          <Tab label="History" {...a11yProps(4)} />
+          <Tab label="History" {...a11yProps(4)} /> */}
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
@@ -75,7 +85,7 @@ const BasicTabs = () => {
         <TableComponent />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={4}>
-        History
+        <TableComponent />
       </CustomTabPanel>
     </Box>
   );
@@ -90,10 +100,10 @@ const TabsAreas = styled(Box)(({ theme }) => ({
   },
 }));
 
-export default function TabsArea() {
+export default function TabsArea(props: BasicTabsProps) {
   return (
     <TabsAreas>
-      <BasicTabs />
+      <BasicTabs tabsTitleArray={props.tabsTitleArray} />
     </TabsAreas>
   );
 }
