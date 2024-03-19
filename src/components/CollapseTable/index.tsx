@@ -22,7 +22,8 @@ const CollapseableTable = styled(Box)(({ theme }) => ({
 
   "&.dashboardTable": {
     padding: "30px",
-    boxShadow: "0 1.85px 6.25px 0 rgba(0, 0, 0, 0.19), 0 0.5px 1.75px 0 rgba(0, 0, 0, 0.04)",
+    boxShadow:
+      "0 1.85px 6.25px 0 rgba(0, 0, 0, 0.19), 0 0.5px 1.75px 0 rgba(0, 0, 0, 0.04)",
 
     "& .MuiPaper-rounded": {
       borderRadius: "0",
@@ -130,11 +131,11 @@ const CollapseableTable = styled(Box)(({ theme }) => ({
 }));
 
 // Custom styled component for bottom table cells
-const StyledBottomTableCell = styled(TableCell)(({ theme }) => ({
-  background: "none",
-  border: "none",
-  fontWeight: "bold",
-}));
+// const StyledBottomTableCell = styled(TableCell)(({ theme }) => ({
+//   background: "none",
+//   border: "none",
+//   fontWeight: "bold",
+// }));
 
 // Rest of your code remains the same
 function createData(
@@ -252,8 +253,12 @@ export default function CollapsibleTable() {
             <TableRow>
               <TableCell>&nbsp;</TableCell>
               <TableCell>Item</TableCell>
-              <TableCell>Projection <span>(Jan-Jun)</span></TableCell>
-              <TableCell>Mid-year <span>(July-Dec)</span></TableCell>
+              <TableCell>
+                Projection <span>(Jan-Jun)</span>
+              </TableCell>
+              <TableCell>
+                Mid-year <span>(July-Dec)</span>
+              </TableCell>
               <TableCell>Year-end</TableCell>
             </TableRow>
           </TableHead>

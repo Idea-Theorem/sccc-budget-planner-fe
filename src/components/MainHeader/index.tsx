@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Buttons from "../Button";
 import AddIcon from "@mui/icons-material/Add";
+import DropdownButton from "../Button/dropDownButton";
 
 const AppHeader = styled(Box)(({ theme }) => ({
   "&.appHeader": {
@@ -65,13 +66,18 @@ interface MainHeaderProps {
   subHeader?: true;
   subTitle?: string;
   date?: string;
+  action?: boolean;
 }
 const MainHeaderComponent = (props: MainHeaderProps) => {
   return (
     <AppHeader className="appHeader">
       <Stack className="appHeaderHolder">
         <Typography variant="h3">{props.title}</Typography>
-        <Buttons startIcon={<AddIcon />} btntext3={props?.btnTitle} />
+        {props?.action ? (
+          <DropdownButton />
+        ) : (
+          <Buttons startIcon={<AddIcon />} btntext3={props?.btnTitle} />
+        )}
       </Stack>
       {props?.subHeader && (
         <Box className="appSubHead">

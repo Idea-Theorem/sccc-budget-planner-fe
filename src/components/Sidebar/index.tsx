@@ -54,7 +54,7 @@ export default function ResponsiveDrawer(props: Props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
   const adminActions = filterSidebarActions(SIDEBARACTIONS, "Admin");
-
+  console.log(isClosing);
   const navigate = useNavigate();
   console.log(adminActions);
   const handleDrawerClose = () => {

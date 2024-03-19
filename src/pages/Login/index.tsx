@@ -20,7 +20,8 @@ const LoginArea = styled(Box)(({ theme }) => ({
     maxWidth: "552px",
     margin: "30px auto",
     padding: "15px 15px 25px",
-    boxShadow: "0 1.85px 6.25px 0 rgba(0, 0, 0, 0.19), 0 0.5px 1.75px 0 rgba(0, 0, 0, 0.04)",
+    boxShadow:
+      "0 1.85px 6.25px 0 rgba(0, 0, 0, 0.19), 0 0.5px 1.75px 0 rgba(0, 0, 0, 0.04)",
   },
 
   "& .siteLogo": {
@@ -55,7 +56,7 @@ const LoginArea = styled(Box)(({ theme }) => ({
       fontWeight: "400",
 
       "&::placeholder": {
-        color: theme.palette.action.inputPlaceholder,
+        color: theme.palette.action.disabledBackground,
         opacity: "1",
       },
     },
@@ -108,10 +109,22 @@ const Input = () => {
           </FormControl>
         </form>
         <Box>
-          <Link className="textLink" color="primary" href="#" underline="none" variant="subtitle2">
+          <Link
+            className="textLink"
+            color="primary"
+            href="#"
+            underline="none"
+            variant="subtitle2"
+          >
             Create account
           </Link>
-          <Link className="textLink" color="primary" href="#" underline="none" variant="subtitle2">
+          <Link
+            className="textLink"
+            color="primary"
+            href="#"
+            underline="none"
+            variant="subtitle2"
+          >
             Forgot password?
           </Link>
         </Box>
