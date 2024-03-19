@@ -7,6 +7,7 @@ import Stack from "@mui/material/Stack";
 interface ProgramProgressProps {
   title?: string;
   amount?: string;
+  value?: number
 }
 
 const StyledBox = styled(Box)(({ theme }) => ({
@@ -60,7 +61,7 @@ const ProgramProgress = (props: ProgramProgressProps) => {
         <Typography>{props?.amount}</Typography>
       </Stack>
       <Box className="progressStatusBar">
-        <LinearWithValueLabel />
+        <LinearWithValueLabel value={props?.value}/> 
       </Box>
     </StyledBox>
   );
