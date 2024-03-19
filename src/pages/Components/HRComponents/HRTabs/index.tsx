@@ -16,7 +16,7 @@ interface TabProps {
 const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
     const [value, setValue] = React.useState(0);
 
-    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    const handleChange = (_: any, newValue: number) => {
         setValue(newValue);
     };
 
@@ -26,10 +26,10 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
         { path: "/superAdmin/hr-addcenter" }
     ];
 
-    const handleAddNew = () => {
-        // Handle adding a new item based on the current tab name
-        console.log(`Adding new ${tabNames[value]}`);
-    };
+    // const handleAddNew = () => {
+    //     // Handle adding a new item based on the current tab name
+    //     console.log(`Adding new ${tabNames[value]}`);
+    // };
 
     return (
         <Grid container spacing={2}>

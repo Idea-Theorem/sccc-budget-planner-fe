@@ -4,7 +4,7 @@ import { styled } from "@mui/material/styles";
 import TabsComponent from '../../../Components/HRComponents/HRTabs';
 
 
-const StyledBox = styled(Box)(({ theme }) => ({
+const StyledBox = styled(Box)(() => ({
   "&.appContainer": {
     padding: "40px",
     paddingLeft: "248px",

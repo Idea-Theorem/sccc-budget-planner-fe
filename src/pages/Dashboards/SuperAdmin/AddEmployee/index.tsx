@@ -4,7 +4,7 @@ import { styled } from "@mui/material/styles";
 import HrAddEmployee from '../../../../models/HrAddEmployee';
  
 
-const StyledBox = styled(Box)(({ theme }) => ({
+const StyledBox = styled(Box)(() => ({
     "&.appContainer": {
       padding: "40px",
       paddingLeft: "248px", 
