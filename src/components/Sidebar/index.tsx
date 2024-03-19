@@ -10,6 +10,7 @@ import ListItemText from "@mui/material/ListItemText";
 import { filterSidebarActions } from "../../utils/filterSideBarActios";
 import { SIDEBARACTIONS } from "../../utils/sideBarActions";
 import { useNavigate } from "react-router-dom";
+import LogoImg from "../../assets/logo.png"
 
 // Assuming SideArea is defined elsewhere
 const SideArea = styled(Box)(({ theme }) => ({
@@ -69,7 +70,7 @@ export default function ResponsiveDrawer(props: Props) {
   const drawer = (
     <Box>
       <Box className="siteLogo">
-        <img src="/src/assets/logo.png" alt="Description image" />
+        <img src={LogoImg} alt="Description image" />
       </Box>
       <List>
         {adminActions.map((text, index) => (
