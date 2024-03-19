@@ -294,15 +294,14 @@ export const commonPalleteColors = {
 };
 
 export const commonTypography = {
-
   h1: {
     fontStyle: "normal",
     fontFamily: "Work Sans, sans-serif",
-    fontWeight: 400,
-    fontSize: "96px",
+    fontWeight: 500,
+    fontSize: "40px",
     letterSpacing: "0px",
     textDecoration: "none",
-    lineHeight: "116.70000553131104%",
+    lineHeight: "1.16",
     textTransform: "none",
   },
   h2: {
@@ -319,20 +318,20 @@ export const commonTypography = {
     fontStyle: "normal",
     fontFamily: "Work Sans, sans-serif",
     fontWeight: 600,
-    fontSize: "24px",
+    fontSize: "26px",
     letterSpacing: "0px",
     textDecoration: "none",
-    lineHeight: "1.1",
+    lineHeight: "1.2",
     textTransform: "none",
   },
   h4: {
     fontStyle: "normal",
     fontFamily: "Work Sans, sans-serif",
     fontWeight: 600,
-    fontSize: "26px",
+    fontSize: "24px",
     letterSpacing: "0px",
     textDecoration: "none",
-    lineHeight: "1.2",
+    lineHeight: "1.1",
     textTransform: "none",
   },
   h5: {

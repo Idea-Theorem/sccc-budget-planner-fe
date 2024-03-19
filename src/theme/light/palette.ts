@@ -12,7 +12,7 @@ export const lightPallete: any = {
   mode: "light",
   primary: {
     // ...defaultPalette.primary,
-    main: "rgba(140, 59, 45, 1)",
+    main: "rgba(42, 157, 143, 1)",
     light: "rgba(151, 78, 65, 1)",
 
     contrastText: "rgba(255, 255, 255, 1)",
@@ -26,8 +26,9 @@ export const lightPallete: any = {
   },
   secondary: {
     // ...defaultPalette.secondary,
-    main: "rgba(10, 140, 164, 1)",
-    light: "rgba(34, 151, 173, 1)",
+    main: "rgba(33, 150, 243, 1)",
+    light: "rgba(64, 135, 222, 1)",
+    mainLight: "rgba(33, 150, 243, 0.4)",
 
     contrastText: "rgba(66, 66, 66, 1)",
     shades: {
@@ -86,7 +87,7 @@ export const lightPallete: any = {
 
   info: {
     // ...defaultPalette.info,
-    main: "rgba(10, 140, 164, 1)",
+    main: "rgba(59, 0, 237, 1)",
     light: "rgba(34, 151, 173, 1)",
 
     contrastText: "rgba(255, 255, 255, 1)",
@@ -103,7 +104,8 @@ export const lightPallete: any = {
     // ...defaultPalette.text,
     primary: "rgba(0, 0, 0, 0.87)",
     secondary: "rgba(0, 0, 0, 0.7)",
-    disabled: "rgba(0, 0, 0, 0.38)",
+    disabled: "rgba(152, 152, 152, 1)",
+    light: "rgba(113, 122, 126, 1)",
   },
 
   action: {
@@ -114,9 +116,11 @@ export const lightPallete: any = {
     disabled: "rgba(0, 0, 0, 0.26)",
     disabledBackground: "rgba(0, 0, 0, 0.12)",
     focus: "rgba(0, 0, 0, 0.12)",
+    inputPlaceholder: "rgba(0, 0, 0, 0.6)",
   },
   background: {
     // ...defaultPalette.background,
+    DarkGray: "#414158",
     default: "rgba(255, 255, 255, 1)",
     paper: "rgba(255, 255, 255, 1)",
     GFBackground: "rgba(29, 26, 38, 1)",
@@ -189,6 +193,7 @@ export const lightPallete: any = {
   },
   gfGrey: {
     ...palleteWithExtraColors.gfGrey,
+    textGray: "#989898",
     GF50: "rgba(0, 0, 0, 0.6)",
     GF75: "rgba(0, 0, 0, 0.6)",
     GF100: "rgba(217, 219, 223, 1)",
@@ -213,7 +218,7 @@ export const lightPallete: any = {
   },
   orange: {
     ...palleteWithExtraColors.orange,
-    GFOrange: "rgba(168, 74, 6, 1)",
+    GFOrange: "rgba(255, 193, 7, 1)",
     GFOrangeLight: "rgba(92, 55, 27, 1)",
     GFOrangeBright: "rgba(187, 114, 34, 1)",
     Status: "rgba(255, 145, 0, 1)",
@@ -243,12 +248,12 @@ export const lightPallete: any = {
   },
   red: {
     ...palleteWithExtraColors.red,
-    GFRed: "rgba(107, 32, 19, 1)",
+    GFRed: "rgba(216, 27, 96, 1)",
     Error: "rgba(255, 23, 68, 1)",
   },
   purple: {
     ...palleteWithExtraColors.purple,
-    GFPurple: "rgba(89, 46, 132, 1)",
+    GFPurple: "rgba(156, 39, 176, 1)",
     GFPurpleLight: "rgba(44, 23, 66, 1)",
   },
   ...commonPalleteColors,
@@ -260,6 +265,7 @@ export const lightTheme: Theme = createTheme({
   shadows: shadows.light as typeof defaultLightTheme.shadows,
   typography: {
     // ...defaultLightTheme.typography,
+    fontRaboto: "Roboto",
     ...commonTypography,
   } as any,
   customShadows: customShadows.light,
