@@ -394,6 +394,16 @@ export const commonTypography = {
     lineHeight: "1.57",
     textTransform: "none",
   },
+  subtitle3: {
+    fontStyle: "normal",
+    fontFamily: "Work Sans, sans-serif",
+    fontWeight: 500,
+    fontSize: "17px",
+    letterSpacing: "0px",
+    textDecoration: "none",
+    lineHeight: "1.57",
+    textTransform: "none",
+  },
   overline: {
     fontStyle: "normal",
     fontFamily: "Source Sans Pro",

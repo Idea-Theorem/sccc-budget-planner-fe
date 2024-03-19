@@ -1,5 +1,9 @@
 import { styled } from "@mui/material/styles";
-import { Button, ArrowBackIosIcon } from "../../pages/Components/MUIComponents/index";
+import {
+  Button,
+  ArrowBackIosIcon,
+} from "../../pages/Components/MUIComponents/index";
+import { Typography } from "@mui/material";
 
 // Styled BackButton component
 const StyledBackButton = styled(Button)({
@@ -8,11 +12,11 @@ const StyledBackButton = styled(Button)({
 });
 
 // Functional component for BackButton
-const BackButton = ({onClick}:any) => {
+const BackButton = ({ onClick }: any) => {
   return (
     <StyledBackButton onClick={onClick}>
-      <ArrowBackIosIcon/>
-      back
+      <ArrowBackIosIcon />
+      <Typography>Back</Typography>
     </StyledBackButton>
   );
 };
