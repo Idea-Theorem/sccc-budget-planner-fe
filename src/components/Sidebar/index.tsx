@@ -12,7 +12,6 @@ import { SIDEBARACTIONS } from "../../utils/sideBarActions";
 import { useNavigate } from "react-router-dom";
 import LogoImg from "../../assets/logo.png";
 import CollapsibleMenu from "../CollapsableManue";
-import LogoImg from "../../assets/logo.png";
 
 // Assuming SideArea is defined elsewhere
 const SideArea = styled(Box)(({ theme }) => ({
