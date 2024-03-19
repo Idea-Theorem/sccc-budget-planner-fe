@@ -1,7 +1,11 @@
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import MainHeaderComponent from "../../../components/MainHeader";
 import TabsArea from "../../../components/Tabs";
+import SubHeader from "../../../components/SubHeader";
+import BackButton from "../../../components/Button/backButton";
+import Typography from "@mui/material/Typography";
+import Stack from "@mui/material/Stack";
+
 const StyledBox = styled(Box)(() => ({
   "&.appContainer": {
     padding: "40px",
@@ -15,14 +19,14 @@ const StyledBox = styled(Box)(() => ({
   },
   // Color: theme.palette.secondary.light,
 }));
-const ReviewBudgetScreen = () => {
+const DepartmentDetailScreen = () => {
   return (
     <StyledBox className="appContainer">
-      <MainHeaderComponent
-        action={true}
-        title="Review Budgets"
-        btnTitle="Actions"
-      />
+      <BackButton />
+      <SubHeader title="Recreation & Culture" />
+      <Stack>
+        <Typography>Total Budget: $00,000.00</Typography>
+      </Stack>
       <TabsArea
         tabsTitleArray={[
           { title: "Pending" },
@@ -36,4 +40,4 @@ const ReviewBudgetScreen = () => {
   );
 };
 
-export default ReviewBudgetScreen;
+export default DepartmentDetailScreen;

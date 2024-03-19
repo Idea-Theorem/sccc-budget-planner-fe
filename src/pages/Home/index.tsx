@@ -49,7 +49,15 @@ const HomeScreen = () => {
               onClick={() => setFirstLevel(true)}
             />
           </Stack>
-          <TabsArea />
+          <TabsArea
+            tabsTitleArray={[
+              { title: "Pending" },
+              { title: "Rejected" },
+              { title: "Approved" },
+              { title: "Drafts" },
+              { title: "History" },
+            ]}
+          />
         </StyledBox>
       ) : null}
       {firstLevel && !secondLevel ? (

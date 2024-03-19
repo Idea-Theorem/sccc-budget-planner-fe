@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem  from '@mui/material/MenuItem';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-
-const DropdownButton: React.FC = () => {
+import React, { useState } from "react";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+interface DropdownButtonProps {
+  title?: string;
+}
+const DropdownButton = (props: DropdownButtonProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -21,14 +23,13 @@ const DropdownButton: React.FC = () => {
 
   return (
     <>
-      <Button 
-      
+      <Button
         aria-controls="dropdown-menu"
         aria-haspopup="true"
         onClick={handleClick}
         startIcon={isOpen ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
       >
-        Dropdown
+        {props?.title}
       </Button>
       <Menu
         id="dropdown-menu"

@@ -1,4 +1,4 @@
-import  Box from "@mui/material/Box";
+import Box from "@mui/material/Box";
 import SelectComponent from "../../components/Select";
 import TableComponent from "../../components/Table";
 import Buttons from "../../components/Button";
@@ -29,12 +29,20 @@ const ComponentsScreen = () => {
       <Checkboxes />
       {/* <ResponsiveDrawer /> */}
       <Input placeholder="Email" type="email" />
-      <TabsArea />
-      <CollapsibleTable/>
-      <BasicPie/>
-      <LinearWithValueLabel/> 
-      <DropdownButton/> 
-      <CollapsibleMenu/>
+      <TabsArea
+        tabsTitleArray={[
+          { title: "Pending" },
+          { title: "Rejected" },
+          { title: "Approved" },
+          { title: "Drafts" },
+          { title: "History" },
+        ]}
+      />
+      <CollapsibleTable />
+      <BasicPie />
+      <LinearWithValueLabel />
+      <DropdownButton />
+      <CollapsibleMenu />
     </Box>
   );
 };

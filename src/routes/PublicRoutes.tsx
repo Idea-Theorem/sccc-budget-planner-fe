@@ -9,6 +9,8 @@ import ComponentsScreen from "../pages/Components";
 import ProgramHeadScreen from "../pages/Dashboards/ProgramHead";
 import AdminScreen from "../pages/Dashboards/Admin";
 import ReviewBudgetScreen from "../pages/Dashboards/Admin/reviewBudget";
+import AdminProgramScreen from "../pages/Dashboards/Admin/adminProgram";
+import DepartmentDetailScreen from "../pages/Dashboards/Admin/departmentDetail";
 const authRoutes: RouteObject = {
   path: "*",
   children: [
@@ -47,8 +49,18 @@ const normalRoutes: RouteObject = {
           // element: <AdminScreen />,
           children: [
             { index: true, element: <AdminScreen /> },
-            { path: "review-budget", element: <ReviewBudgetScreen /> },
-            { path: "programs", element: <HomeScreen /> },
+            {
+              path: "review-budget",
+              children: [
+                { index: true, element: <ReviewBudgetScreen /> },
+                {
+                  path: "department-detail",
+                  element: <DepartmentDetailScreen />,
+                },
+              ],
+            },
+            { path: "programs", element: <AdminProgramScreen /> },
+            { path: "settings", element: <AdminProgramScreen /> },
           ],
         },
       ],

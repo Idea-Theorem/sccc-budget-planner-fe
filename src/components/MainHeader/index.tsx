@@ -74,7 +74,7 @@ const MainHeaderComponent = (props: MainHeaderProps) => {
       <Stack className="appHeaderHolder">
         <Typography variant="h3">{props.title}</Typography>
         {props?.action ? (
-          <DropdownButton />
+          <DropdownButton title="Action" />
         ) : (
           <Buttons startIcon={<AddIcon />} btntext3={props?.btnTitle} />
         )}

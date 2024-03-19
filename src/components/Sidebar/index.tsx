@@ -10,6 +10,7 @@ import ListItemText from "@mui/material/ListItemText";
 import { filterSidebarActions } from "../../utils/filterSideBarActios";
 import { SIDEBARACTIONS } from "../../utils/sideBarActions";
 import { useNavigate } from "react-router-dom";
+import CollapsibleMenu from "../CollapsableManue";
 
 // Assuming SideArea is defined elsewhere
 const SideArea = styled(Box)(({ theme }) => ({
@@ -72,14 +73,18 @@ export default function ResponsiveDrawer(props: Props) {
         <img src="/src/assets/logo.png" alt="Description image" />
       </Box>
       <List>
-        {adminActions.map((text, index) => (
+        {adminActions.map((item, index) => (
           <ListItem
             key={index}
             disablePadding
-            onClick={() => navigate(text.path ?? "")}
+            onClick={() => navigate(item.path ?? "")}
           >
             <ListItemButton>
-              <ListItemText primary={text.title} />
+              {item?.more ? (
+                <CollapsibleMenu title={item.title} item={item?.more} />
+              ) : (
+                <ListItemText primary={item.title} />
+              )}
             </ListItemButton>
           </ListItem>
         ))}
