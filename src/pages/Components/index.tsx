@@ -10,6 +10,9 @@ import TabsArea from "../../components/Tabs";
 import CollapsibleTable from "../../components/CollapseTable";
 import BasicPie from "../../components/PieChart";
 import LinearWithValueLabel from "../../components/ProgressBar";
+import TextFieldWithButton from "../../components/ThreadPopups/TextFieldWithButton";
+import ThreadHeader from "../../components/ThreadPopups/Header";
+import ThreadPopups from "../../components/ThreadPopups";
 import DropdownButton from "../../components/Button/dropDownButton";
 import CollapsibleMenu from "../../components/CollapsableManue";
 // import ResponsiveDrawer from "../../components/Sidebar";
@@ -32,6 +35,14 @@ const ComponentsScreen = () => {
       <TabsArea />
       <CollapsibleTable/>
       <BasicPie/>
+      <LinearWithValueLabel value={40}/>
+      <ThreadPopups/>
+
+      <ThreadHeader   
+        title="Cadmore" 
+        subtitle="feafawfaefawefaefaewfaefawefawefawefaeawfeaeaefaefaefaefaefawefawefaewfawefaefaefaw"
+        date="06-Mar-2024"/>
+        <TextFieldWithButton placeholder="Label" isBtn={true}/>
       <LinearWithValueLabel/> 
       <DropdownButton/> 
       <CollapsibleMenu/>

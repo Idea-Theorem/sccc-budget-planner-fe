@@ -144,7 +144,7 @@ const AdminDataCard = (props: AdminDataCardProps) => {
       </Stack>
       {props?.showProgress && 
         <Box className="cardProgressBar">
-          <LinearWithValueLabel />
+          <LinearWithValueLabel value={20}/>
         </Box>
       }
     </StyledBox>

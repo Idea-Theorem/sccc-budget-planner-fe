@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 import ProgramProgress from "./programProgress";
 import DepartmentButton from "./departmentButton";
+import { departments } from "../../utils/sampleData";
 
 const StyledBox = styled(Box)(() => ({
   "&.dashboardStatsCard": {
@@ -50,20 +51,24 @@ const StyledBox = styled(Box)(() => ({
   },
 }));
 const AdminDepartmentProgress = () => {
+
   return (
     <StyledBox className="dashboardStatsCard">
       <Typography variant="h3">Department %</Typography>
       <Box className="tagsList">
-        {[1, 1, 1, 1].map(() => (
-          <DepartmentButton />
-        ))}
+        {departments.map((e) => (
+          <DepartmentButton text={e.title} color={e.color}/>
+        ))} 
       </Box>
       <Box className="dashboardGraphsBlock">
         <Box className="dashboardGraphBox">
           <BasicPie />
         </Box>
         <Box className="dashboardGraphsList">
-          <ProgramProgress title="Program 1" amount="$00.000" />
+          <ProgramProgress title="Program 1" amount="$00.000" value={70} />  
+          <ProgramProgress title="Program 2" amount="$00.000" value={60}/>
+          <ProgramProgress title="Program 3" amount="$00.000" value={40}/>
+          <ProgramProgress title="Program 4" amount="$00.000" value={50}/>
         </Box>
       </Box>
     </StyledBox>
