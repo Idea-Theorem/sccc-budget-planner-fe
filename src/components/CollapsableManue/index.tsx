@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
-import { List, ListItem, ListItemText, Collapse, IconButton } from '@mui/material';
-import { ExpandLess, ExpandMore } from '@mui/icons-material';
+import List  from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import Collapse from '@mui/material/Collapse';
+import IconButton from '@mui/material/IconButton';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
 
 const CollapsibleMenu: React.FC = () => {
   const [open, setOpen] = useState(false);
