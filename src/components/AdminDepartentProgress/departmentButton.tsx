@@ -17,7 +17,7 @@ const StyledStack = styled(Stack)(({ theme }) => ({
       height: "9px",
       borderRadius: "50%",
       margin: "0 5px 0 0",
-      // background: theme.palette.secondary.main,
+      background: theme.palette.secondary.main,
     },
 
     "& .MuiTypography-root": {
