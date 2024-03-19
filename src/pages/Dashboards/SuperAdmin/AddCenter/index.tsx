@@ -1,6 +1,7 @@
 import React from 'react'; 
 import Box from "@mui/material/Box"; 
 import { styled } from "@mui/material/styles"; 
+import DepartmentInfo from '../../../../models/HrDepartment';
  
 
 const StyledBox = styled(Box)(({ theme }) => ({
@@ -21,7 +22,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
 const AddCenter: React.FC = () => {
   return (
     <StyledBox className="appContainer">
-      <h1>Hello from add center</h1>
+      <DepartmentInfo heading={"add new Center"}/>
       </StyledBox>
   );
 };

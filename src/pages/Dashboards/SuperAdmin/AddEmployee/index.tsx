@@ -1,12 +1,13 @@
 import React from 'react'; 
 import Box from "@mui/material/Box"; 
 import { styled } from "@mui/material/styles"; 
+import HrAddEmployee from '../../../../models/HrAddEmployee';
  
 
 const StyledBox = styled(Box)(({ theme }) => ({
     "&.appContainer": {
       padding: "40px",
-      paddingLeft: "248px",
+      paddingLeft: "248px", 
     },
   
     "& .dashboardCards": {
@@ -21,7 +22,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
 const AddEmployee: React.FC = () => {
   return (
     <StyledBox className="appContainer">
-      <h1>Hello from add Employee</h1>
+     <HrAddEmployee heading={"add new Employee"}/>
       </StyledBox>
   );
 };
