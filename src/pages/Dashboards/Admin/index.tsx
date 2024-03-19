@@ -40,6 +40,7 @@ const AdminScreen = () => {
           title="Approved Prgs-to-date"
           total="45 forecase"
           done="24"
+          edit={true}
         />
         <AdminDataCard title="Completed Dept." total="8" done="4" />
       </Box>

@@ -47,7 +47,12 @@ const Buttons = ({
   return (
     <Stack direction="row" spacing={2}>
       {btntext1 && (
-        <StyledButton size="large" variant="outlined" color="success">
+        <StyledButton
+          size="large"
+          variant="outlined"
+          color="success"
+          startIcon={startIcon}
+        >
           {btntext1}
         </StyledButton>
       )}
