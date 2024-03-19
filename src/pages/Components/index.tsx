@@ -30,7 +30,7 @@ const ComponentsScreen = () => {
       <TabsArea />
       <CollapsibleTable/>
       <BasicPie/>
-      <LinearWithValueLabel/>
+      <LinearWithValueLabel value={40}/>
     </Box>
   );
 };

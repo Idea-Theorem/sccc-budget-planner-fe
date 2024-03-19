@@ -17,7 +17,7 @@ const StyledStack = styled(Stack)(({ theme }) => ({
       height: "9px",
       borderRadius: "50%",
       margin: "0 5px 0 0",
-      background: theme.palette.secondary.main,
+      // background: theme.palette.secondary.main,
     },
 
     "& .MuiTypography-root": {
@@ -30,11 +30,16 @@ const StyledStack = styled(Stack)(({ theme }) => ({
   },
   // Color: theme.palette.secondary.light,
 }));
-const DepartmentButton = () => {
+ 
+interface Props {
+  text?: string;
+  color?: any
+}
+const DepartmentButton: React.FC<Props> = ({text, color}) => {
   return (
     <StyledStack className="statsTag">
-      <Box />
-      <Typography> Recreation & Culture</Typography>
+      <Box color={color}/> 
+      <Typography>{text}</Typography>
     </StyledStack>
   );
 };
