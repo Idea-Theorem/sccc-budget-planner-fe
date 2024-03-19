@@ -7,6 +7,9 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
+import { filterSidebarActions } from "../../utils/filterSideBarActios";
+import { SIDEBARACTIONS } from "../../utils/sideBarActions";
+import { useNavigate } from "react-router-dom";
 
 // Assuming SideArea is defined elsewhere
 const SideArea = styled(Box)(({ theme }) => ({
@@ -21,7 +24,7 @@ const SideArea = styled(Box)(({ theme }) => ({
   "& .MuiListItemButton-root": {
     transition: "0.3s",
     color: theme.palette.background.ContentArea,
-    
+
     "&:hover": {
       background: theme.palette.background.DarkGray,
     },
@@ -50,7 +53,10 @@ export default function ResponsiveDrawer(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
+  const adminActions = filterSidebarActions(SIDEBARACTIONS, "Admin");
 
+  const navigate = useNavigate();
+  console.log(adminActions);
   const handleDrawerClose = () => {
     setIsClosing(true);
     setMobileOpen(false);
@@ -66,10 +72,14 @@ export default function ResponsiveDrawer(props: Props) {
         <img src="/src/assets/logo.png" alt="Description image" />
       </Box>
       <List>
-        {["Dashboard", "Review Budgets", "Programs", "Drafts"].map((text) => (
-          <ListItem key={text} disablePadding>
+        {adminActions.map((text, index) => (
+          <ListItem
+            key={index}
+            disablePadding
+            onClick={() => navigate(text.path ?? "")}
+          >
             <ListItemButton>
-              <ListItemText primary={text} />
+              <ListItemText primary={text.title} />
             </ListItemButton>
           </ListItem>
         ))}
