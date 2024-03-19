@@ -43,6 +43,7 @@ const BasicTabs = () => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    console.log("event", event);
     setValue(newValue);
   };
 
@@ -88,7 +89,6 @@ const TabsAreas = styled(Box)(({ theme }) => ({
     color: theme.palette.error.main, //Example used plz exact style according to figma
   },
 }));
-
 
 export default function TabsArea() {
   return (

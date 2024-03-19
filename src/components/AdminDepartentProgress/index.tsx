@@ -5,12 +5,13 @@ import { styled } from "@mui/material/styles";
 import ProgramProgress from "./programProgress";
 import DepartmentButton from "./departmentButton";
 
-const StyledBox = styled(Box)(({ theme }) => ({
-  "&.dashboardStatsCard":{
+const StyledBox = styled(Box)(() => ({
+  "&.dashboardStatsCard": {
     width: "100%",
     padding: "25px 30px",
     marginBottom: "24px",
-    boxShadow: "0 1.85px 6.25px 0 rgba(0, 0, 0, 0.19), 0 0.5px 1.75px 0 rgba(0, 0, 0, 0.04)",
+    boxShadow:
+      "0 1.85px 6.25px 0 rgba(0, 0, 0, 0.19), 0 0.5px 1.75px 0 rgba(0, 0, 0, 0.04)",
 
     "& .MuiTypography-h3": {
       color: "#303030",
