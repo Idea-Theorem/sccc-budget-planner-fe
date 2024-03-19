@@ -57,6 +57,21 @@ const AppHeader = styled(Box)(({ theme }) => ({
         color: theme.palette.gfGrey.textGray,
       },
     },
+    
+    "& .headerDropdownButton": {
+      background: theme.palette.primary.main,
+      color: theme.palette.background.default,
+      minWidth: "102px",
+      height: "36px",
+      fontSize: "14px",
+      fontWeight: "500",
+      textTransform: "capitalize",
+      fontFamily: "Work Sans", 
+
+      "&:hover": {
+        background: theme.palette.secondary.main,
+      },
+    },
   },
 }));
 

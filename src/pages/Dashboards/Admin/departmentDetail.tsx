@@ -12,10 +12,15 @@ const StyledBox = styled(Box)(() => ({
     paddingLeft: "248px",
   },
 
-  "& .dashboardCards": {
-    display: "flex",
-    justifyContent: "space-between",
-    margin: "0 -12px",
+  "& .budgetTitle": {
+    margin: "0 0 10px",
+    
+    "& .MuiTypography-body1": {
+      fontSize: "20px",
+      fontWeight: "400",
+      lineHeight: "1.23",
+      letterSpacing: "0.25px", 
+    },
   },
   // Color: theme.palette.secondary.light,
 }));
@@ -24,7 +29,7 @@ const DepartmentDetailScreen = () => {
     <StyledBox className="appContainer">
       <BackButton />
       <SubHeader title="Recreation & Culture" />
-      <Stack>
+      <Stack className="budgetTitle">
         <Typography>Total Budget: $00,000.00</Typography>
       </Stack>
       <TabsArea

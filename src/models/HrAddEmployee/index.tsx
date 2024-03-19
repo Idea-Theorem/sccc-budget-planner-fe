@@ -10,8 +10,42 @@ import SelectDemo from "../../components/Select";
 import BasicDatePicker from "../../components/DatePicker";
 
 const EmployeeInfoArea = styled(Box)(({ theme }) => ({
-  background: theme.shadows[10],
-  width: "996px",
+  background: theme.palette.background.default,
+  width: "100%",
+  padding: "40px 50px",
+
+  "& .MuiTypography-h6": {
+    color: "#000",
+    fontFamily: "Work Sans",
+    fontSize: "20px",
+    fontWeight: "600",
+    margin: "0 0 25px", 
+  },
+
+  "& .subtitle": {
+    color: "#000",
+    fontFamily: "Work Sans",
+    fontSize: "17px",
+    fontWeight: "500", 
+    margin: "0 0 20px", 
+  },
+
+  "& .MuiTextField-root": {
+    width: "100%",
+  },
+
+  "& .MuiInput-underline": {
+    width: "100%",
+  },
+
+  "& .MuiInputLabel-root": {
+    marginBottom: "5px",
+    display: "inline-block",
+  },
+
+  "& .formButtons": {
+    marginTop: "25px",
+  },
 }));
 
 interface IHrAddEmployee {
@@ -31,7 +65,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
         <Typography variant="h6">{heading}</Typography>
       </Box>
       <Box>
-        <Typography>{subheading}</Typography>
+        <Typography className="subtitle">{subheading}</Typography>
         <Grid container spacing={4}>
           <Grid item xs={6}>
             <TextFields variant="standard" label="First Name" />
@@ -73,6 +107,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
         </Grid>
       </Grid>
       <Stack
+        className="formButtons"
         direction="row"
         justifyContent="flex-end"
         alignItems="center"

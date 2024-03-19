@@ -15,6 +15,43 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
   "& .MuiButtonBase-root": {
     color: theme.palette.error.main, // Adjust as needed
   },
+
+  "& .programsTableHolder": {
+    boxShadow: "none",
+    borderRadius: "0",
+
+    "& .MuiTable-root": {
+      "& .MuiTableCell-head": {
+        borderBottomColor: "#000",
+        color: "#000",
+        fontFamily: "Work Sans",
+        fontSize: "16px",
+        fontWeight: "600",
+        letterSpacing: "0.4px",
+        padding: "10px 15px",
+      },
+
+      "& .MuiTableCell-body": {
+        border: "0",
+        color: "#303030",
+        fontFamily: "Work Sans",
+        fontSize: "16px",
+        fontWeight: "500",
+        padding: "10px 15px",
+      },
+
+      "& .MuiTableRow-root": {
+        "&:last-child": {
+          "& .MuiTableCell-body": {
+            borderTop: "1px solid #000",
+            color: "#000",
+            fontWeight: "600",
+            letterSpacing: "0.4px",
+          },
+        },
+      },
+    },
+  },
 }));
 
 function createData(item?: string, amount?: string) {
@@ -43,7 +80,7 @@ const rows = [
 export default function TabsProgramArea() {
   return (
     <TabsProgramAreas>
-      <TableContainer component={Paper}>
+      <TableContainer className="programsTableHolder" component={Paper}>
         <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>

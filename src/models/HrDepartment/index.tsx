@@ -8,8 +8,42 @@ import { Save, Clear } from "@mui/icons-material"; // Import Clear icon from Mat
 import Grid from "@mui/material/Grid"; // Import Grid component from MUI
 
 const DepartmentInfoArea = styled(Box)(({ theme }) => ({
-  background: theme.shadows[10],
-  width: "996px",
+  background: theme.palette.background.default,
+  width: "100%",
+  padding: "40px 50px",
+
+  "& .MuiTypography-h6": {
+    color: "#000",
+    fontFamily: "Work Sans",
+    fontSize: "20px",
+    fontWeight: "600",
+    margin: "0 0 25px", 
+  },
+
+  "& .subtitle": {
+    color: "#000",
+    fontFamily: "Work Sans",
+    fontSize: "17px",
+    fontWeight: "500", 
+    margin: "0 0 20px", 
+  },
+
+  "& .MuiTextField-root": {
+    width: "100%",
+  },
+
+  "& .MuiInput-underline": {
+    width: "100%",
+  },
+
+  "& .MuiInputLabel-root": {
+    marginBottom: "5px",
+    display: "inline-block",
+  },
+
+  "& .formButtons": {
+    marginTop: "25px",
+  },
 }));
 
 interface IDepartmentInfo {
@@ -24,7 +58,7 @@ const DepartmentInfo: React.FC<IDepartmentInfo> = ({ heading, subheading }) => {
         <Typography variant="h6">{heading}</Typography>
       </Box>
       <Box>
-        <Typography >{subheading}</Typography>
+        <Typography className="subtitle">{subheading}</Typography>
         <Grid container spacing={4}>
           <Grid item xs={6}>
             <TextFields variant="standard" label="Department Name" />
@@ -35,6 +69,7 @@ const DepartmentInfo: React.FC<IDepartmentInfo> = ({ heading, subheading }) => {
         </Grid>
       </Box>
       <Stack
+        className="formButtons"
         direction="row"
         justifyContent="flex-end"
         alignItems="center"
