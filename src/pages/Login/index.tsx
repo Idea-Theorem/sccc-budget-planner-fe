@@ -5,6 +5,7 @@ import FormControl from "@mui/material/FormControl";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Buttons from "../../components/Button";
 import Link from "@mui/material/Link";
+import LogoImg from "../../assets/logo.png"
 
 const LoginArea = styled(Box)(({ theme }) => ({
   "&.loginBlock": {
@@ -94,7 +95,7 @@ const Input = () => {
     <LoginArea className="loginBlock">
       <Box className="loginHolder">
         <Box className="siteLogo">
-          <img src="/src/assets/logo.png" alt="Description image" />
+          <img src={LogoImg} alt="Description image" />
         </Box>
         <Typography variant="h5">Log In</Typography>
         <form noValidate autoComplete="off">

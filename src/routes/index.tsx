@@ -2,7 +2,7 @@ import {
   HTMLAttributes,
   Suspense,
 } from "react";
-import { useRoutes } from "react-router-dom";
+import { Navigate, useRoutes } from "react-router-dom";
 import { publicRoutes } from "./PublicRoutes";
 
 export function Loadable<T>(
@@ -17,6 +17,10 @@ export function Loadable<T>(
 
 const Index = () => {
   const publicElement = useRoutes([
+    {
+      path: "/",
+      element: <Navigate to="/login" />
+    },
     ...publicRoutes,
   ]);
   return (
