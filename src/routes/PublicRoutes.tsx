@@ -23,15 +23,15 @@ const normalRoutes: RouteObject = {
   children: [
     {
       path: "",
-      element: <SecureLayout />,
+      element: (
+        <SideBarLayout>
+          <SecureLayout />
+        </SideBarLayout>
+      ),
       children: [
         {
           path: "/home",
-          element: (
-            <SideBarLayout>
-              <HomeScreen />
-            </SideBarLayout>
-          ),
+          element: <HomeScreen />,
         },
         {
           path: "/components",
@@ -39,19 +39,15 @@ const normalRoutes: RouteObject = {
         },
         {
           path: "/program-head",
-          element: (
-            <SideBarLayout>
-              <ProgramHeadScreen />
-            </SideBarLayout>
-          ),
+          element: <ProgramHeadScreen />,
         },
         {
           path: "/admin",
-          element: (
-            <SideBarLayout>
-              <AdminScreen />
-            </SideBarLayout>
-          ),
+          // element: <AdminScreen />,
+          children: [
+            { index: true, element: <AdminScreen /> },
+            { path: "review-budget", element: <HomeScreen /> },
+          ],
         },
       ],
     },
