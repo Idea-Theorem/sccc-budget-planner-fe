@@ -13,13 +13,14 @@ interface AdminDataCardProps {
   showProgress?: boolean;
 }
 const StyledBox = styled(Box)(({ theme }) => ({
-  "&.dashboardStatsCard":{
+  "&.dashboardStatsCard": {
     width: "calc(41.841% - 24px)",
     padding: "25px 30px",
     marginLeft: "12px",
     marginRight: "12px",
     marginBottom: "24px",
-    boxShadow: "0 1.85px 6.25px 0 rgba(0, 0, 0, 0.19), 0 0.5px 1.75px 0 rgba(0, 0, 0, 0.04)",
+    boxShadow:
+      "0 1.85px 6.25px 0 rgba(0, 0, 0, 0.19), 0 0.5px 1.75px 0 rgba(0, 0, 0, 0.04)",
 
     "&:first-child": {
       "& .textRange": {
@@ -74,7 +75,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
 
       "&:hover": {
         color: theme.palette.secondary.main,
-      }
+      },
     },
 
     "& .textNote": {
@@ -116,7 +117,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
 
     "& .cardProgressBar": {
       marginBottom: "-18px",
-    
+
       "& .MuiLinearProgress-determinate": {
         background: theme.palette.secondary.mainLight,
 
@@ -135,18 +136,20 @@ const AdminDataCard = (props: AdminDataCardProps) => {
         <Typography variant="h3">{props?.title}</Typography>
         {props?.edit && <Typography className="linkEdit">Edit</Typography>}
       </Box>
-      {props?.detail && <Typography className="textNote">{props?.detail}</Typography>}
+      {props?.detail && (
+        <Typography className="textNote">{props?.detail}</Typography>
+      )}
 
       <Stack className="textRange">
         <Typography className="textFull">{props?.done}</Typography>
         <Typography className="divider">/</Typography>
         <Typography className="textValue">{props?.total}</Typography>
       </Stack>
-      {props?.showProgress && 
+      {props?.showProgress && (
         <Box className="cardProgressBar">
           <LinearWithValueLabel value={20}/>
         </Box>
-      }
+      )}
     </StyledBox>
   );
 };

@@ -6,10 +6,11 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 interface Props {
   title?: string;
   subtitle?: string;
-  date?: any;
-  setDropdown?: any
+  date?: string;
+  setDropdown?: () => void;
+  name?: string;
 }
-const ThreadHeader = ({title, subtitle, date, setDropdown} : Props) => {
+const ThreadHeader = ({ title, subtitle, date, setDropdown, name }: Props) => {
   return (
     <Box width="200px">
       <Stack direction="row" justifyContent="space-between" alignItems="center">
@@ -18,18 +19,18 @@ const ThreadHeader = ({title, subtitle, date, setDropdown} : Props) => {
           justifyContent="space-between"
           alignItems="center"
         >
-          <Typography variant="fontStyle">TK</Typography>
-          <Typography variant="tableHeader">{title}</Typography>
+          <Typography>{name}</Typography>
+          <Typography>{title}</Typography>
         </Stack>
         <Box onClick={setDropdown}>
-          <MoreVertIcon/>
+          <MoreVertIcon />
         </Box>
       </Stack>
       <Box>
-        <Typography variant="body2">{subtitle}</Typography>
+        <Typography>{subtitle}</Typography>
       </Box>
       <Box>
-        <Typography variant="fontStyle">{date}</Typography>
+        <Typography>{date}</Typography>
       </Box>
     </Box>
   );

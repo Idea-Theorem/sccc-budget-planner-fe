@@ -41,8 +41,8 @@ export const lightPallete: any = {
   },
   error: {
     // ...defaultPalette.error,
-    main: "rgba(211, 47, 175, 1)",
-    light: "rgba(218, 94, 192, 1)",
+    main: "rgba(211, 47, 47, 1)",
+    light: "rgba(211, 47, 47, 1)",
     contrastText: "rgba(255, 255, 255, 1)",
     shades: {
       "4p": "rgba(211, 47, 175, 0.04)",
@@ -71,8 +71,8 @@ export const lightPallete: any = {
   },
   success: {
     // ...defaultPalette.success,
-    main: "rgba(18, 166, 25, 1)",
-    light: "rgba(72, 184, 78, 1)",
+    main: "rgba(42, 157, 143, 1)",
+    light: "rgba(42, 157, 143, 1)",
 
     contrastText: "rgba(255, 255, 255, 1)",
     shades: {
