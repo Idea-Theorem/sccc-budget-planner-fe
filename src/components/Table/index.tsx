@@ -5,7 +5,7 @@ import InputSearch from "../Input";
 const StyledBox = styled(Box)({
   width: "100%",
 });
-const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
+const StyleDataGrid = styled(DataGrid)(() => ({
   width: "100%",
   "&.MuiDataGrid-root": {
     borderWidth: "0 !important",

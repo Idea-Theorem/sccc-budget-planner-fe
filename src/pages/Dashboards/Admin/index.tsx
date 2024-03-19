@@ -4,7 +4,7 @@ import AdminDataCard from "../../../components/AdminDataCard";
 import MainHeaderComponent from "../../../components/MainHeader";
 import AdminDepartmentProgress from "../../../components/AdminDepartentProgress";
 import CollapsibleTable from "../../../components/CollapseTable";
-const StyledBox = styled(Box)(({ theme }) => ({
+const StyledBox = styled(Box)(() => ({
   "&.appContainer": {
     padding: "40px",
     paddingLeft: "248px",
