@@ -10,6 +10,8 @@ import TabsArea from "../../components/Tabs";
 import CollapsibleTable from "../../components/CollapseTable";
 import BasicPie from "../../components/PieChart";
 import LinearWithValueLabel from "../../components/ProgressBar";
+import DropdownButton from "../../components/Button/dropDownButton";
+import CollapsibleMenu from "../../components/CollapsableManue";
 // import ResponsiveDrawer from "../../components/Sidebar";
 
 const ComponentsScreen = () => {
@@ -30,7 +32,9 @@ const ComponentsScreen = () => {
       <TabsArea />
       <CollapsibleTable/>
       <BasicPie/>
-      <LinearWithValueLabel/>
+      <LinearWithValueLabel/> 
+      <DropdownButton/> 
+      <CollapsibleMenu/>
     </Box>
   );
 };
