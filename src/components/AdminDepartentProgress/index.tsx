@@ -64,7 +64,7 @@ const AdminDepartmentProgress = () => {
           <BasicPie />
         </Box>
         <Box className="dashboardGraphsList">
-          <ProgramProgress title="Program 1" amount="$00.000" value={70}/> 
+          <ProgramProgress title="Program 1" amount="$00.000" value={70} />  
           <ProgramProgress title="Program 2" amount="$00.000" value={60}/>
           <ProgramProgress title="Program 3" amount="$00.000" value={40}/>
           <ProgramProgress title="Program 4" amount="$00.000" value={50}/>

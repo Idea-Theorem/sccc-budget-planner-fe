@@ -61,7 +61,7 @@ const ProgramProgress = (props: ProgramProgressProps) => {
         <Typography>{props?.amount}</Typography>
       </Stack>
       <Box className="progressStatusBar">
-        <LinearWithValueLabel value={props?.value}/>
+        <LinearWithValueLabel value={props?.value}/> 
       </Box>
     </StyledBox>
   );
