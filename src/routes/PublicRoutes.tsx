@@ -13,6 +13,7 @@ import HREmployees from "../pages/Dashboards/SuperAdmin/HREmployees/index"
 import AddEmployee from "../pages/Dashboards/SuperAdmin/AddEmployee";
 import AddDepartment from "../pages/Dashboards/SuperAdmin/AddDepartment";
 import AddCenter from "../pages/Dashboards/SuperAdmin/AddCenter";
+import ReviewBudgetScreen from "../pages/Dashboards/Admin/reviewBudget";
 const authRoutes: RouteObject = {
   path: "*",
   children: [
@@ -51,7 +52,8 @@ const normalRoutes: RouteObject = {
           // element: <AdminScreen />,
           children: [
             { index: true, element: <AdminScreen /> },
-            { path: "review-budget", element: <HomeScreen /> },
+            { path: "review-budget", element: <ReviewBudgetScreen /> },
+            { path: "programs", element: <HomeScreen /> },
           ],
         }, 
         {

@@ -119,6 +119,7 @@ declare module "@mui/material/styles" {
     // lighter?: Palette["grey"];
     other?: OtherPaletteProperties;
     gfGrey: Partial<Color> & {
+      textGray: string;
       GF50: string;
       GF75: string;
       GF100: string;
@@ -184,6 +185,7 @@ declare module "@mui/material/styles" {
     darker?: string;
     lighter?: string;
     shades?: ColorShades;
+    mainLight?: string;
   }
   interface CommonColors {
     blackshades: Pick<CommonColorShades, "4p" | "12p" | "30p" | "100p">;

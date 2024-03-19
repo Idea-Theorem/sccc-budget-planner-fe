@@ -20,11 +20,15 @@ function LinearProgressWithLabel(
     </Box>
   );
 }
+interface Props {
+  value?: any
+}
+export default function LinearWithValueLabel(props : Props) { 
 
-export default function LinearWithValueLabel() {
+
   return (
-    <Box width="100%">
-      <LinearProgressWithLabel value={20} />
+    <Box width='100%'>
+      <LinearProgressWithLabel value={props?.value} />
     </Box>
   );
 }

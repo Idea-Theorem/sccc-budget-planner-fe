@@ -4,13 +4,14 @@ import Stack from "@mui/material/Stack";
 import { ReactElement, ReactNode } from "react";
 
 interface StyledButtonProps {
-  variant?: "contained" | "outlined";
+  variant?: "contained" | "outlined" | "text";
   color?: "success" | "error";
   size?: "small" | "medium" | "large";
   children?: React.ReactNode;
   btntext1?: string;
   btntext2?: string;
   btntext3?: string;
+  btntext?: string;
   startIcon?: ReactNode | ReactElement;
   endIcon?: ReactNode | ReactElement;
 }
@@ -18,19 +19,25 @@ interface StyledButtonProps {
 const StyledButton = styled(Button)<StyledButtonProps>(
   ({ theme, variant, color }) => ({
     backgroundColor:
-      variant === "outlined" ? "white" : theme.palette.primary.main,
+      variant === "outlined" || variant === "text"
+        ? "transparent"
+        : theme.palette.primary.main,
     color:
       variant === "outlined"
         ? theme.palette[color!].light
+        : variant === "text" && color === "error" // Adjusting color for the "text" variant when color is "error"
+        ? theme.palette.error.main
         : theme.palette[color!].darker,
     border:
       variant === "outlined"
         ? `1px solid ${theme.palette[color!].light}`
+        : variant === "text" // Adjusting border for the "text" variant
+        ? "none"
         : theme.palette[color!].darker,
     "&:hover": {
       backgroundColor:
-        variant === "outlined"
-          ? theme.palette.action.hover
+        variant === "outlined" || variant === "text"
+          ? "transparent"
           : theme.palette.secondary.light,
     },
   })
@@ -40,6 +47,7 @@ const Buttons = ({
   btntext1,
   btntext2,
   btntext3,
+  btntext,
   startIcon,
   endIcon,
   onClick,
@@ -77,6 +85,16 @@ const Buttons = ({
           onClick={onClick}
         >
           {btntext3}
+        </StyledButton>
+      )}
+      {btntext && (
+        <StyledButton
+          size="large"
+          variant="text"
+          color="error"
+          startIcon={startIcon}
+        >
+          {btntext}
         </StyledButton>
       )}
     </Stack>
