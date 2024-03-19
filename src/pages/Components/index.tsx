@@ -43,8 +43,6 @@ const ComponentsScreen = () => {
           { title: "History" },
         ]}
       />
-      <CollapsibleTable />
-      <BasicPie />
       <LinearWithValueLabel value={40} />
       <ThreadPopups />
 
@@ -59,7 +57,6 @@ const ComponentsScreen = () => {
       <CollapsibleMenu />
       <CollapsibleTable />
       <BasicPie />
-      <LinearWithValueLabel />
       <DepartmentInfo
         heading="Add New Department"
         subheading="Deparrtment Information"
