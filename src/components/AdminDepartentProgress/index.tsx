@@ -41,10 +41,6 @@ const StyledBox = styled(Box)(({ theme }) => ({
       width: "320px",
       flexShrink: "0",
       paading: "15px",
-
-      "& > div": {
-        // width: "100%",
-      },
     },
 
     "& .dashboardGraphsList": {
@@ -52,8 +48,6 @@ const StyledBox = styled(Box)(({ theme }) => ({
       minWidth: "0",
     },
   },
-  // Color: theme.palette.secondary.light,
-  // marginTop: "20px",
 }));
 const AdminDepartmentProgress = () => {
 

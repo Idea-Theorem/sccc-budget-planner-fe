@@ -24,7 +24,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
         fontSize: "14px",
         lineHeight: "1.5",
         fontFamily: "Roboto",
-        color: theme.palette.action.inputPlaceholder,
+        color: theme.palette.action.selected,
         fontWeight: "400",
         letterSpacing: "0.5px",
         margin: "0 0 6px",
