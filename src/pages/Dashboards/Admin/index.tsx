@@ -26,6 +26,7 @@ const AdminScreen = () => {
         subTitle="Welcome, Tomohiro!"
         date="Monday, 5-Mar"
         subHeader={true}
+        action={true}
       />
       <Box className="dashboardCards">
         <AdminDataCard

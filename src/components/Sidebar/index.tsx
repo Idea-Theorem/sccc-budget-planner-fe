@@ -7,7 +7,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import { filterSidebarActions } from "../../utils/filterSideBarActios";
+import { filterSidebarActionsWithMore } from "../../utils/filterSideBarActios";
 import { SIDEBARACTIONS } from "../../utils/sideBarActions";
 import { useNavigate } from "react-router-dom";
 import LogoImg from "../../assets/logo.png";
@@ -55,10 +55,13 @@ export default function ResponsiveDrawer(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
-  const adminActions = filterSidebarActions(SIDEBARACTIONS, "Admin");
+  const { withMore, withoutMore } = filterSidebarActionsWithMore(
+    SIDEBARACTIONS,
+    "Program Head"
+  );
   console.log(isClosing);
   const navigate = useNavigate();
-  console.log(adminActions);
+
   const handleDrawerClose = () => {
     setIsClosing(true);
     setMobileOpen(false);
@@ -74,20 +77,19 @@ export default function ResponsiveDrawer(props: Props) {
         <img src={LogoImg} alt="Description image" />
       </Box>
       <List>
-        {adminActions.map((item, index) => (
+        {withoutMore.map((item: SidebarAction, index: number) => (
           <ListItem
             key={index}
             disablePadding
             onClick={() => navigate(item.path ?? "")}
           >
             <ListItemButton>
-              {item?.more ? (
-                <CollapsibleMenu title={item.title} item={item?.more} />
-              ) : (
-                <ListItemText primary={item.title} />
-              )}
+              <ListItemText primary={item.title} />
             </ListItemButton>
           </ListItem>
+        ))}
+        {withMore?.map((item: SidebarAction, index: number) => (
+          <CollapsibleMenu key={index} title={item?.title} item={item?.more} />
         ))}
       </List>
     </Box>

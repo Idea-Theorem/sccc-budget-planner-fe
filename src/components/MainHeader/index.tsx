@@ -67,6 +67,7 @@ interface MainHeaderProps {
   subTitle?: string;
   date?: string;
   action?: boolean;
+  onClick?: () => void;
 }
 const MainHeaderComponent = (props: MainHeaderProps) => {
   return (
@@ -76,7 +77,11 @@ const MainHeaderComponent = (props: MainHeaderProps) => {
         {props?.action ? (
           <DropdownButton title="Action" />
         ) : (
-          <Buttons startIcon={<AddIcon />} btntext3={props?.btnTitle} />
+          <Buttons
+            startIcon={<AddIcon />}
+            onClick={props?.onClick}
+            btntext3={props?.btnTitle}
+          />
         )}
       </Stack>
       {props?.subHeader && (
