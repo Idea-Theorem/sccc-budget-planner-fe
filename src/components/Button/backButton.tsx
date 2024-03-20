@@ -6,10 +6,34 @@ import {
 import { Typography } from "@mui/material";
 
 // Styled BackButton component
-const StyledBackButton = styled(Button)({
-  padding: "15px",
-  color: "black",
-});
+const StyledBackButton = styled(Button)(({ theme }) =>({
+  padding: "5px",
+  color: "#303030",
+
+  "& .MuiSvgIcon-root": {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "16px",
+    height: "16px",
+  },
+
+  "& .MuiTypography-body1": {
+    color: "#303030",
+    fontFamily: "Work Sans",
+    fontSize: "15px",
+    fontWeight: "500",
+    transition: "250ms cubic-bezier(0.4, 0, 0.2, 1)",
+  },
+
+  "&:hover": {
+    color: theme.palette.primary.main,
+
+    "& .MuiTypography-body1": {
+      color: theme.palette.primary.main,
+    },
+  },
+}));
 
 // Functional component for BackButton
 const BackButton = ({ onClick }: any) => {

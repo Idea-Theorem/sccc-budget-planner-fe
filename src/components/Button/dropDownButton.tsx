@@ -24,6 +24,7 @@ const DropdownButton = (props: DropdownButtonProps) => {
   return (
     <>
       <Button
+        className="headerDropdownButton"
         aria-controls="dropdown-menu"
         aria-haspopup="true"
         onClick={handleClick}

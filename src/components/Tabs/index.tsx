@@ -30,7 +30,7 @@ const CustomTabPanel = (props: TabPanelProps) => {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -92,8 +92,29 @@ const BasicTabs = (props: BasicTabsProps) => {
 };
 
 const TabsAreas = styled(Box)(({ theme }) => ({
+  "& .MuiTabs-root": {
+    margin: "0 0 15px",
+  },
+
   ".MuiTabs-flexContainer": {
     borderBottom: "1px solid #BFBFBF",
+
+    "& .MuiButtonBase-root": {
+      textTransform: "capitalize;",
+      color: theme.palette.action.selected,
+      fontFamily: "Work Sans",
+      fontWeight: "500",
+      letterSpacing: "0.4px",
+
+      "&:hover": {
+        color: theme.palette.primary.main,
+      },
+
+      "&.Mui-selected": {
+        color: theme.palette.primary.main,
+        fontWeight: "600",
+      },
+    },
   },
   "&.MuiButtonBase-root": {
     color: theme.palette.error.main, //Example used plz exact style according to figma

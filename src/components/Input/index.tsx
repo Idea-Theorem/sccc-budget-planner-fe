@@ -10,6 +10,13 @@ interface InputProps {
 }
 
 const StyledInputSearch = styled(Box)(({ theme }) => ({
+  "&.tableSearch": {
+    position: "absolute",
+    right: "0",
+    top: "0",
+    zIndex: "1",
+  },
+
   "& .MuiOutlinedInput-input": {
     color: theme.palette.text.primary,
   },
@@ -24,7 +31,7 @@ const InputSearch = (props: InputProps) => {
   const { placeholder, type = "text", ...rest } = props;
   return (
     <>
-      <StyledInputSearch>
+      <StyledInputSearch className="tableSearch">
         <Input
           placeholder={placeholder}
           type={type}
