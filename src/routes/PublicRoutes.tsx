@@ -16,6 +16,8 @@ import AddCenter from "../pages/Dashboards/SuperAdmin/AddCenter";
 import ReviewBudgetScreen from "../pages/Dashboards/Admin/reviewBudget";
 import AdminProgramScreen from "../pages/Dashboards/Admin/adminProgram";
 import DepartmentDetailScreen from "../pages/Dashboards/Admin/departmentDetail";
+import PHProgramsScreen from "../pages/Dashboards/ProgramHead/programs";
+import CreateProgramScreen from "../pages/Dashboards/ProgramHead/createProgram";
 const authRoutes: RouteObject = {
   path: "*",
   children: [
@@ -47,11 +49,15 @@ const normalRoutes: RouteObject = {
         },
         {
           path: "/program-head",
-          element: <ProgramHeadScreen />,
+          // element: <ProgramHeadScreen />,
+          children: [
+            { index: true, element: <ProgramHeadScreen /> },
+            { path: "program", element: <PHProgramsScreen /> },
+            { path: "create", element: <CreateProgramScreen /> },
+          ],
         },
         {
           path: "/admin",
-          // element: <AdminScreen />,
           children: [
             { index: true, element: <AdminScreen /> },
             {

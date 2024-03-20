@@ -14,6 +14,7 @@ interface StyledButtonProps {
   btntext?: string;
   startIcon?: ReactNode | ReactElement;
   endIcon?: ReactNode | ReactElement;
+  onClick?: () => void;
 }
 
 const StyledButton = styled(Button)<StyledButtonProps>(

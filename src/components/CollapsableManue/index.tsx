@@ -7,17 +7,21 @@ import IconButton from "@mui/material/IconButton";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import { useNavigate } from "react-router-dom";
+
 interface CollapsibleMenuProps {
   title?: string;
   item?: Item[];
 }
+
 interface Item {
   title?: string;
   path?: string;
 }
+
 const CollapsibleMenu = (props: CollapsibleMenuProps) => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+
   const handleClick = () => {
     setOpen(!open);
   };
@@ -30,17 +34,19 @@ const CollapsibleMenu = (props: CollapsibleMenuProps) => {
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          {props?.item?.map((item, index) => (
-            <ListItem
-              key={index}
-              onClick={(e) => {
-                e.stopPropagation();
-                navigate(item.path ?? "");
-              }}
-            >
-              <ListItemText primary={item?.title} />
-            </ListItem>
-          ))}
+          {props?.item?.map((item, index) => {
+            return (
+              <ListItem
+                key={index}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigate(item.path ?? "");
+                }}
+              >
+                <ListItemText primary={item?.title} />
+              </ListItem>
+            );
+          })}
         </List>
       </Collapse>
     </>
