@@ -12,9 +12,13 @@ import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { styled } from "@mui/system";
+import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
+import ClearIcon from "@mui/icons-material/Clear";
+import SaveIcon from "@mui/icons-material/Save";
 
 // Define StyledInputSearch using styled component
-const CollapseableTable = styled(Box)(({ theme }) => ({
+const HrCollapseableTable = styled(Box)(({ theme }) => ({
   ".MuiTableCell-root": {
     background: "none",
     border: "none",
@@ -22,15 +26,13 @@ const CollapseableTable = styled(Box)(({ theme }) => ({
 
   "&.dashboardTable": {
     padding: "30px",
-    boxShadow:
-      "0 1.85px 6.25px 0 rgba(0, 0, 0, 0.19), 0 0.5px 1.75px 0 rgba(0, 0, 0, 0.04)",
 
     "& .MuiPaper-rounded": {
       borderRadius: "0",
       boxShadow: "none",
 
       "& .MuiTableHead-root": {
-        borderBottom: "1px solid #000",
+        borderBottom: "1px solid rgba(191, 191, 191, 1)",
       },
 
       "& .totalRow": {
@@ -44,69 +46,23 @@ const CollapseableTable = styled(Box)(({ theme }) => ({
       "& .MuiTableCell-head": {
         color: theme.palette.text.primary,
         fontFamily: "Work Sans",
-        fontSize: "16px",
+        fontSize: "14px",
         fontWeight: "600",
-        lineHeight: "1.3",
+        lineHeight: "24px",
         borderBottom: "1px solid theme.palette.text.primary",
 
         "& span": {
           fontSize: "14px",
           fontWeight: "400",
         },
-
-        "&:first-child": {
-          width: "5% !important",
-        },
-
-        "&:nth-child(2)": {
-          width: "50%",
-        },
-
-        "&:nth-child(3)": {
-          width: "15%",
-          textAlign: "right",
-        },
-
-        "&:nth-child(4)": {
-          width: "15%",
-          textAlign: "right",
-        },
-
-        "&:nth-child(5)": {
-          width: "15%",
-          textAlign: "right",
-        },
       },
 
       "& .MuiTableCell-body": {
         fontFamily: "Work Sans",
-        fontSize: "18px",
-        fontWeight: "600",
-        lineHeight: "1.3",
-        color: "#303030",
-
-        "&:first-child": {
-          width: "5% !important",
-        },
-
-        "&:nth-child(2)": {
-          width: "50%",
-        },
-
-        "&:nth-child(3)": {
-          width: "15%",
-          textAlign: "right",
-        },
-
-        "&:nth-child(4)": {
-          width: "15%",
-          textAlign: "right",
-        },
-
-        "&:nth-child(5)": {
-          width: "15%",
-          textAlign: "right",
-        },
+        fontSize: "14px",
+        fontWeight: "400",
+        lineHeight: "20.02px",
+        color: theme.palette.common.blackshades["4p"],
       },
 
       "& .MuiCollapse-wrapperInner": {
@@ -120,10 +76,10 @@ const CollapseableTable = styled(Box)(({ theme }) => ({
 
         "& .MuiTableCell-body": {
           fontFamily: "Work Sans",
-          fontSize: "16px",
-          fontWeight: "500",
-          lineHeight: "1.3",
-          color: "#303030",
+          fontSize: "14px",
+          fontWeight: "600",
+          lineHeight: "20.02px",
+          color: theme.palette.common.blackshades["4p"],
         },
       },
     },
@@ -147,28 +103,16 @@ function createData(
     price,
     history: [
       {
-        date: "Courier & Postage",
-        customerId: "$00,000.00",
-        amount: "$00,000.00",
-        yearend: "$00,000.00",
+        date: "Email Address",
+        customerId: "Compensation Type",
+        amount: "Employment Type",
+        yearend: "Salary",
       },
       {
-        date: "Printing",
-        customerId: "$00,000.00",
-        amount: "$00,000.00",
-        yearend: "$00,000.00",
-      },
-      {
-        date: "Scholarships",
-        customerId: "$00,000.00",
-        amount: "$00,000.00",
-        yearend: "$00,000.00",
-      },
-      {
-        date: "Office & Computer Supplies",
-        customerId: "$00,000.00",
-        amount: "$00,000.00",
-        yearend: "$00,000.00",
+        date: "tkomase@ideatheorem.com",
+        customerId: "Hourly Rate",
+        amount: "Fulltime",
+        yearend: "$20/h",
       },
     ],
   };
@@ -196,7 +140,6 @@ function Row(props: { row: ReturnType<typeof createData> }) {
         <TableCell>{row.calories}</TableCell>
         <TableCell>{row.fat}</TableCell>
         <TableCell>{row.carbs}</TableCell>
-        {/* <TableCell>{row.protein}</TableCell> */}
       </TableRow>
       <TableRow>
         <TableCell padding="none" colSpan={6}>
@@ -204,12 +147,10 @@ function Row(props: { row: ReturnType<typeof createData> }) {
             <Box sx={{ margin: 1 }}>
               <Table size="small" aria-label="purchases">
                 <TableBody>
-                  {row.history.map((historyRow) => (
-                    <TableRow key={historyRow.date}>
+                  {row.history.map((historyRow, index) => (
+                    <TableRow key={index}>
                       <TableCell>&nbsp;</TableCell>
-                      <TableCell component="th" scope="row">
-                        {historyRow.date}
-                      </TableCell>
+                      <TableCell>{historyRow.date}</TableCell>
                       <TableCell>{historyRow.customerId}</TableCell>
                       <TableCell>{historyRow.amount}</TableCell>
                       <TableCell>{historyRow.yearend}</TableCell>
@@ -226,62 +167,41 @@ function Row(props: { row: ReturnType<typeof createData> }) {
 }
 
 const rows = [
-  createData("Income", "$00,000.00", "$00,000.00", "$00,000.00"),
   createData(
-    "Expense (Supplies & Services)",
-    "$00,000.00",
-    "$00,000.00",
-    "$00,000.00"
+    "Tomohiro Komase",
+    "Program Head",
+    "Recreation & Culture",
+    "02-Mar-2024"
   ),
-  createData("Expense (Salaries)", "$00,000.00", "$00,000.00", "$00,000.00"),
+  createData(
+    "Vishesh Thind",
+    "Department Head",
+    "Recreation & Culture",
+    "02-Mar-2024"
+  ),
 ];
 
-export default function CollapsibleTable() {
+export default function HrCollapsibleTable() {
   return (
-    <CollapseableTable className="dashboardTable">
+    <HrCollapseableTable className="dashboardTable">
       <TableContainer component={Paper}>
         <Table aria-label="collapsible table">
           <TableHead>
             <TableRow>
               <TableCell>&nbsp;</TableCell>
-              <TableCell>Item</TableCell>
-              <TableCell>
-                Projection <span>(Jan-Jun)</span>
-              </TableCell>
-              <TableCell>
-                Mid-year <span>(July-Dec)</span>
-              </TableCell>
-              <TableCell>Year-end</TableCell>
+              <TableCell>Employee Name</TableCell>
+              <TableCell>Position</TableCell>
+              <TableCell>Department</TableCell>
+              <TableCell>Hire date</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <Row key={row.name} row={row} />
+            {rows.map((row, index) => (
+              <Row key={index} row={row} />
             ))}
-            <TableRow className="totalRow">
-              <TableCell>&nbsp;</TableCell>
-              <TableCell>Total Supplies & Services</TableCell>
-              <TableCell>$00,000.00</TableCell>
-              <TableCell>$00,000.00</TableCell>
-              <TableCell>$00,000.00</TableCell>
-            </TableRow>
-            <TableRow className="totalRow">
-              <TableCell>&nbsp;</TableCell>
-              <TableCell>Total Salaries</TableCell>
-              <TableCell>$00,000.00</TableCell>
-              <TableCell>$00,000.00</TableCell>
-              <TableCell>$00,000.00</TableCell>
-            </TableRow>
-            <TableRow className="totalRow last">
-              <TableCell>&nbsp;</TableCell>
-              <TableCell>Profit</TableCell>
-              <TableCell>$00,000.00</TableCell>
-              <TableCell>$00,000.00</TableCell>
-              <TableCell>$00,000.00</TableCell>
-            </TableRow>
           </TableBody>
         </Table>
       </TableContainer>
-    </CollapseableTable>
+    </HrCollapseableTable>
   );
 }

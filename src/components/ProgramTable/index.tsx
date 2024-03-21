@@ -11,6 +11,7 @@ import Paper from "@mui/material/Paper";
 const TabsProgramAreas = styled(Box)(({ theme }) => ({
   ".MuiTabs-flexContainer": {
     borderBottom: "1px solid #BFBFBF",
+    height: "100%",
   },
   "& .MuiButtonBase-root": {
     color: theme.palette.error.main, // Adjust as needed
@@ -37,7 +38,7 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
         fontFamily: "Work Sans",
         fontSize: "16px",
         fontWeight: "500",
-        padding: "10px 15px",
+        padding: "22px 15px 0",
       },
 
       "& .MuiTableRow-root": {
@@ -84,8 +85,8 @@ export default function TabsProgramArea() {
         <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
-              <TableCell>Dessert (100g serving)</TableCell>
-              <TableCell align="right">Calories</TableCell>
+              <TableCell>Item</TableCell>
+              <TableCell align="right">Amount</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

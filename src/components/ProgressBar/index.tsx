@@ -22,13 +22,14 @@ function LinearProgressWithLabel(
 }
 interface Props {
   value?: any
+  color?: LinearProgressProps['color']; // Ensure the color prop matches the type defined in LinearProgressProps
 }
 export default function LinearWithValueLabel(props : Props) { 
 
 
   return (
     <Box width='100%'>
-      <LinearProgressWithLabel value={props?.value} />
+      <LinearProgressWithLabel value={props?.value} color={props?.color}/>
     </Box>
   );
 }

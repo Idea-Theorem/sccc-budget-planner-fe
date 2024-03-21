@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
@@ -11,6 +11,8 @@ import { useNavigate } from "react-router-dom";
 interface CollapsibleMenuProps {
   title?: string;
   item?: Item[];
+  onClick?: any
+  className?: string; // Add className property
 }
 
 interface Item {
@@ -23,12 +25,23 @@ const CollapsibleMenu = (props: CollapsibleMenuProps) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
+    
+  
     setOpen(!open);
   };
 
+  useEffect(() => {
+if(open){
+  props.onClick()
+}
+  }, [open])
+
   return (
     <>
-      <ListItem onClick={handleClick}>
+      <ListItem
+        onClick={handleClick}
+        className={props.className} // Apply className to ListItem
+      >
         <ListItemText primary={props.title} />
         <IconButton>{open ? <ExpandLess /> : <ExpandMore />}</IconButton>
       </ListItem>
@@ -41,6 +54,7 @@ const CollapsibleMenu = (props: CollapsibleMenuProps) => {
                 onClick={(e) => {
                   e.stopPropagation();
                   navigate(item.path ?? "");
+                 
                 }}
               >
                 <ListItemText primary={item?.title} />

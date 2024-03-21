@@ -3,10 +3,6 @@ import Typography from "@mui/material/Typography";
 
 import { styled } from "@mui/material/styles";
 const StyledBox = styled(Box)(() => ({
-  "&.appContainer": {
-    padding: "40px",
-    paddingLeft: "248px",
-  },
 
   "& .dashboardCards": {
     display: "flex",

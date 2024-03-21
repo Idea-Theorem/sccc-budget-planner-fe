@@ -40,7 +40,6 @@ const DropdownButton = (props: DropdownButtonProps) => {
       >
         <MenuItem onClick={handleClose}>Option 1</MenuItem>
         <MenuItem onClick={handleClose}>Option 2</MenuItem>
-        <MenuItem onClick={handleClose}>Option 3</MenuItem>
       </Menu>
     </>
   );

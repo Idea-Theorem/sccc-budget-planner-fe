@@ -13,21 +13,23 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
   width: "100%",
   padding: "40px 50px",
+  boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
 
   "& .MuiTypography-h6": {
     color: "#000",
     fontFamily: "Work Sans",
     fontSize: "20px",
     fontWeight: "600",
-    margin: "0 0 25px", 
+    margin: "0 0 25px",
+    padding: "20px 0 0",
   },
 
   "& .subtitle": {
     color: "#000",
     fontFamily: "Work Sans",
     fontSize: "17px",
-    fontWeight: "500", 
-    margin: "0 0 20px", 
+    fontWeight: "500",
+    margin: "0 0 20px",
   },
 
   "& .MuiTextField-root": {
@@ -86,9 +88,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
             <SelectDemo />
           </Grid>
           <Grid item xs={6}>
-            <Grid item xs={6}>
-              <BasicDatePicker />
-            </Grid>
+            <BasicDatePicker />
           </Grid>
         </Grid>
       </Box>

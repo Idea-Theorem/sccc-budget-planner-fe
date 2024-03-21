@@ -11,6 +11,7 @@ const DepartmentInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
   width: "100%",
   padding: "40px 50px",
+  boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
 
   "& .MuiTypography-h6": {
     color: "#000",

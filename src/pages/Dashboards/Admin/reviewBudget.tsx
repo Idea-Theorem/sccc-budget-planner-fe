@@ -3,10 +3,6 @@ import Box from "@mui/material/Box";
 import MainHeaderComponent from "../../../components/MainHeader";
 import TabsArea from "../../../components/Tabs";
 const StyledBox = styled(Box)(() => ({
-  "&.appContainer": {
-    padding: "40px",
-    paddingLeft: "248px",
-  },
 
   "& .dashboardCards": {
     display: "flex",

@@ -38,7 +38,7 @@ export default function SelectDemo() {
 
   return (
     <StyledFormControl size="medium" variant="standard">
-      <StyledInputLabel>Department</StyledInputLabel>
+      <StyledInputLabel>Program Code</StyledInputLabel>
       <StyledSelect
         labelId="select-label"
         id="select-demo"
@@ -47,9 +47,9 @@ export default function SelectDemo() {
         onChange={handleChange}
         className="select-list"
       >
-        <MenuItem value={10}>Ten</MenuItem>
-        <MenuItem value={20}>Twenty</MenuItem>
-        <MenuItem value={30}>Thirty</MenuItem>
+        <MenuItem value={10}>Please select</MenuItem>
+        <MenuItem value={20}>Please select</MenuItem>
+        <MenuItem value={30}>Please select</MenuItem>
       </StyledSelect>
     </StyledFormControl>
   );

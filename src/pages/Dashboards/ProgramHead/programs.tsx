@@ -4,15 +4,16 @@ import MainHeaderComponent from "../../../components/MainHeader";
 import TabsArea from "../../../components/Tabs";
 const StyledBox = styled(Box)(() => ({
   "&.appContainer": {
-    padding: "40px",
-    paddingLeft: "248px",
+
+    ".appHeader": {
+      paddingBottom: "13px",
+    },
   },
-  // Color: theme.palette.secondary.light,
 }));
 const PHProgramsScreen = () => {
   return (
     <StyledBox className="appContainer">
-      <MainHeaderComponent title="Programs" btnTitle="Create new programs" />
+      <MainHeaderComponent title="Programs" btnTitle="Create New Programs" />
       <TabsArea
         tabsTitleArray={[
           { title: "Pending" },

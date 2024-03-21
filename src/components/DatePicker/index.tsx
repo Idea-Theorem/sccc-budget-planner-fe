@@ -7,7 +7,34 @@ import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 
 const DatePickerArea = styled(Box)(({ theme }) => ({
-  background: theme.shadows[10],
+  "&.MuiBox-root": {
+    flexGrow: "1",
+    minWidth: "0",
+    padding: "0",
+    margin: "0",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    flexDirection: "row",
+    border: "0",
+
+    "&.MuiTextField-root": {
+      width: "100%",
+    },
+
+    ".MuiOutlinedInput-notchedOutline": {
+      borderRadius: "0",
+      borderTop: "0",
+      borderLeft: "0",
+      borderRight: "0",
+    },
+
+    ".MuiOutlinedInput-input": {
+      paddingTop: "4px",
+      paddingLeft: "0",
+      paddingBottom: "5px",
+    },
+  },
 }));
 
 const BasicDatePicker = () => {

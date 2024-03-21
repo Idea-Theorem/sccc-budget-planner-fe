@@ -54,10 +54,11 @@ const TabsProgram = () => {
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
+          className="tabs-lists"
         >
-          <Tab label="Income" {...a11yProps(0)} />
-          <Tab label="Expense (Supplies & Services)" {...a11yProps(1)} />
-          <Tab label="Expense (Salary & Benefits)" {...a11yProps(2)} />
+          <Tab label="Income" {...a11yProps(0)} className="listitem"/>
+          <Tab label="Expense (Supplies & Services)" {...a11yProps(1)} className="listitem"/>
+          <Tab label="Expense (Salary & Benefits)" {...a11yProps(2)} className="listitem"/>
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
@@ -76,10 +77,24 @@ const TabsProgram = () => {
 const TabsAreas = styled(Box)(({ theme }) => ({
   ".MuiTabs-flexContainer": {
     borderBottom: "1px solid #BFBFBF",
+    height: "100%",
   },
   "&.MuiButtonBase-root": {
     color: theme.palette.error.main, //Example used plz exact style according to figma
   },
+  ".tabs-lists": {
+    width: "100%",
+    minHeight: "inherit",
+
+    ".listitem": {
+      width: "33.333%",
+      margin: "-11px 0 0",
+      padding: "9px 0 0",
+    },
+  },
+  ".MuiTableCell-head": {
+    padding: "0 15px !important",
+  }
 }));
 
 export default function TabsProgramArea() {

@@ -7,10 +7,6 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 
 const StyledBox = styled(Box)(() => ({
-  "&.appContainer": {
-    padding: "40px",
-    paddingLeft: "248px",
-  },
 
   "& .budgetTitle": {
     margin: "0 0 10px",

@@ -2,10 +2,10 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import FormControl from "@mui/material/FormControl";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import Buttons from "../../components/Button";
 import Link from "@mui/material/Link";
-import LogoImg from "../../assets/logo.png"
+import LogoImg from "../../assets/logo.png";
+import Button from "@mui/material/Button";
+import { TextField } from "@mui/material";
 
 const LoginArea = styled(Box)(({ theme }) => ({
   "&.loginBlock": {
@@ -20,14 +20,15 @@ const LoginArea = styled(Box)(({ theme }) => ({
     width: "100%",
     maxWidth: "552px",
     margin: "30px auto",
-    padding: "15px 15px 25px",
+    padding: "15px 15px 30px",
     boxShadow:
-      "0 1.85px 6.25px 0 rgba(0, 0, 0, 0.19), 0 0.5px 1.75px 0 rgba(0, 0, 0, 0.04)",
+      "0px 1.850000023841858px 6.25px 0px #00000030, " +
+      "0px 0.5px 1.75px 0px #0000000A",
   },
 
   "& .siteLogo": {
     maxWidth: "118px",
-    margin: "0 auto 10px",
+    margin: "0 auto 2px",
   },
 
   "& .MuiTypography-h5": {
@@ -35,17 +36,22 @@ const LoginArea = styled(Box)(({ theme }) => ({
     fontWeight: "400",
     fontSize: "24px",
     lineHeight: "1.3",
-    color: theme.palette.text.primary,
+    color: theme.palette.common.blackshades["4p"],
     margin: "0 0 24px",
   },
 
-  "& .loginForm": {
-    width: "100%",
+  ".MuiFormLabel-root": {
+    color: theme.palette.common.blackshades["12p"],
+  },
 
-    "& .formRow": {
-      width: "100%",
-      margin: "0 0 16px",
-    },
+  ".MuiButtonBase-root": {
+    // color: theme.palette.common.whiteshades["30p"],
+    margin: "0 0 15px",
+  },
+  
+  "& .loginFormItem": {
+    width: "100%",
+    margin: "0 0 16px",
 
     "& .MuiOutlinedInput-root": {
       width: "100%",
@@ -57,8 +63,8 @@ const LoginArea = styled(Box)(({ theme }) => ({
       fontWeight: "400",
 
       "&::placeholder": {
-        color: theme.palette.action.disabledBackground,
-        opacity: "1",
+        color: theme.palette.common.blackshades["12p"],
+        opacity: ".7",
       },
     },
 
@@ -69,24 +75,31 @@ const LoginArea = styled(Box)(({ theme }) => ({
     "& .MuiButton-root": {
       width: "100%",
       height: "42px",
-      texttransform: "uppercase",
+      textTransform: "uppercase",
       marginBottom: "16px",
+      fontSize: "15px",
+      fontWeight: "500",
+      fontFamily: "Roboto",
+      letterSpacing: "0.46px",
     },
   },
 
   "& .textLink": {
-    color: theme.palette.secondary.main,
+    color: theme.palette.info.main,
     fontFamily: "Roboto",
     fontWeight: "400",
     fontSize: "14px",
+    lineHeight: "20px",
     transition: "250ms cubic-bezier(0.4, 0, 0.2, 1)",
+    textDecorationColor: theme.palette.secondary.shades?.["4p"],
+    letterSpacing: "0.17px",
 
     "& + .textLink": {
       marginLeft: "10px",
     },
 
     "&:hover": {
-      color: theme.palette.primary.main,
+      textDecorationColor: theme.palette.info.main,
     },
   },
 }));
@@ -99,33 +112,21 @@ const Input = () => {
         </Box>
         <Typography variant="h5">Log In</Typography>
         <form noValidate autoComplete="off">
-          <FormControl className="loginForm">
-            <Box className="formRow">
-              <OutlinedInput placeholder="Email" autoFocus={false} />
-            </Box>
-            <Box className="formRow">
-              <OutlinedInput placeholder="Password" autoFocus={false} />
-            </Box>
-            <Buttons btntext3="action" />
+          <FormControl className="loginFormItem">
+            <TextField label="Email" variant="outlined" size="medium" />
           </FormControl>
+          <FormControl className="loginFormItem">
+            <TextField label="Password" variant="outlined" size="medium" />
+          </FormControl>
+          <Button variant="contained" size="large" fullWidth>
+            ACTION
+          </Button>
         </form>
         <Box>
-          <Link
-            className="textLink"
-            color="primary"
-            href="#"
-            underline="none"
-            variant="subtitle2"
-          >
+          <Link className="textLink" href="#" variant="subtitle2">
             Create account
           </Link>
-          <Link
-            className="textLink"
-            color="primary"
-            href="#"
-            underline="none"
-            variant="subtitle2"
-          >
+          <Link className="textLink" href="#" variant="subtitle2">
             Forgot password?
           </Link>
         </Box>

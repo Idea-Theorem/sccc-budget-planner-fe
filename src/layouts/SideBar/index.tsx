@@ -1,11 +1,17 @@
+import { styled } from "@mui/material/styles";
 import  Box from "@mui/material/Box";
 import ResponsiveDrawer from "../../components/Sidebar";
+
+const StyledBox = styled(Box)(() => ({
+  padding: "32px 37px",
+  paddingLeft: "251px", 
+}));
 
 const SideBarLayout = ({ children }: Children) => {
   return (
     <>
       <Box><ResponsiveDrawer /></Box>
-      <Box>{children}</Box>
+      <StyledBox>{children}</StyledBox>
     </>
   );
 };

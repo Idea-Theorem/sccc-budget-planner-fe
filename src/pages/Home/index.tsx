@@ -15,9 +15,6 @@ import { EditNote, Save } from "@mui/icons-material";
 
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.appContainer": {
-    padding: "40px",
-    paddingLeft: "248px",
-
     "&.bgGray": {
       background: "#fafafa",
     },
@@ -37,7 +34,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
     "& .MuiTypography-h3": {
       fontSize: "26px",
       lineHeight: "1.3",
-      color: theme.palette.text.primary,
+      color: theme.palette.common.blackshades["4p"],
     },
 
     "& .MuiButton-containedSuccess": {
@@ -58,8 +55,12 @@ const StyledBox = styled(Box)(({ theme }) => ({
 
   "& .createProgramContent": {
     background: theme.palette.background.default,
-    padding: "40px 50px",
-    marginLeft: "8px",
+    padding: "46px 42px",
+  },
+
+  "& .createProgram": {
+    background: theme.palette.background.default,
+    padding: "30px 42px",
   },
 
   "& .createProgramContentHead": {
@@ -67,14 +68,14 @@ const StyledBox = styled(Box)(({ theme }) => ({
     alignItems: "center",
     justifyContent: "space-between",
     flexDirection: "row",
-    margin: "0 0 20px",
+    margin: "0 0 31px",
 
     "& .mainHeading": {
-      color: theme.palette.text.primary,
+      color: theme.palette.common.blackshades["4p"],
       fontFamily: "Work Sans",
       fontSize: "22px",
       fontWeight: "500",
-      lineHeight: "123.5%",
+      lineHeight: "1.3",
       letterSpacing: "0.25px",
     },
 
@@ -91,8 +92,9 @@ const StyledBox = styled(Box)(({ theme }) => ({
   },
 
   "& .createFormBlock": {
-    with: "100%",
+    width: "100%",
     marginBottom: "30px",
+    paddingTop: "10px",
   },
 
   "& .createFormFields": {
@@ -100,7 +102,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
     alignItems: "center",
     justifyContent: "space-between",
     flexDirection: "row",
-    margin: "0 -10px 25px",
+    margin: "0 -10px 13px",
 
     "& .MuiFormControl-root": {
       width: "50%",
@@ -166,7 +168,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
           borderTop: "0",
           borderLeft: "0",
           borderRight: "0",
-        }
+        },
       },
 
       "& .MuiOutlinedInput-input": {
@@ -176,7 +178,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
       },
     },
   },
-  
+
   "& .createFormTable": {
     width: "100%",
 
@@ -186,7 +188,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
 
     "& .MuiTabs-flexContainer": {
       width: "100%",
-      
+
       "& .MuiTab-root": {
         flexGrow: "1",
         textTransform: "capitalize",
@@ -202,7 +204,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
 const DateTypography = styled(Typography)(({ theme }) => ({
   fontSize: "14px",
   color: theme.palette.action.selected,
-  fontFamily: "Work Sans", 
+  fontFamily: "Work Sans",
   fontWeight: "500",
 }));
 
@@ -230,7 +232,7 @@ const HomeScreen = () => {
       {!firstLevel ? (
         <StyledBox className="appContainer">
           <Box className="appHeader">
-            <Stack className="appHeaderHolder" >
+            <Stack className="appHeaderHolder">
               <Typography variant="h3">Programs</Typography>
               <Buttons
                 startIcon={<AddIcon />}
@@ -256,21 +258,27 @@ const HomeScreen = () => {
             <Grid className="appBackHeader" item xs={12}>
               <BackButton onClick={() => setFirstLevel(false)} />
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={3}>
               <DateStack
                 className="selected"
                 direction={"row"}
                 justifyContent={"flex-end"}
                 alignItems={"center"}
               >
-                <DateTypography variant="h5">2-March</DateTypography>
+                <DateTypography variant="h5">2-Mar</DateTypography>
               </DateStack>
             </Grid>
-            <Grid item xs={10}>
-              <Grid className="createProgramContent" item xs={12}>
+            <Grid item xs={9}>
+              <Grid className="createProgram" item xs={12}>
                 <Grid item xs={12}>
-                  <Stack className="createProgramContentHead">
-                    <Typography className="mainHeading" variant="h5">Youth Swimming Class1</Typography>
+                  <Stack
+                    className="createProgramContentHead"
+                    direction="row"
+                    alignItems="center"
+                  >
+                    <Typography className="mainHeading" variant="h5">
+                      Youth Swimming Class1
+                    </Typography>
                     <Buttons
                       startIcon={<EditNote />}
                       btntext3="Revise"
@@ -303,24 +311,24 @@ const HomeScreen = () => {
             <Grid className="appBackHeader" item xs={12}>
               <BackButton onClick={() => setSecondLevel(false)} />
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={3}>
               <DateStack
                 className="selected"
                 direction={"column"}
                 justifyContent={"end"}
                 alignItems={"end"}
               >
-                <DateTypography variant="h5">2-March</DateTypography>
+                <DateTypography variant="h5">Revise 1 (4-Mar)</DateTypography>
               </DateStack>
               <DateStack
                 direction={"column"}
                 justifyContent={"end"}
                 alignItems={"end"}
               >
-                <DateTypography variant="h5">2-March</DateTypography>
+                <DateTypography variant="h5">2-Mar</DateTypography>
               </DateStack>
             </Grid>
-            <Grid item xs={10}>
+            <Grid item xs={9}>
               <Grid className="createProgramContent" item xs={12}>
                 <Grid item xs={12}>
                   <Stack className="createProgramContentHead">
@@ -332,7 +340,7 @@ const HomeScreen = () => {
                   </Stack>
                 </Grid>
                 <Grid className="createFormBlock" item xs={10}>
-                  <Stack className="createFormFields" >
+                  <Stack className="createFormFields">
                     <SelectDemo />
                     <SelectDemo />
                   </Stack>
