@@ -1,5 +1,5 @@
 import { styled } from "@mui/material/styles";
-import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import InputSearch from "../Input";
 const StyledBox = styled(Box)(({ theme }) => ({
@@ -103,65 +103,6 @@ const StyleDataGrid = styled(DataGrid)(() => ({
   },
 }));
 
-const columns: GridColDef[] = [
-  {
-    field: "departmentName",
-    headerName: "Department Name",
-    sortable: false,
-    editable: false,
-    flex: 1,
-  },
-  {
-    field: "status",
-    headerName: "Status",
-    sortable: false,
-    editable: false,
-    flex: 1,
-  },
-  {
-    field: "lYearBudget",
-    headerName: "Last Year Budget",
-    sortable: false,
-    editable: false,
-    flex: 1,
-  },
-  {
-    field: "budget",
-    headerName: "Budget",
-    sortable: false,
-    editable: false,
-    flex: 1,
-  },
-  {
-    field: "profit",
-    headerName: "Profit",
-    sortable: false,
-    editable: false,
-    flex: 1,
-  },
-  {
-    field: "nPrograms",
-    headerName: "No. Programs",
-    sortable: false,
-    editable: false,
-    flex: 1,
-  },
-  {
-    field: "sDate",
-    headerName: "Submission Date",
-    sortable: false,
-    editable: false,
-    flex: 1,
-  },
-  {
-    field: "comments",
-    headerName: "Comments",
-    sortable: false,
-    editable: false,
-    flex: 1,
-  },
-];
-
 const rows = [
   {
     id: 1,
@@ -219,15 +160,24 @@ const rows = [
     comments: "0",
   },
 ];
-
-const TableComponent = () => {
+interface TableColumn {
+  field: string;
+  headerName: string;
+  sortable: boolean;
+  editable: boolean;
+  flex: number;
+}
+interface ColumnnsProps {
+  columns: TableColumn[];
+}
+const TableComponent = (props: ColumnnsProps) => {
   return (
     <>
       <StyledBox className="mainTableBlock">
         <InputSearch placeholder="Search..." />
         <StyleDataGrid
           rows={rows}
-          columns={columns}
+          columns={props?.columns}
           initialState={{
             pagination: {
               paginationModel: { page: 0, pageSize: 5 },
