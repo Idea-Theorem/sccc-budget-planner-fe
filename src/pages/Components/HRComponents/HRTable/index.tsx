@@ -2,17 +2,34 @@ import { styled } from "@mui/material/styles";
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import InputSearch from "../../../../components/Input";
-const StyledBox = styled(Box)({
-  width: "100%",
-});
+const StyledBox = styled(Box)(({ theme }) => ({
+  "&.mainTableBlock": {
+    width: "100%",
+    position: "relative",
+  },
+
+  "& .MuiDataGrid-toolbarContainer": {
+    marginBottom: "10px",
+
+    "& .MuiButtonBase-root": {
+      color: "#979797 !important",
+      fontSize: "13px",
+      letterSpacing: "1",
+
+      "&:hover": {
+        color: `${theme.palette.primary.main} !important`,
+      },
+    },
+  },
+}));
 const StyleDataGrid = styled(DataGrid)(() => ({
   width: "100%",
   "&.MuiDataGrid-root": {
     borderWidth: "0 !important",
     borderStyle: "none",
-  },
-  ".MuiDataGrid-footerContainer": {
-    border: "none",
+    "&.MuiDataGrid-footerContainer": {
+      border: "none",
+    },
   },
   "& .MuiDataGrid-row": {
     "&.Mui-selected": {
@@ -89,28 +106,28 @@ const StyleDataGrid = styled(DataGrid)(() => ({
 const columns: GridColDef[] = [
   {
     field: "departmentName",
-    headerName: "Employee Name",
+    headerName: "Department Name",
     sortable: false,
     editable: false,
     flex: 1,
   },
   {
     field: "status",
-    headerName: "Position",
+    headerName: "Employee Count",
     sortable: false,
     editable: false,
     flex: 1,
   },
   {
     field: "lYearBudget",
-    headerName: "Department",
+    headerName: "Date Created",
     sortable: false,
     editable: false,
     flex: 1,
   },
   {
-    field: "budget",
-    headerName: "Hire date",
+    field: "",
+    headerName: "",
     sortable: false,
     editable: false,
     flex: 1,
@@ -121,64 +138,21 @@ const rows = [
   {
     id: 1,
     departmentName: "Recreation & Culture",
-    status: "Under review",
-    lYearBudget: "$00,000.00",
-    budget: "$00,000.00",
-    profit: "$00,000.00",
-    nPrograms: "4",
-    sDate: "22-Feb-2024",
-    comments: "1",
+    status: "5",
+    lYearBudget: "02-Mar-2024",
   },
   {
     id: 2,
-    departmentName: "Health and Wellness",
-    status: "Under review",
-    lYearBudget: "$00,000.00",
-    budget: "$00,000.00",
-    profit: "$00,000.00",
-    nPrograms: "2",
-    sDate: "10-Feb-2024",
-    comments: "2",
-  },
-  {
-    id: 3,
     departmentName: "HR",
-    status: "Under review",
-    lYearBudget: "$00,000.00",
-    budget: "$00,000.00",
-    profit: "$00,000.00",
-    nPrograms: "1",
-    sDate: "11-Feb-2024",
-    comments: "1",
-  },
-  {
-    id: 4,
-    departmentName: "Community Support",
-    status: "Under review",
-    lYearBudget: "$00,000.00",
-    budget: "$00,000.00",
-    profit: "$00,000.00",
-    nPrograms: "5",
-    sDate: "04-Feb-2024",
-    comments: "1",
-  },
-  {
-    id: 5,
-    departmentName: "Community Initiatives",
-    status: "Under review",
-    lYearBudget: "$00,000.00",
-    budget: "$00,000.00",
-    profit: "$00,000.00",
-    nPrograms: "2",
-    sDate: "08-Feb-2024",
-    comments: "0",
+    status: "5",
+    lYearBudget: "02-Mar-2024",
   },
 ];
 
 const HRTableComponent = () => {
   return (
     <>
-      <StyledBox>
+      <StyledBox className="mainTableBlock">
         <InputSearch placeholder="Search..." />
         <StyleDataGrid
           rows={rows}
@@ -189,7 +163,6 @@ const HRTableComponent = () => {
             },
           }}
           pageSizeOptions={[5, 10, 15]}
-          checkboxSelection
           disableRowSelectionOnClick
           slots={{ toolbar: GridToolbar }}
         />
