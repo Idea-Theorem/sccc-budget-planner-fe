@@ -13,10 +13,6 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import TablePagination from "@mui/material/TablePagination";
 import { styled } from "@mui/system";
-import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
-import ClearIcon from "@mui/icons-material/Clear";
-import SaveIcon from "@mui/icons-material/Save";
 
 // Define StyledInputSearch using styled component
 const HrCollapseableTable = styled(Box)(({ theme }) => ({
