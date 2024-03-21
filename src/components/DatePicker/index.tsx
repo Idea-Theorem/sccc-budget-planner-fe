@@ -6,7 +6,7 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 
-const DatePickerArea = styled(Box)(({ theme }) => ({
+const DatePickerArea = styled(Box)(({  }) => ({
   "&.MuiBox-root": {
     flexGrow: "1",
     minWidth: "0",

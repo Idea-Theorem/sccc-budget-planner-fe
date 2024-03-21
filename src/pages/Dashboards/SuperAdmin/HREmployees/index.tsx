@@ -15,7 +15,7 @@ const StyledBox = styled(Box)(() => ({
 interface SuperAdminProps {
   name: string;
 }
-const tabNames = ["Employess", "Departments", "Community Centres"];
+const tabNames = ["Employees", "Departments", "Community Centres"];
 const HREmployeees: React.FC<SuperAdminProps> = () => {
   return (
     <StyledBox className="appContainer">

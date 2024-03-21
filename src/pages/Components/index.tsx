@@ -57,7 +57,7 @@ const ComponentsScreen = () => {
       <CollapsibleMenu />
       <CollapsibleTable />
       <BasicPie />
-      <DepartmentInfo
+      <DepartmentInfo 
         heading="Add New Department"
         subheading="Deparrtment Information"
       />
