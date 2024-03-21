@@ -17,6 +17,7 @@ import DropdownButton from "../../components/Button/dropDownButton";
 import CollapsibleMenu from "../../components/CollapsableManue";
 import DepartmentInfo from "../../models/HrDepartment";
 import HrAddEmployee from "../../models/HrAddEmployee";
+import ApprovedProgram from "../Dashboards/ProgramHead/approvedProgram";
 // import ResponsiveDrawer from "../../components/Sidebar";
 
 const ComponentsScreen = () => {
@@ -76,6 +77,7 @@ const ComponentsScreen = () => {
         title="Compensation Information"
       />
       <ThreadPopups />
+      <ApprovedProgram />
     </Box>
   );
 };
