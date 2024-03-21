@@ -14,8 +14,16 @@ interface TabPanelProps {
 interface TabTitle {
   title?: string;
 }
+interface TableColumn {
+  field: string;
+  headerName: string;
+  sortable: boolean;
+  editable: boolean;
+  flex: number;
+}
 interface BasicTabsProps {
   tabsTitleArray: TabTitle[];
+  tableColumnsTitleArray: TableColumn[];
 }
 
 const CustomTabPanel = (props: TabPanelProps) => {
@@ -131,7 +139,10 @@ const TabsAreas = styled(Box)(({ theme }) => ({
 export default function TabsArea(props: BasicTabsProps) {
   return (
     <TabsAreas>
-      <BasicTabs tabsTitleArray={props.tabsTitleArray} />
+      <BasicTabs
+        tabsTitleArray={props?.tabsTitleArray}
+        tableColumnsTitleArray={props?.tableColumnsTitleArray}
+      />
     </TabsAreas>
   );
 }

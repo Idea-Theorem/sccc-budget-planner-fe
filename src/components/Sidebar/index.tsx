@@ -89,7 +89,8 @@ export default function ResponsiveDrawer(props: Props) {
     SIDEBARACTIONS,
     // "Program Head"
     // "Admin"
-    "HR"
+    // "HR",
+    "Department Head"
   );
   const navigate = useNavigate();
   const location = useLocation();
