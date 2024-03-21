@@ -41,9 +41,9 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
   };
 
   const routes = [
-    { path: "/superAdmin/hr-addemployees" },
-    { path: "/superAdmin/hr-adddepartment" },
-    { path: "/superAdmin/hr-addcenter" },
+    { path: "/hr/addemployees" },
+    { path: "/hr/adddepartment" },
+    { path: "/hr/addcenter" },
   ];
 
   return (
@@ -86,6 +86,7 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
         <Grid item xs={12}>
           {value === 0 && <HrCollapsibleTable />}
           {value === 1 && <HRTableComponent />}
+          {value === 2 && <HRTableComponent />}
         </Grid>
       </Grid>
     </AppHuman>
