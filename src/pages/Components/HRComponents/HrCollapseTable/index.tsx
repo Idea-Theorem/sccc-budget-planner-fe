@@ -143,13 +143,15 @@ function Row(props: { row: ReturnType<typeof createData> }) {
         <TableCell>{row.calories}</TableCell>
         <TableCell>{row.fat}</TableCell>
         <TableCell>{row.carbs}</TableCell>
-        <TableCell>
+        <TableCell >
+          <Stack direction="row" gap="10px" alignItems="center">
           <Button variant="text" color="error" size="small" startIcon={<DeleteOutlineIcon/>}>
             Delete
           </Button>
           <Button variant="outlined" color="primary" size="small" startIcon={<EditNoteIcon/>}>
             Edit
           </Button>
+          </Stack>
         </TableCell>
       </TableRow>
       <TableRow>
