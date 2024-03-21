@@ -12,6 +12,8 @@ import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { styled } from "@mui/system";
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import EditNoteIcon from '@mui/icons-material/EditNote';
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -140,6 +142,14 @@ function Row(props: { row: ReturnType<typeof createData> }) {
         <TableCell>{row.calories}</TableCell>
         <TableCell>{row.fat}</TableCell>
         <TableCell>{row.carbs}</TableCell>
+        <TableCell>
+          <Button variant="text" color="error" size="small" startIcon={<DeleteOutlineIcon/>}>
+            Delete
+          </Button>
+          <Button variant="outlined" color="primary" size="small" startIcon={<EditNoteIcon/>}>
+            Edit
+          </Button>
+        </TableCell>
       </TableRow>
       <TableRow>
         <TableCell padding="none" colSpan={6}>

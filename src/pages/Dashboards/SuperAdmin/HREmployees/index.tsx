@@ -22,7 +22,7 @@ const HREmployeees: React.FC<SuperAdminProps> = () => {
       <h1>HR (Human Resources) </h1>
 
       <TabsComponent tabNames={tabNames} />
-    </StyledBox>
+    </StyledBox> 
   );
 };
 

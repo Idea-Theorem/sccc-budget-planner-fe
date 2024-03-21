@@ -81,7 +81,7 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
           </AppBar>
         </Grid>
         <Grid item xs={12}>
-          {value === 0 && <HrCollapsibleTable />}
+          {value === 0 && <HrCollapsibleTable />} 
           {value === 1 && <HRTableComponent />}
         </Grid>
       </Grid>
