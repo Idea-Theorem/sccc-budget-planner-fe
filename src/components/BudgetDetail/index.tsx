@@ -218,7 +218,7 @@ const BudgetDetail: FC<BudgetDetailProps> = ({actions, clickBack}) => {
       <Grid container spacing={2}>
         <Back onClick={clickBack} />
         <LeftSection />
-        <MainSection actions={actions} />
+        <MainSection actions={actions} /> 
       </Grid>
     </StyledBox>
   );
