@@ -108,28 +108,29 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
 }));
 
 
+
 const rows = [
   {
     id: 1,
-    departmentName: "Recreation & Culture",
-    status: "5",
+    departmentName: "SCCC",
+    status: "25",
     lYearBudget: "02-Mar-2024",
   },
   {
     id: 2,
-    departmentName: "HR",
-    status: "5",
+    departmentName: "ACCC",
+    status: "20",
     lYearBudget: "02-Mar-2024",
   },
 ];
 interface HRTableProps {
-  onEdit?: () => void;
+  onCommunityEdit?: () => void;
 }
-const HRTableComponent: React.FC<HRTableProps> = ({ onEdit }) => {
+const CommunityTableComponent: React.FC<HRTableProps> = ({onCommunityEdit}) => { 
   const columns: GridColDef[] = [
     {
       field: "departmentName",
-      headerName: "Department Name",
+      headerName: "Center Name",
       sortable: false,
       editable: false,
       flex: 1,
@@ -167,19 +168,13 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit }) => {
             color="primary"
             size="small"
             startIcon={<EditNoteIcon />}
-            onClick={onEdit}
+            onClick={onCommunityEdit}
           >
             Edit
           </Button>
         </Stack>
       ),
     },
-    // {
-    //   field: "",
-    //   headerName: "",
-    //   sortable: false,
-    //   editable: false,
-    //   flex: 1,
   ];
   return (
     <>
@@ -201,4 +196,4 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit }) => {
     </>
   );
 };
-export default HRTableComponent;
+export default CommunityTableComponent;

@@ -14,11 +14,16 @@ const StyledBox = styled(Box)(() => ({
     // Color: theme.palette.secondary.light,
   }));
 
-
-const AddEmployee: React.FC = () => {
+  interface IProps {
+   
+    open?: boolean
+    handleClose?: any
+    heading?: string
+  }
+const AddEmployee: React.FC<IProps> = ({open, handleClose, heading}) => {
   return (
     <StyledBox className="appContainer">
-     <HrAddEmployee heading={"add new Employee"}/>
+     <HrAddEmployee heading={heading} open={open} handleClose={handleClose} />
       </StyledBox>
   );
 };

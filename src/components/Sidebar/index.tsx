@@ -12,6 +12,7 @@ import { SIDEBARACTIONS } from "../../utils/sideBarActions";
 import { useNavigate, useLocation } from "react-router-dom";
 import LogoImg from "../../assets/logo.png";
 import CollapsibleMenu from "../CollapsableManue";
+import { SidebarAction } from "../../types/common";
 
 const SideArea = styled(Box)(({ theme }) => ({
   background: theme.palette.primary.main,
@@ -88,8 +89,9 @@ export default function ResponsiveDrawer(props: Props) {
   const { withMore, withoutMore } = filterSidebarActionsWithMore(
     SIDEBARACTIONS,
     // "Program Head"
-    "Admin"
-    // "HR"
+    // "Admin"
+    // "HR",
+    "Department Head"
   );
   const navigate = useNavigate();
   const location = useLocation();
