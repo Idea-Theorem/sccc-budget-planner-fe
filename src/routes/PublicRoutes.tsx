@@ -18,6 +18,7 @@ import HREmployees from "../pages/Dashboards/SuperAdmin/HREmployees/index";
 import HomeScreen from "../pages/Home";
 import LoginScreen from "../pages/Login";
 import DHReviewBudgets from "../pages/Dashboards/DepartmentHead/reviewBudgets";
+import ProgramReview from "../pages/Dashboards/DepartmentHead/program-review";
 const authRoutes: RouteObject = {
   path: "*",
   children: [
@@ -94,6 +95,7 @@ const normalRoutes: RouteObject = {
             { index: true, element: <ProgramHeadScreen /> },
             { path: "program", element: <CreateProgramScreen /> },
             { path: "review-budgets", element: <DHReviewBudgets /> },
+            { path: "program-review", element: <ProgramReview /> },
           ],
         },
       ],
