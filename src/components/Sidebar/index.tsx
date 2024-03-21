@@ -87,8 +87,8 @@ export default function ResponsiveDrawer(props: Props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const { withMore, withoutMore } = filterSidebarActionsWithMore(
     SIDEBARACTIONS,
-    // "Program Head"
-    "Admin"
+    "Program Head"
+    // "Admin"
     // "HR"
   );
   const navigate = useNavigate();
