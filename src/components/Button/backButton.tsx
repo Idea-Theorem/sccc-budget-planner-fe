@@ -3,10 +3,10 @@ import {
   Button,
   ArrowBackIosIcon,
 } from "../../pages/Components/MUIComponents/index";
-import { Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 
 // Styled BackButton component
-const StyledBackButton = styled(Button)(({ theme }) =>({
+const StyledBackButton = styled(Button)(({ theme }) => ({
   padding: "5px",
   color: "#303030",
 
@@ -39,8 +39,10 @@ const StyledBackButton = styled(Button)(({ theme }) =>({
 const BackButton = ({ onClick }: any) => {
   return (
     <StyledBackButton onClick={onClick}>
-      <ArrowBackIosIcon />
-      <Typography>Back</Typography>
+      <Stack direction="row" alignItems="center" gap="8px" className="btn-back">
+        <ArrowBackIosIcon />
+        <Typography>Back</Typography>
+      </Stack>
     </StyledBackButton>
   );
 };

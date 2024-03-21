@@ -5,11 +5,6 @@ import MainHeaderComponent from "../../../components/MainHeader";
 import NoProgramExistComponent from "../../../components/NoProgram";
 import { useNavigate } from "react-router-dom";
 const StyledBox = styled(Box)(() => ({
-  "&.appContainer": {
-    padding: "40px",
-    paddingLeft: "248px",
-  },
-  // Color: theme.palette.secondary.light,
 }));
 const ProgramHeadScreen = () => {
   const navigate = useNavigate();
@@ -18,7 +13,7 @@ const ProgramHeadScreen = () => {
     <StyledBox className="appContainer">
       <MainHeaderComponent
         title="Programs"
-        btnTitle="Create new programs"
+        btnTitle="Create New Programs"
         onClick={() => navigate("/program-head/create")}
       />
       <NoProgramExistComponent />

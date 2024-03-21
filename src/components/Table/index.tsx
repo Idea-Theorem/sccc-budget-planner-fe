@@ -2,7 +2,7 @@ import { styled } from "@mui/material/styles";
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import InputSearch from "../Input";
-const StyledBox = styled(Box)(({ theme }) =>({
+const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
     position: "relative",
@@ -14,6 +14,7 @@ const StyledBox = styled(Box)(({ theme }) =>({
     "& .MuiButtonBase-root": {
       color: "#979797 !important",
       fontSize: "13px",
+      letterSpacing: "1",
 
       "&:hover": {
         color: `${theme.palette.primary.main} !important`,
@@ -26,9 +27,9 @@ const StyleDataGrid = styled(DataGrid)(() => ({
   "&.MuiDataGrid-root": {
     borderWidth: "0 !important",
     borderStyle: "none",
-  },
-  ".MuiDataGrid-footerContainer": {
-    border: "none",
+    "&.MuiDataGrid-footerContainer": {
+      border: "none",
+    },
   },
   "& .MuiDataGrid-row": {
     "&.Mui-selected": {

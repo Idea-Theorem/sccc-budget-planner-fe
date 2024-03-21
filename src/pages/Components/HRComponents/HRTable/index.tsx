@@ -115,34 +115,6 @@ const columns: GridColDef[] = [
     editable: false,
     flex: 1,
   },
-//   {
-//     field: "profit",
-//     headerName: "Profit",
-//     sortable: false,
-//     editable: false,
-//     flex: 1,
-//   },
-//   {
-//     field: "nPrograms",
-//     headerName: "No. Programs",
-//     sortable: false,
-//     editable: false,
-//     flex: 1,
-//   },
-//   {
-//     field: "sDate",
-//     headerName: "Submission Date",
-//     sortable: false,
-//     editable: false,
-//     flex: 1,
-//   },
-//   {
-//     field: "comments",
-//     headerName: "Comments",
-//     sortable: false,
-//     editable: false,
-//     flex: 1,
-//   },
 ];
 
 const rows = [

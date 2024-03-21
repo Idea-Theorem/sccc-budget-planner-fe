@@ -5,10 +5,6 @@ import HrAddEmployee from '../../../../models/HrAddEmployee';
  
 
 const StyledBox = styled(Box)(() => ({
-    "&.appContainer": {
-      padding: "40px",
-      paddingLeft: "248px", 
-    },
   
     "& .dashboardCards": {
       display: "flex",

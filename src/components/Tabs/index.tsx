@@ -64,12 +64,6 @@ const BasicTabs = (props: BasicTabsProps) => {
           {props?.tabsTitleArray?.map((item, index) => (
             <Tab key={index} label={item?.title} {...a11yProps(index)} />
           ))}
-
-          {/* <Tab label="Pending" {...a11yProps(0)} />
-          <Tab label="Rejected" {...a11yProps(1)} />
-          <Tab label="Approved" {...a11yProps(2)} />
-          <Tab label="Drafts" {...a11yProps(3)} />
-          <Tab label="History" {...a11yProps(4)} /> */}
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
@@ -94,10 +88,23 @@ const BasicTabs = (props: BasicTabsProps) => {
 const TabsAreas = styled(Box)(({ theme }) => ({
   "& .MuiTabs-root": {
     margin: "0 0 15px",
+
+    ".css-sub0s1-MuiButtonBase-root-MuiTab-root": {
+      padding: "15px 22px 11px",
+      minHeight: "inherit",
+    },
+  },
+  ".MuiTabs-root": {
+    margin: "0 0 3px",
+  },
+
+  ".MuiTabs-indicator": {
+    // bottom: "4px",
   },
 
   ".MuiTabs-flexContainer": {
     borderBottom: "1px solid #BFBFBF",
+    height: "100%",
 
     "& .MuiButtonBase-root": {
       textTransform: "capitalize;",
@@ -117,7 +124,7 @@ const TabsAreas = styled(Box)(({ theme }) => ({
     },
   },
   "&.MuiButtonBase-root": {
-    color: theme.palette.error.main, //Example used plz exact style according to figma
+    color: theme.palette.error.main,
   },
 }));
 

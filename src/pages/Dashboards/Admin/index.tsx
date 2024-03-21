@@ -5,10 +5,6 @@ import MainHeaderComponent from "../../../components/MainHeader";
 import AdminDepartmentProgress from "../../../components/AdminDepartentProgress";
 import CollapsibleTable from "../../../components/CollapseTable";
 const StyledBox = styled(Box)(() => ({
-  "&.appContainer": {
-    padding: "40px",
-    paddingLeft: "248px",
-  },
 
   "& .dashboardCards": {
     display: "flex",
@@ -36,6 +32,7 @@ const AdminScreen = () => {
           total="$1,000.000.00"
           done="$500,000.00"
           showProgress={true}
+          color="info"
         />
         <AdminDataCard
           title="Approved Prgs-to-date"

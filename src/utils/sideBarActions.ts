@@ -1,5 +1,5 @@
 export const SIDEBARACTIONS: SidebarAction[] = [
-  { role: "Program Head", title: "Program", path: "/program-head/program" },
+  { role: "Program Head", title: "Programs", path: "/program-head/program" },
   { role: "Department Head", title: "Program" },
   { role: "Department Head", title: "Review Budgets" },
   { role: "Admin", title: "Dashboard", path: "/admin" },
@@ -9,6 +9,12 @@ export const SIDEBARACTIONS: SidebarAction[] = [
     role: "Admin",
     title: "HR",
     path: "/admin/settings",
+    more: [{ title: "Settings", path: "/admin/settings" }],
+  },
+  {
+    role: "HR",
+    title: "HR",
+    path: "/hr",
     more: [{ title: "Settings", path: "/admin/settings" }],
   },
   { role: "Super Admin", title: "Dashboard" },

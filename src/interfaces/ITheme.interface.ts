@@ -70,6 +70,7 @@ declare module "@mui/material/styles" {
   }
   interface TypeBackground {
     DarkGray: TypeBackground["default"];
+    lightGray: TypeBackground["default"];
     neutral: TypeBackground["default"];
     GFBackground: TypeBackground["default"];
     GFForeground: TypeBackground["default"];

@@ -5,10 +5,6 @@ import DepartmentInfo from '../../../../models/HrDepartment';
  
 
 const StyledBox = styled(Box)(() => ({
-    "&.appContainer": {
-      padding: "40px",
-      paddingLeft: "248px",
-    },
   
     "& .dashboardCards": {
       display: "flex",

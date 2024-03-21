@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 
 import LinearWithValueLabel from "../ProgressBar";
+import { LinearProgressProps } from "@mui/material";
 interface AdminDataCardProps {
   title?: string;
   edit?: boolean;
@@ -11,6 +12,7 @@ interface AdminDataCardProps {
   total?: string;
   done?: string;
   showProgress?: boolean;
+  color?: LinearProgressProps['color']; // Ensure the color prop matches the type defined in LinearProgressProps
 }
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.dashboardStatsCard": {
@@ -119,10 +121,10 @@ const StyledBox = styled(Box)(({ theme }) => ({
       marginBottom: "-18px",
 
       "& .MuiLinearProgress-determinate": {
-        background: theme.palette.secondary.mainLight,
+        // background: theme.palette.secondary.mainLight,
 
         "& .MuiLinearProgress-bar1Determinate": {
-          background: theme.palette.secondary.main,
+          // background: theme.palette.secondary.main,
         },
       },
     },
@@ -147,7 +149,7 @@ const AdminDataCard = (props: AdminDataCardProps) => {
       </Stack>
       {props?.showProgress && (
         <Box className="cardProgressBar">
-          <LinearWithValueLabel value={20}/>
+          <LinearWithValueLabel value={20} color={props?.color}/>
         </Box>
       )}
     </StyledBox>

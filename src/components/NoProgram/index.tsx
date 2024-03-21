@@ -21,7 +21,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
       fontWeight: "500",
       lineHeight: "1.5",
       letterSpacing: "0.15px",
-      marginBottom: "15px"
+      marginBottom: "15px",
     },
 
     "& .linkCreate": {
@@ -31,15 +31,15 @@ const StyledBox = styled(Box)(({ theme }) => ({
       fontWeight: "500",
       lineHeight: "150%",
       letterSpacing: "0.15px",
-      color: theme.palette.secondary.main,
+      color: theme.palette.info.main,
+      textDecorationColor: theme.palette.secondary.shades?.["4p"],
       transition: "250ms cubic-bezier(0.4, 0, 0.2, 1)",
 
       "&:hover": {
-        color: theme.palette.primary.main,
-      }
+        textDecorationColor: theme.palette.info.main,
+      },
     },
   },
-  // Color: theme.palette.secondary.light,
 }));
 
 const NoProgramExistComponent = () => {
@@ -47,8 +47,13 @@ const NoProgramExistComponent = () => {
     <StyledBox className="programsEmptyBox">
       <Typography variant="h6">No existing programs</Typography>
       <Box>
-        <Link className="linkCreate" color="primary" href="#" underline="always" variant="subtitle2">
-          Create new program
+        <Link
+          className="linkCreate"
+          href="#"
+          underline="always"
+          variant="subtitle2"
+        >
+          Create New Program
         </Link>
       </Box>
     </StyledBox>

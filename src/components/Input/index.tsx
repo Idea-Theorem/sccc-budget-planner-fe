@@ -15,6 +15,7 @@ const StyledInputSearch = styled(Box)(({ theme }) => ({
     right: "0",
     top: "0",
     zIndex: "1",
+    width: "220px",
   },
 
   "& .MuiOutlinedInput-input": {
@@ -24,6 +25,10 @@ const StyledInputSearch = styled(Box)(({ theme }) => ({
     "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
       borderColor: theme.palette.primary.main,
     },
+  },
+
+  ".MuiInputBase-root": {
+    padding: "0 0 5px",
   },
 }));
 
