@@ -6,10 +6,12 @@ import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import BudgetDetail from "../../../components/BudgetDetail";
 import BackButton from "../../../components/Button/backButton";
 import BasicDatePicker from "../../../components/DatePicker";
 import SelectDemo from "../../../components/Select";
 import TabsProgramArea from "../../../components/TabsProgram";
+import { ActionsType } from "../../../types/common";
 import { Grid } from "../../Components/MUIComponents/index";
 
 const StyledBox = styled(Box)(({ theme }) => ({
@@ -244,72 +246,24 @@ const CreateProgramScreen = () => {
 
   const navigate = useNavigate()
 
+  const actions: ActionsType[] = [
+    {
+      title: "Revise",
+      icon: <EditNote />,
+      variant: "contained",
+      color: "primary",
+      size: "medium",
+      onClick: () => setSecondLevel(true),
+    },
+  ];
+
   return (
     <>
-      
       {firstLevel && !secondLevel ? (
-        <StyledBox className="appContainer bgGray">
-          <Grid container spacing={2}>
-            <Grid className="appBackHeader" item xs={12}>
-              <BackButton onClick={() => navigate("/program-head")} />
-            </Grid>
-            <Grid item xs={3}>
-              <DateStack
-                className="selected"
-                direction={"row"}
-                justifyContent={"flex-end"}
-                alignItems={"center"}
-              >
-                <DateTypography variant="h5">2-Mar</DateTypography>
-              </DateStack>
-            </Grid>
-            <Grid item xs={9}>
-              <Grid className="createProgramContent" item xs={12}>
-                <Grid item xs={12}>
-                  <Stack className="createProgramContentHead">
-                    <Typography className="mainHeading" variant="h5">
-                      Youth Swimming Class1
-                    </Typography>
-                    {/* <Buttons
-                      startIcon={<EditNote />}
-                      btntext3="Revise"
-                      onClick={() => setSecondLevel(true)}
-                    /> */}
-                    <Button
-                      onClick={() => setSecondLevel(true)}
-                      variant="contained"
-                      color="primary"
-                      size="medium"
-                      startIcon={<EditNote />}
-                    >
-                      Revise
-                    </Button>
-                  </Stack>
-                </Grid>
-                <Grid className="createFormBlock" item xs={10}>
-                  <Stack className="createFormFields">
-                    <SelectDemo />
-                    <SelectDemo />
-                  </Stack>
-                  <Stack className="createFormCalendarFields">
-                    <Typography variant="h5">Duration</Typography>
-                    <Grid container spacing={2} className="datepicker-area">
-                      <Grid className="createFormTable" item xs={6}>
-                        <BasicDatePicker />
-                      </Grid>
-                      <Grid className="createFormTable" item xs={6}>
-                        <BasicDatePicker />
-                      </Grid>
-                    </Grid>
-                  </Stack>
-                </Grid>
-                <Grid className="createFormTable" item xs={12}>
-                  <TabsProgramArea />
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-        </StyledBox>
+        <BudgetDetail
+          actions={actions}
+          clickBack={() => navigate("/program-head")}
+        />
       ) : null}
       {secondLevel ? (
         <StyledBox className="appContainer bgGray">
@@ -345,6 +299,7 @@ const CreateProgramScreen = () => {
                         color="primary"
                         size="medium"
                         startIcon={<Save />}
+                        onClick={() => navigate("/program-head/program")}
                       >
                         Save
                       </Button>

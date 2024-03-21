@@ -83,6 +83,7 @@ const normalRoutes: RouteObject = {
             { path: "addemployees", element: <AddEmployee /> },
             { path: "adddepartment", element: <AddDepartment /> },
             { path: "addcenter", element: <AddCenter /> },
+            {path: "settings", element: <div>Settings</div>}
           ],
         },
       ],

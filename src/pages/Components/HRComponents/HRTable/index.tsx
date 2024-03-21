@@ -103,53 +103,55 @@ const StyleDataGrid = styled(DataGrid)(() => ({
   },
 }));
 
-const columns: GridColDef[] = [
-  {
-    field: "departmentName",
-    headerName: "Department Name",
-    sortable: false,
-    editable: false,
-    flex: 1,
-  },
-  {
-    field: "status",
-    headerName: "Employee Count",
-    sortable: false,
-    editable: false,
-    flex: 1,
-  },
-  {
-    field: "lYearBudget",
-    headerName: "Date Created",
-    sortable: false,
-    editable: false,
-    flex: 1,
-  },
-  {
-    field: "",
-    headerName: "",
-    sortable: false,
-    editable: false,
-    flex: 1,
-  },
-];
 
-const rows = [
-  {
-    id: 1,
-    departmentName: "Recreation & Culture",
-    status: "5",
-    lYearBudget: "02-Mar-2024",
-  },
-  {
-    id: 2,
-    departmentName: "HR",
-    status: "5",
-    lYearBudget: "02-Mar-2024",
-  },
-];
 
-const HRTableComponent = () => {
+const HRTableComponent = ({title}: {title: string}) => {
+  const columns: GridColDef[] = [
+    {
+      field: `${title}Name`,
+      headerName: `${title} Name`,
+      sortable: false,
+      editable: false,
+      flex: 1,
+    },
+    {
+      field: "status",
+      headerName: "Employee Count",
+      sortable: false,
+      editable: false,
+      flex: 1,
+    },
+    {
+      field: "lYearBudget",
+      headerName: "Date Created",
+      sortable: false,
+      editable: false,
+      flex: 1,
+    },
+    {
+      field: "",
+      headerName: "",
+      sortable: false,
+      editable: false,
+      flex: 1,
+    },
+  ];
+
+  const rows = [
+    {
+      id: 1,
+      departmentName: "Recreation & Culture",
+      status: "5",
+      lYearBudget: "02-Mar-2024",
+    },
+    {
+      id: 2,
+      departmentName: "HR",
+      status: "5",
+      lYearBudget: "02-Mar-2024",
+    },
+  ];
+
   return (
     <>
       <StyledBox className="mainTableBlock">

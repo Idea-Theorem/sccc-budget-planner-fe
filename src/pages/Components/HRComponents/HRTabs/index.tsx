@@ -10,7 +10,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import HRTableComponent from "../HRTable";
 import AddIcon from "@mui/icons-material/Add";
-import { Box } from "@mui/material";
+import Box from "@mui/material/Box";
 import HrCollapsibleTable from "../HrCollapseTable";
 
 const AppHuman = styled(Box)(({ theme }) => ({
@@ -85,8 +85,8 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
         </Grid>
         <Grid item xs={12}>
           {value === 0 && <HrCollapsibleTable />}
-          {value === 1 && <HRTableComponent />}
-          {value === 2 && <HRTableComponent />}
+          {value === 1 && <HRTableComponent title="Department" />}
+          {value === 2 && <HRTableComponent title="Center" />}
         </Grid>
       </Grid>
     </AppHuman>
