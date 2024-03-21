@@ -14,7 +14,7 @@ import Modal from '@mui/material/Modal';
 const EmployeeInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
   width: "100%",
-  padding: "40px 50px",
+  padding: "27px 40px",
   boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
   maxWidth:"956px",
   margin: "0 auto",
@@ -30,7 +30,6 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
     fontSize: "20px",
     fontWeight: "600",
     margin: "0 0 25px",
-    padding: "20px 0 0",
   },
 
   "& .subtitle": {
@@ -38,7 +37,8 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
     fontFamily: "Work Sans",
     fontSize: "17px",
     fontWeight: "500",
-    margin: "0 0 20px",
+    margin: "0 0 19px",
+    letterSpacing: "-0.5px",
   },
 
   "& .MuiTextField-root": {
@@ -49,13 +49,70 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
     width: "100%",
   },
 
+  "& .MuiGrid-container": {
+    marginTop: "-15px",
+
+    "& > .MuiGrid-item": {
+      paddingTop: "15px",
+
+      "&.selectGrid": {
+        "& .MuiFormControl-root": {
+          margin: "0",
+    
+          "& .MuiInputLabel-root": {
+            fontSize: "12px",
+            color: "rgba(0, 0, 0, 0.7)",
+
+            "& + .MuiInputBase-root": {
+              marginTop: "-2px",
+
+              "&:before": {
+                display: "none",
+              },
+
+              "& .MuiSelect-nativeInput": {
+                fontFamily: "Work Sans",
+              },
+
+              "& .MuiSelect-select": {
+                fontFamily: "Work Sans",
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+
   "& .MuiInputLabel-root": {
     marginBottom: "5px",
     display: "inline-block",
+    fontSize: "16px",
+    lineHeight: "1.2",
+    fontFamily: "Roboto",
+
+    "& + .MuiInputBase-root": {
+      marginTop: "15px",
+    },
+  },
+
+  "& .MuiInputBase-input": {
+    fontFamily: "Work Sans",
+    fontSize: "16px",
+
+  },
+
+  "& .secondaryRow": {
+    paddingTop: "29px",
   },
 
   "& .formButtons": {
-    marginTop: "25px",
+    marginTop: "32px",
+    paddingBottom: "5px",
+
+    "& .MuiButtonBase-root": {
+      textTransform: "capitalize",
+    },
   },
 }));
 
@@ -102,10 +159,10 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
           <Grid item xs={6}>
             <TextFields variant="standard" label="Email" />
           </Grid>
-          <Grid item xs={6}>
+          <Grid className="selectGrid" item xs={6}>
             <SelectDemo />
           </Grid>
-          <Grid item xs={6}>
+          <Grid className="selectGrid" item xs={6}>
             <SelectDemo />
           </Grid>
           <Grid item xs={6}>
@@ -113,8 +170,8 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
           </Grid>
         </Grid>
       </Box>
-      <Box>
-        <Typography variant="h6">{title}</Typography>
+      <Box className="secondaryRow">
+        <Typography className="subtitle">{title}</Typography>
       </Box>
       <Grid container spacing={4}>
         <Grid item xs={6}>
@@ -132,7 +189,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
         direction="row"
         justifyContent="flex-end"
         alignItems="center"
-        gap="20px"
+        gap="10px"
       >
         <Button
           variant="text"

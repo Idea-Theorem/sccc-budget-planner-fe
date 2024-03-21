@@ -36,7 +36,7 @@ const AdminScreen = () => {
         />
         <AdminDataCard
           title="Approved Prgs-to-date"
-          total="45 forecase"
+          total="45 forecast"
           done="24"
           edit={true}
         />

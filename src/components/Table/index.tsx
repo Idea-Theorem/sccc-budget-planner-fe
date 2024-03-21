@@ -9,12 +9,13 @@ const StyledBox = styled(Box)(({ theme }) => ({
   },
 
   "& .MuiDataGrid-toolbarContainer": {
-    marginBottom: "10px",
+    marginBottom: "1px",
 
     "& .MuiButtonBase-root": {
       color: "#979797 !important",
       fontSize: "13px",
-      letterSpacing: "1",
+      letterSpacing: "0.8px",
+      marginRight: "-1px",
 
       "&:hover": {
         color: `${theme.palette.primary.main} !important`,
@@ -56,7 +57,7 @@ const StyleDataGrid = styled(DataGrid)(() => ({
     color: "rgba(0, 0, 0, 0.87)",
     fontSize: "14px",
     lineHeight: "24px",
-    fontWeight: "500",
+    fontWeight: "600",
     fontFamily: "Work Sans, sans-serif",
     letterSpacing: "0.17px",
   },
@@ -91,12 +92,17 @@ const StyleDataGrid = styled(DataGrid)(() => ({
       fontSize: "12px",
       lineHeight: "20px",
       fontWeight: "400",
-      fontFamily: "Roboto, sans-serif",
+      fontFamily: "Work Sans, sans-serif",
       letterSpacing: "0.4px",
     },
   },
   "& .MuiTablePagination-displayedRows": {
     color: "rgba(0, 0, 0, 0.87)",
+    fontSize: "12px",
+    fontFamily: "Work Sans, sans-serif",
+  },
+  ".MuiDataGrid-cell": {
+    overflow: "visible !important",
   },
   "& .MuiButtonBase-root": {
     color: "rgba(0, 0, 0, 0.56) !important",
