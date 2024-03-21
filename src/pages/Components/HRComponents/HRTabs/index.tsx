@@ -36,7 +36,7 @@ interface TabProps {
 const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
   const [value, setValue] = React.useState(0);
 
-  const handleChange = (event: ChangeEvent<{}>, newValue: number) => {
+  const handleChange = (_: ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
 

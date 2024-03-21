@@ -1,7 +1,6 @@
-import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
+import { styled } from "@mui/material/styles";
 import { ReactElement, ReactNode } from "react";
-import { Box } from "@mui/material";
 
 interface StyledButtonProps {
   variant?: "contained" | "outlined" | "text";
