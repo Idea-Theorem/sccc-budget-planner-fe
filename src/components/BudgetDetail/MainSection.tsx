@@ -16,18 +16,20 @@ const MainSection = ({actions}: {actions: ActionsType[]}) => {
             <Typography className="mainHeading" variant="h5">
               Youth Swimming Class
             </Typography>
-            {actions.map((action: ActionsType, index: number) => (
-              <Button
-                key={index}
-                onClick={action.onClick}
-                variant={action.variant}
-                color={action.color}
-                size={action.size}
-                startIcon={action.icon}
-              >
-                Revise
-              </Button>
-            ))}
+            <Stack direction={"row"} gap={"20px"}>
+              {actions.map((action: ActionsType, index: number) => (
+                <Button
+                  key={index}
+                  onClick={action.onClick}
+                  variant={action.variant}
+                  color={action.color}
+                  size={action.size}
+                  startIcon={action.icon}
+                >
+                  {action.title}
+                </Button>
+              ))}
+            </Stack>
           </Stack>
         </Grid>
         <Grid className="createFormBlock" item xs={10}>

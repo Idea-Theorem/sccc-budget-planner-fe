@@ -11,7 +11,7 @@ const ProgramReview = () => {
         {
           title: "Reject",
           icon: <CloseIcon />,
-          variant: "contained",
+          variant: "outlined",
           color: "primary",
           size: "medium",
           onClick: () => {},

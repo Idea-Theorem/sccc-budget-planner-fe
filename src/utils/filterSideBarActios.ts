@@ -1,3 +1,5 @@
+import { SidebarAction } from "../types/common";
+
 export function filterSidebarActionsWithMore(
   sidebarActions: SidebarAction[],
   role: string
