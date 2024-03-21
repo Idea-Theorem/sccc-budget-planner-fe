@@ -89,9 +89,9 @@ export default function ResponsiveDrawer(props: Props) {
   const { withMore, withoutMore } = filterSidebarActionsWithMore(
     SIDEBARACTIONS,
     // "Program Head"
-    // "Admin"
+    "Admin"
     // "HR",
-    "Department Head"
+    // "Department Head"
   );
   const navigate = useNavigate();
   const location = useLocation();
