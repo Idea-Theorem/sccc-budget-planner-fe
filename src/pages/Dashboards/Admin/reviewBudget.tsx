@@ -11,6 +11,182 @@ const StyledBox = styled(Box)(() => ({
   // Color: theme.palette.secondary.light,
 }));
 const ReviewBudgetScreen = () => {
+  const tableColumnsTitleArray = [
+    [
+      {
+        field: "departmentName",
+        headerName: "Department Name",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "status",
+        headerName: "Status",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "lYearBudget",
+        headerName: "Last Year Budget",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "budget",
+        headerName: "Budget",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "profit",
+        headerName: "Profit",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "nPrograms",
+        headerName: "No. Programs",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "sDate",
+        headerName: "Submission Date",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "comments",
+        headerName: "Comments",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+    ],
+    [
+      {
+        field: "departmentName",
+        headerName: "Department Name",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "status",
+        headerName: "Status",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "lYearBudget",
+        headerName: "Last Year Budget",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "budget",
+        headerName: "Budget",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "profit",
+        headerName: "Profit",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "nPrograms",
+        headerName: "No. Programs",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "sDate",
+        headerName: "Submission Date",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "comments",
+        headerName: "Comments",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+    ],
+    [
+      {
+        field: "departmentName",
+        headerName: "Department Name",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "status",
+        headerName: "Status",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "lYearBudget",
+        headerName: "Last Year Budget",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "budget",
+        headerName: "Budget",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "profit",
+        headerName: "Profit",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "nPrograms",
+        headerName: "No. Programs",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "sDate",
+        headerName: "Submission Date",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "comments",
+        headerName: "Comments",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+    ],
+  ];
   return (
     <StyledBox className="appContainer">
       <MainHeaderComponent
@@ -26,64 +202,7 @@ const ReviewBudgetScreen = () => {
           { title: "Drafts" },
           { title: "History" },
         ]}
-        tableColumnsTitleArray={[
-          {
-            field: "departmentName",
-            headerName: "Department Name",
-            sortable: false,
-            editable: false,
-            flex: 1,
-          },
-          {
-            field: "status",
-            headerName: "Status",
-            sortable: false,
-            editable: false,
-            flex: 1,
-          },
-          {
-            field: "lYearBudget",
-            headerName: "Last Year Budget",
-            sortable: false,
-            editable: false,
-            flex: 1,
-          },
-          {
-            field: "budget",
-            headerName: "Budget",
-            sortable: false,
-            editable: false,
-            flex: 1,
-          },
-          {
-            field: "profit",
-            headerName: "Profit",
-            sortable: false,
-            editable: false,
-            flex: 1,
-          },
-          {
-            field: "nPrograms",
-            headerName: "No. Programs",
-            sortable: false,
-            editable: false,
-            flex: 1,
-          },
-          {
-            field: "sDate",
-            headerName: "Submission Date",
-            sortable: false,
-            editable: false,
-            flex: 1,
-          },
-          {
-            field: "comments",
-            headerName: "Comments",
-            sortable: false,
-            editable: false,
-            flex: 1,
-          },
-        ]}
+        table={tableColumnsTitleArray}
       />
     </StyledBox>
   );

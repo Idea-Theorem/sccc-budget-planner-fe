@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import SelectComponent from "../../components/Select";
-import TableComponent from "../../components/Table";
+// import TableComponent from "../../components/Table";
 import Buttons from "../../components/Button";
 import Checkboxes from "../../components/Checkox";
 import Input from "../../components/Input";
@@ -21,10 +21,186 @@ import ApprovedProgram from "../Dashboards/ProgramHead/approvedProgram";
 // import ResponsiveDrawer from "../../components/Sidebar";
 
 const ComponentsScreen = () => {
+  const tableColumnsTitleArray = [
+    [
+      {
+        field: "departmentName",
+        headerName: "Department Name",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "status",
+        headerName: "Status",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "lYearBudget",
+        headerName: "Last Year Budget",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "budget",
+        headerName: "Budget",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "profit",
+        headerName: "Profit",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "nPrograms",
+        headerName: "No. Programs",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "sDate",
+        headerName: "Submission Date",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "comments",
+        headerName: "Comments",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+    ],
+    [
+      {
+        field: "departmentName",
+        headerName: "Department Name",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "status",
+        headerName: "Status",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "lYearBudget",
+        headerName: "Last Year Budget",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "budget",
+        headerName: "Budget",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "profit",
+        headerName: "Profit",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "nPrograms",
+        headerName: "No. Programs",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "sDate",
+        headerName: "Submission Date",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "comments",
+        headerName: "Comments",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+    ],
+    [
+      {
+        field: "departmentName",
+        headerName: "Department Name",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "status",
+        headerName: "Status",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "lYearBudget",
+        headerName: "Last Year Budget",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "budget",
+        headerName: "Budget",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "profit",
+        headerName: "Profit",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "nPrograms",
+        headerName: "No. Programs",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "sDate",
+        headerName: "Submission Date",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "comments",
+        headerName: "Comments",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+    ],
+  ];
   return (
     <Box>
       <SelectComponent />
-      <TableComponent />
+      {/* <TableComponent /> */}
       <Buttons
         btntext1="abc"
         btntext2="def"
@@ -43,64 +219,7 @@ const ComponentsScreen = () => {
           { title: "Drafts" },
           { title: "History" },
         ]}
-        tableColumnsTitleArray={[
-          {
-            field: "departmentName",
-            headerName: "Department Name",
-            sortable: false,
-            editable: false,
-            flex: 1,
-          },
-          {
-            field: "status",
-            headerName: "Status",
-            sortable: false,
-            editable: false,
-            flex: 1,
-          },
-          {
-            field: "lYearBudget",
-            headerName: "Last Year Budget",
-            sortable: false,
-            editable: false,
-            flex: 1,
-          },
-          {
-            field: "budget",
-            headerName: "Budget",
-            sortable: false,
-            editable: false,
-            flex: 1,
-          },
-          {
-            field: "profit",
-            headerName: "Profit",
-            sortable: false,
-            editable: false,
-            flex: 1,
-          },
-          {
-            field: "nPrograms",
-            headerName: "No. Programs",
-            sortable: false,
-            editable: false,
-            flex: 1,
-          },
-          {
-            field: "sDate",
-            headerName: "Submission Date",
-            sortable: false,
-            editable: false,
-            flex: 1,
-          },
-          {
-            field: "comments",
-            headerName: "Comments",
-            sortable: false,
-            editable: false,
-            flex: 1,
-          },
-        ]}
+        table={tableColumnsTitleArray}
       />
       <LinearWithValueLabel value={40} />
       <ThreadPopups />

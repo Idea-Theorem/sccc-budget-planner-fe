@@ -14,16 +14,10 @@ interface TabPanelProps {
 interface TabTitle {
   title?: string;
 }
-interface TableColumn {
-  field: string;
-  headerName: string;
-  sortable: boolean;
-  editable: boolean;
-  flex: number;
-}
+
 interface BasicTabsProps {
   tabsTitleArray: TabTitle[];
-  tableColumnsTitleArray: TableColumn[];
+  table: any;
 }
 
 const CustomTabPanel = (props: TabPanelProps) => {
@@ -74,21 +68,24 @@ const BasicTabs = (props: BasicTabsProps) => {
           ))}
         </Tabs>
       </Box>
-      <CustomTabPanel value={value} index={0}>
-        <TableComponent />
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-        <TableComponent />
+      {props?.table?.map((item: any, index: any) => (
+        <CustomTabPanel key={index} value={value} index={index}>
+          <TableComponent columns={item} />
+        </CustomTabPanel>
+      ))}
+
+      {/* <CustomTabPanel value={value} index={1}>
+        <TableComponent columns={props.tableColumnsTitleArray} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        <TableComponent />
+        <TableComponent columns={props.tableColumnsTitleArray} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
-        <TableComponent />
+        <TableComponent columns={props.tableColumnsTitleArray} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={4}>
-        <TableComponent />
-      </CustomTabPanel>
+        <TableComponent columns={props.tableColumnsTitleArray} />
+      </CustomTabPanel> */}
     </Box>
   );
 };
@@ -139,10 +136,7 @@ const TabsAreas = styled(Box)(({ theme }) => ({
 export default function TabsArea(props: BasicTabsProps) {
   return (
     <TabsAreas>
-      <BasicTabs
-        tabsTitleArray={props?.tabsTitleArray}
-        tableColumnsTitleArray={props?.tableColumnsTitleArray}
-      />
+      <BasicTabs tabsTitleArray={props?.tabsTitleArray} table={props?.table} />
     </TabsAreas>
   );
 }
