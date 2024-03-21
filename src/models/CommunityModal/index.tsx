@@ -2,16 +2,13 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
 import TextFields from "../../components/Input/textfield";
 import { Save, Clear } from "@mui/icons-material"; // Import Clear icon from Material-UI
 import Grid from "@mui/material/Grid"; // Import Grid component from MUI
-import SelectDemo from "../../components/Select";
-import BasicDatePicker from "../../components/DatePicker";
-import { Button } from "@mui/material";
 import Modal from '@mui/material/Modal';
 
-
-const EmployeeInfoArea = styled(Box)(({ theme }) => ({
+const DepartmentInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
   width: "100%",
   padding: "40px 50px",
@@ -29,16 +26,15 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
     fontFamily: "Work Sans",
     fontSize: "20px",
     fontWeight: "600",
-    margin: "0 0 25px",
-    padding: "20px 0 0",
+    margin: "0 0 25px", 
   },
 
   "& .subtitle": {
     color: "#000",
     fontFamily: "Work Sans",
     fontSize: "17px",
-    fontWeight: "500",
-    margin: "0 0 20px",
+    fontWeight: "500", 
+    margin: "0 0 20px", 
   },
 
   "& .MuiTextField-root": {
@@ -59,75 +55,44 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
   },
 }));
 
-interface IHrAddEmployee {
+interface IDepartmentInfo {
   heading?: string;
   subheading?: string;
-  title?: string;
   handleClose?: any;
   open?: any
-
 }
 
-const HrAddEmployee: React.FC<IHrAddEmployee> = ({
-  heading,
-  subheading,
-  title,
-  handleClose,
-  open
-}) => {
- 
+const CommunityModal: React.FC<IDepartmentInfo> = ({ heading, subheading,  handleClose, open }) => {
   return (
-<Modal
+  <Modal
   open={open}
   onClose={handleClose}
   aria-labelledby="modal-modal-title"
   aria-describedby="modal-modal-description"
 >
-<EmployeeInfoArea>
-      <Box >
+    <DepartmentInfoArea>
+      <Box>
         <Typography variant="h6">{heading}</Typography>
       </Box>
       <Box>
         <Typography className="subtitle">{subheading}</Typography>
         <Grid container spacing={4}>
           <Grid item xs={6}>
-            <TextFields variant="standard" label="First Name" />
-          </Grid>
+            <TextFields variant="standard" label="Center Name" />
+          </Grid> 
           <Grid item xs={6}>
-            <TextFields variant="standard" label="Last Name" />
-          </Grid>
-          <Grid item xs={6}>
-            <TextFields variant="standard" label="Email" />
-          </Grid>
-          <Grid item xs={6}>
-            <TextFields variant="standard" label="Email" />
-          </Grid>
-          <Grid item xs={6}>
-            <SelectDemo />
-          </Grid>
-          <Grid item xs={6}>
-            <SelectDemo />
-          </Grid>
-          <Grid item xs={6}>
-            <BasicDatePicker />
+            <TextFields variant="standard" label="Employee Count" />
           </Grid>
         </Grid>
       </Box>
-      <Box>
-        <Typography variant="h6">{title}</Typography>
-      </Box>
-      <Grid container spacing={4}>
-        <Grid item xs={6}>
-          <TextFields variant="standard" label="First Name" />
-        </Grid>
-        <Grid item xs={6}>
-          <TextFields variant="standard" label="Last Name" />
-        </Grid>
-        <Grid item xs={6}>
-          <TextFields variant="standard" label="Last Name" />
-        </Grid>
-      </Grid>
       <Stack
+        className="formButtons"
+        direction="row"
+        justifyContent="flex-end"
+        alignItems="center"
+        gap="20px"
+      >
+        <Stack
         className="formButtons"
         direction="row"
         justifyContent="flex-end"
@@ -151,11 +116,10 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
           Save
         </Button>
       </Stack>
-    </EmployeeInfoArea>
-</Modal>
-
-  
+      </Stack>
+    </DepartmentInfoArea>
+    </Modal>
   );
 };
 
-export default HrAddEmployee;
+export default CommunityModal;

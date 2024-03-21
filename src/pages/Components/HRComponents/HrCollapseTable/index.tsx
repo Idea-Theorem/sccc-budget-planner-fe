@@ -13,6 +13,10 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import TablePagination from "@mui/material/TablePagination";
 import { styled } from "@mui/system";
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
 
 // Define StyledInputSearch using styled component
 const HrCollapseableTable = styled(Box)(({ theme }) => ({
@@ -115,8 +119,8 @@ function createData(
   };
 }
 
-function Row(props: { row: ReturnType<typeof createData> }) {
-  const { row } = props;
+function Row(props: { row: ReturnType<typeof createData>, handleClick: () => void }) {
+  const { row, handleClick } = props;
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -136,7 +140,17 @@ function Row(props: { row: ReturnType<typeof createData> }) {
         </TableCell>
         <TableCell>{row.calories}</TableCell>
         <TableCell>{row.fat}</TableCell>
-        <TableCell>{row.carbs}</TableCell>
+        <TableCell>{row.carbs}</TableCell> 
+        <TableCell >
+          <Stack direction="row" gap="10px" alignItems="center">
+          <Button variant="text" color="error" size="small" startIcon={<DeleteOutlineIcon/>}>
+            Delete
+          </Button>
+          <Button variant="outlined" color="primary" size="small" startIcon={<EditNoteIcon/>} onClick={handleClick}>
+            Edit
+          </Button>
+          </Stack>
+        </TableCell>
       </TableRow>
       <TableRow>
         <TableCell padding="none" colSpan={6}>
@@ -178,7 +192,7 @@ const rows = [
   ),
 ];
 
-export default function HrCollapsibleTable() {
+export default function HrCollapsibleTable({handleClick}: any) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -211,7 +225,7 @@ export default function HrCollapsibleTable() {
               {rows
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => (
-                  <Row key={index} row={row} />
+                  <Row key={index} row={row} handleClick={handleClick}/>
                 ))}
             </TableBody>
           </Table>
