@@ -6,6 +6,7 @@ import ProgramProgress from "./programProgress";
 import DepartmentButton from "./departmentButton";
 import { departments } from "../../utils/sampleData";
 
+
 const StyledBox = styled(Box)(() => ({
   "&.dashboardStatsCard": {
     width: "100%",
@@ -41,7 +42,7 @@ const StyledBox = styled(Box)(() => ({
     "& .dashboardGraphBox": {
       width: "320px",
       flexShrink: "0",
-      paading: "15px",
+      padding: "15px", // Fixed typo in padding
     },
 
     "& .dashboardGraphsList": {
@@ -50,7 +51,8 @@ const StyledBox = styled(Box)(() => ({
     },
   },
 }));
-const AdminDepartmentProgress = () => {
+
+const AdminDepartmentProgress = () => { // Corrected props definition
   return (
     <StyledBox className="dashboardStatsCard">
       <Typography variant="h3">Department %</Typography>
@@ -64,10 +66,10 @@ const AdminDepartmentProgress = () => {
           <BasicPie />
         </Box>
         <Box className="dashboardGraphsList">
-          <ProgramProgress title="Program 1" amount="$00.000" value={70} />
-          <ProgramProgress title="Program 2" amount="$00.000" value={60} />
-          <ProgramProgress title="Program 3" amount="$00.000" value={40} />
-          <ProgramProgress title="Program 4" amount="$00.000" value={50} />
+          <ProgramProgress title="Program 1" amount="$00.000" value={20} color="info"/>
+          <ProgramProgress title="Program 2" amount="$00.000" value={60} color="secondary" /> 
+          <ProgramProgress title="Program 3" amount="$00.000" value={40} color="error"/>
+          <ProgramProgress title="Program 4" amount="$00.000" value={50} color="warning" />
         </Box>
       </Box>
     </StyledBox>

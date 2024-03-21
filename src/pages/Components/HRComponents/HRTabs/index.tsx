@@ -44,15 +44,14 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
    const [heading, setHeading] = useState<string>("");
    const [departHeading, setDepartHeading] = useState<string>("");
    const [centerHeading, setCenterHeading] = useState<string>("");
-  const handleChange = (event: ChangeEvent<{}>, newValue: number) => {
-    console.log(event)
+  const handleChange = (_: ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
 
   const routes = [
-    { path: "/superAdmin/hr-addemployees" },
-    { path: "/superAdmin/hr-adddepartment" },
-    { path: "/superAdmin/hr-addcenter" },
+    { path: "/hr/addemployees" },
+    { path: "/hr/adddepartment" },
+    { path: "/hr/addcenter" },
   ];
   console.log(routes)
 

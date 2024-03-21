@@ -7,15 +7,14 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 
 const StyledBox = styled(Box)(() => ({
-
   "& .budgetTitle": {
     margin: "0 0 10px",
-    
+
     "& .MuiTypography-body1": {
       fontSize: "20px",
       fontWeight: "400",
       lineHeight: "1.23",
-      letterSpacing: "0.25px", 
+      letterSpacing: "0.25px",
     },
   },
   // Color: theme.palette.secondary.light,
@@ -35,6 +34,64 @@ const DepartmentDetailScreen = () => {
           { title: "Approved" },
           { title: "Drafts" },
           { title: "History" },
+        ]}
+        tableColumnsTitleArray={[
+          {
+            field: "departmentName",
+            headerName: "Department Name",
+            sortable: false,
+            editable: false,
+            flex: 1,
+          },
+          {
+            field: "status",
+            headerName: "Status",
+            sortable: false,
+            editable: false,
+            flex: 1,
+          },
+          {
+            field: "lYearBudget",
+            headerName: "Last Year Budget",
+            sortable: false,
+            editable: false,
+            flex: 1,
+          },
+          {
+            field: "budget",
+            headerName: "Budget",
+            sortable: false,
+            editable: false,
+            flex: 1,
+          },
+          {
+            field: "profit",
+            headerName: "Profit",
+            sortable: false,
+            editable: false,
+            flex: 1,
+          },
+          {
+            field: "nPrograms",
+            headerName: "No. Programs",
+            sortable: false,
+            editable: false,
+            flex: 1,
+          },
+          {
+            field: "sDate",
+            headerName: "Submission Date",
+            sortable: false,
+            editable: false,
+            flex: 1,
+          },
+          {
+            field: "comments",
+            headerName: "Comments",
+            sortable: false,
+            editable: false,
+            flex: 1,
+          },
         ]}
       />
     </StyledBox>

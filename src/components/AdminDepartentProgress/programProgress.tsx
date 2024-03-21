@@ -3,11 +3,13 @@ import Box from "@mui/material/Box";
 import LinearWithValueLabel from "../ProgressBar";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
+import { LinearProgressProps } from "@mui/material";
 
 interface ProgramProgressProps {
   title?: string;
   amount?: string;
   value?: number
+  color?: LinearProgressProps["color"];
 }
 
 const StyledBox = styled(Box)(({ theme }) => ({
@@ -61,7 +63,7 @@ const ProgramProgress = (props: ProgramProgressProps) => {
         <Typography>{props?.amount}</Typography>
       </Stack>
       <Box className="progressStatusBar">
-        <LinearWithValueLabel value={props?.value}/> 
+        <LinearWithValueLabel value={props?.value} color={props?.color}/> 
       </Box>
     </StyledBox>
   );

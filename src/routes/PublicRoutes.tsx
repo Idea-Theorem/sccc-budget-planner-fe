@@ -1,23 +1,23 @@
-import { RouteObject } from "react-router-dom";
+import { Navigate, RouteObject } from "react-router-dom";
 
-import HomeScreen from "../pages/Home";
-import LoginScreen from "../pages/Login";
-import Layout from "../layouts/SimpleLayout";
 import SecureLayout from "../layouts/SecureLayout";
 import SideBarLayout from "../layouts/SideBar";
+import Layout from "../layouts/SimpleLayout";
 import ComponentsScreen from "../pages/Components";
-import ProgramHeadScreen from "../pages/Dashboards/ProgramHead";
-import AdminScreen from "../pages/Dashboards/Admin"; 
-import SuperAdminMain from "../pages/Dashboards/SuperAdmin/index" 
-import HREmployees from "../pages/Dashboards/SuperAdmin/HREmployees/index" 
-import AddEmployee from "../pages/Dashboards/SuperAdmin/AddEmployee";
-import AddDepartment from "../pages/Dashboards/SuperAdmin/AddDepartment";
-import AddCenter from "../pages/Dashboards/SuperAdmin/AddCenter";
-import ReviewBudgetScreen from "../pages/Dashboards/Admin/reviewBudget";
+import AdminScreen from "../pages/Dashboards/Admin";
 import AdminProgramScreen from "../pages/Dashboards/Admin/adminProgram";
 import DepartmentDetailScreen from "../pages/Dashboards/Admin/departmentDetail";
-import PHProgramsScreen from "../pages/Dashboards/ProgramHead/programs";
+import ReviewBudgetScreen from "../pages/Dashboards/Admin/reviewBudget";
+import ProgramHeadScreen from "../pages/Dashboards/ProgramHead";
 import CreateProgramScreen from "../pages/Dashboards/ProgramHead/createProgram";
+import PHProgramsScreen from "../pages/Dashboards/ProgramHead/programs";
+import AddCenter from "../pages/Dashboards/SuperAdmin/AddCenter";
+import AddDepartment from "../pages/Dashboards/SuperAdmin/AddDepartment";
+import AddEmployee from "../pages/Dashboards/SuperAdmin/AddEmployee";
+import HREmployees from "../pages/Dashboards/SuperAdmin/HREmployees/index";
+import HomeScreen from "../pages/Home";
+import LoginScreen from "../pages/Login";
+import DHReviewBudgets from "../pages/Dashboards/DepartmentHead/reviewBudgets";
 const authRoutes: RouteObject = {
   path: "*",
   children: [
@@ -73,16 +73,26 @@ const normalRoutes: RouteObject = {
             { path: "programs", element: <AdminProgramScreen /> },
             { path: "settings", element: <AdminProgramScreen /> },
           ],
-        }, 
+        },
         {
-          path: "/superAdmin",
+          path: "/hr",
           // element: <AdminScreen />,
           children: [
-            { index: true, element: <SuperAdminMain name="raoof"/> },
-            { path: "hr-employees", element: <HREmployees name="HR-Employees"/> }, 
-            { path: "hr-addemployees", element: <AddEmployee /> }, 
-            { path: "hr-adddepartment", element: <AddDepartment /> }, 
-            { path: "hr-addcenter", element: <AddCenter /> },
+            // { index: true, element: <SuperAdminMain name="raoof" /> },
+            { index: true, element: <Navigate to="/hr/employees" /> },
+            { path: "employees", element: <HREmployees name="HR-Employees" /> },
+            { path: "addemployees", element: <AddEmployee /> },
+            { path: "adddepartment", element: <AddDepartment /> },
+            { path: "addcenter", element: <AddCenter /> },
+          ],
+        },
+        {
+          path: "/department-head",
+          // element: <ProgramHeadScreen />,
+          children: [
+            { index: true, element: <ProgramHeadScreen /> },
+            { path: "program", element: <CreateProgramScreen /> },
+            { path: "review-budgets", element: <DHReviewBudgets /> },
           ],
         },
       ],

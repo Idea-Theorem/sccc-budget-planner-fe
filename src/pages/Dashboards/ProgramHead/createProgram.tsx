@@ -1,17 +1,16 @@
-import { styled } from "@mui/material/styles";
-import Stack from "@mui/material/Stack";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import AddIcon from "@mui/icons-material/Add";
-import { Grid } from "../../Components/MUIComponents/index";
-import BackButton from "../../../components/Button/backButton";
-import SelectDemo from "../../../components/Select";
-import BasicDatePicker from "../../../components/DatePicker";
-import { useState } from "react";
-import TabsProgramArea from "../../../components/TabsProgram";
-import TabsArea from "../../../components/Tabs";
 import { EditNote, Save } from "@mui/icons-material";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import { styled } from "@mui/material/styles";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import BackButton from "../../../components/Button/backButton";
+import BasicDatePicker from "../../../components/DatePicker";
+import SelectDemo from "../../../components/Select";
+import TabsProgramArea from "../../../components/TabsProgram";
+import { Grid } from "../../Components/MUIComponents/index";
 
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.appContainer": {
@@ -239,49 +238,20 @@ const DateStack = styled(Stack)(({ theme }) => ({
 }));
 
 const CreateProgramScreen = () => {
-  const [firstLevel, setFirstLevel] = useState(false);
+  const [firstLevel] = useState(true);
 
   const [secondLevel, setSecondLevel] = useState(false);
 
+  const navigate = useNavigate()
+
   return (
     <>
-      {!firstLevel ? (
-        <StyledBox className="appContainer">
-          <Box className="appHeader">
-            <Stack className="appHeaderHolder">
-              <Typography variant="h3">Programs</Typography>
-              {/* <Buttons
-                startIcon={<AddIcon />}
-                btntext3="Create New Program"
-                onClick={() => setFirstLevel(true)}
-              /> */}
-              <Button
-                onClick={() => setFirstLevel(true)}
-                variant="contained"
-                color="primary"
-                size="medium"
-                startIcon={<AddIcon />}
-              >
-                Create New Program
-              </Button>
-            </Stack>
-          </Box>
-          <TabsArea
-            tabsTitleArray={[
-              { title: "Pending" },
-              { title: "Rejected" },
-              { title: "Approved" },
-              { title: "Drafts" },
-              { title: "History" },
-            ]}
-          />
-        </StyledBox>
-      ) : null}
+      
       {firstLevel && !secondLevel ? (
         <StyledBox className="appContainer bgGray">
           <Grid container spacing={2}>
             <Grid className="appBackHeader" item xs={12}>
-              <BackButton onClick={() => setFirstLevel(false)} />
+              <BackButton onClick={() => navigate("/program-head")} />
             </Grid>
             <Grid item xs={3}>
               <DateStack

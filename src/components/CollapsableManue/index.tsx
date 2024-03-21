@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
@@ -24,10 +24,10 @@ const CollapsibleMenu = (props: CollapsibleMenuProps) => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    
+  const handleClick = (e: MouseEvent) => {
+    e.stopPropagation()
   
-    setOpen(!open);
+    setOpen(prev => !prev);
   };
 
   useEffect(() => {
@@ -39,11 +39,13 @@ if(open){
   return (
     <>
       <ListItem
-        onClick={handleClick}
+        onClick={props?.onClick}
         className={props.className} // Apply className to ListItem
       >
         <ListItemText primary={props.title} />
-        <IconButton>{open ? <ExpandLess /> : <ExpandMore />}</IconButton>
+        <IconButton onClick={handleClick}>
+          {open ? <ExpandLess /> : <ExpandMore />}
+        </IconButton>
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
@@ -54,7 +56,6 @@ if(open){
                 onClick={(e) => {
                   e.stopPropagation();
                   navigate(item.path ?? "");
-                 
                 }}
               >
                 <ListItemText primary={item?.title} />
