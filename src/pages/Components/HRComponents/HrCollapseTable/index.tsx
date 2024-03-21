@@ -11,6 +11,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import TablePagination from "@mui/material/TablePagination";
 import { styled } from "@mui/system";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
@@ -182,26 +183,53 @@ const rows = [
 ];
 
 export default function HrCollapsibleTable() {
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+
   return (
-    <HrCollapseableTable className="dashboardTable">
-      <TableContainer component={Paper}>
-        <Table aria-label="collapsible table">
-          <TableHead>
-            <TableRow>
-              <TableCell>&nbsp;</TableCell>
-              <TableCell>Employee Name</TableCell>
-              <TableCell>Position</TableCell>
-              <TableCell>Department</TableCell>
-              <TableCell>Hire date</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row, index) => (
-              <Row key={index} row={row} />
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </HrCollapseableTable>
+    <>
+      <HrCollapseableTable className="dashboardTable">
+        <TableContainer component={Paper}>
+          <Table aria-label="collapsible table">
+            <TableHead>
+              <TableRow>
+                <TableCell>&nbsp;</TableCell>
+                <TableCell>Employee Name</TableCell>
+                <TableCell>Position</TableCell>
+                <TableCell>Department</TableCell>
+                <TableCell>Hire date</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row, index) => (
+                  <Row key={index} row={row} />
+                ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </HrCollapseableTable>
+      <TablePagination
+        rowsPerPageOptions={[5, 10, 15]}
+        component="div"
+        count={rows.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+    </>
   );
 }

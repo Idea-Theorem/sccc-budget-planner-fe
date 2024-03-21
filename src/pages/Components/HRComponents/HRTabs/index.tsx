@@ -24,6 +24,9 @@ const AppHuman = styled(Box)(({ theme }) => ({
   ".css-1nu5xgx-MuiTypography-root": {
     color: theme.palette.common.blackshades["4p"],
   },
+  ".css-gqb8su-MuiButtonBase-root-MuiButton-root": {
+    textTransform: "capitalize",
+  },
 }));
 
 interface TabProps {
