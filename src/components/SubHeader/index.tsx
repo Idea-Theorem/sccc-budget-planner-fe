@@ -43,11 +43,15 @@ const StyledBox = styled(Box)(({ theme }) => ({
 }));
 
 const SubHeader = (props: SubHeaderProps) => {
+  const array = [
+    {text: "Approve"},
+    {text: "Rejected"},
+  ]
   return (
     <StyledBox className="reviewSubhead">
       <Stack>
         <Typography variant="h4">{props.title}</Typography>
-        <DropdownButton title="Action" />
+        <DropdownButton title="Action" array={array}/>
       </Stack>
     </StyledBox>
   );

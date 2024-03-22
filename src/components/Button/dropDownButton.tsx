@@ -6,11 +6,11 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 interface DropdownButtonProps {
   title?: string;
+  array?: any;
 }
 const DropdownButton = (props: DropdownButtonProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [isOpen, setIsOpen] = useState(false);
-
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
     setIsOpen((prev) => !prev);
@@ -38,8 +38,9 @@ const DropdownButton = (props: DropdownButtonProps) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>Export </MenuItem>
-        <MenuItem onClick={handleClose}>Reset</MenuItem>
+        {props?.array?.map((item: any) => (
+          <MenuItem onClick={handleClose}>{item?.text}</MenuItem>
+          ))}
       </Menu>
     </>
   );
