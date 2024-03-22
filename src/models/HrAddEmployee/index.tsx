@@ -131,8 +131,8 @@ interface IHrAddEmployee {
 
 const HrAddEmployee: React.FC<IHrAddEmployee> = ({
   heading,
-  headinginfo,
-  subheading,
+  // headinginfo,
+  // subheading,
   title,
   handleClose,
   open,
