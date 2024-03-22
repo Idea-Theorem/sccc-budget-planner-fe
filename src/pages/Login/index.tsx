@@ -49,7 +49,7 @@ const LoginArea = styled(Box)(({ theme }) => ({
     // color: theme.palette.common.whiteshades["30p"],
     margin: "0 0 15px",
   },
-  
+
   "& .loginFormItem": {
     width: "100%",
     margin: "0 0 16px",
@@ -62,6 +62,7 @@ const LoginArea = styled(Box)(({ theme }) => ({
       width: "100%",
       fontFamily: "Roboto",
       fontWeight: "400",
+      color: theme.palette.common.blackshades["12p"],
 
       "&::placeholder": {
         color: theme.palette.common.blackshades["12p"],
@@ -128,9 +129,9 @@ const Input = () => {
           </Button>
         </form>
         <Box>
-          <Link className="textLink" href="#" variant="subtitle2">
+          {/* <Link className="textLink" href="#" variant="subtitle2">
             Create account
-          </Link>
+          </Link> */}
           <Link className="textLink" href="#" variant="subtitle2">
             Forgot password?
           </Link>

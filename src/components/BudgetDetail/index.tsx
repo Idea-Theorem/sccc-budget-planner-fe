@@ -214,22 +214,26 @@ const StyledBox = styled(Box)(({ theme }) => ({
       "& .MuiTab-root": {
         flexGrow: "1",
         textTransform: "capitalize",
-        fontWeight: "500",
+        fontWeight: "600",
         letterSpacing: "0.4px",
         maxWidth: "100%",
+        color: theme.palette.common.blackshades["12p"],
+
+        "&.Mui-selected": {
+          color: theme.palette.primary.main,
+        },
       },
     },
   },
 }));
 
-const BudgetDetail: FC<BudgetDetailProps> = ({actions, clickBack}) => {
-
+const BudgetDetail: FC<BudgetDetailProps> = ({ actions, clickBack }) => {
   return (
     <StyledBox className="appContainer bgGray">
       <Grid container spacing={2}>
         <Back onClick={clickBack} />
         <LeftSection />
-        <MainSection actions={actions} /> 
+        <MainSection actions={actions} />
       </Grid>
     </StyledBox>
   );

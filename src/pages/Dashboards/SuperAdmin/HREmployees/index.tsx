@@ -4,7 +4,6 @@ import { styled } from "@mui/material/styles";
 import TabsComponent from "../../../Components/HRComponents/HRTabs";
 
 const StyledBox = styled(Box)(() => ({
-
   "& .dashboardCards": {
     display: "flex",
     justifyContent: "space-between",
@@ -22,7 +21,7 @@ const StyledBox = styled(Box)(() => ({
   "& .MuiTabs-flexContainer": {
     "& .MuiTab-root": {
       minWidth: "172px",
-      textCransform: "capitalize",
+      textTransform: "capitalize",
       fontSize: "14px",
       fontWeight: "500",
       fontFamily: "Work Sans,sans-serif",
@@ -66,7 +65,7 @@ const HREmployeees: React.FC<SuperAdminProps> = () => {
       <h1 className="hrBlockTitle">HR (Human Resources) </h1>
 
       <TabsComponent tabNames={tabNames} />
-    </StyledBox> 
+    </StyledBox>
   );
 };
 

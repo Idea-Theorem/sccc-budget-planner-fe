@@ -135,12 +135,12 @@ const DepartmentInfo: React.FC<IDepartmentInfo> = ({ heading, subheading,  handl
       <Box>
         <Typography className="subtitle">{subheading}</Typography>
         <Grid container spacing={4}>
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <TextFields variant="standard" label="Department Name" />
           </Grid> 
-          <Grid item xs={6}>
+          {/* <Grid item xs={6}>
             <TextFields variant="standard" label="Employee Count" />
-          </Grid>
+          </Grid> */}
         </Grid>
       </Box>
       <Stack

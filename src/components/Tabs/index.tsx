@@ -103,10 +103,6 @@ const TabsAreas = styled(Box)(({ theme }) => ({
     margin: "0 0 7px",
   },
 
-  ".MuiTabs-indicator": {
-    // bottom: "4px",
-  },
-
   ".MuiTabs-flexContainer": {
     borderBottom: "1px solid #BFBFBF",
     height: "100%",

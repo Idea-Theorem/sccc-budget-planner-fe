@@ -24,10 +24,10 @@ const AppHuman = styled(Box)(({ theme }) => ({
     background: "none",
     boxShadow: "none",
   },
-  ".css-1nu5xgx-MuiTypography-root": {
+  ".MuiTypography-h6": {
     color: theme.palette.common.blackshades["4p"],
   },
-  ".css-gqb8su-MuiButtonBase-root-MuiButton-root": {
+  ".MuiButton-root": {
     textTransform: "capitalize",
   },
 }));
