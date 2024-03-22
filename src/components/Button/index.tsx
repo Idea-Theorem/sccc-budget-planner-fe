@@ -9,6 +9,7 @@ interface StyledButtonProps extends ButtonProps {
 const StyledButton = styled(Button)<StyledButtonProps>(
   ({ theme, variant }) => ({
     letterSpacing: "0.46px",
+    textTransform: "none",
     "&:hover": {
       backgroundColor:
         variant === "outlined" || variant === "text"
