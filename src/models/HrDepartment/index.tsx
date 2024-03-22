@@ -11,7 +11,7 @@ import Modal from '@mui/material/Modal';
 const DepartmentInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
   width: "100%",
-  padding: "40px 50px",
+  padding: "27px 40px",
   boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
   maxWidth:"956px",
   margin: "0 auto",
@@ -33,8 +33,9 @@ const DepartmentInfoArea = styled(Box)(({ theme }) => ({
     color: "#000",
     fontFamily: "Work Sans",
     fontSize: "17px",
-    fontWeight: "500", 
-    margin: "0 0 20px", 
+    fontWeight: "500",
+    margin: "0 0 19px",
+    letterSpacing: "-0.5px",
   },
 
   "& .MuiTextField-root": {
@@ -45,13 +46,70 @@ const DepartmentInfoArea = styled(Box)(({ theme }) => ({
     width: "100%",
   },
 
+  "& .MuiGrid-container": {
+    marginTop: "-15px",
+
+    "& > .MuiGrid-item": {
+      paddingTop: "15px",
+
+      "&.selectGrid": {
+        "& .MuiFormControl-root": {
+          margin: "0",
+    
+          "& .MuiInputLabel-root": {
+            fontSize: "12px",
+            color: "rgba(0, 0, 0, 0.7)",
+
+            "& + .MuiInputBase-root": {
+              marginTop: "-2px",
+
+              "&:before": {
+                display: "none",
+              },
+
+              "& .MuiSelect-nativeInput": {
+                fontFamily: "Work Sans",
+              },
+
+              "& .MuiSelect-select": {
+                fontFamily: "Work Sans",
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+
   "& .MuiInputLabel-root": {
     marginBottom: "5px",
     display: "inline-block",
+    fontSize: "16px",
+    lineHeight: "1.2",
+    fontFamily: "Roboto",
+
+    "& + .MuiInputBase-root": {
+      marginTop: "15px",
+    },
+  },
+
+  "& .MuiInputBase-input": {
+    fontFamily: "Work Sans",
+    fontSize: "16px",
+
+  },
+
+  "& .secondaryRow": {
+    paddingTop: "29px",
   },
 
   "& .formButtons": {
-    marginTop: "25px",
+    marginTop: "32px",
+    paddingBottom: "5px",
+
+    "& .MuiButtonBase-root": {
+      textTransform: "capitalize",
+    },
   },
 }));
 
@@ -77,12 +135,12 @@ const DepartmentInfo: React.FC<IDepartmentInfo> = ({ heading, subheading,  handl
       <Box>
         <Typography className="subtitle">{subheading}</Typography>
         <Grid container spacing={4}>
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <TextFields variant="standard" label="Department Name" />
           </Grid> 
-          <Grid item xs={6}>
+          {/* <Grid item xs={6}>
             <TextFields variant="standard" label="Employee Count" />
-          </Grid>
+          </Grid> */}
         </Grid>
       </Box>
       <Stack
@@ -90,14 +148,14 @@ const DepartmentInfo: React.FC<IDepartmentInfo> = ({ heading, subheading,  handl
         direction="row"
         justifyContent="flex-end"
         alignItems="center"
-        gap="20px"
+        gap="10px"
       >
         <Stack
         className="formButtons"
         direction="row"
         justifyContent="flex-end"
         alignItems="center"
-        gap="20px"
+        gap="10px"
       >
         <Button
           variant="text"

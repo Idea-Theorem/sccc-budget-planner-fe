@@ -1,5 +1,5 @@
 import { styled } from "@mui/material/styles";
-import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import InputSearch from "../Input";
 const StyledBox = styled(Box)(({ theme }) => ({
@@ -9,12 +9,13 @@ const StyledBox = styled(Box)(({ theme }) => ({
   },
 
   "& .MuiDataGrid-toolbarContainer": {
-    marginBottom: "10px",
+    marginBottom: "1px",
 
     "& .MuiButtonBase-root": {
       color: "#979797 !important",
       fontSize: "13px",
-      letterSpacing: "1",
+      letterSpacing: "0.8px",
+      marginRight: "-1px",
 
       "&:hover": {
         color: `${theme.palette.primary.main} !important`,
@@ -56,7 +57,7 @@ const StyleDataGrid = styled(DataGrid)(() => ({
     color: "rgba(0, 0, 0, 0.87)",
     fontSize: "14px",
     lineHeight: "24px",
-    fontWeight: "500",
+    fontWeight: "600",
     fontFamily: "Work Sans, sans-serif",
     letterSpacing: "0.17px",
   },
@@ -91,76 +92,22 @@ const StyleDataGrid = styled(DataGrid)(() => ({
       fontSize: "12px",
       lineHeight: "20px",
       fontWeight: "400",
-      fontFamily: "Roboto, sans-serif",
+      fontFamily: "Work Sans, sans-serif",
       letterSpacing: "0.4px",
     },
   },
   "& .MuiTablePagination-displayedRows": {
     color: "rgba(0, 0, 0, 0.87)",
+    fontSize: "12px",
+    fontFamily: "Work Sans, sans-serif",
+  },
+  ".MuiDataGrid-cell": {
+    overflow: "visible !important",
   },
   "& .MuiButtonBase-root": {
     color: "rgba(0, 0, 0, 0.56) !important",
   },
 }));
-
-const columns: GridColDef[] = [
-  {
-    field: "departmentName",
-    headerName: "Department Name",
-    sortable: false,
-    editable: false,
-    flex: 1,
-  },
-  {
-    field: "status",
-    headerName: "Status",
-    sortable: false,
-    editable: false,
-    flex: 1,
-  },
-  {
-    field: "lYearBudget",
-    headerName: "Last Year Budget",
-    sortable: false,
-    editable: false,
-    flex: 1,
-  },
-  {
-    field: "budget",
-    headerName: "Budget",
-    sortable: false,
-    editable: false,
-    flex: 1,
-  },
-  {
-    field: "profit",
-    headerName: "Profit",
-    sortable: false,
-    editable: false,
-    flex: 1,
-  },
-  {
-    field: "nPrograms",
-    headerName: "No. Programs",
-    sortable: false,
-    editable: false,
-    flex: 1,
-  },
-  {
-    field: "sDate",
-    headerName: "Submission Date",
-    sortable: false,
-    editable: false,
-    flex: 1,
-  },
-  {
-    field: "comments",
-    headerName: "Comments",
-    sortable: false,
-    editable: false,
-    flex: 1,
-  },
-];
 
 const rows = [
   {
@@ -219,15 +166,24 @@ const rows = [
     comments: "0",
   },
 ];
-
-const TableComponent = () => {
+interface TableColumn {
+  field: string;
+  headerName: string;
+  sortable: boolean;
+  editable: boolean;
+  flex: number;
+}
+interface ColumnnsProps {
+  columns: TableColumn[];
+}
+const TableComponent = (props: ColumnnsProps) => {
   return (
     <>
       <StyledBox className="mainTableBlock">
         <InputSearch placeholder="Search..." />
         <StyleDataGrid
           rows={rows}
-          columns={columns}
+          columns={props?.columns}
           initialState={{
             pagination: {
               paginationModel: { page: 0, pageSize: 5 },

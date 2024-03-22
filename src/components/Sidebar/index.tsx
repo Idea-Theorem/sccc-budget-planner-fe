@@ -26,7 +26,7 @@ const SideArea = styled(Box)(({ theme }) => ({
   "& .MuiListItemButton-root": {
     transition: "0.3s",
     color: theme.palette.background.ContentArea,
-    padding: "8px 20px",
+    padding: "8px 16px",
 
     "&:hover": {
       background: theme.palette.background.lightGray,
@@ -40,6 +40,7 @@ const SideArea = styled(Box)(({ theme }) => ({
     alignItems: "center",
     justifyContent: "center",
     background: theme.palette.background.default,
+    padding: "0 27px 0 0",
 
     "& img": {
       width: "118px",
@@ -49,14 +50,37 @@ const SideArea = styled(Box)(({ theme }) => ({
 
   "& .active": {
     background: theme.palette.background.DarkGray,
+
+    ".MuiButtonBase-root": {
+      color: "#fff",
+    },
   },
 
   ".MuiListItem-root": {
     color: "#fff",
+
+    "&.MuiListItem-padding": {
+      "& .MuiButtonBase-root": {
+        padding: "5px",
+        color: "#fff",
+
+        "& ,MuiSvgIcon-root": {
+          width: "0.8em",
+          height: "0.8em",
+          opacity: "0.56",
+          marginRight: "8px",
+        },
+      },
+    },
   },
 
   ".MuiButtonBase-root": {
-    color: "#fff",
+    color: "#f5f5f5",
+
+    "&:hover": {
+      color: "#fff",
+      background: "#676779",
+    },
   },
 
   "& .activecollapse": {
@@ -66,10 +90,24 @@ const SideArea = styled(Box)(({ theme }) => ({
 
   ".MuiCollapse-root": {
     background: "#fff",
+
     "& .MuiListItem-root": {
       textAlign: "center",
       color: "#303030",
+      transition: "0.3s",
+      cursor: "pointer",
+
+      "&:hover": {
+        color: "#fff",
+        background: "#b3b3bc",
+      },
+
+      "&.active": {
+        color: "#fff",
+        background: "#676779",
+      },
     },
+
     ".MuiTypography-root": {
       fontSize: "14px",
       lineHeight: "20.02px",

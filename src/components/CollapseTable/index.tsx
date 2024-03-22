@@ -21,7 +21,7 @@ const CollapseableTable = styled(Box)(({ theme }) => ({
   },
 
   "&.dashboardTable": {
-    padding: "30px",
+    padding: "10px 30px 19px",
     boxShadow:
       "0 1.85px 6.25px 0 rgba(0, 0, 0, 0.19), 0 0.5px 1.75px 0 rgba(0, 0, 0, 0.04)",
 
@@ -47,6 +47,7 @@ const CollapseableTable = styled(Box)(({ theme }) => ({
         fontSize: "16px",
         fontWeight: "600",
         lineHeight: "1.3",
+        padding: "15px",
         borderBottom: "1px solid theme.palette.text.primary",
 
         "& span": {
@@ -55,25 +56,26 @@ const CollapseableTable = styled(Box)(({ theme }) => ({
         },
 
         "&:first-child": {
-          width: "5% !important",
+          width: "1% !important",
+          padding: "0",
         },
 
         "&:nth-child(2)": {
-          width: "50%",
+          width: "44%",
         },
 
         "&:nth-child(3)": {
-          width: "15%",
+          width: "19.333%",
           textAlign: "right",
         },
 
         "&:nth-child(4)": {
-          width: "15%",
+          width: "19.333%",
           textAlign: "right",
         },
 
         "&:nth-child(5)": {
-          width: "15%",
+          width: "15.333%",
           textAlign: "right",
         },
       },
@@ -84,28 +86,39 @@ const CollapseableTable = styled(Box)(({ theme }) => ({
         fontWeight: "600",
         lineHeight: "1.3",
         color: "#303030",
+        padding: "15px",
 
         "&:first-child": {
-          width: "5% !important",
+          width: "1% !important",
+          padding: "0",
         },
 
         "&:nth-child(2)": {
-          width: "50%",
+          width: "44%",
         },
 
         "&:nth-child(3)": {
-          width: "15%",
+          width: "19.333%",
           textAlign: "right",
         },
 
         "&:nth-child(4)": {
-          width: "15%",
+          width: "19.333%",
           textAlign: "right",
         },
 
         "&:nth-child(5)": {
-          width: "15%",
+          width: "15.333%",
           textAlign: "right",
+        },
+
+        "& .MuiIconButton-root": {
+          padding: "0",
+
+          "& svg": {
+            width: "0.8em",
+            height: "0.8em",
+          },
         },
       },
 
@@ -124,6 +137,8 @@ const CollapseableTable = styled(Box)(({ theme }) => ({
           fontWeight: "500",
           lineHeight: "1.3",
           color: "#303030",
+          paddingTop: "8px",
+          paddingBottom: "14px",
         },
       },
     },

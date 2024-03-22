@@ -13,11 +13,14 @@ import SelectDemo from "../../../components/Select";
 import TabsProgramArea from "../../../components/TabsProgram";
 import { ActionsType } from "../../../types/common";
 import { Grid } from "../../Components/MUIComponents/index";
+import Buttons from "../../../components/Button";
 
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.appContainer": {
     "&.bgGray": {
       background: "#fafafa",
+      margin: "-32px -40px",
+      padding: "32px 40px",
     },
   },
 
@@ -66,7 +69,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
   },
 
   ".MuiTypography-h5": {
-    color: theme.palette.common.blackshades["4p"],
+    color: theme.palette.common.blackshades["12p"],
   },
 
   ".btn-back": {
@@ -74,7 +77,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
   },
 
   "& .appBackHeader": {
-    marginTop: "-16px",
+    marginTop: "-3px",
   },
 
   "& .createProgramContent": {
@@ -87,7 +90,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
     alignItems: "center",
     justifyContent: "space-between",
     flexDirection: "row",
-    margin: "0 0 20px",
+    margin: "0 0 31px",
 
     "& .mainHeading": {
       color: theme.palette.common.blackshades["4p"],
@@ -111,8 +114,8 @@ const StyledBox = styled(Box)(({ theme }) => ({
   },
 
   "& .createFormBlock": {
-    with: "100%",
-    marginBottom: "30px",
+    width: "100%",
+    marginBottom: "28px",
   },
 
   "& .createFormFields": {
@@ -120,7 +123,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
     alignItems: "center",
     justifyContent: "space-between",
     flexDirection: "row",
-    margin: "0 -10px 25px",
+    margin: "0 -10px 13px",
 
     "& .MuiFormControl-root": {
       width: "50%",
@@ -136,6 +139,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
         color: "#000",
         fontFamily: "Work Sans",
         fontSize: "16px",
+        lineHeight: "1.2",
         fontWeight: "500",
         flexShrink: "0",
         margin: "0 20px 0 0",
@@ -146,6 +150,14 @@ const StyledBox = styled(Box)(({ theme }) => ({
         flexGrow: "1",
         minWidth: "0",
         margin: "0",
+      },
+
+      "& .MuiSelect-select": {
+        fontFamily: "Work Sans !important",
+      },
+
+      "& .MuiSelect-nativeInput": {
+        fontFamily: "Work Sans  !important",
       },
     },
   },
@@ -201,7 +213,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
     width: "100%",
 
     "& .MuiTabs-scroller": {
-      marginBottom: "30px !important",
+      marginBottom: "24px !important",
     },
 
     "& .MuiTabs-flexContainer": {
@@ -229,6 +241,8 @@ const DateStack = styled(Stack)(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
   borderRight: "3px solid #fff",
   padding: "12px 15px",
+  marginRight: "5px",
+  letterSpacing: "0.3px",
 
   "&.selected": {
     borderRightColor: theme.palette.primary.main,
@@ -244,7 +258,7 @@ const CreateProgramScreen = () => {
 
   const [secondLevel, setSecondLevel] = useState(false);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const actions: ActionsType[] = [
     {
@@ -292,10 +306,12 @@ const CreateProgramScreen = () => {
               <Grid className="createProgramContent" item xs={12}>
                 <Grid item xs={12}>
                   <Stack className="createProgramContentHead">
-                    <Typography variant="h5">Youth Swimming Class2</Typography>
-                    <Stack direction={"row"} gap={"20px"}>
+                    <Typography className="mainHeading" variant="h5">
+                      Youth Swimming Class2
+                    </Typography>
+                    <Stack direction={"row"} gap={"10px"}>
                       <Button
-                        variant="contained"
+                        variant="outlined"
                         color="primary"
                         size="medium"
                         startIcon={<Save />}
@@ -303,14 +319,22 @@ const CreateProgramScreen = () => {
                       >
                         Save
                       </Button>
-                      <Button
+
+                      <Buttons
+                        variant="contained"
+                        color="primary"
+                        size="medium"
+                        startIcon={<EditNote />}
+                        btntext="Resubmit"
+                      />
+                      {/* <Button
                         variant="contained"
                         color="primary"
                         size="medium"
                         startIcon={<EditNote />}
                       >
-                        ReSubmit
-                      </Button>
+                        Resubmit
+                      </Button> */}
                       {/* <Buttons startIcon={<Save />} btntext1="Save" />
                       <Buttons startIcon={<EditNote />} btntext3="ReSubmit" /> */}
                     </Stack>

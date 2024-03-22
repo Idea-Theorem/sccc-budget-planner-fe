@@ -5,19 +5,24 @@ import InputSearch from "../../../../components/Input";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { Button, Stack } from "@mui/material";
-const StyledBox = styled(Box)(({  }) => ({
+const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
     position: "relative",
   },
 
   "& .MuiDataGrid-toolbarContainer": {
-    marginBottom: "10px",
+    marginBottom: "1px",
 
     "& .MuiButtonBase-root": {
+      color: "#979797 !important",
       fontSize: "13px",
-      letterSpacing: "1",
+      letterSpacing: "0.8px",
+      marginRight: "-1px",
 
+      "&:hover": {
+        color: `${theme.palette.primary.main} !important`,
+      },
     },
   },
 }));
@@ -44,9 +49,9 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
     },
   },
   "& .MuiButton-root": {
-    color: "#979797",
-    fontSize: "14px",
-    lineHeight: "24px",
+    // color: "#979797",
+    // fontSize: "14px",
+    // lineHeight: "24px",
     "&:hover": {
       background: "none",
     },
@@ -55,7 +60,7 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
     color: "rgba(0, 0, 0, 0.87)",
     fontSize: "14px",
     lineHeight: "24px",
-    fontWeight: "500",
+    fontWeight: "600",
     fontFamily: "Work Sans, sans-serif",
     letterSpacing: "0.17px",
   },
@@ -90,12 +95,14 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
       fontSize: "12px",
       lineHeight: "20px",
       fontWeight: "400",
-      fontFamily: "Roboto, sans-serif",
+      fontFamily: "Work Sans, sans-serif",
       letterSpacing: "0.4px",
     },
   },
   "& .MuiTablePagination-displayedRows": {
     color: "rgba(0, 0, 0, 0.87)",
+    fontSize: "12px",
+    fontFamily: "Work Sans, sans-serif",
   },
   ".MuiDataGrid-cell": {
     overflow: "visible !important",

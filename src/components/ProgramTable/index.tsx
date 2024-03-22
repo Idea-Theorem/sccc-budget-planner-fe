@@ -31,7 +31,7 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
         fontSize: "16px",
         fontWeight: "600",
         letterSpacing: "0.4px",
-        padding: "10px 15px",
+        paddingBottom: "7px !important",
       },
 
       "& .MuiTableCell-body": {
@@ -41,9 +41,20 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
         fontSize: "16px",
         fontWeight: "500",
         padding: "22px 15px 0",
+
+        "&.MuiTableCell-alignRight": {
+          fontFamily: "Roboto",
+          fontWeight: "400",
+        },
       },
 
       "& .MuiTableRow-root": {
+        "&:nth-last-child(2)": {
+          "& .MuiTableCell-body": {
+            paddingBottom: "22px",
+          },
+        },
+
         "&:last-child": {
           "& .MuiTableCell-body": {
             borderTop: "1px solid #000",

@@ -4,8 +4,8 @@ import Typography from "@mui/material/Typography";
 import FormControl from "@mui/material/FormControl";
 import Link from "@mui/material/Link";
 import LogoImg from "../../assets/logo.png";
-import Button from "@mui/material/Button";
 import { TextField } from "@mui/material";
+import Buttons from "../../components/Button";
 
 const LoginArea = styled(Box)(({ theme }) => ({
   "&.loginBlock": {
@@ -42,13 +42,14 @@ const LoginArea = styled(Box)(({ theme }) => ({
 
   ".MuiFormLabel-root": {
     color: theme.palette.common.blackshades["12p"],
+    fontFamily: "Roboto",
   },
 
   ".MuiButtonBase-root": {
     // color: theme.palette.common.whiteshades["30p"],
     margin: "0 0 15px",
   },
-  
+
   "& .loginFormItem": {
     width: "100%",
     margin: "0 0 16px",
@@ -61,6 +62,7 @@ const LoginArea = styled(Box)(({ theme }) => ({
       width: "100%",
       fontFamily: "Roboto",
       fontWeight: "400",
+      color: theme.palette.common.blackshades["12p"],
 
       "&::placeholder": {
         color: theme.palette.common.blackshades["12p"],
@@ -81,6 +83,10 @@ const LoginArea = styled(Box)(({ theme }) => ({
       fontWeight: "500",
       fontFamily: "Roboto",
       letterSpacing: "0.46px",
+    },
+
+    "& legend": {
+      fontFamily: "Roboto",
     },
   },
 
@@ -118,14 +124,20 @@ const Input = () => {
           <FormControl className="loginFormItem">
             <TextField label="Password" variant="outlined" size="medium" />
           </FormControl>
-          <Button variant="contained" size="large" fullWidth>
+          <Buttons
+            btntext="Action"
+            variant="contained"
+            size="large"
+            fullWidth
+          />
+          {/* <Button variant="contained" size="large" fullWidth>
             ACTION
-          </Button>
+          </Button> */}
         </form>
         <Box>
-          <Link className="textLink" href="#" variant="subtitle2">
+          {/* <Link className="textLink" href="#" variant="subtitle2">
             Create account
-          </Link>
+          </Link> */}
           <Link className="textLink" href="#" variant="subtitle2">
             Forgot password?
           </Link>

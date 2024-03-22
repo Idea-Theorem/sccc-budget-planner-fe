@@ -1,4 +1,4 @@
-import Button from "@mui/material/Button";
+// import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import BasicDatePicker from "../DatePicker";
@@ -6,8 +6,9 @@ import SelectDemo from "../Select";
 import { Grid } from "../../pages/Components/MUIComponents/index";
 import TabsProgramArea from "../TabsProgram";
 import { ActionsType } from "../../types/common";
+import Buttons from "../Button";
 
-const MainSection = ({actions}: {actions: ActionsType[]}) => {
+const MainSection = ({ actions }: { actions: ActionsType[] }) => {
   return (
     <Grid item xs={9}>
       <Grid className="createProgramContent" item xs={12}>
@@ -16,18 +17,29 @@ const MainSection = ({actions}: {actions: ActionsType[]}) => {
             <Typography className="mainHeading" variant="h5">
               Youth Swimming Class
             </Typography>
-            {actions.map((action: ActionsType, index: number) => (
-              <Button
-                key={index}
-                onClick={action.onClick}
-                variant={action.variant}
-                color={action.color}
-                size={action.size}
-                startIcon={action.icon}
-              >
-                Revise
-              </Button>
-            ))}
+            <Stack direction={"row"} gap={"20px"}>
+              {actions.map((action: ActionsType, index: number) => (
+                // <Button
+                //   key={index}
+                //   onClick={action.onClick}
+                //   variant={action.variant}
+                //   color={action.color}
+                //   size={action.size}
+                //   startIcon={action.icon}
+                // >
+                //   {action.title}
+                // </Button>
+                <Buttons
+                  key={index}
+                  btntext={action?.title}
+                  onClick={action.onClick}
+                  variant={action.variant}
+                  color={action.color}
+                  size={action.size}
+                  startIcon={action.icon}
+                />
+              ))}
+            </Stack>
           </Stack>
         </Grid>
         <Grid className="createFormBlock" item xs={10}>

@@ -3,80 +3,236 @@ import Box from "@mui/material/Box";
 import TabsArea from "../../../components/Tabs";
 import Typography from "@mui/material/Typography";
 import SubHeader from "../../../components/SubHeader";
-const StyledBox = styled(Box)(() => ({}));
+import ApprovedProgram from "../ProgramHead/approvedProgram";
+const StyledBox = styled(Box)(() => ({
+  "& .reviewBudgetHead": {
+    marginBottom: "23px",
+  },
+
+  "& .totalBudgetText": {
+    fontSize: "20px",
+    fontWeight: "400",
+    marginTop: "-10px",
+    marginBottom: "8px",
+  },
+  // Color: theme.palette.secondary.light,
+  
+  "& .approvedTableBlock": {
+    position: "relative",
+
+    "& .MuiTabs-root": {
+      marginBottom: "66px",
+    },
+  },
+
+  "& .approvedProgramBlock": {
+    position: "absolute",
+    left: "0",
+    top: "63px",
+    width: "100%",
+    
+    "& .divider": {
+      margin: "0 4px",
+    },
+  },
+}));
 const DHReviewBudgets = () => {
+  const tableColumnsTitleArray = [
+    [
+      {
+        field: "departmentName",
+        headerName: "Department Name",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "status",
+        headerName: "Status",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "budget",
+        headerName: "Budget",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "lYearBudget",
+        headerName: "Last Year Budget",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      // {
+      //   field: "profit",
+      //   headerName: "Profit",
+      //   sortable: false,
+      //   editable: false,
+      //   flex: 1,
+      // },
+      // {
+      //   field: "nPrograms",
+      //   headerName: "No. Programs",
+      //   sortable: false,
+      //   editable: false,
+      //   flex: 1,
+      // },
+      {
+        field: "sDate",
+        headerName: "Submission Date",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "comments",
+        headerName: "Comments",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+    ],
+    [
+      {
+        field: "departmentName",
+        headerName: "Department Name",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "status",
+        headerName: "Status",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "lYearBudget",
+        headerName: "Last Year Budget",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "budget",
+        headerName: "Budget",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "profit",
+        headerName: "Profit",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "nPrograms",
+        headerName: "No. Programs",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "sDate",
+        headerName: "Submission Date",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "comments",
+        headerName: "Comments",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+    ],
+    [
+      {
+        field: "departmentName",
+        headerName: "Department Name",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "status",
+        headerName: "Status",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "lYearBudget",
+        headerName: "Last Year Budget",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "budget",
+        headerName: "Budget",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "profit",
+        headerName: "Profit",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "nPrograms",
+        headerName: "No. Programs",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "sDate",
+        headerName: "Submission Date",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "comments",
+        headerName: "Comments",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+    ],
+  ];
   return (
     <StyledBox className="appContainer">
-      <Box>
+      <Box className="reviewBudgetHead">
         <Typography variant="h3">Review Budgets</Typography>
       </Box>
       <SubHeader title="Recreation & Culture" />
-      <Typography>Total Budget: $00,000.00</Typography>
-      <TabsArea
-        tabsTitleArray={[
-          { title: "Pending" },
-          { title: "Approved" },
-          { title: "Rejected" },
-        ]}
-        tableColumnsTitleArray={[
-          {
-            field: "departmentName",
-            headerName: "Department Name",
-            sortable: false,
-            editable: false,
-            flex: 1,
-          },
-          {
-            field: "status",
-            headerName: "Status",
-            sortable: false,
-            editable: false,
-            flex: 1,
-          },
-          {
-            field: "lYearBudget",
-            headerName: "Last Year Budget",
-            sortable: false,
-            editable: false,
-            flex: 1,
-          },
-          {
-            field: "budget",
-            headerName: "Budget",
-            sortable: false,
-            editable: false,
-            flex: 1,
-          },
-          {
-            field: "profit",
-            headerName: "Profit",
-            sortable: false,
-            editable: false,
-            flex: 1,
-          },
-          {
-            field: "nPrograms",
-            headerName: "No. Programs",
-            sortable: false,
-            editable: false,
-            flex: 1,
-          },
-          {
-            field: "sDate",
-            headerName: "Submission Date",
-            sortable: false,
-            editable: false,
-            flex: 1,
-          },
-          {
-            field: "comments",
-            headerName: "Comments",
-            sortable: false,
-            editable: false,
-            flex: 1,
-          },
-        ]}
-      />
+      <Typography className="totalBudgetText">Total Budget: $00,000.00</Typography>
+      <Box className="approvedTableBlock">
+        <Box className="approvedProgramBlock">
+          <ApprovedProgram />
+        </Box>
+        <TabsArea
+          tabsTitleArray={[
+            { title: "Pending" },
+            { title: "Approved" },
+            { title: "Rejected" },
+          ]}
+          table={tableColumnsTitleArray}
+        />
+      </Box>
     </StyledBox>
   );
 };

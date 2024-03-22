@@ -14,16 +14,10 @@ interface TabPanelProps {
 interface TabTitle {
   title?: string;
 }
-interface TableColumn {
-  field: string;
-  headerName: string;
-  sortable: boolean;
-  editable: boolean;
-  flex: number;
-}
+
 interface BasicTabsProps {
   tabsTitleArray: TabTitle[];
-  tableColumnsTitleArray: TableColumn[];
+  table: any;
 }
 
 const CustomTabPanel = (props: TabPanelProps) => {
@@ -74,21 +68,24 @@ const BasicTabs = (props: BasicTabsProps) => {
           ))}
         </Tabs>
       </Box>
-      <CustomTabPanel value={value} index={0}>
-        <TableComponent />
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-        <TableComponent />
+      {props?.table?.map((item: any, index: any) => (
+        <CustomTabPanel key={index} value={value} index={index}>
+          <TableComponent columns={item} />
+        </CustomTabPanel>
+      ))}
+
+      {/* <CustomTabPanel value={value} index={1}>
+        <TableComponent columns={props.tableColumnsTitleArray} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        <TableComponent />
+        <TableComponent columns={props.tableColumnsTitleArray} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
-        <TableComponent />
+        <TableComponent columns={props.tableColumnsTitleArray} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={4}>
-        <TableComponent />
-      </CustomTabPanel>
+        <TableComponent columns={props.tableColumnsTitleArray} />
+      </CustomTabPanel> */}
     </Box>
   );
 };
@@ -98,16 +95,12 @@ const TabsAreas = styled(Box)(({ theme }) => ({
     margin: "0 0 15px",
 
     ".css-sub0s1-MuiButtonBase-root-MuiTab-root": {
-      padding: "15px 22px 11px",
+      padding: "15px 23px 8px",
       minHeight: "inherit",
     },
   },
   ".MuiTabs-root": {
-    margin: "0 0 3px",
-  },
-
-  ".MuiTabs-indicator": {
-    // bottom: "4px",
+    margin: "0 0 7px",
   },
 
   ".MuiTabs-flexContainer": {
@@ -139,10 +132,7 @@ const TabsAreas = styled(Box)(({ theme }) => ({
 export default function TabsArea(props: BasicTabsProps) {
   return (
     <TabsAreas>
-      <BasicTabs
-        tabsTitleArray={props?.tabsTitleArray}
-        tableColumnsTitleArray={props?.tableColumnsTitleArray}
-      />
+      <BasicTabs tabsTitleArray={props?.tabsTitleArray} table={props?.table} />
     </TabsAreas>
   );
 }

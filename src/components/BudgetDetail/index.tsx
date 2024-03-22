@@ -11,6 +11,8 @@ const StyledBox = styled(Box)(({ theme }) => ({
   "&.appContainer": {
     "&.bgGray": {
       background: "#fafafa",
+      margin: "-32px -40px",
+      padding: "32px 40px",
     },
   },
 
@@ -67,7 +69,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
   },
 
   "& .appBackHeader": {
-    marginTop: "-16px",
+    marginTop: "-3px",
   },
 
   "& .createProgramContent": {
@@ -80,7 +82,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
     alignItems: "center",
     justifyContent: "space-between",
     flexDirection: "row",
-    margin: "0 0 20px",
+    margin: "0 0 31px",
 
     "& .mainHeading": {
       color: theme.palette.common.blackshades["4p"],
@@ -92,7 +94,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
     },
 
     "& .MuiButton-root": {
-      minWidth: "102px",
+      minWidth: "90px",
       height: "36px",
       fontFamily: "Work Sans",
       fontSize: "14px",
@@ -104,8 +106,8 @@ const StyledBox = styled(Box)(({ theme }) => ({
   },
 
   "& .createFormBlock": {
-    with: "100%",
-    marginBottom: "30px",
+    width: "100%",
+    marginBottom: "28px",
   },
 
   "& .createFormFields": {
@@ -113,7 +115,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
     alignItems: "center",
     justifyContent: "space-between",
     flexDirection: "row",
-    margin: "0 -10px 25px",
+    margin: "0 -10px 13px",
 
     "& .MuiFormControl-root": {
       width: "50%",
@@ -129,6 +131,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
         color: "#000",
         fontFamily: "Work Sans",
         fontSize: "16px",
+        lineHeight: "1.2",
         fontWeight: "500",
         flexShrink: "0",
         margin: "0 20px 0 0",
@@ -139,6 +142,14 @@ const StyledBox = styled(Box)(({ theme }) => ({
         flexGrow: "1",
         minWidth: "0",
         margin: "0",
+      },
+
+      "& .MuiSelect-select": {
+        fontFamily: "Work Sans !important",
+      },
+
+      "& .MuiSelect-nativeInput": {
+        fontFamily: "Work Sans  !important",
       },
     },
   },
@@ -194,7 +205,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
     width: "100%",
 
     "& .MuiTabs-scroller": {
-      marginBottom: "30px !important",
+      marginBottom: "24px !important",
     },
 
     "& .MuiTabs-flexContainer": {
@@ -203,22 +214,26 @@ const StyledBox = styled(Box)(({ theme }) => ({
       "& .MuiTab-root": {
         flexGrow: "1",
         textTransform: "capitalize",
-        fontWeight: "500",
+        fontWeight: "600",
         letterSpacing: "0.4px",
         maxWidth: "100%",
+        color: theme.palette.common.blackshades["12p"],
+
+        "&.Mui-selected": {
+          color: theme.palette.primary.main,
+        },
       },
     },
   },
 }));
 
-const BudgetDetail: FC<BudgetDetailProps> = ({actions, clickBack}) => {
-
+const BudgetDetail: FC<BudgetDetailProps> = ({ actions, clickBack }) => {
   return (
     <StyledBox className="appContainer bgGray">
       <Grid container spacing={2}>
         <Back onClick={clickBack} />
         <LeftSection />
-        <MainSection actions={actions} /> 
+        <MainSection actions={actions} />
       </Grid>
     </StyledBox>
   );

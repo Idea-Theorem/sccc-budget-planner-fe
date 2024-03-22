@@ -12,12 +12,12 @@ interface AdminDataCardProps {
   total?: string;
   done?: string;
   showProgress?: boolean;
-  color?: LinearProgressProps['color']; // Ensure the color prop matches the type defined in LinearProgressProps
+  color?: LinearProgressProps["color"]; // Ensure the color prop matches the type defined in LinearProgressProps
 }
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.dashboardStatsCard": {
     width: "calc(41.841% - 24px)",
-    padding: "25px 30px",
+    padding: "21px 24px",
     marginLeft: "12px",
     marginRight: "12px",
     marginBottom: "24px",
@@ -26,7 +26,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
 
     "&:first-child": {
       "& .textRange": {
-        margin: "0 0 5px",
+        margin: "0 0 8px",
       },
 
       "& .textFull": {
@@ -36,10 +36,13 @@ const StyledBox = styled(Box)(({ theme }) => ({
 
       "& .textValue": {
         fontSize: "16px",
+        paddingBottom: "2px",
+        letterSpacing: "0",
       },
 
       "& .divider": {
         fontSize: "16px",
+        paddingBottom: "0",
       },
     },
 
@@ -74,9 +77,10 @@ const StyledBox = styled(Box)(({ theme }) => ({
       lineHeight: "1.3",
       letterSpacing: "0.46px",
       cursor: "pointer",
+      margin: "6px 7px 0 0",
 
       "&:hover": {
-        color: theme.palette.secondary.main,
+        color: theme.palette.primary.main,
       },
     },
 
@@ -86,13 +90,14 @@ const StyledBox = styled(Box)(({ theme }) => ({
       fontSize: "14px",
       fontWeight: "400",
       lineHeight: "1.3",
-      marginBottom: "15px",
+      marginBottom: "13px",
+      letterSpacing: "0",
     },
 
     "& .textRange": {
-      margin: "20px 0 0",
+      margin: "12px 0 0",
       display: "flex",
-      alignItems: "center",
+      alignItems: "flex-end",
       flexDirection: "row",
     },
 
@@ -110,26 +115,19 @@ const StyledBox = styled(Box)(({ theme }) => ({
       fontFamily: "Work Sans",
       fontWeight: "400",
       lineHeight: "1.3",
+      paddingBottom: "5px",
     },
 
     "& .divider": {
       margin: "0 5px",
       fontSize: "22px",
+      paddingBottom: "5px",
     },
 
     "& .cardProgressBar": {
-      marginBottom: "-18px",
-
-      "& .MuiLinearProgress-determinate": {
-        // background: theme.palette.secondary.mainLight,
-
-        "& .MuiLinearProgress-bar1Determinate": {
-          // background: theme.palette.secondary.main,
-        },
-      },
+      marginBottom: "-14px",
     },
   },
-  // Color: theme.palette.secondary.light,
 }));
 const AdminDataCard = (props: AdminDataCardProps) => {
   return (
@@ -149,7 +147,7 @@ const AdminDataCard = (props: AdminDataCardProps) => {
       </Stack>
       {props?.showProgress && (
         <Box className="cardProgressBar">
-          <LinearWithValueLabel value={20} color={props?.color}/>
+          <LinearWithValueLabel value={50} color={props?.color}/>
         </Box>
       )}
     </StyledBox>

@@ -8,15 +8,14 @@ import Grid from "@mui/material/Grid"; // Import Grid component from MUI
 import SelectDemo from "../../components/Select";
 import BasicDatePicker from "../../components/DatePicker";
 import { Button } from "@mui/material";
-import Modal from '@mui/material/Modal';
-
+import Modal from "@mui/material/Modal";
 
 const EmployeeInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
   width: "100%",
-  padding: "40px 50px",
+  padding: "27px 40px",
   boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-  maxWidth:"956px",
+  maxWidth: "956px",
   margin: "0 auto",
   maxHeight: "655px",
   overflow: "auto",
@@ -30,7 +29,6 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
     fontSize: "20px",
     fontWeight: "600",
     margin: "0 0 25px",
-    padding: "20px 0 0",
   },
 
   "& .subtitle": {
@@ -38,7 +36,8 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
     fontFamily: "Work Sans",
     fontSize: "17px",
     fontWeight: "500",
-    margin: "0 0 20px",
+    margin: "0 0 19px",
+    letterSpacing: "-0.5px",
   },
 
   "& .MuiTextField-root": {
@@ -49,46 +48,135 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
     width: "100%",
   },
 
+  "& .MuiGrid-container": {
+    marginTop: "-15px",
+
+    "& > .MuiGrid-item": {
+      paddingTop: "15px",
+
+      "&.selectGrid": {
+        "& .MuiFormControl-root": {
+          margin: "0",
+
+          "& .MuiInputLabel-root": {
+            fontSize: "12px",
+            color: "rgba(0, 0, 0, 0.7)",
+
+            "& + .MuiInputBase-root": {
+              marginTop: "-2px",
+
+              "&:before": {
+                display: "none",
+              },
+
+              "& .MuiSelect-nativeInput": {
+                fontFamily: "Work Sans",
+              },
+
+              "& .MuiSelect-select": {
+                fontFamily: "Work Sans",
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+
+  ".MuiTypography-body1": {
+    margin: "0 0 20px",
+    fontWeight: "500",
+  },
+
   "& .MuiInputLabel-root": {
     marginBottom: "5px",
     display: "inline-block",
+    fontSize: "16px",
+    lineHeight: "1.2",
+    fontFamily: "Roboto",
+
+    "& + .MuiInputBase-root": {
+      marginTop: "15px",
+    },
+  },
+
+  "& .MuiInputBase-input": {
+    fontFamily: "Roboto, sans-serif",
+    fontSize: "16px",
+    color: theme.palette.common.blackshades["4p"],
+  },
+
+  "& .secondaryRow": {
+    paddingTop: "29px",
   },
 
   "& .formButtons": {
-    marginTop: "25px",
+    marginTop: "32px",
+    paddingBottom: "5px",
+
+    "& .MuiButtonBase-root": {
+      textTransform: "capitalize",
+    },
   },
 }));
 
 interface IHrAddEmployee {
   heading?: string;
+  headinginfo?: string;
   subheading?: string;
   title?: string;
   handleClose?: any;
-  open?: any
-
+  open?: any;
 }
 
 const HrAddEmployee: React.FC<IHrAddEmployee> = ({
   heading,
-  subheading,
+  // headinginfo,
+  // subheading,
   title,
   handleClose,
-  open
+  open,
 }) => {
- 
   return (
-<Modal
-  open={open}
-  onClose={handleClose}
-  aria-labelledby="modal-modal-title"
-  aria-describedby="modal-modal-description"
->
-<EmployeeInfoArea>
-      <Box >
-        <Typography variant="h6">{heading}</Typography>
-      </Box>
-      <Box>
-        <Typography className="subtitle">{subheading}</Typography>
+    <Modal
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <EmployeeInfoArea>
+        <Box>
+          <Typography variant="h6">{heading}</Typography>
+        </Box>
+        <Box>
+          <Typography className="body1">Account Information</Typography>
+          <Grid container spacing={4}>
+            <Grid item xs={6}>
+              <TextFields variant="standard" label="First Name" />
+            </Grid>
+            <Grid item xs={6}>
+              <TextFields variant="standard" label="Last Name" />
+            </Grid>
+            <Grid item xs={6}>
+              <TextFields variant="standard" label="Email" />
+            </Grid>
+            <Grid item xs={6}>
+              <TextFields variant="standard" label="Email" />
+            </Grid>
+            <Grid className="selectGrid" item xs={6}>
+              <SelectDemo />
+            </Grid>
+            <Grid className="selectGrid" item xs={6}>
+              <SelectDemo />
+            </Grid>
+            <Grid item xs={6}>
+              <BasicDatePicker />
+            </Grid>
+          </Grid>
+        </Box>
+        <Box className="secondaryRow">
+          <Typography className="subtitle">{title}</Typography>
+        </Box>
         <Grid container spacing={4}>
           <Grid item xs={6}>
             <TextFields variant="standard" label="First Name" />
@@ -97,64 +185,36 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
             <TextFields variant="standard" label="Last Name" />
           </Grid>
           <Grid item xs={6}>
-            <TextFields variant="standard" label="Email" />
-          </Grid>
-          <Grid item xs={6}>
-            <TextFields variant="standard" label="Email" />
-          </Grid>
-          <Grid item xs={6}>
-            <SelectDemo />
-          </Grid>
-          <Grid item xs={6}>
-            <SelectDemo />
-          </Grid>
-          <Grid item xs={6}>
-            <BasicDatePicker />
+            <TextFields variant="standard" label="Last Name" />
           </Grid>
         </Grid>
-      </Box>
-      <Box>
-        <Typography variant="h6">{title}</Typography>
-      </Box>
-      <Grid container spacing={4}>
-        <Grid item xs={6}>
-          <TextFields variant="standard" label="First Name" />
-        </Grid>
-        <Grid item xs={6}>
-          <TextFields variant="standard" label="Last Name" />
-        </Grid>
-        <Grid item xs={6}>
-          <TextFields variant="standard" label="Last Name" />
-        </Grid>
-      </Grid>
-      <Stack
-        className="formButtons"
-        direction="row"
-        justifyContent="flex-end"
-        alignItems="center"
-        gap="20px"
-      >
-        <Button
-          variant="text"
-          color="error"
-          size="medium"
-          startIcon={<Clear />}
-          onClick={handleClose}
+        <Stack
+          className="formButtons"
+          direction="row"
+          justifyContent="flex-end"
+          alignItems="center"
+          gap="10px"
         >
-          Cancel
-        </Button>
-        <Button 
-        variant="outlined" 
-        color="primary" 
-        size="medium" 
-        startIcon={<Save />}>
-          Save
-        </Button>
-      </Stack>
-    </EmployeeInfoArea>
-</Modal>
-
-  
+          <Button
+            variant="text"
+            color="error"
+            size="medium"
+            startIcon={<Clear />}
+            onClick={handleClose}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="outlined"
+            color="primary"
+            size="medium"
+            startIcon={<Save />}
+          >
+            Save
+          </Button>
+        </Stack>
+      </EmployeeInfoArea>
+    </Modal>
   );
 };
 
