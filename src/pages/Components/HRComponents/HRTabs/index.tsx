@@ -4,8 +4,6 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-// import Button from "@mui/material/Button";
-import Buttons from "../../../../components/Button";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import HRTableComponent from "../HRTable";
@@ -16,9 +14,10 @@ import AddEmployee from "../../../Dashboards/SuperAdmin/AddEmployee";
 import DepartmentInfo from "../../../../models/HrDepartment";
 import CommunityTableComponent from "../CommunityCenterTable";
 import CommunityModal from "../../../../models/CommunityModal";
+import Buttons from "../../../../components/Button";
 
 const AppHuman = styled(Box)(({ theme }) => ({
-  ".css-heg063-MuiTabs-flexContainer": {
+  ".MuiTabs-flexContainer": {
     borderBottom: "1px solid #BFBFBF",
   },
   ".MuiPaper-root": {
@@ -30,6 +29,11 @@ const AppHuman = styled(Box)(({ theme }) => ({
   },
   ".MuiButton-root": {
     textTransform: "capitalize",
+  },
+  ".MuiTablePagination-actions": {
+    ".MuiButtonBase-root": {
+      color: "rgba(0, 0, 0, 0.56) !important",
+    },
   },
 }));
 
@@ -110,6 +114,7 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 {tabNames[value]}
               </Typography>
+
               <Buttons
                 variant="contained"
                 color="primary"
@@ -118,15 +123,6 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
                 onClick={() => handleClick(tabNames[value])}
                 btntext={`Add New ${tabNames[value]}`}
               />
-              {/* <Button
-                variant="contained"
-                color="primary"
-                size="medium"
-                startIcon={<AddIcon />}
-                onClick={() => handleClick(tabNames[value])}
-              >
-                Add New {tabNames[value]}
-              </Button> */}
             </Toolbar>
           </AppBar>
         </Grid>

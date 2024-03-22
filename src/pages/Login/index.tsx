@@ -144,14 +144,8 @@ const Input = () => {
               login(email);
             }}
           />
-          {/* <Button variant="contained" size="large" fullWidth>
-            ACTION
-          </Button> */}
         </form>
         <Box>
-          {/* <Link className="textLink" href="#" variant="subtitle2">
-            Create account
-          </Link> */}
           <Link className="textLink" href="#" variant="subtitle2">
             Forgot password?
           </Link>
