@@ -45,13 +45,8 @@ const DropdownButton = (props: DropdownButtonProps) => {
         onClose={handleClose}
         
       >
-<<<<<<< HEAD
-        <MenuItem onClick={handleClose} style={{ width: "109px" }}>Approve</MenuItem>
-        <MenuItem onClick={handleClose}>Reject</MenuItem>
-=======
         <MenuItem onClick={handleClose}>Export </MenuItem>
         <MenuItem onClick={handleClose}>Reset</MenuItem>
->>>>>>> 73aed820376363481af5638414a10ec81f51618c
       </Menu>
     </MenuItemList>
   );
