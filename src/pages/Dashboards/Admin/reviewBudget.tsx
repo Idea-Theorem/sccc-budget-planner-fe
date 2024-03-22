@@ -187,9 +187,14 @@ const ReviewBudgetScreen = () => {
       },
     ],
   ];
+  const array = [
+    {text: "Approve"},
+    {text: "Reject"},
+  ]
   return (
     <StyledBox className="appContainer">
       <MainHeaderComponent
+        array={array}
         action={true} 
         title="Review Budgets"
         btnTitle="Actions"
