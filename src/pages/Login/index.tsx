@@ -4,8 +4,8 @@ import Typography from "@mui/material/Typography";
 import FormControl from "@mui/material/FormControl";
 import Link from "@mui/material/Link";
 import LogoImg from "../../assets/logo.png";
-import Button from "@mui/material/Button";
 import { TextField } from "@mui/material";
+import Buttons from "../../components/Button";
 
 const LoginArea = styled(Box)(({ theme }) => ({
   "&.loginBlock": {
@@ -49,7 +49,7 @@ const LoginArea = styled(Box)(({ theme }) => ({
     // color: theme.palette.common.whiteshades["30p"],
     margin: "0 0 15px",
   },
-  
+
   "& .loginFormItem": {
     width: "100%",
     margin: "0 0 16px",
@@ -123,9 +123,15 @@ const Input = () => {
           <FormControl className="loginFormItem">
             <TextField label="Password" variant="outlined" size="medium" />
           </FormControl>
-          <Button variant="contained" size="large" fullWidth>
+          <Buttons
+            btntext="Action"
+            variant="contained"
+            size="large"
+            fullWidth
+          />
+          {/* <Button variant="contained" size="large" fullWidth>
             ACTION
-          </Button>
+          </Button> */}
         </form>
         <Box>
           <Link className="textLink" href="#" variant="subtitle2">

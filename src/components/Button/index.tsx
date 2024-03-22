@@ -1,16 +1,9 @@
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
-import { ReactElement, ReactNode } from "react";
+import { ButtonProps } from "@mui/material/Button";
 
-interface StyledButtonProps {
-  variant?: "contained" | "outlined" | "text";
-  color?: string;
-  size?: "small" | "medium" | "large";
-  children?: React.ReactNode;
+interface StyledButtonProps extends ButtonProps {
   btntext?: string;
-  startIcon?: ReactNode | ReactElement;
-  endIcon?: ReactNode | ReactElement;
-  onClick?: () => void;
 }
 
 const StyledButton = styled(Button)<StyledButtonProps>(
@@ -30,15 +23,9 @@ const StyledButton = styled(Button)<StyledButtonProps>(
   })
 );
 
-const Buttons = ({ btntext, startIcon, variant, color, endIcon }: any) => {
+const Buttons: React.FC<StyledButtonProps> = ({ btntext, ...props }) => {
   return (
-    <StyledButton
-      size="large"
-      variant={variant}
-      startIcon={startIcon}
-      endIcon={endIcon}
-      color={color}
-    >
+    <StyledButton size="large" {...props}>
       {btntext}
     </StyledButton>
   );
