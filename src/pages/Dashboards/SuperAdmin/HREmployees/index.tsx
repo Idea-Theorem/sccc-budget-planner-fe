@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import TabsComponent from "../../../Components/HRComponents/HRTabs";
 
-const StyledBox = styled(Box)(({ theme }) => ({
+const StyledBox = styled(Box)(() => ({
 
   "& .dashboardCards": {
     display: "flex",
