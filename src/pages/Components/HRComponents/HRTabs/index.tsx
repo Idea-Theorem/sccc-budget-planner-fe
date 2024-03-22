@@ -112,7 +112,13 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
           <AppBar position="static">
             <Toolbar>
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                {tabNames[value]}
+                {tabNames[value] === "Community Centres"
+                  ? "Centres"
+                  : tabNames[value] === "Departments"
+                  ? "Departments"
+                  : tabNames[value] === "Employees"
+                  ? "Employees"
+                  : null}
               </Typography>
 
               <Buttons
@@ -121,7 +127,15 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
                 size="medium"
                 startIcon={<AddIcon />}
                 onClick={() => handleClick(tabNames[value])}
-                btntext={`Add New ${tabNames[value]}`}
+                btntext={`Add New ${
+                  tabNames[value] === "Community Centres"
+                    ? "Centre"
+                    : tabNames[value] === "Departments"
+                    ? "Department"
+                    : tabNames[value] === "Employees"
+                    ? "Employee"
+                    : null
+                }`}
               />
             </Toolbar>
           </AppBar>
