@@ -38,8 +38,8 @@ const DropdownButton = (props: DropdownButtonProps) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>Option 1</MenuItem>
-        <MenuItem onClick={handleClose}>Option 2</MenuItem>
+        <MenuItem onClick={handleClose}>Export </MenuItem>
+        <MenuItem onClick={handleClose}>Reset</MenuItem>
       </Menu>
     </>
   );
