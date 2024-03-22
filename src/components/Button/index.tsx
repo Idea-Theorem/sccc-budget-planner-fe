@@ -26,7 +26,7 @@ const StyledButton = styled(Button)<StyledButtonProps>(
 
 const Buttons: React.FC<StyledButtonProps> = ({ btntext, ...props }) => {
   return (
-    <StyledButton size="large" {...props}>
+    <StyledButton  {...props}>
       {btntext}
     </StyledButton>
   );
