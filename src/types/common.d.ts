@@ -5,6 +5,7 @@ interface Children {
 }
 
 interface SidebarAction {
+  email?: string;
   role: string;
   title: string;
   path?: string;
@@ -14,13 +15,13 @@ interface SidebarAction {
 interface ActionsType {
   title: string;
   icon: ReactNode;
-  variant: ButtonProps['variant'];
-  color:ButtonProps['color'];
-  size: ButtonProps['size'];
+  variant: ButtonProps["variant"];
+  color: ButtonProps["color"];
+  size: ButtonProps["size"];
   onClick: () => void;
 }
 
 interface BudgetDetailProps {
-  actions: ActionsType[]
-  clickBack: () => void
+  actions: ActionsType[];
+  clickBack: () => void;
 }

@@ -85,14 +85,17 @@ const normalRoutes: RouteObject = {
             { path: "addemployees", element: <AddEmployee /> },
             { path: "adddepartment", element: <AddDepartment /> },
             { path: "addcenter", element: <AddCenter /> },
-            {path: "settings", element: <div>Settings</div>}
+            { path: "settings", element: <div>Settings</div> },
           ],
         },
         {
           path: "/department-head",
           // element: <ProgramHeadScreen />,
           children: [
-            { index: true, element: <ProgramHeadScreen /> },
+            {
+              index: true,
+              element: <Navigate to="/department-head/review-budgets" />,
+            },
             { path: "program", element: <CreateProgramScreen /> },
             { path: "review-budgets", element: <DHReviewBudgets /> },
             { path: "program-review", element: <ProgramReview /> },

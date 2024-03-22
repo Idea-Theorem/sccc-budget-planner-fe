@@ -1,7 +1,8 @@
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
+// import Link from "@mui/material/Link";
+import { Link } from "react-router-dom";
 
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.programsEmptyBox": {
@@ -49,9 +50,9 @@ const NoProgramExistComponent = () => {
       <Box>
         <Link
           className="linkCreate"
-          href="#"
-          underline="always"
-          variant="subtitle2"
+          to="/program-head/create"
+          // underline="always"
+          // variant="subtitle2"
         >
           Create New Program
         </Link>

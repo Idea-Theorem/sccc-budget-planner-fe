@@ -1,11 +1,13 @@
-import { styled } from "@mui/material/styles";
+import { TextField } from "@mui/material";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import FormControl from "@mui/material/FormControl";
 import Link from "@mui/material/Link";
+import { styled } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
+import { useState } from "react";
 import LogoImg from "../../assets/logo.png";
-import { TextField } from "@mui/material";
 import Buttons from "../../components/Button";
+import { useAuth } from "../../contexts/AuthContext";
 
 const LoginArea = styled(Box)(({ theme }) => ({
   "&.loginBlock": {
@@ -110,6 +112,9 @@ const LoginArea = styled(Box)(({ theme }) => ({
   },
 }));
 const Input = () => {
+  const [email, setEmail] = useState("");
+  const { login } = useAuth();
+
   return (
     <LoginArea className="loginBlock">
       <Box className="loginHolder">
@@ -119,7 +124,13 @@ const Input = () => {
         <Typography variant="h5">Log In</Typography>
         <form noValidate autoComplete="off">
           <FormControl className="loginFormItem">
-            <TextField label="Email" variant="outlined" size="medium" />
+            <TextField
+              label="Email"
+              variant="outlined"
+              size="medium"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </FormControl>
           <FormControl className="loginFormItem">
             <TextField label="Password" variant="outlined" size="medium" />
@@ -129,6 +140,9 @@ const Input = () => {
             variant="contained"
             size="large"
             fullWidth
+            onClick={() => {
+              login(email);
+            }}
           />
           {/* <Button variant="contained" size="large" fullWidth>
             ACTION
