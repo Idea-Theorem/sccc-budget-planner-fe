@@ -30,13 +30,7 @@ const StyledButton = styled(Button)<StyledButtonProps>(
   })
 );
 
-const Buttons = ({
-  btntext,
-  startIcon,
-  variant,
-  color,
-  endIcon,
-}: any) => {
+const Buttons = ({ btntext, startIcon, variant, color, endIcon }: any) => {
   return (
     <StyledButton
       size="large"

@@ -68,10 +68,10 @@ const SideArea = styled(Box)(({ theme }) => ({
           width: "0.8em",
           height: "0.8em",
           opacity: "0.56",
-          marginRight: "8px", 
+          marginRight: "8px",
         },
       },
-    }
+    },
   },
 
   ".MuiButtonBase-root": {
@@ -107,7 +107,7 @@ const SideArea = styled(Box)(({ theme }) => ({
         background: "#676779",
       },
     },
-    
+
     ".MuiTypography-root": {
       fontSize: "14px",
       lineHeight: "20.02px",
