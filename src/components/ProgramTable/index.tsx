@@ -7,6 +7,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { useState } from "react";
+import DepartmentHeadModal from "../../models/Departmenthead";
 
 const TabsProgramAreas = styled(Box)(({ theme }) => ({
   ".MuiTabs-flexContainer": {
@@ -90,7 +92,12 @@ const rows = [
 ];
 
 export default function TabsProgramArea() {
+  const [isOpen , setIsOpen] = useState(false)
+  const closeModal = ()=>{
+    setIsOpen(false)
+  }
   return (
+    <>
     <TabsProgramAreas>
       <TableContainer className="programsTableHolder" component={Paper}>
         <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
@@ -105,6 +112,7 @@ export default function TabsProgramArea() {
               <TableRow
                 key={row.item}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                onClick={()=>setIsOpen(true)}
               >
                 <TableCell component="th" scope="row">
                   {row.item}
@@ -116,5 +124,7 @@ export default function TabsProgramArea() {
         </Table>
       </TableContainer>
     </TabsProgramAreas>
+    <DepartmentHeadModal open={isOpen} handleClose={closeModal}/>
+    </>
   );
 }
