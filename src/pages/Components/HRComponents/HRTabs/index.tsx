@@ -15,9 +15,10 @@ import AddEmployee from "../../../Dashboards/SuperAdmin/AddEmployee";
 import DepartmentInfo from "../../../../models/HrDepartment";
 import CommunityTableComponent from "../CommunityCenterTable";
 import CommunityModal from "../../../../models/CommunityModal";
+import Buttons from "../../../../components/Button";
 
 const AppHuman = styled(Box)(({ theme }) => ({
-  ".css-heg063-MuiTabs-flexContainer": {
+  ".MuiTabs-flexContainer": {
     borderBottom: "1px solid #BFBFBF",
   },
   ".MuiPaper-root": {
@@ -29,6 +30,11 @@ const AppHuman = styled(Box)(({ theme }) => ({
   },
   ".MuiButton-root": {
     textTransform: "capitalize",
+  },
+  ".MuiTablePagination-actions": {
+    ".MuiButtonBase-root": {
+      color: "rgba(0, 0, 0, 0.56) !important",
+    },
   },
 }));
 
@@ -109,15 +115,15 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 {tabNames[value]}
               </Typography>
-              <Button
+
+              <Buttons
                 variant="contained"
                 color="primary"
                 size="medium"
                 startIcon={<AddIcon />}
                 onClick={() => handleClick(tabNames[value])}
-              >
-                Add New {tabNames[value]}
-              </Button>
+                btntext={`Add New ${tabNames[value]}`}
+              />
             </Toolbar>
           </AppBar>
         </Grid>
