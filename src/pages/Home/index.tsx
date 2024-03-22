@@ -17,6 +17,23 @@ const StyledBox = styled(Box)(({ theme }) => ({
   "&.appContainer": {
     "&.bgGray": {
       background: "#fafafa",
+      margin: "-32px -40px",
+      padding: "32px 40px",
+    },
+  },
+
+  ".datepicker-area": {
+    position: "relative",
+
+    "&:before": {
+      position: "absolute",
+      content: "''",
+      width: "13px",
+      height: "2px",
+      background: "rgba(0, 0, 0, 0.87)",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
     },
   },
 
@@ -93,7 +110,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
 
   "& .createFormBlock": {
     width: "100%",
-    marginBottom: "30px",
+    marginBottom: "28px",
     paddingTop: "10px",
   },
 
@@ -118,6 +135,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
         color: "#000",
         fontFamily: "Work Sans",
         fontSize: "16px",
+        lineHeight: "1.2",
         fontWeight: "500",
         flexShrink: "0",
         margin: "0 20px 0 0",
@@ -128,6 +146,14 @@ const StyledBox = styled(Box)(({ theme }) => ({
         flexGrow: "1",
         minWidth: "0",
         margin: "0",
+      },
+
+      "& .MuiSelect-select": {
+        fontFamily: "Work Sans !important",
+      },
+
+      "& .MuiSelect-nativeInput": {
+        fontFamily: "Work Sans  !important",
       },
     },
   },
@@ -183,7 +209,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
     width: "100%",
 
     "& .MuiTabs-scroller": {
-      marginBottom: "30px !important",
+      marginBottom: "24px !important",
     },
 
     "& .MuiTabs-flexContainer": {
@@ -212,6 +238,8 @@ const DateStack = styled(Stack)(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
   borderRight: "3px solid #fff",
   padding: "12px 15px",
+  marginRight: "5px",
+  letterSpacing: "0.3px",
 
   "&.selected": {
     borderRightColor: theme.palette.primary.main,
@@ -508,7 +536,7 @@ const HomeScreen = () => {
               <Grid className="createProgramContent" item xs={12}>
                 <Grid item xs={12}>
                   <Stack className="createProgramContentHead">
-                    <Typography variant="h5">Youth Swimming Class2</Typography>
+                    <Typography className="mainHeading" variant="h5">Youth Swimming Class2</Typography>
                     <Stack direction={"row"} gap={"20px"}>
                       <Buttons startIcon={<Save />} btntext1="Save" />
                       <Buttons startIcon={<EditNote />} btntext3="ReSubmit" />

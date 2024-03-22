@@ -42,6 +42,7 @@ const LoginArea = styled(Box)(({ theme }) => ({
 
   ".MuiFormLabel-root": {
     color: theme.palette.common.blackshades["12p"],
+    fontFamily: "Roboto",
   },
 
   ".MuiButtonBase-root": {
@@ -81,6 +82,10 @@ const LoginArea = styled(Box)(({ theme }) => ({
       fontWeight: "500",
       fontFamily: "Roboto",
       letterSpacing: "0.46px",
+    },
+
+    "& legend": {
+      fontFamily: "Roboto",
     },
   },
 

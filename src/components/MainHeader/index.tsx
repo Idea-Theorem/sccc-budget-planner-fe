@@ -21,6 +21,7 @@ const AppHeader = styled(Box)(({ theme }) => ({
     "& .MuiTypography-h3": {
       fontSize: "26px",
       lineHeight: "1.3",
+      marginTop: "-3px",
       color: theme.palette.common.blackshades["4p"],
     },
 
@@ -36,6 +37,12 @@ const AppHeader = styled(Box)(({ theme }) => ({
       },
     },
 
+    "& .buttonCreate": {
+      textTransform: "capitalize",
+      fontFamily: "Work Sans",
+      fontWeight: "500",
+    },
+
     "& .appSubHead": {
       display: "flex",
       alignItems: "center",
@@ -47,7 +54,7 @@ const AppHeader = styled(Box)(({ theme }) => ({
         fontWeight: "500",
         letterSpacing: "0.25px",
         color: theme.palette.text.primary,
-        margin: "0 10px 0 0",
+        margin: "0 13px 0 0",
       },
 
       "& .welcomeDate ": {
@@ -62,12 +69,13 @@ const AppHeader = styled(Box)(({ theme }) => ({
     "& .headerDropdownButton": {
       background: theme.palette.primary.main,
       color: theme.palette.background.default,
-      minWidth: "102px",
+      minWidth: "110px",
       height: "36px",
       fontSize: "14px",
       fontWeight: "500",
       textTransform: "capitalize",
-      fontFamily: "Work Sans", 
+      fontFamily: "Work Sans",
+      letterSpacing: "0.4px", 
 
       "&:hover": {
         // background: theme.palette.secondary.main,
@@ -98,7 +106,7 @@ const MainHeaderComponent = (props: MainHeaderProps) => {
           //   onClick={props?.onClick}
           //   btntext3={props?.btnTitle}
           // />
-          <Button onClick={props?.onClick} variant="contained" color="primary" size="medium" startIcon={<AddIcon />}>Create New Program</Button>
+          <Button className="buttonCreate" onClick={props?.onClick} variant="contained" color="primary" size="medium" startIcon={<AddIcon />}>Create New Program</Button>
         )}
       </Stack>
       {props?.subHeader && (

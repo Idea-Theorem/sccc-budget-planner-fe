@@ -17,6 +17,30 @@ const StyledBox = styled(Box)(() => ({
       letterSpacing: "0.25px",
     },
   },
+
+  "& .reviewSubhead": {
+    marginBottom: "4px",
+
+    "& .MuiTypography-h4": {
+      marginTop: "-5px",
+    },
+  },
+
+  "& .backButtonBox": {
+    margin: "-3px 0 8px",
+    paddingLeft: "8px",
+  },
+
+  "& .headerDropdownButton": {
+    marginTop: "6px",
+  },
+
+  "& .totalBudgetText": {
+    fontSize: "18px",
+    fontWeight: "400",
+    marginTop: "-10px",
+    marginBottom: "0",
+  },
   // Color: theme.palette.secondary.light,
 }));
 const DepartmentDetailScreen = () => {
@@ -198,11 +222,11 @@ const DepartmentDetailScreen = () => {
   ];
   return (
     <StyledBox className="appContainer">
-      <BackButton />
+      <Box className="backButtonBox">
+        <BackButton />
+      </Box>
       <SubHeader title="Recreation & Culture" />
-      <Stack className="budgetTitle">
-        <Typography>Total Budget: $00,000.00</Typography>
-      </Stack>
+      <Typography className="totalBudgetText">Total Budget: $00,000.00</Typography>
       <TabsArea
         tabsTitleArray={[
           { title: "Pending" },

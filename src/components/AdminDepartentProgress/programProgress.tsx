@@ -15,6 +15,11 @@ interface ProgramProgressProps {
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.progressStatusWidget": {
     width: "100%",
+    marginBottom: "21px",
+
+    "&:last-child": {
+      marginBottom: "8px",
+    },
 
     "& .textInfo": {
       display: "flex",
@@ -28,7 +33,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
         fontFamily: "Roboto",
         color: theme.palette.action.selected,
         fontWeight: "400",
-        letterSpacing: "0.5px",
+        letterSpacing: "0",
         margin: "0 0 6px",
       },
     },

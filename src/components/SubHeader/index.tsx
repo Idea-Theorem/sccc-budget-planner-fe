@@ -28,12 +28,13 @@ const StyledBox = styled(Box)(({ theme }) => ({
   "& .headerDropdownButton": {
     background: theme.palette.primary.main,
     color: theme.palette.background.default,
-    minWidth: "102px",
+    minWidth: "110px",
     height: "36px",
     fontSize: "14px",
     fontWeight: "500",
     textTransform: "capitalize",
-    fontFamily: "Work Sans", 
+    fontFamily: "Work Sans",
+    letterSpacing: "0.4px", 
 
     "&:hover": {
       // background: theme.palette.secondary.main,

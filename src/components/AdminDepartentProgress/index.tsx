@@ -10,10 +10,9 @@ import { departments } from "../../utils/sampleData";
 const StyledBox = styled(Box)(() => ({
   "&.dashboardStatsCard": {
     width: "100%",
-    padding: "25px 30px",
+    padding: "23px 24px",
     marginBottom: "24px",
-    boxShadow:
-      "0 1.85px 6.25px 0 rgba(0, 0, 0, 0.19), 0 0.5px 1.75px 0 rgba(0, 0, 0, 0.04)",
+    boxShadow: "0 1.85px 6.25px 0 rgba(0, 0, 0, 0.19), 0 0.5px 1.75px 0 rgba(0, 0, 0, 0.04)",
 
     "& .MuiTypography-h3": {
       color: "#303030",
@@ -30,19 +29,19 @@ const StyledBox = styled(Box)(() => ({
       flexDirection: "row",
       flexWrap: "wrap",
       overflow: "hidden",
-      margin: "0 0 20px",
+      margin: "0 -3px 20px -4px",
     },
 
     "& .dashboardGraphsBlock": {
       display: "flex",
-      alignItems: "center",
+      alignItems: "flex-start",
       flexDirection: "row",
     },
 
     "& .dashboardGraphBox": {
-      width: "320px",
+      width: "303px",
       flexShrink: "0",
-      padding: "15px", // Fixed typo in padding
+      padding: "6px 15px", // Fixed typo in padding
     },
 
     "& .dashboardGraphsList": {
