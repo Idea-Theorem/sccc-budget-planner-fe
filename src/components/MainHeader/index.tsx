@@ -91,6 +91,7 @@ interface MainHeaderProps {
   subHeader?: true;
   subTitle?: string;
   date?: string;
+  array?: any;
   action?: boolean;
   onClick?: () => void;
 }
@@ -100,7 +101,7 @@ const MainHeaderComponent = (props: MainHeaderProps) => {
       <Stack className="appHeaderHolder">
         <Typography variant="h3">{props.title}</Typography>
         {props?.action ? (
-          <DropdownButton title="Action" /> 
+          <DropdownButton title="Action" array={props?.array}/> 
         ) : (
           <Buttons
             startIcon={<AddIcon />}

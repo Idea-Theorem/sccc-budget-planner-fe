@@ -10,11 +10,11 @@ import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 const MenuItemList = styled(Box)({});
 interface DropdownButtonProps {
   title?: string;
+  array?: any;
 }
 const DropdownButton = (props: DropdownButtonProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [isOpen, setIsOpen] = useState(false);
-
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
     setIsOpen((prev) => !prev);
@@ -42,10 +42,9 @@ const DropdownButton = (props: DropdownButtonProps) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose} style={{ width: "109px" }}>
-          Export{" "}
-        </MenuItem>
-        <MenuItem onClick={handleClose}>Reset</MenuItem>
+        {props?.array?.map((item: any) => (
+          <MenuItem onClick={handleClose} style={{ width: "109px" }}>{item?.text}</MenuItem>
+          ))}
       </Menu>
     </MenuItemList>
   );

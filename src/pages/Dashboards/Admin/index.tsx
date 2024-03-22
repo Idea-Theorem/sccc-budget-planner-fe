@@ -14,9 +14,14 @@ const StyledBox = styled(Box)(() => ({
   // Color: theme.palette.secondary.light,
 }));
 const AdminScreen = () => {
+  const array = [
+    {text: "Export"},
+    {text: "Reset"},
+  ]
   return (
     <StyledBox className="appContainer">
-      <MainHeaderComponent
+      <MainHeaderComponent 
+      array={array}
         title="Dashboard"
         btnTitle="Actions"
         subTitle="Welcome, Tomohiro!"
