@@ -19,6 +19,9 @@ import HomeScreen from "../pages/Home";
 import LoginScreen from "../pages/Login";
 import DHReviewBudgets from "../pages/Dashboards/DepartmentHead/reviewBudgets";
 import ProgramReview from "../pages/Dashboards/DepartmentHead/program-review";
+import ProgramSetting from "../pages/Dashboards/ProgramHead/program-setting";
+import ProgramCodes from "../pages/Dashboards/ProgramHead/programCodes";
+import HRSettings from "../pages/Components/HRComponents/HRSettings";
 const authRoutes: RouteObject = {
   path: "*",
   children: [
@@ -55,8 +58,10 @@ const normalRoutes: RouteObject = {
             { index: true, element: <ProgramHeadScreen /> },
             { path: "program", element: <PHProgramsScreen /> },
             { path: "create", element: <CreateProgramScreen /> },
+            { path: "program-settings", element: <ProgramSetting /> }, 
+            { path: "program-codes", element: <ProgramCodes /> },  
           ],
-        },
+        }, 
         {
           path: "/admin",
           children: [
@@ -85,7 +90,7 @@ const normalRoutes: RouteObject = {
             { path: "addemployees", element: <AddEmployee /> },
             { path: "adddepartment", element: <AddDepartment /> },
             { path: "addcenter", element: <AddCenter /> },
-            { path: "settings", element: <div>Settings</div> },
+            {path: "settings", element: <HRSettings/>}
           ],
         },
         {

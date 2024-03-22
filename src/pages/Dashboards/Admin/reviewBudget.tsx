@@ -190,7 +190,7 @@ const ReviewBudgetScreen = () => {
   return (
     <StyledBox className="appContainer">
       <MainHeaderComponent
-        action={true}
+        action={true} 
         title="Review Budgets"
         btnTitle="Actions"
       />
