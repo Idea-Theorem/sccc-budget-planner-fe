@@ -35,7 +35,7 @@ const AppHuman = styled(Box)(({ theme }) => ({
 interface TabProps {
   tabNames: string[];
 }
-
+ 
 const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
   const [value, setValue] = React.useState(0);
    const [isOpen, setIsopen] = useState(false);

@@ -343,7 +343,7 @@ export const commonTypography = {
     textDecoration: "none",
     lineHeight: "1.3",
     textTransform: "none",
-  },
+  }, 
   h6: {
     fontStyle: "normal",
     fontFamily: "Work Sans, sans-serif",
