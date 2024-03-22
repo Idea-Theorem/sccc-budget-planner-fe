@@ -128,7 +128,7 @@ export default function ResponsiveDrawer(props: Props) {
   const { user } = useAuth();
   const { withMore, withoutMore } = filterSidebarActionsWithMore(
     SIDEBARACTIONS,
-    "Program Head"
+    user
     // "Admin"
     // "HR",
     // "Department Head"
