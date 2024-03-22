@@ -2,6 +2,7 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MainHeaderComponent from "../../../components/MainHeader";
 import TabsArea from "../../../components/Tabs";
+import { useNavigate } from "react-router-dom";
 const StyledBox = styled(Box)(() => ({
   "&.appContainer": {
     ".appHeader": {
@@ -10,6 +11,7 @@ const StyledBox = styled(Box)(() => ({
   },
 }));
 const PHProgramsScreen = () => {
+  const navigate = useNavigate();
   const tableColumnsTitleArray = [
     [
       {
@@ -188,7 +190,11 @@ const PHProgramsScreen = () => {
   ];
   return (
     <StyledBox className="appContainer">
-      <MainHeaderComponent title="Programs" btnTitle="Create New Programs" />
+      <MainHeaderComponent
+        title="Programs"
+        btnTitle="Create New Programs"
+        onClick={() => navigate("/program-head/create")}
+      />
       <TabsArea
         tabsTitleArray={[
           { title: "Pending" },

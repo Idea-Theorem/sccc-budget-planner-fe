@@ -1,13 +1,16 @@
 import Routes from "./routes";
 import "./App.css";
 import ThemeProvider from "./theme/index";
+import AuthProvider from "./contexts/AuthContext";
 
 function App() {
   return (
     <>
-      <ThemeProvider>
-        <Routes />
-      </ThemeProvider>
+      <AuthProvider>
+        <ThemeProvider>
+          <Routes />
+        </ThemeProvider>
+      </AuthProvider>
     </>
   );
 }
