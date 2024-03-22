@@ -12,7 +12,7 @@ interface AdminDataCardProps {
   total?: string;
   done?: string;
   showProgress?: boolean;
-  color?: LinearProgressProps['color']; // Ensure the color prop matches the type defined in LinearProgressProps
+  color?: LinearProgressProps["color"]; // Ensure the color prop matches the type defined in LinearProgressProps
 }
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.dashboardStatsCard": {
@@ -80,7 +80,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
       margin: "6px 7px 0 0",
 
       "&:hover": {
-        color: theme.palette.secondary.main,
+        color: theme.palette.primary.main,
       },
     },
 
@@ -126,26 +126,8 @@ const StyledBox = styled(Box)(({ theme }) => ({
 
     "& .cardProgressBar": {
       marginBottom: "-14px",
-
-      "& .MuiLinearProgress-determinate": {
-        // background: theme.palette.secondary.mainLight,
-
-        "& .MuiLinearProgress-bar1Determinate": {
-          // background: theme.palette.secondary.main,
-        },
-      },
-
-      "& .MuiBox-root": {
-        "& .MuiTypography-root": {
-          minWidth: "45px",
-          textAlign: "right",
-          color: "#000",
-          fontFamily: "Roboto",
-        },
-      },
     },
   },
-  // Color: theme.palette.secondary.light,
 }));
 const AdminDataCard = (props: AdminDataCardProps) => {
   return (
