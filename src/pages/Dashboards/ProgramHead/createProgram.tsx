@@ -69,7 +69,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
   },
 
   ".MuiTypography-h5": {
-    color: theme.palette.common.blackshades["4p"],
+    color: theme.palette.common.blackshades["12p"],
   },
 
   ".btn-back": {

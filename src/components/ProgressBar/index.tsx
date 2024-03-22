@@ -3,21 +3,22 @@ import LinearProgress, {
 } from "@mui/material/LinearProgress";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
 
 function LinearProgressWithLabel(
   props: LinearProgressProps & { value: number }
 ) {
   return (
-    <Box display="flex" alignItems="center">
-      <Box width="100%" mr="1">
+    <Stack alignItems="center" direction="row" gap="10px">
+      <Box width="100%">
         <LinearProgress variant="determinate" {...props} />
       </Box>
-      <Box minWidth="35">
+      <Box>
         <Typography variant="body2" color="text.secondary">{`${Math.round(
           props.value
         )}%`}</Typography>
       </Box>
-    </Box>
+    </Stack>
   );
 }
 

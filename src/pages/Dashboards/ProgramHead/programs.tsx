@@ -14,7 +14,7 @@ const PHProgramsScreen = () => {
     [
       {
         field: "departmentName",
-        headerName: "Department Name",
+        headerName: "Program Name",
         sortable: false,
         editable: false,
         flex: 1,
@@ -35,25 +35,11 @@ const PHProgramsScreen = () => {
       },
       {
         field: "lYearBudget",
-        headerName: "Last Year Budget",
+        headerName: "Previous Year Budget",
         sortable: false,
         editable: false,
         flex: 1,
       },
-      // {
-      //   field: "profit",
-      //   headerName: "Profit",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
-      // {
-      //   field: "nPrograms",
-      //   headerName: "No. Programs",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
       {
         field: "sDate",
         headerName: "Submission Date",
@@ -72,7 +58,7 @@ const PHProgramsScreen = () => {
     [
       {
         field: "departmentName",
-        headerName: "Department Name",
+        headerName: "Program Name",
         sortable: false,
         editable: false,
         flex: 1,
@@ -93,25 +79,11 @@ const PHProgramsScreen = () => {
       },
       {
         field: "lYearBudget",
-        headerName: "Last Year Budget",
+        headerName: "Previous Year Budget",
         sortable: false,
         editable: false,
         flex: 1,
       },
-      // {
-      //   field: "profit",
-      //   headerName: "Profit",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
-      // {
-      //   field: "nPrograms",
-      //   headerName: "No. Programs",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
       {
         field: "sDate",
         headerName: "Submission Date",
@@ -130,7 +102,7 @@ const PHProgramsScreen = () => {
     [
       {
         field: "departmentName",
-        headerName: "Department Name",
+        headerName: "Program Name",
         sortable: false,
         editable: false,
         flex: 1,
@@ -151,25 +123,11 @@ const PHProgramsScreen = () => {
       },
       {
         field: "lYearBudget",
-        headerName: "Last Year Budget",
+        headerName: "Previous Year Budget",
         sortable: false,
         editable: false,
         flex: 1,
       },
-      // {
-      //   field: "profit",
-      //   headerName: "Profit",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
-      // {
-      //   field: "nPrograms",
-      //   headerName: "No. Programs",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
       {
         field: "sDate",
         headerName: "Submission Date",
