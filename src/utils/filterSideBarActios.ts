@@ -5,11 +5,11 @@ export function filterSidebarActionsWithMore(
   role: string
 ) {
   const withMore = sidebarActions.filter((action: SidebarAction) => {
-    return action.role === role && action.more;
+    return action.email === role && action.more;
   });
 
   const withoutMore = sidebarActions.filter((action: SidebarAction) => {
-    return action.role === role && !action.more;
+    return action.email === role && !action.more;
   });
 
   return { withMore, withoutMore };

@@ -13,6 +13,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import LogoImg from "../../assets/logo.png";
 import CollapsibleMenu from "../CollapsableManue";
 import { SidebarAction } from "../../types/common";
+import { useAuth } from "../../contexts/AuthContext";
 
 const SideArea = styled(Box)(({ theme }) => ({
   background: theme.palette.primary.main,
@@ -124,6 +125,7 @@ interface Props {
 export default function ResponsiveDrawer(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const { user } = useAuth();
   const { withMore, withoutMore } = filterSidebarActionsWithMore(
     SIDEBARACTIONS,
     "Program Head"

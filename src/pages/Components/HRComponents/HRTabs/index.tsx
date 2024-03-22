@@ -4,7 +4,8 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import Button from "@mui/material/Button";
+// import Button from "@mui/material/Button";
+import Buttons from "../../../../components/Button";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import HRTableComponent from "../HRTable";
@@ -109,7 +110,15 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 {tabNames[value]}
               </Typography>
-              <Button
+              <Buttons
+                variant="contained"
+                color="primary"
+                size="medium"
+                startIcon={<AddIcon />}
+                onClick={() => handleClick(tabNames[value])}
+                btntext={`Add New ${tabNames[value]}`}
+              />
+              {/* <Button
                 variant="contained"
                 color="primary"
                 size="medium"
@@ -117,7 +126,7 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
                 onClick={() => handleClick(tabNames[value])}
               >
                 Add New {tabNames[value]}
-              </Button>
+              </Button> */}
             </Toolbar>
           </AppBar>
         </Grid>
