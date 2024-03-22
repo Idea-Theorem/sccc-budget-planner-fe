@@ -7,9 +7,7 @@ import MenuItem from "@mui/material/MenuItem";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 
-const MenuItemList = styled(Box)({
- 
-}); 
+const MenuItemList = styled(Box)({});
 interface DropdownButtonProps {
   title?: string;
   array?: any;
@@ -43,10 +41,9 @@ const DropdownButton = (props: DropdownButtonProps) => {
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         onClose={handleClose}
-        
       >
         {props?.array?.map((item: any) => (
-          <MenuItem onClick={handleClose}>{item?.text}</MenuItem>
+          <MenuItem onClick={handleClose} style={{ width: "109px" }}>{item?.text}</MenuItem>
           ))}
       </Menu>
     </MenuItemList>

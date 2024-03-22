@@ -1,24 +1,36 @@
 import { styled } from "@mui/material/styles";
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
-import InputSearch from "../../../components/Input";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { Button, Stack, Typography } from "@mui/material";
-import EditProgramCodesModal from "../../../models/ProgramSettings/EditProgramCodes";
-import { useState } from "react";
-const StyledBox = styled(Box)(({}) => ({
+import InputSearch from "../../../components/Input";
+const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
     position: "relative",
   },
 
+  ".MuiTypography-h3": {
+    margin: " 0 0 30px",
+  },
+
+  ".MuiTypography-h6": {
+    margin: " 0 0 10px",
+  },
+
   "& .MuiDataGrid-toolbarContainer": {
-    marginBottom: "10px",
+    marginBottom: "1px",
 
     "& .MuiButtonBase-root": {
+      color: "#979797 !important",
       fontSize: "13px",
-      letterSpacing: "1",
+      letterSpacing: "0.8px",
+      marginRight: "-1px",
+
+      "&:hover": {
+        color: `${theme.palette.primary.main} !important`,
+      },
     },
   },
 }));
@@ -44,19 +56,11 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
       outline: "none",
     },
   },
-  "& .MuiButton-root": {
-    color: "#979797",
-    fontSize: "14px",
-    lineHeight: "24px",
-    "&:hover": {
-      background: "none",
-    },
-  },
   "& .MuiDataGrid-columnHeaderTitle": {
     color: "rgba(0, 0, 0, 0.87)",
     fontSize: "14px",
     lineHeight: "24px",
-    fontWeight: "500",
+    fontWeight: "600",
     fontFamily: "Work Sans, sans-serif",
     letterSpacing: "0.17px",
   },
@@ -91,12 +95,14 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
       fontSize: "12px",
       lineHeight: "20px",
       fontWeight: "400",
-      fontFamily: "Roboto, sans-serif",
+      fontFamily: "Work Sans, sans-serif",
       letterSpacing: "0.4px",
     },
   },
   "& .MuiTablePagination-displayedRows": {
     color: "rgba(0, 0, 0, 0.87)",
+    fontSize: "12px",
+    fontFamily: "Work Sans, sans-serif",
   },
   ".MuiDataGrid-cell": {
     overflow: "visible !important",
@@ -111,52 +117,21 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
 const rows = [
   {
     id: 1,
-    departmentName: "Youth Swimming Class",
-    status: "1505",
+    departmentName: "Recreation & Culture",
+    status: "5",
+    lYearBudget: "02-Mar-2024",
   },
   {
     id: 2,
-    departmentName: "youth Swimming Class",
-    status: "1506",
+    departmentName: "HR",
+    status: "5",
+    lYearBudget: "02-Mar-2024",
   },
-  {
-    id: 3,
-    departmentName: "Youth Table Tennis Class",
-    status: "1220",
-  },
-  {
-    id: 4,
-    departmentName: "Youth Computer Class",
-    status: "2234",
-  },
-  {
-    id: 5,
-    departmentName: "Youth Hockey Class",
-    status: "1234",
-  },
-  {
-    id: 6,
-    departmentName: "Youth Basketball Class",
-    status: "0094",
-  },
-  {
-    id: 7,
-    departmentName: "Youth Golf Class",
-    status: "0283",
-  },
-  {
-    id: 8,
-    departmentName: "Youth Soccer Class",
-    status: "New",
-  },
-  {
-    id: 9,
-    departmentName: "Youth Soccer Class",
-    status: "New",
-  },
-]; 
-interface HRTableProps {}
-const ProgramCodes: React.FC<HRTableProps> = ({}) => {
+];
+interface HRTableProps {
+  onEdit?: () => void;
+}
+const HRTableComponent: React.FC<HRTableProps> = ({ onEdit }) => {
   const columns: GridColDef[] = [
     {
       field: "departmentName",
@@ -177,7 +152,12 @@ const ProgramCodes: React.FC<HRTableProps> = ({}) => {
       headerName: "",
       flex: 0.5,
       renderCell: () => (
-        <Stack direction="row" gap="10px" alignItems="center">
+        <Stack
+          direction="row"
+          gap="10px"
+          alignItems="center"
+          ml="auto                                       "
+        >
           <Button
             variant="text"
             color="error"
@@ -191,7 +171,7 @@ const ProgramCodes: React.FC<HRTableProps> = ({}) => {
             color="primary"
             size="small"
             startIcon={<EditNoteIcon />}
-            onClick={()=>setIsOpen(true)}
+            onClick={onEdit}
           >
             Edit
           </Button>
@@ -199,14 +179,14 @@ const ProgramCodes: React.FC<HRTableProps> = ({}) => {
       ),
     },
   ];
-  const [isOpen, setIsOpen] = useState(false)
-  const closeModal = ()=>{
-    setIsOpen(false)
-  }
   return (
-    <>
-      <Typography variant="h3">Programs</Typography>
-      <Typography variant="h6">Codes</Typography>
+    <StyledBox>
+      <Typography className="hrBlockTitle" variant="h3">
+        Programs
+      </Typography>
+      <Typography className="hrBlockTitle" variant="h6">
+        Codes
+      </Typography>
       <StyledBox className="mainTableBlock">
         <InputSearch placeholder="Search..." />
         <StyleDataGrid
@@ -214,7 +194,7 @@ const ProgramCodes: React.FC<HRTableProps> = ({}) => {
           columns={columns}
           initialState={{
             pagination: {
-              paginationModel: { page: 0, pageSize: 10 },
+              paginationModel: { page: 0, pageSize: 5 },
             },
           }}
           pageSizeOptions={[5, 10, 15]}
@@ -222,8 +202,7 @@ const ProgramCodes: React.FC<HRTableProps> = ({}) => {
           slots={{ toolbar: GridToolbar }}
         />
       </StyledBox>
-      <EditProgramCodesModal open={isOpen} handleClose={closeModal}/>
-    </>
+    </StyledBox>
   );
 };
-export default ProgramCodes;
+export default HRTableComponent;
