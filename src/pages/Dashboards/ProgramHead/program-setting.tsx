@@ -2,11 +2,9 @@ import { styled } from "@mui/material/styles";
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import InputSearch from "../../../components/Input";
-import { Button, Stack, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { useState } from "react";
 import EditProgramModal from "../../../models/ProgramSettings/EditProgram";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import EditNoteIcon from "@mui/icons-material/EditNote";
 
 const StyledBox = styled(Box)(({}) => ({
   "&.mainTableBlock": {
@@ -21,6 +19,13 @@ const StyledBox = styled(Box)(({}) => ({
       fontSize: "13px",
       letterSpacing: "1",
     },
+  },
+  ".MuiTypography-h3": {
+    margin: " 0 0 30px",
+  },
+
+  ".MuiTypography-h6": {
+    margin: " 0 0 10px",
   },
 }));
 const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
@@ -181,48 +186,18 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
       editable: false,
       flex: 1,
     },
-    {
-      field: "buttonsColumn",
-      headerName: "",
-      flex: 0.5,
-      renderCell: () => (
-        <Stack direction="row" gap="10px" alignItems="center">
-          <Button
-            variant="text"
-            color="error"
-            size="small"
-            startIcon={<DeleteOutlineIcon />}
-          >
-            Delete
-          </Button>
-          <Button
-            variant="outlined"
-            color="primary"
-            size="small"
-            startIcon={<EditNoteIcon />}
-            onClick={()=>setIsOpen(true)}
-          >
-            Edit
-          </Button>
-        </Stack>
-      ),
-    },
   ];
-  const [isOpen, setIsOpen] = useState(false)
-  const closeModal = ()=>{
-    setIsOpen(false)
-  }
+  const [isOpen, setIsOpen] = useState(false);
+  const closeModal = () => {
+    setIsOpen(false);
+  };
   return (
-    <>
-      <Typography variant="h3">
-        Programs
-      </Typography>
-      <Typography variant="h6">
-        Settings
-      </Typography>
+    <StyledBox>
+      <Typography variant="h3">Programs</Typography>
+      <Typography variant="h6">Settings</Typography>
       <StyledBox className="mainTableBlock">
         <InputSearch placeholder="Search..." />
-        <StyleDataGrid 
+        <StyleDataGrid
           rows={rows}
           columns={columns}
           initialState={{
@@ -235,8 +210,8 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
           slots={{ toolbar: GridToolbar }}
         />
       </StyledBox>
-      <EditProgramModal open={isOpen} handleClose={closeModal}/>
-    </>
+      <EditProgramModal open={isOpen} handleClose={closeModal} />
+    </StyledBox>
   );
 };
 export default ProgramSetting;

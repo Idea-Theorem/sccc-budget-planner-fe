@@ -2,6 +2,7 @@ import React from "react";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import TabsComponent from "../../../Components/HRComponents/HRTabs";
+import { Typography } from "@mui/material";
 
 const StyledBox = styled(Box)(() => ({
   "& .dashboardCards": {
@@ -9,7 +10,6 @@ const StyledBox = styled(Box)(() => ({
     justifyContent: "space-between",
     margin: "0 -12px",
   },
-  // Color: theme.palette.secondary.light,
 
   "& .hrBlockTitle": {
     fontSize: "26px",
@@ -62,7 +62,7 @@ const tabNames = ["Employees", "Departments", "Community Centres"];
 const HREmployeees: React.FC<SuperAdminProps> = () => {
   return (
     <StyledBox className="appContainer">
-      <h1 className="hrBlockTitle">HR (Human Resources) </h1>
+      <Typography className="hrBlockTitle" >HR (Human Resources) </Typography>
 
       <TabsComponent tabNames={tabNames} />
     </StyledBox>
