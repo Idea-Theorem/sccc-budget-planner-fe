@@ -4,7 +4,8 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import AddIcon from "@mui/icons-material/Add";
 import DropdownButton from "../Button/dropDownButton";
-import { Button } from "@mui/material";
+// import { Button } from "@mui/material";
+import Buttons from "../Button";
 
 const AppHeader = styled(Box)(({ theme }) => ({
   "&.appHeader": {
@@ -65,7 +66,7 @@ const AppHeader = styled(Box)(({ theme }) => ({
         color: theme.palette.gfGrey.textGray,
       },
     },
-    
+
     "& .headerDropdownButton": {
       background: theme.palette.primary.main,
       color: theme.palette.background.default,
@@ -75,7 +76,7 @@ const AppHeader = styled(Box)(({ theme }) => ({
       fontWeight: "500",
       textTransform: "capitalize",
       fontFamily: "Work Sans",
-      letterSpacing: "0.4px", 
+      letterSpacing: "0.4px",
 
       "&:hover": {
         // background: theme.palette.secondary.main,
@@ -101,12 +102,14 @@ const MainHeaderComponent = (props: MainHeaderProps) => {
         {props?.action ? (
           <DropdownButton title="Action" />
         ) : (
-          // <Buttons
-          //   startIcon={<AddIcon />}
-          //   onClick={props?.onClick}
-          //   btntext3={props?.btnTitle}
-          // />
-          <Button className="buttonCreate" onClick={props?.onClick} variant="contained" color="primary" size="medium" startIcon={<AddIcon />}>Create New Program</Button>
+          <Buttons
+            startIcon={<AddIcon />}
+            onClick={props?.onClick}
+            btntext={props?.btnTitle}
+            variant="contained"
+            // color="error"
+          />
+          // <Button className="buttonCreate" onClick={props?.onClick} variant="contained" color="primary" size="medium" startIcon={<AddIcon />}>Create New Program</Button>
         )}
       </Stack>
       {props?.subHeader && (

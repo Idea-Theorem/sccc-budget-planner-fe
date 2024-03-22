@@ -13,6 +13,7 @@ import SelectDemo from "../../../components/Select";
 import TabsProgramArea from "../../../components/TabsProgram";
 import { ActionsType } from "../../../types/common";
 import { Grid } from "../../Components/MUIComponents/index";
+import Buttons from "../../../components/Button";
 
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.appContainer": {
@@ -257,7 +258,7 @@ const CreateProgramScreen = () => {
 
   const [secondLevel, setSecondLevel] = useState(false);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const actions: ActionsType[] = [
     {
@@ -305,7 +306,9 @@ const CreateProgramScreen = () => {
               <Grid className="createProgramContent" item xs={12}>
                 <Grid item xs={12}>
                   <Stack className="createProgramContentHead">
-                    <Typography className="mainHeading" variant="h5">Youth Swimming Class2</Typography>
+                    <Typography className="mainHeading" variant="h5">
+                      Youth Swimming Class2
+                    </Typography>
                     <Stack direction={"row"} gap={"10px"}>
                       <Button
                         variant="outlined"
@@ -316,14 +319,22 @@ const CreateProgramScreen = () => {
                       >
                         Save
                       </Button>
-                      <Button
+
+                      <Buttons
+                        variant="contained"
+                        color="primary"
+                        size="medium"
+                        startIcon={<EditNote />}
+                        btntext="Resubmit"
+                      />
+                      {/* <Button
                         variant="contained"
                         color="primary"
                         size="medium"
                         startIcon={<EditNote />}
                       >
                         Resubmit
-                      </Button>
+                      </Button> */}
                       {/* <Buttons startIcon={<Save />} btntext1="Save" />
                       <Buttons startIcon={<EditNote />} btntext3="ReSubmit" /> */}
                     </Stack>

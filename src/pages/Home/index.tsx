@@ -439,7 +439,7 @@ const HomeScreen = () => {
               <Typography variant="h3">Programs</Typography>
               <Buttons
                 startIcon={<AddIcon />}
-                btntext3="Create New Program"
+                btntext="Create New Program"
                 onClick={() => setFirstLevel(true)}
               />
             </Stack>
@@ -485,7 +485,7 @@ const HomeScreen = () => {
                     </Typography>
                     <Buttons
                       startIcon={<EditNote />}
-                      btntext3="Revise"
+                      btntext="Revise"
                       onClick={() => setSecondLevel(true)}
                     />
                   </Stack>
@@ -536,10 +536,12 @@ const HomeScreen = () => {
               <Grid className="createProgramContent" item xs={12}>
                 <Grid item xs={12}>
                   <Stack className="createProgramContentHead">
-                    <Typography className="mainHeading" variant="h5">Youth Swimming Class2</Typography>
+                    <Typography className="mainHeading" variant="h5">
+                      Youth Swimming Class2
+                    </Typography>
                     <Stack direction={"row"} gap={"20px"}>
-                      <Buttons startIcon={<Save />} btntext1="Save" />
-                      <Buttons startIcon={<EditNote />} btntext3="ReSubmit" />
+                      <Buttons startIcon={<Save />} btntext="Save" />
+                      <Buttons startIcon={<EditNote />} btntext="ReSubmit" />
                     </Stack>
                   </Stack>
                 </Grid>
