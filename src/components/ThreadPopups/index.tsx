@@ -17,7 +17,7 @@ const ThreadPopups = ({ title, subtitle }: Props) => {
     setDropdown(!dropdown);
   };
   return (
-    <Box width="200px">
+    <Box >
       {[1].map(() => (
         <ThreadHeader
           setDropdown={handleDropdown}
