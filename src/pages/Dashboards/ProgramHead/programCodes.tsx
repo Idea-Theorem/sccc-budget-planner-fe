@@ -12,11 +12,11 @@ const StyledBox = styled(Box)(({ theme }) => ({
   },
 
   ".MuiTypography-h3": {
-    margin: " 0 0 30px",
+    margin: " 0 0 33px",
   },
 
   ".MuiTypography-h6": {
-    margin: " 0 0 10px",
+    margin: " 0 0 23px",
   },
 
   "& .MuiDataGrid-toolbarContainer": {
@@ -119,13 +119,31 @@ const rows = [
     id: 1,
     departmentName: "Recreation & Culture",
     status: "5",
-    lYearBudget: "02-Mar-2024",
   },
   {
     id: 2,
     departmentName: "HR",
     status: "5",
-    lYearBudget: "02-Mar-2024",
+  },
+  {
+    id: 3,
+    departmentName: "Recreation & Culture",
+    status: "5",
+  },
+  {
+    id: 4,
+    departmentName: "HR",
+    status: "5",
+  },
+  {
+    id: 5,
+    departmentName: "Recreation & Culture",
+    status: "5",
+  },
+  {
+    id: 6,
+    departmentName: "HR",
+    status: "5",
   },
 ];
 interface HRTableProps {
@@ -150,7 +168,7 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit }) => {
     {
       field: "buttonsColumn",
       headerName: "",
-      flex: 0.5,
+      flex: 0.4,
       renderCell: () => (
         <Stack
           direction="row"

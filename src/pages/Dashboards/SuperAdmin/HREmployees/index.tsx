@@ -13,9 +13,11 @@ const StyledBox = styled(Box)(() => ({
 
   "& .hrBlockTitle": {
     fontSize: "26px",
+    lineHeight: "32.11px",
     fontweight: "600",
     fontFamily: "Work Sans,sans-serif",
     margin: "-4px 0 10px",
+    letterSpacing: "0.25px",
   },
 
   "& .MuiTabs-flexContainer": {
@@ -62,7 +64,9 @@ const tabNames = ["Employees", "Departments", "Community Centres"];
 const HREmployeees: React.FC<SuperAdminProps> = () => {
   return (
     <StyledBox className="appContainer">
-      <Typography className="hrBlockTitle" >HR (Human Resources) </Typography>
+      <Typography className="hrBlockTitle" variant="h3">
+        HR (Human Resources)
+      </Typography>
 
       <TabsComponent tabNames={tabNames} />
     </StyledBox>

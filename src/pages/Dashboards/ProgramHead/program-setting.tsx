@@ -13,7 +13,7 @@ const StyledBox = styled(Box)(({}) => ({
   },
 
   "& .MuiDataGrid-toolbarContainer": {
-    marginBottom: "10px",
+    marginBottom: "1px",
 
     "& .MuiButtonBase-root": {
       fontSize: "13px",
@@ -21,11 +21,11 @@ const StyledBox = styled(Box)(({}) => ({
     },
   },
   ".MuiTypography-h3": {
-    margin: " 0 0 30px",
+    margin: " 0 0 33px",
   },
 
   ".MuiTypography-h6": {
-    margin: " 0 0 10px",
+    margin: " 0 0 23px",
   },
 }));
 const StyleDataGrid = styled(DataGrid)(({ theme }) => ({

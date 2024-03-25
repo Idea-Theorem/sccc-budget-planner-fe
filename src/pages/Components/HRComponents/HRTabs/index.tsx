@@ -26,6 +26,7 @@ const AppHuman = styled(Box)(({ theme }) => ({
   },
   ".MuiTypography-h6": {
     color: theme.palette.common.blackshades["4p"],
+    letterSpacing: "0.4px",
   },
   ".MuiButton-root": {
     textTransform: "capitalize",
@@ -40,7 +41,7 @@ const AppHuman = styled(Box)(({ theme }) => ({
 interface TabProps {
   tabNames: string[];
 }
- 
+
 const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
   const [value, setValue] = React.useState(0);
   const [isOpen, setIsopen] = useState(false);

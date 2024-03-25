@@ -5,6 +5,8 @@ import InputSearch from "../../../../components/Input";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { Button, Stack } from "@mui/material";
+import { useState } from "react";
+import DeleteModal from "../../../../models/DeleteModal";
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
@@ -166,6 +168,7 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit }) => {
             color="error"
             size="small"
             startIcon={<DeleteOutlineIcon />}
+            onClick={()=>setIsOpen(true)}
           >
             Delete
           </Button>
@@ -181,13 +184,12 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit }) => {
         </Stack>
       ),
     },
-    // {
-    //   field: "",
-    //   headerName: "",
-    //   sortable: false,
-    //   editable: false,
-    //   flex: 1,
   ];
+
+  const [isOpen, setIsOpen] =useState(false)
+  const closeModel =()=>{
+    setIsOpen(false)
+  }
   return (
     <>
       <StyledBox className="mainTableBlock">
@@ -205,6 +207,7 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit }) => {
           slots={{ toolbar: GridToolbar }}
         />
       </StyledBox>
+      <DeleteModal open={isOpen} handleClose={closeModel} heading="Are you sure you want to delete?"/>
     </>
   );
 };
