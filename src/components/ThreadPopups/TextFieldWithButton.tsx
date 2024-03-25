@@ -2,17 +2,33 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import SendIcon from "@mui/icons-material/Send";
-
+import { styled } from "@mui/material/styles";
+import Box  from "@mui/material/Box";
+const LabelField = styled(Box)({
+  ".MuiButtonBase-root": {
+    padding: "0",
+    color: "#303030",
+    minWidth: "21px",
+    height: "18px",
+  },
+  ".MuiInputBase-input": {
+    width: "100%",
+    height: "34px",
+    padding: "0 10px",
+  },
+});
 interface Props {
   placeholder?: string;
   isBtn?: boolean;
 }
 const TextFieldWithButton = (props: Props) => {
   return (
-    <Stack direction="row" alignItems="center" gap="20px">
-      <TextField placeholder={props?.placeholder} />
-      {props?.isBtn && <Button endIcon={<SendIcon />} />}
-    </Stack>
+    <LabelField>
+      <Stack direction="row" alignItems="center" gap="10px">
+        <TextField placeholder={props?.placeholder} />
+        {props?.isBtn && <Button endIcon={<SendIcon />} />}
+      </Stack>
+    </LabelField>
   );
 };
 
