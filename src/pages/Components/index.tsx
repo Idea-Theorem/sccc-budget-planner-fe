@@ -14,8 +14,6 @@ import CollapsibleMenu from "../../components/CollapsableManue";
 import DepartmentInfo from "../../models/HrDepartment";
 import HrAddEmployee from "../../models/HrAddEmployee";
 import ApprovedProgram from "../Dashboards/ProgramHead/approvedProgram";
-import DeleteModal from "../../models/DeleteModal";
-// import ResponsiveDrawer from "../../components/Sidebar";
 
 const ComponentsScreen = () => {
   const tableColumnsTitleArray = [
