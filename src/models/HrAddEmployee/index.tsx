@@ -9,6 +9,14 @@ import SelectDemo from "../../components/Select";
 import BasicDatePicker from "../../components/DatePicker";
 import { Button } from "@mui/material";
 import Modal from "@mui/material/Modal";
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import ListItemText from '@mui/material/ListItemText';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Checkbox from '@mui/material/Checkbox';
+import { useEffect, useState } from "react";
+import { getAllDepartments, getUserRole } from "../../services/authServices";
 
 const EmployeeInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
@@ -137,6 +145,56 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
   handleClose,
   open,
 }) => {
+  const [personName, setPersonName] = useState<string[]>([]);
+  const [role, setRole] = useState<any>([]);
+  const [departments, setDepartments] = useState<any>([]);
+
+  useEffect(() => {
+    fetchUserRole()
+    fetchDepartments()
+  }, [])
+
+
+  const ITEM_HEIGHT = 48;
+  const ITEM_PADDING_TOP = 8;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 250,
+      },
+    },
+  };
+
+  const handleChange = (event: SelectChangeEvent<typeof personName>) => {
+    const {
+      target: { value },
+    } = event;
+    setPersonName(
+      typeof value === 'string' ? value.split(',') : value,
+    );
+  };
+
+  const fetchUserRole = async () => {
+    try {
+      const response = await getUserRole()
+       const filterddata = response?.data?.roles.filter((item: any) => item.name != "HR")
+      setRole(filterddata)
+    } catch (error) {
+      
+    }
+
+  }
+
+  const fetchDepartments = async () => {
+    try {
+      const response = await getAllDepartments()
+      setDepartments(response?.data?.departments)
+    } catch (error) {
+      
+    }
+
+  }
   return (
     <Modal
       open={open}
@@ -160,14 +218,30 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
             <Grid item xs={6}>
               <TextFields variant="standard" label="Email" />
             </Grid>
-            <Grid item xs={6}>
-              <TextFields variant="standard" label="Email" />
+            <Grid className="selectGrid" item xs={6}>
+              <SelectDemo title="Department"/>
             </Grid>
             <Grid className="selectGrid" item xs={6}>
-              <SelectDemo />
-            </Grid>
-            <Grid className="selectGrid" item xs={6}>
-              <SelectDemo />
+
+              {/* <SelectDemo title="Role"/> */}
+              <InputLabel id="demo-multiple-checkbox-label">Role</InputLabel>
+              <Select
+          labelId="demo-multiple-checkbox-label"
+          id="demo-multiple-checkbox"
+          multiple
+          value={personName}
+          onChange={handleChange}
+          input={<OutlinedInput label="Tag" />}
+          renderValue={(selected) => selected.join(', ')}
+          MenuProps={MenuProps}
+        >
+          {role.map((item: any, index: number) => (
+            <MenuItem key={index} value={item.name}>
+              <Checkbox checked={personName.indexOf(item.name) > -1} />
+              <ListItemText primary={item.name} />
+            </MenuItem>
+          ))}
+        </Select>
             </Grid>
             <Grid item xs={6}>
               <BasicDatePicker />
@@ -178,15 +252,15 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
           <Typography className="subtitle">{title}</Typography>
         </Box>
         <Grid container spacing={4}>
-          <Grid item xs={6}>
-            <TextFields variant="standard" label="First Name" />
-          </Grid>
-          <Grid item xs={6}>
-            <TextFields variant="standard" label="Last Name" />
-          </Grid>
-          <Grid item xs={6}>
-            <TextFields variant="standard" label="Last Name" />
-          </Grid>
+        <Grid className="selectGrid" item xs={6}>
+              <SelectDemo title="Compensation Type"/>
+            </Grid>
+            <Grid className="selectGrid" item xs={6}>
+              <SelectDemo title="Employment Type"/>
+            </Grid>
+            <Grid className="selectGrid" item xs={6}>
+              <SelectDemo title="Salary/Rate"/>
+            </Grid>
         </Grid>
         <Stack
           className="formButtons"

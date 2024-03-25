@@ -29,7 +29,7 @@ const StyledSelect = styled(Select)(({ theme }) => ({
   color: theme.palette.gfGrey.GF75,
 }));
 
-export default function SelectDemo() {
+export default function SelectDemo({title}: any) {
   const [value, selectValue] = React.useState("");
   console.log(value);
   const handleChange = (event: any) => {
@@ -38,7 +38,7 @@ export default function SelectDemo() {
 
   return (
     <StyledFormControl size="medium" variant="standard">
-      <StyledInputLabel>Program Code</StyledInputLabel>
+      <StyledInputLabel>{title}</StyledInputLabel>
       <StyledSelect
         labelId="select-label"
         id="select-demo"

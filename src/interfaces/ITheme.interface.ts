@@ -245,3 +245,9 @@ declare module "@mui/material/AvatarGroup" {
     dashed: true;
   }
 }
+
+
+export default interface LoginState {
+  email: string
+  password: string
+}
