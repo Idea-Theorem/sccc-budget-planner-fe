@@ -14,7 +14,7 @@ const DateStack = styled(Stack)(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
   borderRight: "3px solid #fff",
   padding: "12px 15px",
-  marginRight: "5px",
+  marginRight: "6px",
   letterSpacing: "0.3px",
 
   "&.selected": {

@@ -8,6 +8,9 @@ import InputSearch from "../../../../components/Input";
 import Buttons from "../../../../components/Button";
 import AddIcon from '@mui/icons-material/Add';
 const StyledBox = styled(Box)(({ theme }) => ({
+  ".main-wrap": {
+    marginBottom: "15px",
+  },
   "&.mainTableBlock": {
     width: "100%",
     position: "relative",
@@ -159,7 +162,7 @@ const HRSettings: React.FC<HRTableProps> = ({ }) => {
     {
       field: "buttonsColumn",
       headerName: "",
-      flex: 0.5,
+      flex: 0.6,
       renderCell: () => (
         <Stack direction="row" gap="10px" alignItems="center">
           <Button
@@ -187,7 +190,7 @@ const HRSettings: React.FC<HRTableProps> = ({ }) => {
       <Typography className="hrBlockTitle" variant="h3">
         HR (Human Resources)
       </Typography>
-      <Stack direction="row" alignItems="center" justifyContent="space-between" >
+      <Stack direction="row" alignItems="center" justifyContent="space-between" className="main-wrap">
         <Typography className="hrBlockTitle" variant="h6">
           Settings
         </Typography>

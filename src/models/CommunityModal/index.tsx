@@ -13,9 +13,8 @@ const DepartmentInfoArea = styled(Box)(({ theme }) => ({
   width: "100%",
   padding: "27px 40px",
   boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-  maxWidth: "956px",
+  maxWidth: "502px",
   margin: "0 auto",
-  maxHeight: "655px",
   overflow: "auto",
   transform: "translateY(-50%)",
   top: "50%",
@@ -143,9 +142,6 @@ const CommunityModal: React.FC<IDepartmentInfo> = ({
             <Grid item xs={12}>
               <TextFields variant="standard" label="Center Name" />
             </Grid>
-            {/* <Grid item xs={6}>
-            <TextFields variant="standard" label="Employee Count" />
-          </Grid> */}
           </Grid>
         </Box>
         <Stack
