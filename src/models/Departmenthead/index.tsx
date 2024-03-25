@@ -4,7 +4,6 @@ import TextFieldWithButton from "../../components/ThreadPopups/TextFieldWithButt
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
 import { useState } from "react";
 
 const DepartmentModalArea = styled(Box)(({ theme }) => ({
