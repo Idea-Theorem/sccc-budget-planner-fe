@@ -82,7 +82,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
 
   "& .createProgramContent": {
     background: theme.palette.background.default,
-    padding: "30px 43px 28px 41px",
+    padding: "32px 43px 28px 41px",
   },
 
   "& .createProgramContentHead": {
@@ -97,7 +97,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
       fontFamily: "Work Sans",
       fontSize: "22px",
       fontWeight: "500",
-      lineHeight: "123.5%",
+      lineHeight: "1.2",
       letterSpacing: "0.25px",
     },
 

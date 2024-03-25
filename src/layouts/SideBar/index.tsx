@@ -4,7 +4,7 @@ import ResponsiveDrawer from "../../components/Sidebar";
 import { Children } from "../../types/common";
 
 const StyledBox = styled(Box)(() => ({
-  padding: "32px 40px",
+  padding: "32px 36px 32px 40px",
   paddingLeft: "248px", 
 }));
 

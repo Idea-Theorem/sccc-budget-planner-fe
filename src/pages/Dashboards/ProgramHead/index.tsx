@@ -1,11 +1,12 @@
 import { styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-
 import MainHeaderComponent from "../../../components/MainHeader";
 import NoProgramExistComponent from "../../../components/NoProgram";
 import { useNavigate } from "react-router-dom";
-const StyledBox = styled(Box)(() => ({
+
+const StyledBox = styled("div")(({ theme }) => ({
+  paddingLeft: "3px", 
 }));
+
 const ProgramHeadScreen = () => {
   const navigate = useNavigate();
 
