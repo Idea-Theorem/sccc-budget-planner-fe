@@ -37,11 +37,12 @@ const DatePickerArea = styled(Box)(() => ({
   },
 }));
 
-const BasicDatePicker = () => {
+const BasicDatePicker = ({receiveDate}: any) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
+    receiveDate(date)
   };
 
   return (

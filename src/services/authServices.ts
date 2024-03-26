@@ -11,16 +11,8 @@ const getUserRole = async () => {
 };
 
 
-const getAllDepartments = async () => {
-  return await HTTP_CLIENT.get("/department");
-};
-
-
-
-
 
 export {
   loggedIn,
   getUserRole,
-  getAllDepartments
 };

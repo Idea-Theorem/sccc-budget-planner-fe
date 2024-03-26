@@ -5,6 +5,8 @@ import InputSearch from "../../../../components/Input";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { Button, Stack } from "@mui/material";
+import { deleteCenter, deleteDelete } from "../../../../services/centersServices";
+import { useState } from "react";
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
@@ -124,7 +126,7 @@ const rows = [
     lYearBudget: "02-Mar-2024",
   },
   {
-    id: 2,
+    id: 2, 
     departmentName: "ACCC",
     status: "20",
     lYearBudget: "02-Mar-2024",
@@ -132,25 +134,40 @@ const rows = [
 ];
 interface HRTableProps {
   onCommunityEdit?: () => void;
+  row?: any
+  refresh?: any
 }
-const CommunityTableComponent: React.FC<HRTableProps> = ({onCommunityEdit}) => { 
+const CommunityTableComponent: React.FC<HRTableProps> = ({onCommunityEdit, row, refresh}) => { 
+const [loading, setLoading] = useState<boolean>(false)
+
+  const handleDelete = async (data: any) => {
+    try {
+      setLoading(true)
+      await deleteCenter(data?.id)
+      setLoading(false)
+      refresh()
+    } catch (error) {
+      setLoading(false)
+
+    }
+  }
   const columns: GridColDef[] = [
     {
-      field: "departmentName",
+      field: "name",
       headerName: "Center Name",
       sortable: false,
       editable: false,
       flex: 1,
     },
+    // {
+    //   field: "status",
+    //   headerName: "Employee Count",
+    //   sortable: false,
+    //   editable: false,
+    //   flex: 1,
+    // },
     {
-      field: "status",
-      headerName: "Employee Count",
-      sortable: false,
-      editable: false,
-      flex: 1,
-    },
-    {
-      field: "lYearBudget",
+      field: "created_at",
       headerName: "Date Created",
       sortable: false,
       editable: false,
@@ -160,13 +177,14 @@ const CommunityTableComponent: React.FC<HRTableProps> = ({onCommunityEdit}) => {
       field: "buttonsColumn",
       headerName: "",
       flex: 0.5,
-      renderCell: () => (
+      renderCell: (data: any) => (
         <Stack direction="row" gap="10px" alignItems="center">
           <Button
             variant="text"
             color="error"
             size="small"
             startIcon={<DeleteOutlineIcon />}
+            onClick={() => handleDelete(data)}
           >
             Delete
           </Button>
@@ -175,7 +193,7 @@ const CommunityTableComponent: React.FC<HRTableProps> = ({onCommunityEdit}) => {
             color="primary"
             size="small"
             startIcon={<EditNoteIcon />}
-            onClick={onCommunityEdit}
+            onClick={() => onCommunityEdit(data)}
           >
             Edit
           </Button>
@@ -188,7 +206,7 @@ const CommunityTableComponent: React.FC<HRTableProps> = ({onCommunityEdit}) => {
       <StyledBox className="mainTableBlock">
         <InputSearch placeholder="Search..." /> 
         <StyleDataGrid
-          rows={rows}
+          rows={row}
           columns={columns}
           initialState={{
             pagination: {

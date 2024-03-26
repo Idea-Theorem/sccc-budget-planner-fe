@@ -29,11 +29,11 @@ const StyledSelect = styled(Select)(({ theme }) => ({
   color: theme.palette.gfGrey.GF75,
 }));
 
-export default function SelectDemo({title}: any) {
+export default function SelectDemo({title, list,receiveValue}: any) {
   const [value, selectValue] = React.useState("");
-  console.log(value);
   const handleChange = (event: any) => {
     selectValue(event.target.value);
+    receiveValue(event.target.value)
   };
 
   return (
@@ -47,9 +47,10 @@ export default function SelectDemo({title}: any) {
         onChange={handleChange}
         className="select-list"
       >
-        <MenuItem value={10}>Please select</MenuItem>
-        <MenuItem value={20}>Please select</MenuItem>
-        <MenuItem value={30}>Please select</MenuItem>
+        {list?.map((item: any) => (
+
+        <MenuItem value={item.name}>{item.name}</MenuItem>
+        ))}
       </StyledSelect>
     </StyledFormControl>
   );

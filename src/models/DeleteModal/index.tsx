@@ -46,12 +46,18 @@ interface IDeleteModal {
   subheading?: string;
   handleClose: () => void;
   open: boolean;
+  selectRow?: any
+  handleOK?: any
+  loading?: any
 }
 
 const DeleteModal: React.FC<IDeleteModal> = ({
   heading,
   handleClose,
   open,
+  selectRow,
+  loading,
+  handleOK
 }) => {
   return (
     <Modal
@@ -92,8 +98,9 @@ const DeleteModal: React.FC<IDeleteModal> = ({
               color="primary"
               size="medium"
               startIcon={<Check />}
+              onClick={() => handleOK()}
             >
-              Yes
+             {loading ? "Deleting..." : "Yes"} 
             </Button>
           </Stack>
         </Stack>

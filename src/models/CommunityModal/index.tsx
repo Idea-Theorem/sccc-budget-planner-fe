@@ -7,6 +7,11 @@ import TextFields from "../../components/Input/textfield";
 import { Save, Clear } from "@mui/icons-material"; // Import Clear icon from Material-UI
 import Grid from "@mui/material/Grid"; // Import Grid component from MUI
 import Modal from "@mui/material/Modal";
+import { useFormik } from "formik";
+import { createCentresSchema } from "../../utils/yupSchema";
+import { TextField } from "@mui/material";
+import { createCenters, updateCenter } from "../../services/centersServices";
+
 
 const DepartmentInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
@@ -118,6 +123,8 @@ interface IDepartmentInfo {
   subheading?: string;
   handleClose?: any;
   open?: any;
+  singleCenter?: any
+  setSingleCenter?: any
 }
 
 const CommunityModal: React.FC<IDepartmentInfo> = ({
@@ -125,7 +132,47 @@ const CommunityModal: React.FC<IDepartmentInfo> = ({
   subheading,
   handleClose,
   open,
+  singleCenter,
+  setSingleCenter
 }) => {
+
+console.log(heading)
+  const formik = useFormik<any>({
+    validateOnBlur: false,
+    validationSchema: createCentresSchema,
+    enableReinitialize: true,
+    initialValues: {
+      name: singleCenter?.name ? singleCenter?.name : "",
+    },
+    onSubmit: async values => {
+      try {
+        if (heading == "Edit center") {
+        await updateCenter(values, singleCenter?.id)
+        } else {
+        await createCenters(values)
+        }
+        formik.resetForm()
+        setSingleCenter(null)
+        handleClose()
+      } catch (error) {
+
+      }
+    },
+  })
+
+
+  const {
+    values,
+    touched,
+    handleBlur,
+    handleChange,
+    isSubmitting,
+    errors,
+    handleSubmit,
+    setFieldValue,
+  } = formik
+
+
   return (
     <Modal
       open={open}
@@ -141,7 +188,12 @@ const CommunityModal: React.FC<IDepartmentInfo> = ({
           <Typography className="subtitle">{subheading}</Typography>
           <Grid container spacing={4}>
             <Grid item xs={12}>
-              <TextFields variant="standard" label="Center Name" />
+              <TextField variant="standard" label="Center Name" 
+                value={values.name}
+                name="name"
+                onChange={handleChange}
+                helperText={errors.name ? errors.name.toString() : ''}
+              />
             </Grid>
             {/* <Grid item xs={6}>
             <TextFields variant="standard" label="Employee Count" />
@@ -176,8 +228,9 @@ const CommunityModal: React.FC<IDepartmentInfo> = ({
               color="primary"
               size="medium"
               startIcon={<Save />}
+              onClick={() => handleSubmit()}
             >
-              Save
+             {isSubmitting ? "Saving..." : "Save"} 
             </Button>
           </Stack>
         </Stack>

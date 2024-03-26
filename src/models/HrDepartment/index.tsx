@@ -3,17 +3,20 @@ import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
-import TextFields from "../../components/Input/textfield";
 import { Save, Clear } from "@mui/icons-material"; // Import Clear icon from Material-UI
 import Grid from "@mui/material/Grid"; // Import Grid component from MUI
 import Modal from '@mui/material/Modal';
+import { TextField } from "@mui/material";
+import { useFormik } from "formik";
+import { createDepartmentSchema } from "../../utils/yupSchema";
+import { createDepartment, updateDepartment } from "../../services/departmentServices";
 
 const DepartmentInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
   width: "100%",
   padding: "27px 40px",
   boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-  maxWidth:"956px",
+  maxWidth: "956px",
   margin: "0 auto",
   maxHeight: "655px",
   overflow: "auto",
@@ -26,7 +29,7 @@ const DepartmentInfoArea = styled(Box)(({ theme }) => ({
     fontFamily: "Work Sans",
     fontSize: "20px",
     fontWeight: "600",
-    margin: "0 0 25px", 
+    margin: "0 0 25px",
   },
 
   "& .subtitle": {
@@ -55,7 +58,7 @@ const DepartmentInfoArea = styled(Box)(({ theme }) => ({
       "&.selectGrid": {
         "& .MuiFormControl-root": {
           margin: "0",
-    
+
           "& .MuiInputLabel-root": {
             fontSize: "12px",
             color: "rgba(0, 0, 0, 0.7)",
@@ -118,64 +121,108 @@ interface IDepartmentInfo {
   subheading?: string;
   handleClose?: any;
   open?: any
+  singleDepartments?: any
+  setDingleDepartments?: any
 }
 
-const DepartmentInfo: React.FC<IDepartmentInfo> = ({ heading, subheading,  handleClose, open }) => {
+const DepartmentInfo: React.FC<IDepartmentInfo> = ({ heading, subheading, handleClose, open, singleDepartments, setDingleDepartments }) => {
+  const formik = useFormik<any>({
+    validateOnBlur: false,
+    validationSchema: createDepartmentSchema,
+    enableReinitialize: true,
+    initialValues: {
+      name: singleDepartments?.name ? singleDepartments?.name : "",
+    },
+    onSubmit: async values => {
+      try {
+        if (heading == "Edit Department") {
+        await updateDepartment(values, singleDepartments?.id)
+        } else {
+        await createDepartment(values)
+        }
+        formik.resetForm()
+        setDingleDepartments(null)
+        handleClose()
+      } catch (error) {
+
+      }
+    },
+  })
+
+
+  const {
+    values,
+    touched,
+    handleBlur,
+    handleChange,
+    isSubmitting,
+    errors,
+    handleSubmit,
+    setFieldValue,
+  } = formik
+
   return (
-  <Modal
-  open={open}
-  onClose={handleClose}
-  aria-labelledby="modal-modal-title"
-  aria-describedby="modal-modal-description"
->
-    <DepartmentInfoArea>
-      <Box>
-        <Typography variant="h6">{heading}</Typography>
-      </Box>
-      <Box>
-        <Typography className="subtitle">{subheading}</Typography>
-        <Grid container spacing={4}>
-          <Grid item xs={6}>
-            <TextFields variant="standard" label="Department Name" />
-          </Grid> 
-          <Grid item xs={6}>
-            <TextFields variant="standard" label="Employee Count" />
+    <Modal
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <DepartmentInfoArea>
+        <Box>
+          <Typography variant="h6">{heading}</Typography>
+        </Box>
+        <Box>
+          <Typography className="subtitle">{subheading}</Typography>
+          <Grid container spacing={4}>
+            <Grid item xs={6}>
+              <TextField variant="standard" label="Department Name"
+                value={values.name}
+                name="name"
+                onChange={handleChange}
+                helperText={errors.name ? errors.name.toString() : ''}
+              />
+            </Grid>
+            {/* <Grid item xs={6}>
+            <TextField variant="standard" label="Employee Count" />
+          </Grid> */}
           </Grid>
-        </Grid>
-      </Box>
-      <Stack
-        className="formButtons"
-        direction="row"
-        justifyContent="flex-end"
-        alignItems="center"
-        gap="10px"
-      >
+        </Box>
         <Stack
-        className="formButtons"
-        direction="row"
-        justifyContent="flex-end"
-        alignItems="center"
-        gap="10px"
-      >
-        <Button
-          variant="text"
-          color="error"
-          size="medium"
-          startIcon={<Clear />}
-          onClick={handleClose}
+          className="formButtons"
+          direction="row"
+          justifyContent="flex-end"
+          alignItems="center"
+          gap="10px"
         >
-          Cancel
-        </Button>
-        <Button 
-        variant="outlined" 
-        color="primary" 
-        size="medium" 
-        startIcon={<Save />}>
-          Save
-        </Button>
-      </Stack>
-      </Stack>
-    </DepartmentInfoArea>
+          <Stack
+            className="formButtons"
+            direction="row"
+            justifyContent="flex-end"
+            alignItems="center"
+            gap="10px"
+          >
+            <Button
+              variant="text"
+              color="error"
+              size="medium"
+              startIcon={<Clear />}
+              onClick={handleClose}
+            >
+              Cancel
+            </Button>
+            <Button
+              disabled={isSubmitting}
+              onClick={() => handleSubmit()}
+              variant="outlined"
+              color="primary"
+              size="medium"
+              startIcon={<Save />}>
+              {isSubmitting ? "Saving..." : 'Save'}
+            </Button>
+          </Stack>
+        </Stack>
+      </DepartmentInfoArea>
     </Modal>
   );
 };

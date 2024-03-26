@@ -7,7 +7,7 @@ import { Save, Clear } from "@mui/icons-material"; // Import Clear icon from Mat
 import Grid from "@mui/material/Grid"; // Import Grid component from MUI
 import SelectDemo from "../../components/Select";
 import BasicDatePicker from "../../components/DatePicker";
-import { Button } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import Modal from "@mui/material/Modal";
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
@@ -16,7 +16,12 @@ import ListItemText from '@mui/material/ListItemText';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 import { useEffect, useState } from "react";
-import { getAllDepartments, getUserRole } from "../../services/authServices";
+import { getUserRole } from "../../services/authServices";
+import { compensationType, employeementType, salaryRates } from "../../utils/dumpData";
+import { FormikProps, useFormik } from "formik"
+import { createEmployeeSchema } from "../../utils/yupSchema";
+import { createEmployee } from "../../services/employeeServices";
+import { getAllDepartments } from "../../services/departmentServices";
 
 const EmployeeInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
@@ -139,8 +144,6 @@ interface IHrAddEmployee {
 
 const HrAddEmployee: React.FC<IHrAddEmployee> = ({
   heading,
-  // headinginfo,
-  // subheading,
   title,
   handleClose,
   open,
@@ -149,6 +152,39 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
   const [role, setRole] = useState<any>([]);
   const [departments, setDepartments] = useState<any>([]);
 
+  const formik = useFormik<any>({
+    validateOnBlur: false,
+    validationSchema: createEmployeeSchema,
+    initialValues: {
+      firstname: "",
+      lastname: "",
+      email: "",
+      password: "",
+      hire_date: "",
+      roles: [],
+      department_id: "",
+      employment_type: "",
+      compensation_type: "",
+      salary_rate: ""
+    },
+    onSubmit: async values => {
+      try {
+        const response = await createEmployee(values)
+      } catch (error) {
+        
+      }
+    },
+  })
+  const {
+    values,
+    touched,
+    handleBlur,
+    handleChange,
+    isSubmitting,
+    errors,
+    handleSubmit,
+    setFieldValue,
+  } = formik
   useEffect(() => {
     fetchUserRole()
     fetchDepartments()
@@ -166,7 +202,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
     },
   };
 
-  const handleChange = (event: SelectChangeEvent<typeof personName>) => {
+  const handleMultiSelectChange = (event: SelectChangeEvent<typeof personName>) => {
     const {
       target: { value },
     } = event;
@@ -178,10 +214,10 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
   const fetchUserRole = async () => {
     try {
       const response = await getUserRole()
-       const filterddata = response?.data?.roles.filter((item: any) => item.name != "HR")
+      const filterddata = response?.data?.roles.filter((item: any) => item.name != "HR")
       setRole(filterddata)
     } catch (error) {
-      
+
     }
 
   }
@@ -191,10 +227,52 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
       const response = await getAllDepartments()
       setDepartments(response?.data?.departments)
     } catch (error) {
-      
+
     }
 
   }
+
+  const receiveDepartments = (name: string) => {
+    const filteredID = departments.find((item: any) => item?.name === name)
+    setFieldValue("department_id", filteredID?.id)
+  }
+
+  useEffect(()=> {
+    let roleIds: any = []
+    if(personName.length > 0) {
+        role.map((item: any) => {
+          personName.map((ele: any) => {
+            if(ele == item.name){
+              roleIds.push(item.id)
+            }
+          })
+        })
+    }else if(personName.length == 0){
+      roleIds = []
+    }
+
+    setFieldValue("roles",roleIds )
+  }, [personName])
+
+  const receiveDate = (date: any) => {
+    setFieldValue("hire_date", date)
+  }
+
+  const receiveCompensationType = (compensationType: string) => {
+    setFieldValue("compensation_type", compensationType)
+  }
+
+  
+  const EmployeementType = (employementType: string) => {
+    setFieldValue("employment_type",employementType)
+  }
+
+  const salartRate = (salaryRate: any) => {
+    setFieldValue("salary_rate", salaryRate)
+  }
+
+
+
   return (
     <Modal
       open={open}
@@ -210,41 +288,63 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
           <Typography className="body1">Account Information</Typography>
           <Grid container spacing={4}>
             <Grid item xs={6}>
-              <TextFields variant="standard" label="First Name" />
+              <TextField variant="standard" label="First Name"
+                value={values.firstname}
+                name="firstname"
+                onChange={handleChange}
+                helperText={errors.firstname ? errors.firstname.toString() : ''}
+              />
             </Grid>
             <Grid item xs={6}>
-              <TextFields variant="standard" label="Last Name" />
+              <TextField variant="standard" label="Last Name"
+                value={values.lastname}
+                name="lastname"
+                onChange={handleChange}
+                helperText={errors.lastname ? errors.lastname.toString() : ''}
+              />
             </Grid>
             <Grid item xs={6}>
-              <TextFields variant="standard" label="Email" />
+              <TextField variant="standard" label="Email"
+                value={values.email}
+                name="email"
+                onChange={handleChange}
+                helperText={errors.email ? errors.email.toString() : ''}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField variant="standard" label="Password"
+                value={values.email}
+                name="password"
+                onChange={handleChange}
+                helperText={errors.password ? errors.password.toString() : ''}
+              />
             </Grid>
             <Grid className="selectGrid" item xs={6}>
-              <SelectDemo title="Department"/>
+              <SelectDemo title="Department" list={departments} receiveValue={receiveDepartments} />
             </Grid>
             <Grid className="selectGrid" item xs={6}>
-
-              {/* <SelectDemo title="Role"/> */}
               <InputLabel id="demo-multiple-checkbox-label">Role</InputLabel>
               <Select
-          labelId="demo-multiple-checkbox-label"
-          id="demo-multiple-checkbox"
-          multiple
-          value={personName}
-          onChange={handleChange}
-          input={<OutlinedInput label="Tag" />}
-          renderValue={(selected) => selected.join(', ')}
-          MenuProps={MenuProps}
-        >
-          {role.map((item: any, index: number) => (
-            <MenuItem key={index} value={item.name}>
-              <Checkbox checked={personName.indexOf(item.name) > -1} />
-              <ListItemText primary={item.name} />
-            </MenuItem>
-          ))}
-        </Select>
+                labelId="demo-multiple-checkbox-label"
+                id="demo-multiple-checkbox"
+                multiple
+                value={personName}
+                onChange={handleMultiSelectChange}
+                input={<OutlinedInput label="Tag" />}
+                renderValue={(selected) => selected.join(', ')}
+                MenuProps={MenuProps}
+              >
+                {role.map((item: any, index: number) => (
+                  <MenuItem key={index} value={item.name}>
+                    <Checkbox checked={personName.indexOf(item.name) > -1} />
+                    <ListItemText primary={item.name} />
+                  </MenuItem>
+                ))}
+              </Select>
+              <Box>{errors.roles ? errors.roles.toString() : ""}</Box>
             </Grid>
             <Grid item xs={6}>
-              <BasicDatePicker />
+              <BasicDatePicker  receiveDate={receiveDate}/>
             </Grid>
           </Grid>
         </Box>
@@ -252,15 +352,18 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
           <Typography className="subtitle">{title}</Typography>
         </Box>
         <Grid container spacing={4}>
-        <Grid className="selectGrid" item xs={6}>
-              <SelectDemo title="Compensation Type"/>
-            </Grid>
-            <Grid className="selectGrid" item xs={6}>
-              <SelectDemo title="Employment Type"/>
-            </Grid>
-            <Grid className="selectGrid" item xs={6}>
-              <SelectDemo title="Salary/Rate"/>
-            </Grid>
+          <Grid className="selectGrid" item xs={6}>
+            <SelectDemo title="Compensation Type" list={compensationType} receiveValue={receiveCompensationType}/>
+            <Box>{errors.compensation_type ? errors.compensation_type.toString() : ""}</Box>
+          </Grid>
+          <Grid className="selectGrid" item xs={6}>
+            <SelectDemo title="Employment Type" list={employeementType}  receiveValue={EmployeementType} />
+            <Box>{errors.employment_type ? errors.employment_type.toString() : ""}</Box>
+          </Grid>
+          <Grid className="selectGrid" item xs={6}>
+            <SelectDemo title="Salary/Rate" list={salaryRates}  receiveValue={salartRate} />
+            <Box>{errors.salary_rate ? errors.salary_rate.toString() : ""}</Box>
+          </Grid>
         </Grid>
         <Stack
           className="formButtons"
@@ -283,6 +386,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
             color="primary"
             size="medium"
             startIcon={<Save />}
+            onClick={() => handleSubmit()}
           >
             Save
           </Button>
