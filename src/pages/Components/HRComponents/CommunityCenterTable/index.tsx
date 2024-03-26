@@ -5,7 +5,7 @@ import InputSearch from "../../../../components/Input";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { Button, Stack } from "@mui/material";
-import { deleteCenter, deleteDelete } from "../../../../services/centersServices";
+import { deleteCenter } from "../../../../services/centersServices";
 import { useState } from "react";
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
@@ -118,27 +118,27 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
 
 
 
-const rows = [
-  {
-    id: 1,
-    departmentName: "SCCC",
-    status: "25",
-    lYearBudget: "02-Mar-2024",
-  },
-  {
-    id: 2, 
-    departmentName: "ACCC",
-    status: "20",
-    lYearBudget: "02-Mar-2024",
-  },
-];
+// const rows = [
+//   {
+//     id: 1,
+//     departmentName: "SCCC",
+//     status: "25",
+//     lYearBudget: "02-Mar-2024",
+//   },
+//   {
+//     id: 2, 
+//     departmentName: "ACCC",
+//     status: "20",
+//     lYearBudget: "02-Mar-2024",
+//   },
+// ];
 interface HRTableProps {
   onCommunityEdit?: () => void;
   row?: any
   refresh?: any
 }
 const CommunityTableComponent: React.FC<HRTableProps> = ({onCommunityEdit, row, refresh}) => { 
-const [loading, setLoading] = useState<boolean>(false)
+const [ setLoading] = useState<boolean>(false)
 
   const handleDelete = async (data: any) => {
     try {

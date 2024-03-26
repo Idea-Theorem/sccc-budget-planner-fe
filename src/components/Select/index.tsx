@@ -30,7 +30,7 @@ const StyledSelect = styled(Select)(({ theme }) => ({
 }));
 
 export default function SelectDemo({title, list,receiveValue}: any) {
-  const [value, selectValue] = React.useState("");
+  const [ selectValue] = React.useState("");
   const handleChange = (event: any) => {
     selectValue(event.target.value);
     receiveValue(event.target.value)

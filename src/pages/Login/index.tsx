@@ -146,12 +146,10 @@ const Input = () => {
   const {
     values,
     touched,
-    handleBlur,
     handleChange,
     isSubmitting,
     errors,
     handleSubmit,
-    setFieldValue,
   } = formik
 
 

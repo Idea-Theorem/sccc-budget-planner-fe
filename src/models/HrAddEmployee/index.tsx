@@ -2,7 +2,6 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
-import TextFields from "../../components/Input/textfield";
 import { Save, Clear } from "@mui/icons-material"; // Import Clear icon from Material-UI
 import Grid from "@mui/material/Grid"; // Import Grid component from MUI
 import SelectDemo from "../../components/Select";
@@ -18,7 +17,7 @@ import Checkbox from '@mui/material/Checkbox';
 import { useEffect, useState } from "react";
 import { getUserRole } from "../../services/authServices";
 import { compensationType, employeementType, salaryRates } from "../../utils/dumpData";
-import { FormikProps, useFormik } from "formik"
+import {  useFormik } from "formik"
 import { createEmployeeSchema } from "../../utils/yupSchema";
 import { createEmployee } from "../../services/employeeServices";
 import { getAllDepartments } from "../../services/departmentServices";
@@ -169,7 +168,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
     },
     onSubmit: async values => {
       try {
-        const response = await createEmployee(values)
+        await createEmployee(values)
       } catch (error) {
         
       }
@@ -177,10 +176,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
   })
   const {
     values,
-    touched,
-    handleBlur,
     handleChange,
-    isSubmitting,
     errors,
     handleSubmit,
     setFieldValue,

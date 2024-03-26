@@ -55,7 +55,6 @@ const DeleteModal: React.FC<IDeleteModal> = ({
   heading,
   handleClose,
   open,
-  selectRow,
   loading,
   handleOK
 }) => {

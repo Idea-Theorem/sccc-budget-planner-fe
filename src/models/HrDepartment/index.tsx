@@ -152,13 +152,10 @@ const DepartmentInfo: React.FC<IDepartmentInfo> = ({ heading, subheading, handle
 
   const {
     values,
-    touched,
-    handleBlur,
     handleChange,
     isSubmitting,
     errors,
     handleSubmit,
-    setFieldValue,
   } = formik
 
   return (

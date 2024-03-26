@@ -10,13 +10,13 @@ const AuthContext = createContext({
   authToken: ""
 });
 
-const users = [
-  "programhead@gmail.com",
-  "departmenthead@gmail.com",
-  "admin@gmail.com",
-  "hr@gmail.com",
-  "suparadmin@gmail.com",
-];
+// const users = [
+//   "programhead@gmail.com",
+//   "departmenthead@gmail.com",
+//   "admin@gmail.com",
+//   "hr@gmail.com",
+//   "suparadmin@gmail.com",
+// ];
 
 export const useAuth = () => useContext(AuthContext);
 

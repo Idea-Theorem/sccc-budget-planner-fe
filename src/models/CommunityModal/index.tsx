@@ -3,7 +3,6 @@ import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
-import TextFields from "../../components/Input/textfield";
 import { Save, Clear } from "@mui/icons-material"; // Import Clear icon from Material-UI
 import Grid from "@mui/material/Grid"; // Import Grid component from MUI
 import Modal from "@mui/material/Modal";
@@ -163,13 +162,10 @@ console.log(heading)
 
   const {
     values,
-    touched,
-    handleBlur,
     handleChange,
     isSubmitting,
     errors,
     handleSubmit,
-    setFieldValue,
   } = formik
 
 
