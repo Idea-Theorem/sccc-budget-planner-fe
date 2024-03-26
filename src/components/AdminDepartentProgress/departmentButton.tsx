@@ -2,7 +2,7 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-const StyledStack = styled(Stack)(({ theme }) => ({
+const StyledStack = styled(Stack)(() => ({
   "&.statsTag": {
     background: "#e7eaee",
     borderRadius: "4px",

@@ -3,7 +3,7 @@ import MainHeaderComponent from "../../../components/MainHeader";
 import NoProgramExistComponent from "../../../components/NoProgram";
 import { useNavigate } from "react-router-dom";
 
-const StyledBox = styled("div")(({ theme }) => ({
+const StyledBox = styled("div")(() => ({
   paddingLeft: "3px", 
 }));
 
