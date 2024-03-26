@@ -21,7 +21,7 @@ const CollapseableTable = styled(Box)(({ theme }) => ({
   },
 
   "&.dashboardTable": {
-    padding: "10px 30px 19px",
+    padding: "10px 44px 19px 40px",
     boxShadow:
       "0 1.85px 6.25px 0 rgba(0, 0, 0, 0.19), 0 0.5px 1.75px 0 rgba(0, 0, 0, 0.04)",
 
@@ -47,7 +47,7 @@ const CollapseableTable = styled(Box)(({ theme }) => ({
         fontSize: "16px",
         fontWeight: "600",
         lineHeight: "1.3",
-        padding: "15px",
+        padding: "15px 0 9px 0",
         borderBottom: "1px solid theme.palette.text.primary",
 
         "& span": {
@@ -86,15 +86,15 @@ const CollapseableTable = styled(Box)(({ theme }) => ({
         fontWeight: "600",
         lineHeight: "1.3",
         color: "#303030",
-        padding: "15px",
+        padding: "0",
 
         "&:first-child": {
           width: "1% !important",
-          padding: "0",
         },
 
         "&:nth-child(2)": {
           width: "44%",
+          padding :"18px 6px",
         },
 
         "&:nth-child(3)": {
@@ -141,6 +141,11 @@ const CollapseableTable = styled(Box)(({ theme }) => ({
           paddingBottom: "14px",
         },
       },
+    },
+  },
+  ".icon": {
+    ".MuiSvgIcon-root": {
+      transfrom: "rotate(180deg) !important",
     },
   },
 }));
@@ -201,6 +206,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
             aria-label="expand row"
             size="small"
             onClick={() => setOpen(!open)}
+            className="icon"
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>

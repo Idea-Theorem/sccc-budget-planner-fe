@@ -6,13 +6,13 @@ import ProgramProgress from "./programProgress";
 import DepartmentButton from "./departmentButton";
 import { departments } from "../../utils/sampleData";
 
-
 const StyledBox = styled(Box)(() => ({
   "&.dashboardStatsCard": {
     width: "100%",
     padding: "23px 24px",
     marginBottom: "24px",
-    boxShadow: "0 1.85px 6.25px 0 rgba(0, 0, 0, 0.19), 0 0.5px 1.75px 0 rgba(0, 0, 0, 0.04)",
+    boxShadow:
+      "0 1.85px 6.25px 0 rgba(0, 0, 0, 0.19), 0 0.5px 1.75px 0 rgba(0, 0, 0, 0.04)",
 
     "& .MuiTypography-h3": {
       color: "#303030",
@@ -41,17 +41,30 @@ const StyledBox = styled(Box)(() => ({
     "& .dashboardGraphBox": {
       width: "303px",
       flexShrink: "0",
-      padding: "6px 15px", // Fixed typo in padding
+      padding: "6px 15px",
     },
 
     "& .dashboardGraphsList": {
       flexGrow: "1",
       minWidth: "0",
     },
+
+    "& .MuiLinearProgress-root ": {
+      "&:before": {
+        background: "#E8EAED",
+      },
+    },
+  },
+  ".progress-wrap": {
+    marginBottom: "20px",
+
+    "&:last-child": {
+      marginBottom: "10px",
+    },
   },
 }));
 
-const AdminDepartmentProgress = () => { // Corrected props definition
+const AdminDepartmentProgress = () => {
   return (
     <StyledBox className="dashboardStatsCard">
       <Typography variant="h3">Department %</Typography>
@@ -65,10 +78,38 @@ const AdminDepartmentProgress = () => { // Corrected props definition
           <BasicPie />
         </Box>
         <Box className="dashboardGraphsList">
-          <ProgramProgress title="Program 1" amount="$00.000" value={20} color="info"/>
-          <ProgramProgress title="Program 2" amount="$00.000" value={60} color="secondary" /> 
-          <ProgramProgress title="Program 3" amount="$00.000" value={40} color="error"/>
-          <ProgramProgress title="Program 4" amount="$00.000" value={50} color="warning" />
+          <Box color={"#3B00ED"} className="progress-wrap">
+            <ProgramProgress
+              title="Program 1"
+              amount="$00.000"
+              value={52}
+              color="inherit"
+            />
+          </Box>
+          <Box color={"#9C27B0"} className="progress-wrap">
+            <ProgramProgress
+              title="Program 2"
+              amount="$00.000"
+              value={42}
+              color="inherit"
+            />
+          </Box>
+          <Box color={"#D81B60"} className="progress-wrap">
+            <ProgramProgress
+              title="Program 3"
+              amount="$00.000"
+              value={26}
+              color="inherit"
+            />
+          </Box>
+          <Box color={"#FFC107"} className="progress-wrap">
+            <ProgramProgress
+              title="Program 4"
+              amount="$00.000"
+              value={34}
+              color="inherit"
+            />
+          </Box>
         </Box>
       </Box>
     </StyledBox>

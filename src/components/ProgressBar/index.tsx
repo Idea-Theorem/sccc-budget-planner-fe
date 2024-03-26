@@ -8,28 +8,27 @@ import Stack from "@mui/material/Stack";
 function LinearProgressWithLabel(
   props: LinearProgressProps & { value: number }
 ) {
+  const { value, ...otherProps } = props; // Destructure value from props
+
   return (
     <Stack alignItems="center" direction="row" gap="10px">
       <Box width="100%">
-        <LinearProgress variant="determinate" {...props} />
+        <LinearProgress variant="determinate" value={value} {...otherProps} />
       </Box>
-      <Box>
-        <Typography variant="body2" color="text.secondary">{`${Math.round(
-          props.value
-        )}%`}</Typography>
-      </Box>
+      <Typography variant="body2" color="text.secondary">{`${Math.round(
+        value
+      )}%`}</Typography>
     </Stack>
   );
 }
 
 interface Props {
-  value?: any;
-  color?: LinearProgressProps["color"]; // Ensure the color prop matches the type defined in LinearProgressProps
+  value?: number;
+  color?: LinearProgressProps["color"];
 }
+
 export default function LinearWithValueLabel(props: Props) {
   return (
-    <Box width="100%">
-      <LinearProgressWithLabel value={props?.value} color={props?.color} />
-    </Box>
+    <LinearProgressWithLabel value={props.value || 0} color={props.color} />
   );
 }
