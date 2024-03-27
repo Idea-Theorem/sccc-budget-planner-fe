@@ -15,7 +15,6 @@ const StyledBox = styled(Box)(() => ({
   }));
 
   interface IProps {
-   
     open?: boolean
     handleClose?: any
     heading?: string

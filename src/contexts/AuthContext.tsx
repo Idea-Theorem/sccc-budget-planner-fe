@@ -30,6 +30,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
       const respone  = await loggedIn(values)
       setUser(respone?.data?.user)
       setAuthToken(respone?.data?.token)
+      localStorage.setItem("userInfo", JSON.stringify(respone?.data?.user) )
       localStorage.setItem("authToken", respone?.data?.token)
       navigate("/hr");
     } catch (error) {

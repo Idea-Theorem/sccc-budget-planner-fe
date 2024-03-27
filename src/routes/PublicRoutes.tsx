@@ -22,6 +22,9 @@ import ProgramReview from "../pages/Dashboards/DepartmentHead/program-review";
 import ProgramSetting from "../pages/Dashboards/ProgramHead/program-setting";
 import ProgramCodes from "../pages/Dashboards/ProgramHead/programCodes";
 import HRSettings from "../pages/Components/HRComponents/HRSettings";
+
+
+
 const authRoutes: RouteObject = {
   path: "*",
   children: [
