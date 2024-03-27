@@ -89,8 +89,7 @@ const HrCollapseableTable = styled(Box)(({ theme }) => ({
 }));
 
 function createData(
-  firstname?: string,
-  lastname?: string,
+
   calories?: string,
   fat?: string,
   carbs?: string,
@@ -123,7 +122,7 @@ function createData(
 
 function Row(props: {
   row: ReturnType<typeof createData> |  any;
-  handleClick: () => void;
+  handleClick: any;
   employeeData?: any
   handleDelete?: any
 }) {
@@ -251,7 +250,7 @@ export default function HrCollapsibleTable({ handleClick, employeeData, refresh}
             <TableBody>
               {employeeData
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => (
+                .map((row: any, index: number) => (
                   <Row key={index} row={row} handleClick={handleClick} employeeData={employeeData} handleDelete={handleDelete}/>
                 ))}
             </TableBody>

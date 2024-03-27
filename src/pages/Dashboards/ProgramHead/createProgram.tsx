@@ -347,8 +347,8 @@ const CreateProgramScreen = () => {
                   </Stack>
                   <Stack className="createFormCalendarFields">
                     <Typography variant="h5">Duration</Typography>
-                    {/* <BasicDatePicker />
-                    <BasicDatePicker /> */}
+                    <BasicDatePicker />
+                    <BasicDatePicker />
                   </Stack>
                 </Grid>
                 <Grid className="createFormTable" item xs={12}>

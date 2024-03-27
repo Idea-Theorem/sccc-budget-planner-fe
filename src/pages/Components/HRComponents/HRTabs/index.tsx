@@ -18,7 +18,6 @@ import Buttons from "../../../../components/Button";
 import { getAllDepartments } from "../../../../services/departmentServices";
 import { getAllCenters } from "../../../../services/centersServices";
 import { getEmployee } from "../../../../services/employeeServices";
-import { useAuth } from "../../../../contexts/AuthContext";
 
 const AppHuman = styled(Box)(({ theme }) => ({
   ".MuiTabs-flexContainer": {

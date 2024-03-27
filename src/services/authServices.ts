@@ -1,4 +1,3 @@
-import axios from "axios";
 import { HTTP_CLIENT } from "../utils/axiosClient";
 import LoginState from "../interfaces/ITheme.interface";
 

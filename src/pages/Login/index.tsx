@@ -4,7 +4,6 @@ import FormControl from "@mui/material/FormControl";
 import Link from "@mui/material/Link";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import { useState } from "react";
 import LogoImg from "../../assets/logo.png";
 import Buttons from "../../components/Button";
 import { useAuth } from "../../contexts/AuthContext";

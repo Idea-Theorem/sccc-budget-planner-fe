@@ -133,12 +133,13 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
 //   },
 // ];
 interface HRTableProps {
-  onCommunityEdit?: () => void;
+  onCommunityEdit?: any;
   row?: any
   refresh?: any
 }
 const CommunityTableComponent: React.FC<HRTableProps> = ({onCommunityEdit, row, refresh}) => { 
 const [loading, setLoading] = useState<boolean>(false)
+console.log(loading)
 
   const handleDelete = async (data: any) => {
     try {
@@ -177,7 +178,7 @@ const [loading, setLoading] = useState<boolean>(false)
       field: "buttonsColumn",
       headerName: "",
       flex: 0.5,
-      renderCell: (data: any) => (
+      renderCell: (data: any ) => (
         <Stack direction="row" gap="10px" alignItems="center">
           <Button
             variant="text"

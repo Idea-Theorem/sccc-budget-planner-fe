@@ -5,7 +5,7 @@ import { loggedIn } from "../services/authServices";
 
 const AuthContext = createContext({
   user: "",
-  login: (_: string) => {},
+  login: (_: LoginState) => {},
   logout: () => {},
   authToken: ""
 });

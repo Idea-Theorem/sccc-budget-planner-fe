@@ -133,7 +133,7 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
 //   },
 // ];
 interface HRTableProps {
-  onEdit?: () => void;
+  onEdit?: any;
   row?: any
   refresh?: any
 }
@@ -199,7 +199,7 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit, row, refresh }) => {
   const handleDelete = async () => {
     try {
       setLoading(true)
-      const response = await deleteDepartment(deleteRow?.id)
+      await deleteDepartment(deleteRow?.id)
       setLoading(false)
       refresh()
       closeModel()
