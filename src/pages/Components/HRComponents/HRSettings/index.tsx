@@ -1,24 +1,41 @@
 import { styled } from "@mui/material/styles";
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
-import InputSearch from "../../../../components/Input";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import Typography from "@mui/material/Typography";
-import AddIcon from "@mui/icons-material/Add";
 import EditNoteIcon from "@mui/icons-material/EditNote";
-import { Button, Stack } from "@mui/material";
-const StyledBox = styled(Box)(({}) => ({
+import { Button, Stack, Typography } from "@mui/material";
+import InputSearch from "../../../../components/Input";
+import Buttons from "../../../../components/Button";
+import AddIcon from '@mui/icons-material/Add';
+const StyledBox = styled(Box)(({ theme }) => ({
+  ".main-wrap": {
+    marginBottom: "15px",
+  },
   "&.mainTableBlock": {
     width: "100%",
     position: "relative",
   },
 
+  ".MuiTypography-h3": {
+    margin: " 0 0 33px",
+  },
+
+  ".MuiTypography-h6": {
+    margin: " 0 0 23px",
+  },
+
   "& .MuiDataGrid-toolbarContainer": {
-    marginBottom: "10px",
+    marginBottom: "1px",
 
     "& .MuiButtonBase-root": {
+      color: "#979797 !important",
       fontSize: "13px",
-      letterSpacing: "1",
+      letterSpacing: "0.8px",
+      marginRight: "-1px",
+
+      "&:hover": {
+        color: `${theme.palette.primary.main} !important`,
+      },
     },
   },
 }));
@@ -44,19 +61,11 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
       outline: "none",
     },
   },
-  "& .MuiButton-root": {
-    color: "#979797",
-    fontSize: "14px",
-    lineHeight: "24px",
-    "&:hover": {
-      background: "none",
-    },
-  },
   "& .MuiDataGrid-columnHeaderTitle": {
     color: "rgba(0, 0, 0, 0.87)",
     fontSize: "14px",
     lineHeight: "24px",
-    fontWeight: "500",
+    fontWeight: "600",
     fontFamily: "Work Sans, sans-serif",
     letterSpacing: "0.17px",
   },
@@ -91,12 +100,14 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
       fontSize: "12px",
       lineHeight: "20px",
       fontWeight: "400",
-      fontFamily: "Roboto, sans-serif",
+      fontFamily: "Work Sans, sans-serif",
       letterSpacing: "0.4px",
     },
   },
   "& .MuiTablePagination-displayedRows": {
     color: "rgba(0, 0, 0, 0.87)",
+    fontSize: "12px",
+    fontFamily: "Work Sans, sans-serif",
   },
   ".MuiDataGrid-cell": {
     overflow: "visible !important",
@@ -122,12 +133,14 @@ const rows = [
     lYearBudget: "02-Mar-2024",
   },
 ];
-interface HRTableProps {}
-const HRSettings: React.FC<HRTableProps> = ({}) => {
+interface HRTableProps {
+  onEdit?: () => void;
+}
+const HRSettings: React.FC<HRTableProps> = ({ }) => {
   const columns: GridColDef[] = [
     {
       field: "departmentName",
-      headerName: "Center Name",
+      headerName: "Centre Name",
       sortable: false,
       editable: false,
       flex: 1,
@@ -149,7 +162,7 @@ const HRSettings: React.FC<HRTableProps> = ({}) => {
     {
       field: "buttonsColumn",
       headerName: "",
-      flex: 0.5,
+      flex: 0.6,
       renderCell: () => (
         <Stack direction="row" gap="10px" alignItems="center">
           <Button
@@ -173,19 +186,16 @@ const HRSettings: React.FC<HRTableProps> = ({}) => {
     },
   ];
   return (
-    <>
-      <Typography variant="h3">HR (Human Resources)</Typography>
-      <Typography variant="h6">
-        Settings
+    <StyledBox>
+      <Typography className="hrBlockTitle" variant="h3">
+        HR (Human Resources)
       </Typography>
-      <Button
-        variant="contained"
-        color="primary"
-        size="medium"
-        startIcon={<AddIcon />}
-      >
-        Add New Center
-      </Button>
+      <Stack direction="row" alignItems="center" justifyContent="space-between" className="main-wrap">
+        <Typography className="hrBlockTitle" variant="h6">
+          Settings
+        </Typography>
+        <Buttons btntext="Add New Centre" variant="contained" startIcon={<AddIcon/>} />
+      </Stack>
       <StyledBox className="mainTableBlock">
         <InputSearch placeholder="Search..." />
         <StyleDataGrid
@@ -201,7 +211,7 @@ const HRSettings: React.FC<HRTableProps> = ({}) => {
           slots={{ toolbar: GridToolbar }}
         />
       </StyledBox>
-    </>
+    </StyledBox>
   );
 };
 export default HRSettings;

@@ -16,7 +16,7 @@ const DepartmentInfoArea = styled(Box)(({ theme }) => ({
   width: "100%",
   padding: "27px 40px",
   boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-  maxWidth: "956px",
+  maxWidth: "502px",
   margin: "0 auto",
   maxHeight: "655px",
   overflow: "auto",
@@ -99,7 +99,6 @@ const DepartmentInfoArea = styled(Box)(({ theme }) => ({
   "& .MuiInputBase-input": {
     fontFamily: "Work Sans",
     fontSize: "16px",
-
   },
 
   "& .secondaryRow": {

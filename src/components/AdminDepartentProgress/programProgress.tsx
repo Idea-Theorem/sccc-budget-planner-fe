@@ -8,7 +8,7 @@ import { LinearProgressProps } from "@mui/material";
 interface ProgramProgressProps {
   title?: string;
   amount?: string;
-  value?: number
+  value?: number;
   color?: LinearProgressProps["color"];
 }
 
@@ -33,7 +33,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
         fontFamily: "Roboto",
         color: theme.palette.action.selected,
         fontWeight: "400",
-        letterSpacing: "0",
+        letterSpacing: "1px",
         margin: "0 0 6px",
       },
     },
@@ -58,7 +58,12 @@ const StyledBox = styled(Box)(({ theme }) => ({
       },
     },
   },
-  // Color: theme.palette.secondary.light,
+
+  ".progressStatusBar": {
+    ".MuiTypography-root": {
+      display: "none",
+    },
+  },
 }));
 const ProgramProgress = (props: ProgramProgressProps) => {
   return (
@@ -68,7 +73,7 @@ const ProgramProgress = (props: ProgramProgressProps) => {
         <Typography>{props?.amount}</Typography>
       </Stack>
       <Box className="progressStatusBar">
-        <LinearWithValueLabel value={props?.value} color={props?.color}/> 
+        <LinearWithValueLabel value={props?.value} color={props?.color} />
       </Box>
     </StyledBox>
   );

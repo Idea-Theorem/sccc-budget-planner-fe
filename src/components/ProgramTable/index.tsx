@@ -40,7 +40,7 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
         fontFamily: "Work Sans",
         fontSize: "16px",
         fontWeight: "500",
-        padding: "22px 15px 0",
+        padding: "24px 15px 0",
 
         "&.MuiTableCell-alignRight": {
           fontFamily: "Roboto",
@@ -68,30 +68,11 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
   },
 }));
 
-function createData(item?: string, amount?: string) {
-  return { item, amount };
+
+interface Props {
+  rows?: [] | any;
 }
-
-const rows = [
-  createData("Grants - Federal", "$00,000.00"),
-  createData("Grants - City of Toronto", "$00,000.00"),
-  createData("Grants - Foundation", "$00,000.00"),
-  createData("Cupcake", "$00,000.00"),
-  createData("General Donations", "$00,000.00"),
-  createData("Memberships", "$00,000.00"),
-  createData("Program Fees", "$00,000.00"),
-  createData("Rental Revenue", "$00,000.00"),
-  createData("Fundraising", "$00,000.00"),
-  createData("Services Fees", "$00,000.00"),
-  createData("Interest", "$00,000.00"),
-  createData("Misc Income", "$00,000.00"),
-  createData("Deferred From Previous Year", "$00,000.00"),
-  createData("To Reserve Fund", "$00,000.00"),
-  createData("Deferred To Following Year", "$00,000.00"),
-  createData("Total Income", "$00,000.00"),
-];
-
-export default function TabsProgramArea() {
+export default function TabsProgramArea({rows}: Props) {
   const [isOpen , setIsOpen] = useState(false)
   const closeModal = ()=>{
     setIsOpen(false)
@@ -108,7 +89,7 @@ export default function TabsProgramArea() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {rows?.map((row: any) => (
               <TableRow
                 key={row.item}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
