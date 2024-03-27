@@ -19,11 +19,12 @@ const StyledBox = styled(Box)(() => ({
     open?: boolean
     handleClose?: any
     heading?: string
+    singleEmployeeData?: any
   }
-const AddEmployee: React.FC<IProps> = ({open, handleClose, heading}) => {
+const AddEmployee: React.FC<IProps> = ({open, handleClose, heading, singleEmployeeData}) => {
   return (
     <StyledBox className="appContainer">
-     <HrAddEmployee heading={heading} open={open} handleClose={handleClose} />
+     <HrAddEmployee heading={heading} open={open} handleClose={handleClose} singleEmployeeData={singleEmployeeData}/>
       </StyledBox>
   );
 };

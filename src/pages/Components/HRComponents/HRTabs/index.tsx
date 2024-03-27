@@ -58,6 +58,7 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
   const [center, setCenter] = useState<any>(null);
   const [singleDepartments, setDingleDepartments] = useState<any>(null);
   const [singleCenter, setSingleCenter] = useState<any>(null);
+  const [singleEmployeeData, setSingleEmployeeData] = useState<any>(null);
   const handleChange = (_: ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
@@ -70,6 +71,8 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
   console.log(routes);
 
   const handleCloseModal = () => {
+    fetchEmployee()
+    setSingleEmployeeData(null)
     setIsopen(false);
   };
   const handleCloseDepartmentModal = () => {
@@ -92,7 +95,8 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
       setCenterHeading("Add New Center");
     }
   };
-  const handleEditClick = () => {
+  const handleEditClick = (data: any) => {
+    setSingleEmployeeData(data)
     setIsopen(true);
     setHeading("Edit Employee");
   };
@@ -198,6 +202,8 @@ try {
         open={isOpen}
         handleClose={handleCloseModal}
         heading={heading}
+        singleEmployeeData={singleEmployeeData}
+
       />
       <DepartmentInfo
         open={isDepartOpen}
@@ -205,7 +211,6 @@ try {
         heading={departHeading}
         subheading="Department Information"
         singleDepartments={singleDepartments}
-      
         setDingleDepartments={setDingleDepartments}
       />
       <CommunityModal

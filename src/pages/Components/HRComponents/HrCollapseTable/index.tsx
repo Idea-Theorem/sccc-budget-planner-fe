@@ -164,7 +164,7 @@ function Row(props: {
               color="primary"
               size="small"
               startIcon={<EditNoteIcon />}
-              onClick={handleClick}
+              onClick={() => handleClick(row)}
             >
               Edit
             </Button>

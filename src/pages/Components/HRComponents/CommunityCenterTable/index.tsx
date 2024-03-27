@@ -138,7 +138,7 @@ interface HRTableProps {
   refresh?: any
 }
 const CommunityTableComponent: React.FC<HRTableProps> = ({onCommunityEdit, row, refresh}) => { 
-const [ setLoading] = useState<boolean>(false)
+const [loading, setLoading] = useState<boolean>(false)
 
   const handleDelete = async (data: any) => {
     try {

@@ -18,8 +18,8 @@ import { useEffect, useState } from "react";
 import { getUserRole } from "../../services/authServices";
 import { compensationType, employeementType, salaryRates } from "../../utils/dumpData";
 import {  useFormik } from "formik"
-import { createEmployeeSchema } from "../../utils/yupSchema";
-import { createEmployee } from "../../services/employeeServices";
+import { createEmployeeSchema, editEmployeeSchema } from "../../utils/yupSchema";
+import { createEmployee, updateEmployee } from "../../services/employeeServices";
 import { getAllDepartments } from "../../services/departmentServices";
 
 const EmployeeInfoArea = styled(Box)(({ theme }) => ({
@@ -139,6 +139,7 @@ interface IHrAddEmployee {
   title?: string;
   handleClose?: any;
   open?: any;
+  singleEmployeeData?: any
 }
 
 const HrAddEmployee: React.FC<IHrAddEmployee> = ({
@@ -146,29 +147,42 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
   title,
   handleClose,
   open,
+  singleEmployeeData
 }) => {
   const [personName, setPersonName] = useState<string[]>([]);
   const [role, setRole] = useState<any>([]);
   const [departments, setDepartments] = useState<any>([]);
+  const [activeDepartment, setActiveDepartment] = useState<any>(null);
 
   const formik = useFormik<any>({
     validateOnBlur: false,
-    validationSchema: createEmployeeSchema,
+    validationSchema: heading == "Edit Employee" ? editEmployeeSchema : createEmployeeSchema ,
+    enableReinitialize: true,
     initialValues: {
-      firstname: "",
-      lastname: "",
-      email: "",
+      firstname: singleEmployeeData?.firstname ? singleEmployeeData?.firstname : "",
+      lastname: singleEmployeeData?.lastname ? singleEmployeeData?.lastname : "",
+      email: singleEmployeeData?.email ? singleEmployeeData?.email :"",
       password: "",
       hire_date: "",
       roles: [],
       department_id: "",
-      employment_type: "",
-      compensation_type: "",
-      salary_rate: ""
+      employment_type:singleEmployeeData?.employment_type ? singleEmployeeData?.employment_type : "",
+      compensation_type: singleEmployeeData?.compensation_type ? singleEmployeeData?.compensation_type : "",
+      salary_rate: singleEmployeeData?.salary_rate ? singleEmployeeData?.salary_rate :""
     },
     onSubmit: async values => {
       try {
-        await createEmployee(values)
+        if(heading == "Edit Employee"){
+          delete values.password;
+
+          await updateEmployee(values, singleEmployeeData?.id)  
+        }else{
+
+          await createEmployee(values)
+        }
+        handleClose()
+        setPersonName([])
+        formik.resetForm()
       } catch (error) {
         
       }
@@ -180,11 +194,27 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
     errors,
     handleSubmit,
     setFieldValue,
+    isSubmitting
   } = formik
   useEffect(() => {
     fetchUserRole()
     fetchDepartments()
   }, [])
+
+  useEffect(() =>{
+    if(singleEmployeeData){
+      setActiveDepartment(singleEmployeeData?.department?.name)
+      setFieldValue("department_id", singleEmployeeData?.department?.id)
+      setFieldValue("hire_date", singleEmployeeData?.hire_date)
+      let array: any = [];
+      singleEmployeeData?.roles.map((item: any) => {
+        array.push(item.name)
+      })
+      setPersonName(array)
+    
+    }
+
+  }, [singleEmployeeData])
 
 
   const ITEM_HEIGHT = 48;
@@ -231,6 +261,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
   const receiveDepartments = (name: string) => {
     const filteredID = departments.find((item: any) => item?.name === name)
     setFieldValue("department_id", filteredID?.id)
+    setActiveDepartment(filteredID?.name)
   }
 
   useEffect(()=> {
@@ -266,8 +297,6 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
   const salartRate = (salaryRate: any) => {
     setFieldValue("salary_rate", salaryRate)
   }
-
-
 
   return (
     <Modal
@@ -309,14 +338,15 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
             </Grid>
             <Grid item xs={6}>
               <TextField variant="standard" label="Password"
-                value={values.email}
+              disabled={heading == "Edit Employee" ? true : false}
+                value={values.password}
                 name="password"
                 onChange={handleChange}
                 helperText={errors.password ? errors.password.toString() : ''}
               />
             </Grid>
             <Grid className="selectGrid" item xs={6}>
-              <SelectDemo title="Department" list={departments} receiveValue={receiveDepartments} />
+              <SelectDemo title="Department" value={activeDepartment} list={departments} receiveValue={receiveDepartments} />
             </Grid>
             <Grid className="selectGrid" item xs={6}>
               <InputLabel id="demo-multiple-checkbox-label">Role</InputLabel>
@@ -340,7 +370,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
               <Box>{errors.roles ? errors.roles.toString() : ""}</Box>
             </Grid>
             <Grid item xs={6}>
-              <BasicDatePicker  receiveDate={receiveDate}/>
+              <BasicDatePicker singleEmployeeData={singleEmployeeData} receiveDate={receiveDate}/>
             </Grid>
           </Grid>
         </Box>
@@ -349,15 +379,15 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
         </Box>
         <Grid container spacing={4}>
           <Grid className="selectGrid" item xs={6}>
-            <SelectDemo title="Compensation Type" list={compensationType} receiveValue={receiveCompensationType}/>
+            <SelectDemo title="Compensation Type" value={values?.compensation_type} list={compensationType} receiveValue={receiveCompensationType}/>
             <Box>{errors.compensation_type ? errors.compensation_type.toString() : ""}</Box>
           </Grid>
           <Grid className="selectGrid" item xs={6}>
-            <SelectDemo title="Employment Type" list={employeementType}  receiveValue={EmployeementType} />
+            <SelectDemo title="Employment Type" value={values?.employment_type} list={employeementType}  receiveValue={EmployeementType} />
             <Box>{errors.employment_type ? errors.employment_type.toString() : ""}</Box>
           </Grid>
           <Grid className="selectGrid" item xs={6}>
-            <SelectDemo title="Salary/Rate" list={salaryRates}  receiveValue={salartRate} />
+            <SelectDemo title="Salary/Rate" value={values?.salary_rate} list={salaryRates}  receiveValue={salartRate} />
             <Box>{errors.salary_rate ? errors.salary_rate.toString() : ""}</Box>
           </Grid>
         </Grid>
@@ -384,7 +414,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
             startIcon={<Save />}
             onClick={() => handleSubmit()}
           >
-            Save
+            {isSubmitting ?" Saving..." : "Save"}
           </Button>
         </Stack>
       </EmployeeInfoArea>

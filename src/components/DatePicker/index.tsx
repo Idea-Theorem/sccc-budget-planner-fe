@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -37,13 +37,22 @@ const DatePickerArea = styled(Box)(() => ({
   },
 }));
 
-const BasicDatePicker = ({receiveDate}: any) => {
+const BasicDatePicker = ({receiveDate,singleEmployeeData}: any) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
     receiveDate(date)
   };
+
+  useEffect(() => {
+    if(singleEmployeeData?.hire_date){
+      setSelectedDate(singleEmployeeData?.hire_date)
+    }else {
+
+      receiveDate(new Date());
+    }
+  }, [singleEmployeeData])
 
   return (
     <DatePickerArea>
