@@ -101,7 +101,7 @@ const MainHeaderComponent = (props: MainHeaderProps) => {
       <Stack className="appHeaderHolder">
         <Typography variant="h3">{props.title}</Typography>
         {props?.action ? (
-          <DropdownButton title="Action" array={props?.array}/> 
+          <DropdownButton title="Actions" array={props?.array}/> 
         ) : (
           <Buttons
             startIcon={<AddIcon />}

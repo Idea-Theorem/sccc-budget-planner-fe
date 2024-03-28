@@ -51,7 +51,7 @@ const SubHeader = (props: SubHeaderProps) => {
     <StyledBox className="reviewSubhead">
       <Stack>
         <Typography variant="h4">{props.title}</Typography>
-        <DropdownButton title="Action" array={array}/>
+        <DropdownButton title="Actions" array={array}/>
       </Stack>
     </StyledBox>
   );

@@ -13,6 +13,9 @@ const StyledBox = styled(Box)(({ theme }) => ({
     letterSpacing: "0.25px",
     fontWeight: "500",
   },
+  ".MuiButtonBase-root": {
+    textTransform: "capitalize",
+  },
 }));
 
 const ApprovedProgram = () => {
