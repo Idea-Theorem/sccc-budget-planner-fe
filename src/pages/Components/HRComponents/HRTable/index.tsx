@@ -167,7 +167,7 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit, row, refresh }) => {
       headerName: "",
       flex: 0.5,
       renderCell: (data?: any) => (
-        <Stack direction="row" gap="10px" alignItems="center">
+        <Stack direction="row" gap="10px" alignItems="center" justifyContent="flex-end" width="100%">
           <Button
             variant="text"
             color="error"
