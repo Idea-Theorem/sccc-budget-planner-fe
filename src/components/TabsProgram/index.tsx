@@ -38,55 +38,19 @@ function a11yProps(index: number) {
   };
 }
 
-const TabsProgram = () => {
+const TabsProgram = ({
+  handleReceived,
+  handleSupplyExpenseReceived,
+  handleSalaryExpenseReceived,
+  formik,
+}: any) => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     console.log("event", event);
     setValue(newValue);
   };
-  function createData(item?: string, amount?: string) {
-    return { item, amount };
-  }
-  
-  const rows = [
-    createData("Grants - Federal", "$00,000.00"),
-    createData("Grants - City of Toronto", "$00,000.00"),
-    createData("Grants - Foundation", "$00,000.00"),
-    createData("Cupcake", "$00,000.00"),
-    createData("General Donations", "$00,000.00"),
-    createData("Memberships", "$00,000.00"),
-    createData("Program Fees", "$00,000.00"),
-    createData("Rental Revenue", "$00,000.00"),
-    createData("Fundraising", "$00,000.00"),
-    createData("Services Fees", "$00,000.00"),
-    createData("Interest", "$00,000.00"),
-    createData("Misc Income", "$00,000.00"),
-    createData("Deferred From Previous Year", "$00,000.00"),
-    createData("To Reserve Fund", "$00,000.00"),
-    createData("Deferred To Following Year", "$00,000.00"),
-    createData("Total Income", "$00,000.00"),
-  ];
-  const benefits = [
-    createData("Courier & Postage", "$00,000.00"),
-    createData("printing", "$00,000.00"),
-    createData("Office & Computer Supplies", "$00,000.00"),
-    createData("Program Food", "$00,000.00"),
-    createData("Recreational Supplies", "$00,000.00"),
-    createData("recreational Equipment", "$00,000.00"),
-    createData("Furniture & Equipment", "$00,000.00"),
-    createData("Office Furniture & Equip", "$00,000.00"),
-    createData("Employee Development", "$00,000.00"),
-    createData("Program Travel", "$00,000.00"),
-    createData("Program Admission", "$00,000.00"),
-    createData("Telephone", "$00,000.00"),
-    createData("Total Income", "$00,000.00"),
-  ];
-  const expense = [
-    createData("Salaries", "$00,000.00"),
-    createData("Benefits", "$00,000.00"),
-    createData("Total Income", "$00,000.00"),
-  ];
+
   return (
     <Box width="100%">
       <Box borderBottom="1" borderColor="divider">
@@ -96,19 +60,39 @@ const TabsProgram = () => {
           aria-label="basic tabs example"
           className="tabs-lists"
         >
-          <Tab label="Income" {...a11yProps(0)} className="listitem"/>
-          <Tab label="Expense (Supplies & Services)" {...a11yProps(1)} className="listitem"/>
-          <Tab label="Expense (Salary & Benefits)" {...a11yProps(2)} className="listitem"/>
+          <Tab label="Income" {...a11yProps(0)} className="listitem" />
+          <Tab
+            label="Expense (Supplies & Services)"
+            {...a11yProps(1)}
+            className="listitem"
+          />
+          <Tab
+            label="Expense (Salary & Benefits)"
+            {...a11yProps(2)}
+            className="listitem"
+          />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <ProgramTable rows={rows}/>
+        <ProgramTable
+          handleReceived={handleReceived}
+          title="income"
+          formik={formik}
+        />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <ProgramTable rows={benefits}/>
+        <ProgramTable
+          handleSupplyExpenseReceived={handleSupplyExpenseReceived}
+          title="supply-expense"
+          formik={formik}
+        />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        <ProgramTable rows={expense}/>
+        <ProgramTable
+          handleSalaryExpenseReceived={handleSalaryExpenseReceived}
+          title="salary-expense"
+          formik={formik}
+        />
       </CustomTabPanel>
     </Box>
   );
@@ -134,13 +118,23 @@ const TabsAreas = styled(Box)(({ theme }) => ({
   },
   ".MuiTableCell-head": {
     padding: "0 15px !important",
-  }
+  },
 }));
 
-export default function TabsProgramArea() {
+export default function TabsProgramArea({
+  handleReceived,
+  handleSupplyExpenseReceived,
+  handleSalaryExpenseReceived,
+  formik,
+}: any) {
   return (
     <TabsAreas>
-      <TabsProgram />
+      <TabsProgram
+        handleReceived={handleReceived}
+        handleSupplyExpenseReceived={handleSupplyExpenseReceived}
+        handleSalaryExpenseReceived={handleSalaryExpenseReceived}
+        formik={formik}
+      />
     </TabsAreas>
   );
 }
