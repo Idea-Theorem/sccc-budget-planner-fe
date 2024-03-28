@@ -7,6 +7,7 @@ import EditNoteIcon from "@mui/icons-material/EditNote";
 import { Button, Stack } from "@mui/material";
 import { useState } from "react";
 import DeleteModal from "../../../../models/DeleteModal";
+import { deleteDepartment } from "../../../../services/departmentServices";
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
@@ -117,41 +118,45 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
 }));
 
 
-const rows = [
-  {
-    id: 1,
-    departmentName: "Recreation & Culture",
-    status: "5",
-    lYearBudget: "02-Mar-2024",
-  },
-  {
-    id: 2,
-    departmentName: "HR",
-    status: "5",
-    lYearBudget: "02-Mar-2024",
-  },
-];
+// const rows = [
+//   {
+//     id: 1,
+//     name: "Recreation & Culture",
+//     // status: "5",
+//     lYearBudget: "02-Mar-2024",
+//   },
+//   {
+//     id: 2,
+//     name: "HR",
+//     // status: "5",
+//     lYearBudget: "02-Mar-2024",
+//   },
+// ];
 interface HRTableProps {
-  onEdit?: () => void;
+  onEdit?: any;
+  row?: any
+  refresh?: any
 }
-const HRTableComponent: React.FC<HRTableProps> = ({ onEdit }) => {
+const HRTableComponent: React.FC<HRTableProps> = ({ onEdit, row, refresh }) => {
+  const [deleteRow, setDeleteRow] = useState<any>(false)
+  const [loading, setLoading] = useState<any>(false)
   const columns: GridColDef[] = [
     {
-      field: "departmentName",
+      field: "name",
       headerName: "Department Name",
       sortable: false,
       editable: false,
       flex: 1,
     },
+    // {
+    //   field: "status",
+    //   headerName: "Employee Count",
+    //   sortable: false,
+    //   editable: false,
+    //   flex: 1,
+    // },
     {
-      field: "status",
-      headerName: "Employee Count",
-      sortable: false,
-      editable: false,
-      flex: 1,
-    },
-    {
-      field: "lYearBudget",
+      field: "created_at",
       headerName: "Date Created",
       sortable: false,
       editable: false,
@@ -161,14 +166,14 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit }) => {
       field: "buttonsColumn",
       headerName: "",
       flex: 0.5,
-      renderCell: () => (
+      renderCell: (data?: any) => (
         <Stack direction="row" gap="10px" alignItems="center">
           <Button
             variant="text"
             color="error"
             size="small"
             startIcon={<DeleteOutlineIcon />}
-            onClick={()=>setIsOpen(true)}
+            onClick={()=>{setIsOpen(true);setDeleteRow(data)}}
           >
             Delete
           </Button>
@@ -177,7 +182,7 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit }) => {
             color="primary"
             size="small"
             startIcon={<EditNoteIcon />}
-            onClick={onEdit}
+            onClick={() => onEdit(data)}
           >
             Edit
           </Button>
@@ -190,12 +195,24 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit }) => {
   const closeModel =()=>{
     setIsOpen(false)
   }
+
+  const handleDelete = async () => {
+    try {
+      setLoading(true)
+      await deleteDepartment(deleteRow?.id)
+      setLoading(false)
+      refresh()
+      closeModel()
+    } catch (error) {
+        setLoading(false)
+    }
+  }
   return (
     <>
       <StyledBox className="mainTableBlock">
         <InputSearch placeholder="Search..." /> 
         <StyleDataGrid
-          rows={rows}
+          rows={row}
           columns={columns}
           initialState={{
             pagination: {
@@ -207,7 +224,7 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit }) => {
           slots={{ toolbar: GridToolbar }}
         />
       </StyledBox>
-      <DeleteModal open={isOpen} handleClose={closeModel} heading="Are you sure you want to delete?"/>
+      <DeleteModal open={isOpen} handleOK={() => handleDelete()} handleClose={closeModel} loading={loading} heading="Are you sure you want to delete?"/>
     </>
   );
 };

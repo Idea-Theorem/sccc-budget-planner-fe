@@ -9,6 +9,10 @@ import { ActionsType } from "../../types/common";
 import Buttons from "../Button";
 
 const MainSection = ({ actions }: { actions: ActionsType[] }) => {
+
+  const receiveDate = () => {
+
+  }
   return (
     <Grid item xs={9}>
       <Grid className="createProgramContent" item xs={12}>
@@ -51,10 +55,10 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
             <Typography variant="h5">Duration</Typography>
             <Grid container spacing={2} className="datepicker-area">
               <Grid className="createFormTable" item xs={6}>
-                <BasicDatePicker />
+                <BasicDatePicker receiveDate={receiveDate}/>
               </Grid>
               <Grid className="createFormTable" item xs={6}>
-                <BasicDatePicker />
+                <BasicDatePicker receiveDate={receiveDate}/>
               </Grid>
             </Grid>
           </Stack>

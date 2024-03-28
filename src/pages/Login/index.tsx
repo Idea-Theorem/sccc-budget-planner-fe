@@ -4,10 +4,12 @@ import FormControl from "@mui/material/FormControl";
 import Link from "@mui/material/Link";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import { useState } from "react";
 import LogoImg from "../../assets/logo.png";
 import Buttons from "../../components/Button";
 import { useAuth } from "../../contexts/AuthContext";
+import { FormikProps, useFormik } from "formik"
+import * as yup from "yup"
+import LoginState from "../../interfaces/ITheme.interface";
 
 const LoginArea = styled(Box)(({ theme }) => ({
   "&.loginBlock": {
@@ -111,9 +113,44 @@ const LoginArea = styled(Box)(({ theme }) => ({
     },
   },
 }));
+
+
+const validationSchema = yup.object().shape({
+  email: yup
+    .string()
+    .email("enter a valid email")
+    .required("Email is required!"),
+    password: yup
+    .string()
+    .required("Password is required!"),
+})
+
+
+
 const Input = () => {
-  const [email, setEmail] = useState("");
   const { login } = useAuth();
+
+  const formik: FormikProps<LoginState> = useFormik<LoginState>({
+    validateOnBlur: false,
+    validationSchema,
+    initialValues: {
+      email: "",
+      password: ""
+    },
+    onSubmit: async values => {
+      login(values)
+    },
+  })
+
+  const {
+    values,
+    touched,
+    handleChange,
+    isSubmitting,
+    errors,
+    handleSubmit,
+  } = formik
+
 
   return (
     <LoginArea className="loginBlock">
@@ -128,21 +165,31 @@ const Input = () => {
               label="Email"
               variant="outlined"
               size="medium"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={values.email}
+              name="email"
+              onChange={handleChange}
+              helperText={errors.email ? errors.email : touched.email}
             />
           </FormControl>
           <FormControl className="loginFormItem">
-            <TextField label="Password" variant="outlined" size="medium" />
+            <TextField
+              value={values.password}
+              label="Password" variant="outlined" size="medium"
+              name="password"
+              type="password"
+              onChange={handleChange}
+              helperText={errors.password  ? errors.password :  touched.password}
+            />
           </FormControl>
           <Buttons
+            loading={isSubmitting}
             btntext="Action"
             variant="contained"
             size="large"
             fullWidth
-            onClick={() => {
-              login(email);
-            }}
+            onClick={() =>
+              handleSubmit()
+            }
           />
         </form>
         <Box>

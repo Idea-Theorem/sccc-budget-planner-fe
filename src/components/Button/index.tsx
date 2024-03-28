@@ -1,9 +1,11 @@
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import { ButtonProps } from "@mui/material/Button";
+import { CircularProgress } from "@mui/material";
 
 interface StyledButtonProps extends ButtonProps {
   btntext?: string;
+  loading?: boolean;
 }
 
 const StyledButton = styled(Button)<StyledButtonProps>(
@@ -24,10 +26,10 @@ const StyledButton = styled(Button)<StyledButtonProps>(
   })
 );
 
-const Buttons: React.FC<StyledButtonProps> = ({ btntext, ...props }) => {
+const Buttons: React.FC<StyledButtonProps> = ({ btntext, loading, ...props }) => {
   return (
     <StyledButton  {...props}>
-      {btntext}
+     {loading ? <CircularProgress size={24} color="inherit" /> : btntext}
     </StyledButton>
   );
 };

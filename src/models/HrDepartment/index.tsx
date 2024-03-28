@@ -3,10 +3,13 @@ import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
-import TextFields from "../../components/Input/textfield";
 import { Save, Clear } from "@mui/icons-material"; // Import Clear icon from Material-UI
 import Grid from "@mui/material/Grid"; // Import Grid component from MUI
-import Modal from "@mui/material/Modal";
+import Modal from '@mui/material/Modal';
+import { TextField } from "@mui/material";
+import { useFormik } from "formik";
+import { createDepartmentSchema } from "../../utils/yupSchema";
+import { createDepartment, updateDepartment } from "../../services/departmentServices";
 
 const DepartmentInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
@@ -116,15 +119,44 @@ interface IDepartmentInfo {
   heading?: string;
   subheading?: string;
   handleClose?: any;
-  open?: any;
+  open?: any
+  singleDepartments?: any
+  setDingleDepartments?: any
 }
 
-const DepartmentInfo: React.FC<IDepartmentInfo> = ({
-  heading,
-  subheading,
-  handleClose,
-  open,
-}) => {
+const DepartmentInfo: React.FC<IDepartmentInfo> = ({ heading, subheading, handleClose, open, singleDepartments, setDingleDepartments }) => {
+  const formik = useFormik<any>({
+    validateOnBlur: false,
+    validationSchema: createDepartmentSchema,
+    enableReinitialize: true,
+    initialValues: {
+      name: singleDepartments?.name ? singleDepartments?.name : "",
+    },
+    onSubmit: async values => {
+      try {
+        if (heading == "Edit Department") {
+        await updateDepartment(values, singleDepartments?.id)
+        } else {
+        await createDepartment(values)
+        }
+        formik.resetForm()
+        setDingleDepartments(null)
+        handleClose()
+      } catch (error) {
+
+      }
+    },
+  })
+
+
+  const {
+    values,
+    handleChange,
+    isSubmitting,
+    errors,
+    handleSubmit,
+  } = formik
+
   return (
     <Modal
       open={open}
@@ -139,9 +171,17 @@ const DepartmentInfo: React.FC<IDepartmentInfo> = ({
         <Box>
           <Typography className="subtitle">{subheading}</Typography>
           <Grid container spacing={4}>
-            <Grid item xs={12}>
-              <TextFields variant="standard" label="Department Name" />
+            <Grid item xs={6}>
+              <TextField variant="standard" label="Department Name"
+                value={values.name}
+                name="name"
+                onChange={handleChange}
+                helperText={errors.name ? errors.name.toString() : ''}
+              />
             </Grid>
+            {/* <Grid item xs={6}>
+            <TextField variant="standard" label="Employee Count" />
+          </Grid> */}
           </Grid>
         </Box>
         <Stack
@@ -168,12 +208,13 @@ const DepartmentInfo: React.FC<IDepartmentInfo> = ({
               Cancel
             </Button>
             <Button
+              disabled={isSubmitting}
+              onClick={() => handleSubmit()}
               variant="outlined"
               color="primary"
               size="medium"
-              startIcon={<Save />}
-            >
-              Save
+              startIcon={<Save />}>
+              {isSubmitting ? "Saving..." : 'Save'}
             </Button>
           </Stack>
         </Stack>

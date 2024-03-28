@@ -1,4 +1,3 @@
-import * as React from "react";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -29,27 +28,27 @@ const StyledSelect = styled(Select)(({ theme }) => ({
   color: theme.palette.gfGrey.GF75,
 }));
 
-export default function SelectDemo() {
-  const [value, selectValue] = React.useState("");
-  console.log(value);
+export default function SelectDemo({title, list,receiveValue, value}: any) {
   const handleChange = (event: any) => {
-    selectValue(event.target.value);
+  
+    receiveValue(event.target.value)
   };
 
   return (
     <StyledFormControl size="medium" variant="standard">
-      <StyledInputLabel>Program Code</StyledInputLabel>
+      <StyledInputLabel>{title}</StyledInputLabel>
       <StyledSelect
+       value={value}
         labelId="select-label"
         id="select-demo"
-        defaultValue={10}
         label="Label"
         onChange={handleChange}
         className="select-list"
       >
-        <MenuItem value={10}>Please select</MenuItem>
-        <MenuItem value={20}>Please select</MenuItem>
-        <MenuItem value={30}>Please select</MenuItem>
+        {list?.map((item: any) => (
+
+        <MenuItem value={item.name}>{item.name}</MenuItem>
+        ))}
       </StyledSelect>
     </StyledFormControl>
   );

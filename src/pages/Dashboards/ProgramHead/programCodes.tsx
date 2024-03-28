@@ -147,7 +147,7 @@ const rows = [
   },
 ];
 interface HRTableProps {
-  onEdit?: () => void;
+  onEdit?: any;
 }
 const HRTableComponent: React.FC<HRTableProps> = ({ onEdit }) => {
   const columns: GridColDef[] = [

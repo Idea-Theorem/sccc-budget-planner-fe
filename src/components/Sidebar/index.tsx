@@ -139,8 +139,6 @@ export default function ResponsiveDrawer(props: Props) {
   const handleDrawerClose = () => {
     setMobileOpen(false);
   };
-  console.log("location.pathname:::::::", location.pathname);
-  console.log("location.withMore:::::::", withMore);
   const drawer = (
     <Box>
       <Box className="siteLogo">

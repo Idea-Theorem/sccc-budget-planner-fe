@@ -17,6 +17,7 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
+import { deleteEmployee } from "../../../../services/employeeServices";
 
 // Define StyledInputSearch using styled component
 const HrCollapseableTable = styled(Box)(({ theme }) => ({
@@ -88,7 +89,7 @@ const HrCollapseableTable = styled(Box)(({ theme }) => ({
 }));
 
 function createData(
-  name?: string,
+
   calories?: string,
   fat?: string,
   carbs?: string,
@@ -120,10 +121,12 @@ function createData(
 }
 
 function Row(props: {
-  row: ReturnType<typeof createData>;
-  handleClick: () => void;
+  row: ReturnType<typeof createData> |  any;
+  handleClick: any;
+  employeeData?: any
+  handleDelete?: any
 }) {
-  const { row, handleClick } = props;
+  const { row, handleClick, employeeData, handleDelete } = props;
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -139,11 +142,11 @@ function Row(props: {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {row.name}
+          {row.firstname + " " +  row.lastname }
         </TableCell>
         <TableCell>{row.calories}</TableCell>
         <TableCell>{row.fat}</TableCell>
-        <TableCell>{row.carbs}</TableCell>
+        <TableCell>{row.hire_date}</TableCell>
         <TableCell>
           <Stack direction="row" gap="10px" alignItems="center">
             <Button
@@ -151,6 +154,7 @@ function Row(props: {
               color="error"
               size="small"
               startIcon={<DeleteOutlineIcon />}
+              onClick={() => handleDelete(row)}
             >
               Delete
             </Button>
@@ -159,7 +163,7 @@ function Row(props: {
               color="primary"
               size="small"
               startIcon={<EditNoteIcon />}
-              onClick={handleClick}
+              onClick={() => handleClick(row)}
             >
               Edit
             </Button>
@@ -172,7 +176,7 @@ function Row(props: {
             <Box sx={{ margin: 1 }}>
               <Table size="small" aria-label="purchases">
                 <TableBody>
-                  {row.history.map((historyRow, index) => (
+                  {employeeData?.map((historyRow: any, index: number) => (
                     <TableRow key={index}>
                       <TableCell>&nbsp;</TableCell>
                       <TableCell>{historyRow.date}</TableCell>
@@ -206,7 +210,7 @@ const rows = [
   ),
 ];
 
-export default function HrCollapsibleTable({ handleClick }: any) {
+export default function HrCollapsibleTable({ handleClick, employeeData, refresh}: any) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -221,6 +225,14 @@ export default function HrCollapsibleTable({ handleClick }: any) {
     setPage(0);
   };
 
+  const handleDelete = async (data: any) => {
+    try {
+      await deleteEmployee(data?.id)
+      refresh()
+    } catch (error) {
+      
+    }
+  }
   return (
     <>
       <HrCollapseableTable className="dashboardTable">
@@ -236,10 +248,10 @@ export default function HrCollapsibleTable({ handleClick }: any) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows
+              {employeeData
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => (
-                  <Row key={index} row={row} handleClick={handleClick} />
+                .map((row: any, index: number) => (
+                  <Row key={index} row={row} handleClick={handleClick} employeeData={employeeData} handleDelete={handleDelete}/>
                 ))}
             </TableBody>
           </Table>

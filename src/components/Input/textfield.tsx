@@ -6,9 +6,10 @@ type TextFieldVariants = "standard" | "filled" | "outlined";
 interface ITextFields {
   label?: string;
   variant?: TextFieldVariants;
+  value?: string
 }
 
-const TextFields: React.FC<ITextFields> = ({ label, variant }) => {
+const TextFields: React.FC<ITextFields> = ({ label, variant, value }) => {
   return (
     <Box component="form" noValidate autoComplete="off">
       <TextField
@@ -16,6 +17,7 @@ const TextFields: React.FC<ITextFields> = ({ label, variant }) => {
         label={label}
         variant={variant}
         defaultValue="value"
+        value={value}
       />
     </Box>
   );

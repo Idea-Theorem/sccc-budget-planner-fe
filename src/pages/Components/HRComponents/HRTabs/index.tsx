@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -15,6 +15,9 @@ import DepartmentInfo from "../../../../models/HrDepartment";
 import CommunityTableComponent from "../CommunityCenterTable";
 import CommunityModal from "../../../../models/CommunityModal";
 import Buttons from "../../../../components/Button";
+import { getAllDepartments } from "../../../../services/departmentServices";
+import { getAllCenters } from "../../../../services/centersServices";
+import { getEmployee } from "../../../../services/employeeServices";
 
 const AppHuman = styled(Box)(({ theme }) => ({
   ".MuiTabs-flexContainer": {
@@ -50,10 +53,15 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
   const [heading, setHeading] = useState<string>("");
   const [departHeading, setDepartHeading] = useState<string>("");
   const [centerHeading, setCenterHeading] = useState<string>("");
+  const [departments, setDepartments] = useState<any>(null);
+  const [employee, setEmployee] = useState<any>([]);
+  const [center, setCenter] = useState<any>(null);
+  const [singleDepartments, setDingleDepartments] = useState<any>(null);
+  const [singleCenter, setSingleCenter] = useState<any>(null);
+  const [singleEmployeeData, setSingleEmployeeData] = useState<any>(null);
   const handleChange = (_: ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
-
   const routes = [
     { path: "/hr/addemployees" },
     { path: "/hr/adddepartment" },
@@ -62,12 +70,16 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
   console.log(routes);
 
   const handleCloseModal = () => {
+    fetchEmployee()
+    setSingleEmployeeData(null)
     setIsopen(false);
   };
   const handleCloseDepartmentModal = () => {
+    fetchDepartments()
     setIsDepartopen(false);
   };
   const handleCloseCommunityModal = () => {
+    fetchCenters()
     setCommunityModal(false);
   };
   const handleClick = (e: any) => {
@@ -82,18 +94,54 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
       setCenterHeading("Add New Center");
     }
   };
-  const handleEditClick = () => {
+  const handleEditClick = (data: any) => {
+    setSingleEmployeeData(data)
     setIsopen(true);
     setHeading("Edit Employee");
   };
-  const onEdit = () => {
+  const onEdit = (data: any) => {
+    setDingleDepartments(data?.row)
     setIsDepartopen(true);
     setDepartHeading("Edit Department");
   };
-  const onCommunityEdit = () => {
+  const onCommunityEdit = (data: any) => {
+    setSingleCenter(data.row)
     setCommunityModal(true);
     setCenterHeading("Edit center");
   };
+
+  const fetchDepartments = async () => {
+    try {
+      const response = await getAllDepartments()
+      setDepartments(response?.data?.departments)
+    } catch (error) {
+      
+    }
+  }
+
+  const fetchCenters = async () => {
+    try {
+      const response = await getAllCenters()
+      setCenter(response?.data?.centers)
+    } catch (error) {
+      
+    }
+  }
+
+  const fetchEmployee = async () => {
+try {
+  const response = await getEmployee()
+  setEmployee(response?.data?.users)
+} catch (error) {
+  
+}
+  }
+
+  useEffect(() => {
+    fetchDepartments()
+    fetchCenters()
+    fetchEmployee()
+  }, [])
   return (
     <AppHuman>
       <Grid container spacing={2}>
@@ -142,10 +190,10 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
           </AppBar>
         </Grid>
         <Grid item xs={12}>
-          {value === 0 && <HrCollapsibleTable handleClick={handleEditClick} />}
-          {value === 1 && <HRTableComponent onEdit={onEdit} />}
+          {value === 0 && <HrCollapsibleTable handleClick={handleEditClick} employeeData={employee} refresh={fetchEmployee}/>}
+          {value === 1 && <HRTableComponent onEdit={onEdit} row={departments}   refresh={handleCloseDepartmentModal}/>}
           {value === 2 && (
-            <CommunityTableComponent onCommunityEdit={onCommunityEdit} />
+            <CommunityTableComponent onCommunityEdit={onCommunityEdit} row={center}  refresh={handleCloseCommunityModal}/>
           )}
         </Grid>
       </Grid>
@@ -153,18 +201,24 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
         open={isOpen}
         handleClose={handleCloseModal}
         heading={heading}
+        singleEmployeeData={singleEmployeeData}
+
       />
       <DepartmentInfo
         open={isDepartOpen}
         handleClose={handleCloseDepartmentModal}
         heading={departHeading}
         subheading="Department Information"
+        singleDepartments={singleDepartments}
+        setDingleDepartments={setDingleDepartments}
       />
       <CommunityModal
         open={isCommunityOpen}
         handleClose={handleCloseCommunityModal}
         heading={centerHeading}
         subheading="Center Information"
+        singleCenter={singleCenter}
+        setSingleCenter={setSingleCenter}
       />
     </AppHuman>
   );
