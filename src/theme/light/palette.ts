@@ -12,10 +12,10 @@ export const lightPallete: any = {
   mode: "light",
   primary: {
     // ...defaultPalette.primary,
-    main: "rgba(140, 59, 45, 1)",
-    light: "rgba(151, 78, 65, 1)",
+    main: "rgba(42, 157, 143, 1)",
+    light: "rgba(42, 157, 143, 1)",
 
-    contrastText: "rgba(255, 255, 255, 1)",
+    // contrastText: "rgba(0, 0, 0, 0.12)",
     shades: {
       "4p": "rgba(140, 59, 45, 0.04)",
       "8p": "rgba(140, 59, 45, 0.08)",
@@ -26,12 +26,13 @@ export const lightPallete: any = {
   },
   secondary: {
     // ...defaultPalette.secondary,
-    main: "rgba(10, 140, 164, 1)",
-    light: "rgba(34, 151, 173, 1)",
+    main: "rgba(231, 111, 81, 1)",
+    light: "rgba(231, 111, 81, 1)",
+    mainLight: "rgba(231, 111, 81, 1)",
 
-    contrastText: "rgba(66, 66, 66, 1)",
+    // contrastText: "rgba(0, 0, 0, 0.12)",
     shades: {
-      "4p": "rgba(10, 140, 164, 0.04)",
+      "4p": "rgba(33, 150, 243, 0.4)",
       "8p": "rgba(10, 140, 164, 0.08)",
       "12p": "rgba(10, 140, 164, 0.12)",
       "30p": "rgba(10, 140, 164, 0.3)",
@@ -40,9 +41,9 @@ export const lightPallete: any = {
   },
   error: {
     // ...defaultPalette.error,
-    main: "rgba(211, 47, 175, 1)",
-    light: "rgba(218, 94, 192, 1)",
-    contrastText: "rgba(255, 255, 255, 1)",
+    main: "rgba(211, 47, 47, 1)",
+    light: "rgba(198, 40, 40, 1)",
+    // contrastText: "rgba(0, 0, 0, 0.12)",
     shades: {
       "4p": "rgba(211, 47, 175, 0.04)",
       "12p": "rgba(211, 47, 175, 0.12)",
@@ -55,12 +56,12 @@ export const lightPallete: any = {
 
   warning: {
     // ...defaultPalette.warning,
-    main: "rgba(161, 146, 5, 1)",
-    light: "rgba(180, 169, 63, 1)",
+    main: "rgba(239, 108, 0, 1)",
+    light: "rgba(198, 40, 40, 1)",
 
-    contrastText: "rgba(255, 255, 255, 1)",
+    // contrastText: "rgba(0, 0, 0, 0.12)",
     shades: {
-      "4p": "rgba(161, 146, 5, 0.04)",
+      "4p": "rgba(239, 108, 0, 1)",
       "12p": "rgba(161, 146, 5, 0.12)",
       "30p": "rgba(161, 146, 5, 0.3)",
       "50p": "rgba(161, 146, 5, 0.5)",
@@ -70,12 +71,12 @@ export const lightPallete: any = {
   },
   success: {
     // ...defaultPalette.success,
-    main: "rgba(18, 166, 25, 1)",
-    light: "rgba(72, 184, 78, 1)",
+    main: "rgba(46, 125, 50, 1)",
+    light: "rgba(27, 94, 32, 1)",
 
-    contrastText: "rgba(255, 255, 255, 1)",
+    // contrastText: "rgba(0, 0, 0, 0.12)",
     shades: {
-      "4p": "rgba(18, 166, 25, 0.04)",
+      "4p": "rgba(46, 125, 50, 1)",
       "12p": "rgba(18, 166, 25, 0.12)",
       "30p": "rgba(18, 166, 25, 0.3)",
       "50p": "rgba(18, 166, 25, 0.5)",
@@ -86,12 +87,12 @@ export const lightPallete: any = {
 
   info: {
     // ...defaultPalette.info,
-    main: "rgba(10, 140, 164, 1)",
-    light: "rgba(34, 151, 173, 1)",
+    main: "rgba(2, 136, 209, 1)",
+    light: "rgba(1, 87, 155, 1)",
 
-    contrastText: "rgba(255, 255, 255, 1)",
+    // contrastText: "rgba(0, 0, 0, 0.12)",
     shades: {
-      "4p": "rgba(10, 140, 164, 0.04)",
+      "4p": "rgba(2, 136, 209, 1)",
       "12p": "rgba(10, 140, 164, 0.12)",
       "30p": "rgba(10, 140, 164, 0.3)",
       "50p": "rgba(10, 140, 164, 0.5)",
@@ -103,20 +104,23 @@ export const lightPallete: any = {
     // ...defaultPalette.text,
     primary: "rgba(0, 0, 0, 0.87)",
     secondary: "rgba(0, 0, 0, 0.7)",
-    disabled: "rgba(0, 0, 0, 0.38)",
+    disabled: "rgba(152, 152, 152, 1)",
+    light: "rgba(113, 122, 126, 1)",
   },
 
   action: {
     // ...defaultPalette.action,
     active: "rgba(0, 0, 0, 0.54)",
     hover: "rgba(255, 255, 255, 0.08)",
-    selected: "rgba(0, 0, 0, 0.08)",
+    selected: "rgba(0, 0, 0, 0.6)",
     disabled: "rgba(0, 0, 0, 0.26)",
-    disabledBackground: "rgba(0, 0, 0, 0.12)",
+    disabledBackground: "rgba(0, 0, 0, 1)",
     focus: "rgba(0, 0, 0, 0.12)",
   },
   background: {
     // ...defaultPalette.background,
+    DarkGray: "rgba(65, 65, 88, 1)",
+    lightGray: "rgba(65, 65, 88, 0.8)",
     default: "rgba(255, 255, 255, 1)",
     paper: "rgba(255, 255, 255, 1)",
     GFBackground: "rgba(29, 26, 38, 1)",
@@ -164,8 +168,8 @@ export const lightPallete: any = {
     // ...defaultPalette.common,
     // Need to confirm shades
     blackshades: {
-      "4p": "rgba(0, 0, 0, 0.04)",
-      "12p": "rgba(0, 0, 0, 0.12)",
+      "4p": "rgba(0, 0, 0, 0.87)",
+      "12p": "rgba(0, 0, 0, 0.6)",
       "30p": "rgba(0, 0, 0, 0.3)",
       "100p": "rgba(0, 0, 0, 1)",
     },
@@ -189,6 +193,7 @@ export const lightPallete: any = {
   },
   gfGrey: {
     ...palleteWithExtraColors.gfGrey,
+    textGray: "#989898",
     GF50: "rgba(0, 0, 0, 0.6)",
     GF75: "rgba(0, 0, 0, 0.6)",
     GF100: "rgba(217, 219, 223, 1)",
@@ -213,7 +218,7 @@ export const lightPallete: any = {
   },
   orange: {
     ...palleteWithExtraColors.orange,
-    GFOrange: "rgba(168, 74, 6, 1)",
+    GFOrange: "rgba(255, 193, 7, 1)",
     GFOrangeLight: "rgba(92, 55, 27, 1)",
     GFOrangeBright: "rgba(187, 114, 34, 1)",
     Status: "rgba(255, 145, 0, 1)",
@@ -243,12 +248,12 @@ export const lightPallete: any = {
   },
   red: {
     ...palleteWithExtraColors.red,
-    GFRed: "rgba(107, 32, 19, 1)",
+    GFRed: "rgba(216, 27, 96, 1)",
     Error: "rgba(255, 23, 68, 1)",
   },
   purple: {
     ...palleteWithExtraColors.purple,
-    GFPurple: "rgba(89, 46, 132, 1)",
+    GFPurple: "rgba(156, 39, 176, 1)",
     GFPurpleLight: "rgba(44, 23, 66, 1)",
   },
   ...commonPalleteColors,
@@ -260,6 +265,7 @@ export const lightTheme: Theme = createTheme({
   shadows: shadows.light as typeof defaultLightTheme.shadows,
   typography: {
     // ...defaultLightTheme.typography,
+    fontRaboto: "Roboto",
     ...commonTypography,
   } as any,
   customShadows: customShadows.light,

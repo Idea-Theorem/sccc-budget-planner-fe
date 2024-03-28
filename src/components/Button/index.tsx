@@ -1,51 +1,36 @@
-import { styled } from "@mui/material";
 import Button from "@mui/material/Button";
-import DeleteIcon from "@mui/icons-material/Delete";
-import SendIcon from "@mui/icons-material/Send";
-import Stack from "@mui/material/Stack";
+import { styled } from "@mui/material/styles";
+import { ButtonProps } from "@mui/material/Button";
+import { CircularProgress } from "@mui/material";
 
-const StyledButton = styled(Button)(({ theme, variant }) => ({
-  backgroundColor:
-    variant === "outlined" ? "white" : theme.palette.primary.main,
-  color:
-    variant === "outlined"
-      ? theme.palette.success.light
-      : theme.palette.success.darker,
-  border:
-    variant === "outlined"
-      ? `1px solid ${theme.palette.success.light}`
-      : theme.palette.success.darker,
-  "&:hover": {
-    backgroundColor:
-      variant === "outlined"
-        ? theme.palette.action.hover
-        : theme.palette.success.darker,
-  },
-}));
+interface StyledButtonProps extends ButtonProps {
+  btntext?: string;
+  loading?: boolean;
+}
 
-const Buttons = () => {
+const StyledButton = styled(Button)<StyledButtonProps>(
+  ({ theme, variant }) => ({
+    letterSpacing: "0.46px",
+    textTransform: "none",
+    "&:hover": {
+      backgroundColor:
+        variant === "outlined" || variant === "text"
+          ? "transparent"
+          : theme.palette.primary.main,
+      boxShadow: `
+            0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+            0px 4px 5px 0px rgba(0, 0, 0, 0.14),
+            0px 1px 10px 0px rgba(0, 0, 0, 0.12)
+          `,
+    },
+  })
+);
+
+const Buttons: React.FC<StyledButtonProps> = ({ btntext, loading, ...props }) => {
   return (
-    <Stack direction="row" spacing={2}>
-      <StyledButton size="large" variant="outlined" color="success">
-        ACTION
-      </StyledButton>
-      <StyledButton
-        size="medium"
-        variant="outlined"
-        color="error"
-        startIcon={<DeleteIcon />}
-      >
-        Delete
-      </StyledButton>
-      <StyledButton
-        size="small"
-        variant="contained"
-        color="success"
-        endIcon={<SendIcon />}
-      >
-        Send
-      </StyledButton>
-    </Stack>
+    <StyledButton  {...props}>
+     {loading ? <CircularProgress size={24} color="inherit" /> : btntext}
+    </StyledButton>
   );
 };
 

@@ -69,6 +69,8 @@ declare module "@mui/material/styles" {
     article?: React.CSSProperties;
   }
   interface TypeBackground {
+    DarkGray: TypeBackground["default"];
+    lightGray: TypeBackground["default"];
     neutral: TypeBackground["default"];
     GFBackground: TypeBackground["default"];
     GFForeground: TypeBackground["default"];
@@ -118,6 +120,7 @@ declare module "@mui/material/styles" {
     // lighter?: Palette["grey"];
     other?: OtherPaletteProperties;
     gfGrey: Partial<Color> & {
+      textGray: string;
       GF50: string;
       GF75: string;
       GF100: string;
@@ -183,6 +186,7 @@ declare module "@mui/material/styles" {
     darker?: string;
     lighter?: string;
     shades?: ColorShades;
+    mainLight?: string;
   }
   interface CommonColors {
     blackshades: Pick<CommonColorShades, "4p" | "12p" | "30p" | "100p">;
@@ -240,4 +244,10 @@ declare module "@mui/material/AvatarGroup" {
   interface ButtonPropsVariantOverrides {
     dashed: true;
   }
+}
+
+
+export default interface LoginState {
+  email: string
+  password: string
 }

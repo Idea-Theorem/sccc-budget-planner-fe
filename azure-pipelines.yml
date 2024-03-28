@@ -62,7 +62,7 @@ stages:
     displayName: Deploy
     environment:
       name: $(environmentName)
-      resourceName: 'budget-dev'
+      resourceName: 'budget-fe-dev'
       resourceType: VirtualMachine
     pool:
       vmImage: $(vmImageName)
@@ -80,4 +80,5 @@ stages:
           - script: |
               cd /home/azureuser/app/budget-planner-fe
               unzip $(Build.BuildId).zip
-              cp /home/azureuser/app/.htaccess /home/azureuser/app/budget-planner-fe/dist/
+              # cp /home/azureuser/app/.htaccess /home/azureuser/app/budget-planner-fe/dist/
+              rm -rf *.zip
