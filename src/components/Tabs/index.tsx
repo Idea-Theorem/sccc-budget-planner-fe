@@ -115,10 +115,9 @@ const BasicTabs = (props: BasicTabsProps) => {
       {props?.table?.map((item: any, index: any) => (
         <CustomTabPanel key={index} value={value} index={index}>
           <TableComponent
-            row={props?.row}
             onRowClick={(rowData) => handleClick(rowData)}
             columns={item}
-            tableData={typeof programList == "undefined" ? [] : programList}
+            row={typeof programList == "undefined" ? [] : programList}
           />
         </CustomTabPanel>
       ))}

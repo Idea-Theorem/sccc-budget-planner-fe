@@ -175,7 +175,6 @@ interface TableColumn {
 }
 interface ColumnnsProps {
   columns: TableColumn[];
-  tableData?: any;
   row?: any;
   onRowClick: (rowData: any) => void;
 }
