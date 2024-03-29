@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { ProgramCode } from "../../utils/dumpData";
 import { useFormik } from "formik";
 import { createProgram } from "../../services/programServices";
+import { Input, TextField } from '@mui/material';
 import {
   storeIncomeList,
   storeSalaryList,
@@ -19,19 +20,23 @@ import {
 } from "../../store/reducers/programSlice";
 import { useAppDispatch } from "../../store/hooks";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 const MainSection = ({ actions }: { actions: ActionsType[] }) => {
   const [departments, setDepartments] = useState<any>([]);
   const [activeDepartment, setActiveDepartment] = useState<any>(null);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [isEditing, setIsEditing] = useState(false);
+  const { singleProgram } = useSelector((state: RootState) => state.program);
 
   const formik = useFormik<any>({
     validateOnBlur: false,
     // validationSchema:  editEmployeeSchema,
     enableReinitialize: true,
     initialValues: {
-      name: "React Js",
+      name: singleProgram ? singleProgram?.name : "React Js",
       code: "",
       department_id: "",
       from_date: "",
@@ -52,6 +57,14 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
       } catch (error) {}
     },
   });
+
+  useEffect(() => {
+    if (singleProgram) {
+      dispatch(storeIncomeList(singleProgram?.income));
+      dispatch(storeSupplyList(singleProgram?.salary_expense));
+      dispatch(storeSalaryList(singleProgram?.supply_expense));
+    }
+  }, []);
 
   const {
     values,
@@ -99,14 +112,37 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
   const receiveSalaryExpense = (value: any) => {
     setFieldValue("salary_expense", value);
   };
+
+  const handleClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleChangeEvent = (e: any) => {
+    const newName = e.target.value;
+    formik.setFieldValue('name', newName);
+  };
+
+  const handleBlur = () => {
+    setIsEditing(false);
+  };
   return (
     <Grid item xs={9}>
       <Grid className="createProgramContent" item xs={12}>
         <Grid item xs={12}>
           <Stack className="createProgramContentHead">
-            <Typography className="mainHeading" variant="h5">
-              Youth Swimming Class
-            </Typography>
+              {isEditing ? (
+                    <Input
+                    autoFocus
+                    type="text"
+                    value={formik.values.name}
+                    onChange={handleChangeEvent}
+                    onBlur={handleBlur}
+                  />
+              ) : (
+                <Typography className="mainHeading" variant="h5" onClick={handleClick}>
+                {formik.values?.name ? formik.values?.name : singleProgram?.name}
+              </Typography>
+              )}
             <Stack direction={"row"} gap={"20px"}>
               {actions.map((action: ActionsType, index: number) => (
                 // <Button

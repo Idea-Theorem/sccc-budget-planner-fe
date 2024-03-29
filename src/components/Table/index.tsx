@@ -175,14 +175,21 @@ interface TableColumn {
 }
 interface ColumnnsProps {
   columns: TableColumn[];
+  row?: any
+  onRowClick: (rowData: any) => void; 
 }
 const TableComponent = (props: ColumnnsProps) => {
+  const handleRowClick = (params: any) => {
+    if (props.onRowClick) {
+      props.onRowClick(params.row);
+    }
+  };
   return (
     <>
       <StyledBox className="mainTableBlock">
         <InputSearch placeholder="Search..." />
         <StyleDataGrid
-          rows={rows}
+          rows={props?.row}
           columns={props?.columns}
           initialState={{
             pagination: {
@@ -193,6 +200,7 @@ const TableComponent = (props: ColumnnsProps) => {
           checkboxSelection
           disableRowSelectionOnClick
           slots={{ toolbar: GridToolbar }}
+          onRowClick={handleRowClick}
         />
       </StyledBox>
     </>

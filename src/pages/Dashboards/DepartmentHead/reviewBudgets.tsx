@@ -4,6 +4,11 @@ import TabsArea from "../../../components/Tabs";
 import Typography from "@mui/material/Typography";
 import SubHeader from "../../../components/SubHeader";
 import ApprovedProgram from "../ProgramHead/approvedProgram";
+import { getProgram } from "../../../services/programServices";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { storeProgramList } from "../../../store/reducers/programSlice";
+import { RootState } from "../../../store";
 const StyledBox = styled(Box)(() => ({
   "& .reviewBudgetHead": {
     marginBottom: "23px",
@@ -40,8 +45,8 @@ const DHReviewBudgets = () => {
   const tableColumnsTitleArray = [
     [
       {
-        field: "departmentName",
-        headerName: "Department Name",
+        field: "name",
+        headerName: "Program Name",
         sortable: false,
         editable: false,
         flex: 1,
@@ -82,7 +87,7 @@ const DHReviewBudgets = () => {
       //   flex: 1,
       // },
       {
-        field: "sDate",
+        field: "created_at",
         headerName: "Submission Date",
         sortable: false,
         editable: false,
@@ -156,8 +161,8 @@ const DHReviewBudgets = () => {
     ],
     [
       {
-        field: "departmentName",
-        headerName: "Department Name",
+        field: "name",
+        headerName: "Program Name",
         sortable: false,
         editable: false,
         flex: 1,
@@ -212,7 +217,20 @@ const DHReviewBudgets = () => {
         flex: 1,
       },
     ],
-  ];
+  ]; 
+  const {programList} = useSelector((state :RootState)=> state.program)
+  const dispatch = useDispatch()
+  useEffect(()=>{ 
+    fetchProgram()
+  }, [])
+  const fetchProgram = async ()=>{
+    try {
+      const response = await getProgram()
+      dispatch(storeProgramList(response?.data?.programs))
+    } catch (error) {
+      
+    }
+  }
   return (
     <StyledBox className="appContainer">
       <Box className="reviewBudgetHead">
@@ -224,13 +242,14 @@ const DHReviewBudgets = () => {
         <Box className="approvedProgramBlock">
           <ApprovedProgram />
         </Box>
-        <TabsArea
+        <TabsArea 
           tabsTitleArray={[
             { title: "Pending" },
             { title: "Approved" },
             { title: "Rejected" },
           ]}
           table={tableColumnsTitleArray}
+          row={programList}
         />
       </Box>
     </StyledBox>

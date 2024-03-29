@@ -5,6 +5,9 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import TableComponent from "../Table";
+import { useDispatch } from "react-redux";
+import { storeSingleProgram } from "../../store/reducers/programSlice";
+import { useNavigate } from "react-router";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -18,6 +21,7 @@ interface TabTitle {
 interface BasicTabsProps {
   tabsTitleArray: TabTitle[];
   table: any;
+  row?: any
 }
 
 const CustomTabPanel = (props: TabPanelProps) => {
@@ -49,12 +53,17 @@ function a11yProps(index: number) {
 
 const BasicTabs = (props: BasicTabsProps) => {
   const [value, setValue] = React.useState(0);
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     console.log("event", event);
     setValue(newValue);
   };
-
+  const handleClick = (rowData: any)=>{
+    dispatch(storeSingleProgram(rowData))
+    navigate("/department-head/program-review")
+  }
   return (
     <Box width="100%">
       <Box borderBottom="1" borderColor="divider">
@@ -62,7 +71,7 @@ const BasicTabs = (props: BasicTabsProps) => {
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
-        >
+        > 
           {props?.tabsTitleArray?.map((item, index) => (
             <Tab key={index} label={item?.title} {...a11yProps(index)} />
           ))}
@@ -70,7 +79,7 @@ const BasicTabs = (props: BasicTabsProps) => {
       </Box>
       {props?.table?.map((item: any, index: any) => (
         <CustomTabPanel key={index} value={value} index={index}>
-          <TableComponent columns={item} />
+          <TableComponent columns={item} row={props?.row} onRowClick={(rowData) => handleClick(rowData)}/>
         </CustomTabPanel>
       ))}
 
@@ -132,7 +141,7 @@ const TabsAreas = styled(Box)(({ theme }) => ({
 export default function TabsArea(props: BasicTabsProps) {
   return (
     <TabsAreas>
-      <BasicTabs tabsTitleArray={props?.tabsTitleArray} table={props?.table} />
+      <BasicTabs tabsTitleArray={props?.tabsTitleArray} table={props?.table} row={props?.row}/>
     </TabsAreas>
   );
 }
