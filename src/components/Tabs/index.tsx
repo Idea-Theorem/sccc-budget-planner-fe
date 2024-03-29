@@ -10,7 +10,6 @@ import Status from "../../utils/dumpData";
 import { useDispatch, useSelector } from "react-redux";
 import { storeProgramList } from "../../store/reducers/programSlice";
 import { RootState } from "../../store";
-import { modifyCreatedAt } from "../../utils";
 import { storeSingleProgram } from "../../store/reducers/programSlice";
 import { useNavigate } from "react-router";
 
@@ -64,6 +63,7 @@ const BasicTabs = (props: BasicTabsProps) => {
   const navigate = useNavigate();
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    console.log(event);
     setValue(newValue);
     if (newValue === 0) {
       setStatus(Status.PENDING);

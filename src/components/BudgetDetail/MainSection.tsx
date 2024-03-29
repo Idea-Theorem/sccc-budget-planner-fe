@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import Status, { ProgramCode } from "../../utils/dumpData";
 import { useFormik } from "formik";
 import { createProgram } from "../../services/programServices";
-import { Input, TextField } from "@mui/material";
+import { Input } from "@mui/material";
 import {
   storeIncomeList,
   storeSalaryList,
@@ -66,14 +66,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
     }
   }, []);
 
-  const {
-    values,
-    handleChange,
-    errors,
-    handleSubmit,
-    setFieldValue,
-    isSubmitting,
-  } = formik;
+  const { values, handleSubmit, setFieldValue } = formik;
 
   const fetchDepartments = async () => {
     try {
