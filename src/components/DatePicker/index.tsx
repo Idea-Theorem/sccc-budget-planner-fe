@@ -6,6 +6,11 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 
+interface DatePickerArea {
+ label?: string
+}
+
+
 const DatePickerArea = styled(Box)(() => ({
   "&.MuiBox-root": {
     flexGrow: "1",
@@ -37,7 +42,7 @@ const DatePickerArea = styled(Box)(() => ({
   },
 }));
 
-const BasicDatePicker = ({receiveDate,singleEmployeeData}: any) => {
+const BasicDatePicker = ({receiveDate,singleEmployeeData, label}: any) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
   const handleDateChange = (date: Date | null) => {
@@ -61,6 +66,7 @@ const BasicDatePicker = ({receiveDate,singleEmployeeData}: any) => {
           className="date-picker-standard"
           value={selectedDate}
           onChange={handleDateChange}
+          label={label}
           renderInput={(props) => <TextField {...props} />}
         />
       </LocalizationProvider>

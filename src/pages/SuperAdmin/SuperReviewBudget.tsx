@@ -1,16 +1,18 @@
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import MainHeaderComponent from "../../../components/MainHeader";
-import TabsArea from "../../../components/Tabs";
+import MainHeaderComponent from "../../components/MainHeader";
+import TabsArea from "../../components/Tabs";
 const StyledBox = styled(Box)(() => ({
   "& .dashboardCards": {
     display: "flex",
     justifyContent: "space-between",
     margin: "0 -12px",
   },
-  // Color: theme.palette.secondary.light,
+  ".appHeader": {
+    paddingBottom: "5px",
+  },
 }));
-const ReviewBudgetScreen = () => {
+const SuperReviewBudget = () => {
   const tableColumnsTitleArray = [
     [
       {
@@ -213,4 +215,4 @@ const ReviewBudgetScreen = () => {
   );
 };
 
-export default ReviewBudgetScreen;
+export default SuperReviewBudget;
