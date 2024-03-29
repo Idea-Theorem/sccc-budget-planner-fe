@@ -23,14 +23,118 @@ import ProgramSetting from "../pages/Dashboards/ProgramHead/program-setting";
 import ProgramCodes from "../pages/Dashboards/ProgramHead/programCodes";
 import HRSettings from "../pages/Components/HRComponents/HRSettings";
 
-
-
 const authRoutes: RouteObject = {
   path: "*",
   children: [
     {
       path: "login",
       element: <LoginScreen />,
+    },
+  ],
+};
+
+const adminRoute: RouteObject = {
+  path: "",
+  element: <Layout />,
+  children: [
+    {
+      path: "/admin",
+      element: (
+        <SideBarLayout>
+          <SecureLayout />
+        </SideBarLayout>
+      ),
+      children: [
+        { index: true, element: <AdminScreen /> },
+        {
+          path: "review-budget",
+          children: [
+            { index: true, element: <ReviewBudgetScreen /> },
+            {
+              path: "department-detail",
+              element: <DepartmentDetailScreen />,
+            },
+          ],
+        },
+        { path: "programs", element: <AdminProgramScreen /> },
+        { path: "settings", element: <AdminProgramScreen /> },
+      ],
+    },
+  ],
+};
+
+const programHeadRoute: RouteObject = {
+  path: "",
+  element: <Layout />,
+
+  children: [
+    {
+      path: "/program-head",
+      element: (
+        <SideBarLayout>
+          <SecureLayout />
+        </SideBarLayout>
+      ),
+      // element: <ProgramHeadScreen />,
+      children: [
+        { index: true, element: <ProgramHeadScreen /> },
+        { path: "program", element: <PHProgramsScreen /> },
+        { path: "create", element: <CreateProgramScreen /> },
+        { path: "program-settings", element: <ProgramSetting /> },
+        { path: "program-codes", element: <ProgramCodes /> },
+      ],
+    },
+  ],
+};
+
+const hrRoute: RouteObject = {
+  path: "",
+  element: <Layout />,
+
+  children: [
+    {
+      path: "/hr",
+      element: (
+        <SideBarLayout>
+          <SecureLayout />
+        </SideBarLayout>
+      ),
+      // element: <AdminScreen />,
+      children: [
+        // { index: true, element: <SuperAdminMain name="raoof" /> },
+        { index: true, element: <Navigate to="/hr/employees" /> },
+        { path: "employees", element: <HREmployees name="HR-Employees" /> },
+        { path: "addemployees", element: <AddEmployee /> },
+        { path: "adddepartment", element: <AddDepartment /> },
+        { path: "addcenter", element: <AddCenter /> },
+        { path: "settings", element: <HRSettings /> },
+      ],
+    },
+  ],
+};
+
+const departmentHeadRoute: RouteObject = {
+  path: "",
+  element: <Layout />,
+
+  children: [
+    {
+      path: "/department-head",
+      element: (
+        <SideBarLayout>
+          <SecureLayout />
+        </SideBarLayout>
+      ),
+      // element: <ProgramHeadScreen />,
+      children: [
+        {
+          index: true,
+          element: <Navigate to="/department-head/review-budgets" />,
+        },
+        { path: "program", element: <CreateProgramScreen /> },
+        { path: "review-budgets", element: <DHReviewBudgets /> },
+        { path: "program-review", element: <ProgramReview /> },
+      ],
     },
   ],
 };
@@ -54,63 +158,15 @@ const normalRoutes: RouteObject = {
           path: "/components",
           element: <ComponentsScreen />,
         },
-        {
-          path: "/program-head",
-          // element: <ProgramHeadScreen />,
-          children: [
-            { index: true, element: <ProgramHeadScreen /> },
-            { path: "program", element: <PHProgramsScreen /> },
-            { path: "create", element: <CreateProgramScreen /> },
-            { path: "program-settings", element: <ProgramSetting /> }, 
-            { path: "program-codes", element: <ProgramCodes /> },  
-          ],
-        }, 
-        {
-          path: "/admin",
-          children: [
-            { index: true, element: <AdminScreen /> },
-            {
-              path: "review-budget",
-              children: [
-                { index: true, element: <ReviewBudgetScreen /> },
-                {
-                  path: "department-detail",
-                  element: <DepartmentDetailScreen />,
-                },
-              ],
-            },
-            { path: "programs", element: <AdminProgramScreen /> },
-            { path: "settings", element: <AdminProgramScreen /> },
-          ],
-        },
-        {
-          path: "/hr",
-          // element: <AdminScreen />,
-          children: [
-            // { index: true, element: <SuperAdminMain name="raoof" /> },
-            { index: true, element: <Navigate to="/hr/employees" /> },
-            { path: "employees", element: <HREmployees name="HR-Employees" /> },
-            { path: "addemployees", element: <AddEmployee /> },
-            { path: "adddepartment", element: <AddDepartment /> },
-            { path: "addcenter", element: <AddCenter /> },
-            {path: "settings", element: <HRSettings/>}
-          ],
-        },
-        {
-          path: "/department-head",
-          // element: <ProgramHeadScreen />,
-          children: [
-            {
-              index: true,
-              element: <Navigate to="/department-head/review-budgets" />,
-            },
-            { path: "program", element: <CreateProgramScreen /> },
-            { path: "review-budgets", element: <DHReviewBudgets /> },
-            { path: "program-review", element: <ProgramReview /> },
-          ],
-        },
       ],
     },
   ],
 };
-export const publicRoutes: RouteObject[] = [authRoutes, normalRoutes];
+export const publicRoutes: RouteObject[] = [
+  authRoutes,
+  normalRoutes,
+  adminRoute,
+  programHeadRoute,
+  hrRoute,
+  departmentHeadRoute,
+];
