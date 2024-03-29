@@ -12,19 +12,19 @@ export const salaryRates = [
 
   export const employeementType = [
     {
-      name: "Full-time"
+      name: "FULL_TIME"
     },
     {
-      name: "Part-time"
+      name: "PART_TIME"
     }
   ]
 
   export const compensationType = [
     {
-      name: "Hourly"
+      name: "HOURLY"
    
     },{
-      name: "Salary"
+      name: "SALARY"
     }
   ]
 

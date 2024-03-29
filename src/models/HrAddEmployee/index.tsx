@@ -6,7 +6,7 @@ import { Save, Clear } from "@mui/icons-material"; // Import Clear icon from Mat
 import Grid from "@mui/material/Grid"; // Import Grid component from MUI
 import SelectDemo from "../../components/Select";
 import BasicDatePicker from "../../components/DatePicker";
-import { Button, TextField } from "@mui/material";
+import { Button } from "@mui/material";
 import Modal from "@mui/material/Modal";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
@@ -31,6 +31,7 @@ import {
   updateEmployee,
 } from "../../services/employeeServices";
 import { getAllDepartments } from "../../services/departmentServices";
+import TextFields from "../../components/Input/textfield";
 
 const EmployeeInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
@@ -330,7 +331,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
           <Typography className="body1">Account Information</Typography>
           <Grid container spacing={4}>
             <Grid item xs={6}>
-              <TextField
+              <TextFields
                 variant="standard"
                 label="First Name"
                 value={values.firstname}
@@ -340,7 +341,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
               />
             </Grid>
             <Grid item xs={6}>
-              <TextField
+              <TextFields
                 variant="standard"
                 label="Last Name"
                 value={values.lastname}
@@ -350,7 +351,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
               />
             </Grid>
             <Grid item xs={6}>
-              <TextField
+              <TextFields
                 variant="standard"
                 label="Email"
                 value={values.email}
@@ -360,7 +361,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
               />
             </Grid>
             <Grid item xs={6}>
-              <TextField
+              <TextFields
                 variant="standard"
                 label="Password"
                 disabled={heading == "Edit Employee" ? true : false}

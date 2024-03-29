@@ -12,6 +12,8 @@ interface ITextFields {
   onChange?: any;
   placeholder?: string;
   type?: string;
+  name?: string;
+  helperText?: any;
 }
 
 const TextFields: React.FC<ITextFields> = ({
@@ -23,6 +25,8 @@ const TextFields: React.FC<ITextFields> = ({
   onChange,
   placeholder,
   type,
+  name,
+  helperText,
 }) => {
   return (
     <Box component="form" noValidate autoComplete="off">
@@ -36,6 +40,8 @@ const TextFields: React.FC<ITextFields> = ({
         onDoubleClick={onDoubleClick}
         onChange={onChange}
         placeholder={placeholder}
+        name={name}
+        helperText={helperText}
       />
     </Box>
   );
