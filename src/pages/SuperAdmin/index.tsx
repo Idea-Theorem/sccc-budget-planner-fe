@@ -3,7 +3,6 @@ import Box from "@mui/material/Box";
 import MainHeaderComponent from "../../components/MainHeader";
 import AdminDataCard from "../../components/AdminDataCard";
 import AdminDepartmentProgress from "../../components/AdminDepartentProgress";
-import CollapsibleTable from "../../components/CollapseTable";
 const StyledBox = styled(Box)(() => ({
   "& .dashboardCards": {
     display: "flex",
@@ -11,7 +10,7 @@ const StyledBox = styled(Box)(() => ({
     margin: "0 -6px 0 -12px",
   },
 }));
-const AdminScreen = () => {
+const SuperAdminScreen = () => {
   const array = [{ text: "Export" }, { text: "Reset" }];
   return (
     <StyledBox className="appContainer">
@@ -43,9 +42,8 @@ const AdminScreen = () => {
         <AdminDataCard title="Completed Dept." total="8" done="4" />
       </Box>
       <AdminDepartmentProgress />
-      <CollapsibleTable />
     </StyledBox>
   );
 };
 
-export default AdminScreen;
+export default SuperAdminScreen;

@@ -1,48 +1,19 @@
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
-import BackButton from "../../components/Button/backButton";
-import SubHeader from "../../components/SubHeader";
+import Box from "@mui/material/Box";
 import TabsArea from "../../components/Tabs";
-
+import MainHeaderComponent from "../../components/MainHeader";
+import BreadCrumbs from "../../components/BreadCrumbs";
 const StyledBox = styled(Box)(() => ({
-  "& .budgetTitle": {
-    margin: "0 0 10px",
-
-    "& .MuiTypography-body1": {
-      fontSize: "20px",
-      fontWeight: "400",
-      lineHeight: "1.23",
-      letterSpacing: "0.25px",
-    },
+  "& .dashboardCards": {
+    display: "flex",
+    justifyContent: "space-between",
+    margin: "0 -12px",
   },
-
-  "& .reviewSubhead": {
-    marginBottom: "4px",
-
-    "& .MuiTypography-h4": {
-      marginTop: "-5px",
-    },
+  ".appHeader": {
+    paddingBottom: "5px !important",
   },
-
-  "& .backButtonBox": {
-    margin: "-3px 0 8px",
-    paddingLeft: "8px",
-  },
-
-  "& .headerDropdownButton": {
-    marginTop: "6px",
-  },
-
-  "& .totalBudgetText": {
-    fontSize: "18px",
-    fontWeight: "400",
-    marginTop: "-10px",
-    marginBottom: "0",
-  },
-  // Color: theme.palette.secondary.light,
 }));
-const DepartmentDetailScreen = () => {
+const SuperDepartmentDetail = () => {
   const tableColumnsTitleArray = [
     [
       {
@@ -219,13 +190,18 @@ const DepartmentDetailScreen = () => {
       },
     ],
   ];
+  const array = [{ text: "Approve" }, { text: "Reject" }];
   return (
     <StyledBox className="appContainer">
-      <Box className="backButtonBox">
-        <BackButton />
-      </Box>
-      <SubHeader title="Recreation & Culture" />
-      <Typography className="totalBudgetText">Total Budget: $00,000.00</Typography>
+      <BreadCrumbs linkText="Review Budgets Centre" subText="Departments" />
+      <MainHeaderComponent
+        classname="main-header"
+        array={array}
+        action={true}
+        title="SCCC"
+        btnTitle="Actions"
+        subdes="Total Budget: $00,000.00"
+      />
       <TabsArea
         tabsTitleArray={[
           { title: "Pending" },
@@ -240,4 +216,4 @@ const DepartmentDetailScreen = () => {
   );
 };
 
-export default DepartmentDetailScreen;
+export default SuperDepartmentDetail;
