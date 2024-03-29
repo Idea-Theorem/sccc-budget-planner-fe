@@ -5,6 +5,12 @@ const createProgram = async (data: any) => {
     return await HTTP_CLIENT.post("/program", data);
   };
 
+  const getAllProgramsViaStatus = async (status: any) => {
+    return await HTTP_CLIENT.get(`/program/${status}`);
+  };
+
+  
+
 // const getEmployee = async () => {
 //     return await HTTP_CLIENT.get("/user");
 //   };
@@ -25,6 +31,7 @@ const createProgram = async (data: any) => {
 
 export {
     createProgram,
+    getAllProgramsViaStatus
 //     getEmployee,
 //   deleteEmployee,
 //   updateEmployee

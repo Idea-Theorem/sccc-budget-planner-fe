@@ -77,3 +77,13 @@ export const salaryRates = [
   ];
   export const expense = [createData("Salaries", ""), createData("Benefits", "")];
 
+
+  enum Status {
+    PENDING = 'PENDING',
+    REJECTED = 'REJECTED',
+    APPROVED = 'APPROVED',
+    DRAFTED = 'DRAFTED',
+  }
+  
+  export default Status;
+

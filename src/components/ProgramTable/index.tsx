@@ -211,7 +211,7 @@ export default function TabsProgramArea({
                   </TableCell>
                   <TableCell align="right">
                     <TextFields
-                      type="number"
+                      type="text"
                       placeholder="$00,000.00"
                       value={row.amount || ""} // Set value from state
                       onChange={(e) => handleInputChange(index, e.target.value)} // Update state on change

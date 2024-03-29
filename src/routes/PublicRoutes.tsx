@@ -22,6 +22,7 @@ import ProgramReview from "../pages/Dashboards/DepartmentHead/program-review";
 import ProgramSetting from "../pages/Dashboards/ProgramHead/program-setting";
 import ProgramCodes from "../pages/Dashboards/ProgramHead/programCodes";
 import HRSettings from "../pages/Components/HRComponents/HRSettings";
+import ProgramsDraftScreen from "../pages/Dashboards/ProgramHead/draft";
 
 const authRoutes: RouteObject = {
   path: "*",
@@ -82,6 +83,7 @@ const programHeadRoute: RouteObject = {
         { path: "create", element: <CreateProgramScreen /> },
         { path: "program-settings", element: <ProgramSetting /> },
         { path: "program-codes", element: <ProgramCodes /> },
+        { path: "draft", element: <ProgramsDraftScreen /> },
       ],
     },
   ],

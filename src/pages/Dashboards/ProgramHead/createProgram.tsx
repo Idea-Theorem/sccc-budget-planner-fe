@@ -262,7 +262,15 @@ const CreateProgramScreen = () => {
 
   const actions: ActionsType[] = [
     {
-      title: "Revise",
+      title: "Save",
+      icon: <EditNote />,
+      variant: "contained",
+      color: "primary",
+      size: "medium",
+      onClick: () => setSecondLevel(true),
+    },
+    {
+      title: "Submit",
       icon: <EditNote />,
       variant: "contained",
       color: "primary",
@@ -270,7 +278,6 @@ const CreateProgramScreen = () => {
       onClick: () => setSecondLevel(true),
     },
   ];
-
   return (
     <>
       {firstLevel && !secondLevel ? (

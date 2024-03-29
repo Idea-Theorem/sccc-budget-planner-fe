@@ -9,7 +9,7 @@ import { ActionsType } from "../../types/common";
 import Buttons from "../Button";
 import { getAllDepartments } from "../../services/departmentServices";
 import { useEffect, useState } from "react";
-import { ProgramCode } from "../../utils/dumpData";
+import Status, { ProgramCode } from "../../utils/dumpData";
 import { useFormik } from "formik";
 import { createProgram } from "../../services/programServices";
 import {
@@ -48,7 +48,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
         dispatch(storeIncomeList([]));
         dispatch(storeSupplyList([]));
         dispatch(storeSalaryList([]));
-        // navigate("/program-head");
+        navigate("/program-head/program");
       } catch (error) {}
     },
   });
@@ -99,6 +99,21 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
   const receiveSalaryExpense = (value: any) => {
     setFieldValue("salary_expense", value);
   };
+
+  const handleSave = async () => {
+    try {
+      let obj = {
+        ...values,
+        status: Status.DRAFTED,
+      };
+      await createProgram(obj);
+      formik.resetForm();
+      dispatch(storeIncomeList([]));
+      dispatch(storeSupplyList([]));
+      dispatch(storeSalaryList([]));
+      navigate("/program-head/draft");
+    } catch (error) {}
+  };
   return (
     <Grid item xs={9}>
       <Grid className="createProgramContent" item xs={12}>
@@ -122,7 +137,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
                 <Buttons
                   key={index}
                   btntext={action?.title}
-                  onClick={handleSubmit}
+                  onClick={action.title == "Submit" ? handleSubmit : handleSave}
                   variant={action.variant}
                   color={action.color}
                   size={action.size}

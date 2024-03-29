@@ -15,7 +15,51 @@ const PHProgramsScreen = () => {
   const tableColumnsTitleArray = [
     [
       {
-        field: "departmentName",
+        field: "name",
+        headerName: "Program Name",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "status",
+        headerName: "Status",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "budget",
+        headerName: "Budget",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "lYearBudget",
+        headerName: "Previous Year Budget",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "created_at",
+        headerName: "Submission Date",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "comments",
+        headerName: "Comments",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+    ],
+    [
+      {
+        field: "name",
         headerName: "Program Name",
         sortable: false,
         editable: false,
@@ -59,7 +103,7 @@ const PHProgramsScreen = () => {
     ],
     [
       {
-        field: "departmentName",
+        field: "name",
         headerName: "Program Name",
         sortable: false,
         editable: false,
@@ -73,7 +117,51 @@ const PHProgramsScreen = () => {
         flex: 1,
       },
       {
-        field: "budget",
+        field: "  ",
+        headerName: "Budget",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "lYearBudget",
+        headerName: "Previous Year Budget",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "sDate",
+        headerName: "Submission Date",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "comments",
+        headerName: "Comments",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+    ],
+    [
+      {
+        field: "name",
+        headerName: "Program Name",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "status",
+        headerName: "Status",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "  ",
         headerName: "Budget",
         sortable: false,
         editable: false,
@@ -117,7 +205,7 @@ const PHProgramsScreen = () => {
         flex: 1,
       },
       {
-        field: "budget",
+        field: "  ",
         headerName: "Budget",
         sortable: false,
         editable: false,

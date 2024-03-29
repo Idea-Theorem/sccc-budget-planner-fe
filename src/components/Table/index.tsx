@@ -175,6 +175,7 @@ interface TableColumn {
 }
 interface ColumnnsProps {
   columns: TableColumn[];
+  tableData?: any;
 }
 const TableComponent = (props: ColumnnsProps) => {
   return (
@@ -182,7 +183,7 @@ const TableComponent = (props: ColumnnsProps) => {
       <StyledBox className="mainTableBlock">
         <InputSearch placeholder="Search..." />
         <StyleDataGrid
-          rows={rows}
+          rows={props?.tableData}
           columns={props?.columns}
           initialState={{
             pagination: {

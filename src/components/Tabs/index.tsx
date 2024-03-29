@@ -5,6 +5,12 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import TableComponent from "../Table";
+import { getAllProgramsViaStatus } from "../../services/programServices";
+import Status from "../../utils/dumpData";
+import { useDispatch, useSelector } from "react-redux";
+import { storeProgramList } from "../../store/reducers/programSlice";
+import { RootState } from "../../store";
+import { modifyCreatedAt } from "../../utils";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -49,10 +55,41 @@ function a11yProps(index: number) {
 
 const BasicTabs = (props: BasicTabsProps) => {
   const [value, setValue] = React.useState(0);
+  const [status, setStatus] = React.useState(Status.PENDING);
+  const dispatch = useDispatch();
+  const { programList } = useSelector((state: RootState) => state.program);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    console.log("event", event);
     setValue(newValue);
+    if (newValue === 0) {
+      setStatus(Status.PENDING);
+    } else if (newValue == 1) {
+      setStatus(Status.REJECTED);
+    } else if (newValue == 2) {
+      setStatus(Status.APPROVED);
+    } else if (newValue == 3) {
+      setStatus(Status.DRAFTED);
+    }
+  };
+
+  React.useEffect(() => {
+    if (props?.tabsTitleArray.length > 0) {
+      if (props?.tabsTitleArray[0].title == "Drafts") {
+        setStatus(Status.DRAFTED);
+      }
+    }
+  }, [props?.tabsTitleArray]);
+
+  React.useEffect(() => {
+    fetchProgramList(status);
+  }, [status]);
+
+  const fetchProgramList = async (status: string) => {
+    try {
+      const response = await getAllProgramsViaStatus(status);
+      // const modifyArray = modifyCreatedAt(response?.data?.programs);
+      dispatch(storeProgramList(response?.data?.programs));
+    } catch (error) {}
   };
 
   return (
@@ -70,7 +107,10 @@ const BasicTabs = (props: BasicTabsProps) => {
       </Box>
       {props?.table?.map((item: any, index: any) => (
         <CustomTabPanel key={index} value={value} index={index}>
-          <TableComponent columns={item} />
+          <TableComponent
+            columns={item}
+            tableData={typeof programList == "undefined" ? [] : programList}
+          />
         </CustomTabPanel>
       ))}
 
