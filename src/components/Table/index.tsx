@@ -109,63 +109,6 @@ const StyleDataGrid = styled(DataGrid)(() => ({
   },
 }));
 
-const rows = [
-  {
-    id: 1,
-    departmentName: "Recreation & Culture",
-    status: "Under review",
-    lYearBudget: "$00,000.00",
-    budget: "$00,000.00",
-    profit: "$00,000.00",
-    nPrograms: "4",
-    sDate: "22-Feb-2024",
-    comments: "1",
-  },
-  {
-    id: 2,
-    departmentName: "Health and Wellness",
-    status: "Under review",
-    lYearBudget: "$00,000.00",
-    budget: "$00,000.00",
-    profit: "$00,000.00",
-    nPrograms: "2",
-    sDate: "10-Feb-2024",
-    comments: "2",
-  },
-  {
-    id: 3,
-    departmentName: "HR",
-    status: "Under review",
-    lYearBudget: "$00,000.00",
-    budget: "$00,000.00",
-    profit: "$00,000.00",
-    nPrograms: "1",
-    sDate: "11-Feb-2024",
-    comments: "1",
-  },
-  {
-    id: 4,
-    departmentName: "Community Support",
-    status: "Under review",
-    lYearBudget: "$00,000.00",
-    budget: "$00,000.00",
-    profit: "$00,000.00",
-    nPrograms: "5",
-    sDate: "04-Feb-2024",
-    comments: "1",
-  },
-  {
-    id: 5,
-    departmentName: "Community Initiatives",
-    status: "Under review",
-    lYearBudget: "$00,000.00",
-    budget: "$00,000.00",
-    profit: "$00,000.00",
-    nPrograms: "2",
-    sDate: "08-Feb-2024",
-    comments: "0",
-  },
-];
 interface TableColumn {
   field: string;
   headerName: string;
@@ -175,14 +118,21 @@ interface TableColumn {
 }
 interface ColumnnsProps {
   columns: TableColumn[];
+  row?: any;
+  onRowClick: (rowData: any) => void;
 }
 const TableComponent = (props: ColumnnsProps) => {
+  const handleRowClick = (params: any) => {
+    if (props.onRowClick) {
+      props.onRowClick(params.row);
+    }
+  };
   return (
     <>
       <StyledBox className="mainTableBlock">
         <InputSearch placeholder="Search..." />
         <StyleDataGrid
-          rows={rows}
+          rows={props?.row}
           columns={props?.columns}
           initialState={{
             pagination: {
@@ -193,6 +143,7 @@ const TableComponent = (props: ColumnnsProps) => {
           checkboxSelection
           disableRowSelectionOnClick
           slots={{ toolbar: GridToolbar }}
+          onRowClick={handleRowClick}
         />
       </StyledBox>
     </>

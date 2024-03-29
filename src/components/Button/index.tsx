@@ -6,6 +6,7 @@ import { CircularProgress } from "@mui/material";
 interface StyledButtonProps extends ButtonProps {
   btntext?: string;
   loading?: boolean;
+  onClick?: any;
 }
 
 const StyledButton = styled(Button)<StyledButtonProps>(
@@ -26,10 +27,15 @@ const StyledButton = styled(Button)<StyledButtonProps>(
   })
 );
 
-const Buttons: React.FC<StyledButtonProps> = ({ btntext, loading, ...props }) => {
+const Buttons: React.FC<StyledButtonProps> = ({
+  btntext,
+  loading,
+  onClick,
+  ...props
+}) => {
   return (
-    <StyledButton  {...props}>
-     {loading ? <CircularProgress size={24} color="inherit" /> : btntext}
+    <StyledButton {...props} onClick={onClick}>
+      {loading ? <CircularProgress size={24} color="inherit" /> : btntext}
     </StyledButton>
   );
 };

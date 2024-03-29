@@ -1,16 +1,19 @@
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import MainHeaderComponent from "../../../components/MainHeader";
-import TabsArea from "../../../components/Tabs";
+import TabsArea from "../../components/Tabs";
+import MainHeaderComponent from "../../components/MainHeader";
+import BreadCrumbs from "../../components/BreadCrumbs";
 const StyledBox = styled(Box)(() => ({
   "& .dashboardCards": {
     display: "flex",
     justifyContent: "space-between",
     margin: "0 -12px",
   },
-  // Color: theme.palette.secondary.light,
+  ".appHeader": {
+    paddingBottom: "5px",
+  },
 }));
-const ReviewBudgetScreen = () => {
+const SuperAdminProgramScreen = () => {
   const tableColumnsTitleArray = [
     [
       {
@@ -187,17 +190,20 @@ const ReviewBudgetScreen = () => {
       },
     ],
   ];
-  const array = [
-    {text: "Approve"},
-    {text: "Reject"},
-  ]
+  const array = [{ text: "Approve" }, { text: "Reject" }];
   return (
     <StyledBox className="appContainer">
+      <BreadCrumbs
+        linkText="Recreation & Culture"
+        text="Departments"
+        subText="Programs"
+      />
       <MainHeaderComponent
         array={array}
-        action={true} 
-        title="Review Budgets"
+        action={true}
+        title="SCCC"
         btnTitle="Actions"
+        subdes="Total Budget: $00,000.00"
       />
       <TabsArea
         tabsTitleArray={[
@@ -209,8 +215,8 @@ const ReviewBudgetScreen = () => {
         ]}
         table={tableColumnsTitleArray}
       />
-    </StyledBox> 
+    </StyledBox>
   );
 };
 
-export default ReviewBudgetScreen;
+export default SuperAdminProgramScreen;

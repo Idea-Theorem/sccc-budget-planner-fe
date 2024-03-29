@@ -4,7 +4,7 @@ import NoProgramExistComponent from "../../../components/NoProgram";
 import { useNavigate } from "react-router-dom";
 
 const StyledBox = styled("div")(() => ({
-  paddingLeft: "3px", 
+  paddingLeft: "3px",
 }));
 
 const ProgramHeadScreen = () => {
