@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import Status, { ProgramCode } from "../../utils/dumpData";
 import { useFormik } from "formik";
 import { createProgram } from "../../services/programServices";
-import { Input, TextField } from '@mui/material';
+import { Input, TextField } from "@mui/material";
 import {
   storeIncomeList,
   storeSalaryList,
@@ -126,13 +126,14 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
       dispatch(storeSalaryList([]));
       navigate("/program-head/draft");
     } catch (error) {}
+  };
   const handleClick = () => {
     setIsEditing(true);
   };
 
   const handleChangeEvent = (e: any) => {
     const newName = e.target.value;
-    formik.setFieldValue('name', newName);
+    formik.setFieldValue("name", newName);
   };
 
   const handleBlur = () => {
@@ -143,19 +144,25 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
       <Grid className="createProgramContent" item xs={12}>
         <Grid item xs={12}>
           <Stack className="createProgramContentHead">
-              {isEditing ? (
-                    <Input
-                    autoFocus
-                    type="text"
-                    value={formik.values.name}
-                    onChange={handleChangeEvent}
-                    onBlur={handleBlur}
-                  />
-              ) : (
-                <Typography className="mainHeading" variant="h5" onClick={handleClick}>
-                {formik.values?.name ? formik.values?.name : singleProgram?.name}
+            {isEditing ? (
+              <Input
+                autoFocus
+                type="text"
+                value={formik.values.name}
+                onChange={handleChangeEvent}
+                onBlur={handleBlur}
+              />
+            ) : (
+              <Typography
+                className="mainHeading"
+                variant="h5"
+                onClick={handleClick}
+              >
+                {formik.values?.name
+                  ? formik.values?.name
+                  : singleProgram?.name}
               </Typography>
-              )}
+            )}
             <Stack direction={"row"} gap={"20px"}>
               {actions.map((action: ActionsType, index: number) => (
                 // <Button
