@@ -11,6 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { storeProgramList } from "../../store/reducers/programSlice";
 import { RootState } from "../../store";
 import { modifyCreatedAt } from "../../utils";
+import { storeSingleProgram } from "../../store/reducers/programSlice";
+import { useNavigate } from "react-router";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -24,6 +26,7 @@ interface TabTitle {
 interface BasicTabsProps {
   tabsTitleArray: TabTitle[];
   table: any;
+  row?: any;
 }
 
 const CustomTabPanel = (props: TabPanelProps) => {
@@ -58,6 +61,7 @@ const BasicTabs = (props: BasicTabsProps) => {
   const [status, setStatus] = React.useState(Status.PENDING);
   const dispatch = useDispatch();
   const { programList } = useSelector((state: RootState) => state.program);
+  const navigate = useNavigate();
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -91,7 +95,10 @@ const BasicTabs = (props: BasicTabsProps) => {
       dispatch(storeProgramList(response?.data?.programs));
     } catch (error) {}
   };
-
+  const handleClick = (rowData: any) => {
+    dispatch(storeSingleProgram(rowData));
+    navigate("/department-head/program-review");
+  };
   return (
     <Box width="100%">
       <Box borderBottom="1" borderColor="divider">
@@ -108,6 +115,8 @@ const BasicTabs = (props: BasicTabsProps) => {
       {props?.table?.map((item: any, index: any) => (
         <CustomTabPanel key={index} value={value} index={index}>
           <TableComponent
+            row={props?.row}
+            onRowClick={(rowData) => handleClick(rowData)}
             columns={item}
             tableData={typeof programList == "undefined" ? [] : programList}
           />
@@ -172,7 +181,11 @@ const TabsAreas = styled(Box)(({ theme }) => ({
 export default function TabsArea(props: BasicTabsProps) {
   return (
     <TabsAreas>
-      <BasicTabs tabsTitleArray={props?.tabsTitleArray} table={props?.table} />
+      <BasicTabs
+        tabsTitleArray={props?.tabsTitleArray}
+        table={props?.table}
+        row={props?.row}
+      />
     </TabsAreas>
   );
 }

@@ -196,7 +196,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
     setFieldValue,
     isSubmitting
   } = formik
-  useEffect(() => {
+  useEffect(() => { 
     fetchUserRole()
     fetchDepartments()
   }, [])
