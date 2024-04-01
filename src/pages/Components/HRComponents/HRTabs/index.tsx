@@ -70,16 +70,16 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
   console.log(routes);
 
   const handleCloseModal = () => {
-    fetchEmployee()
-    setSingleEmployeeData(null)
+    fetchEmployee();
+    setSingleEmployeeData(null);
     setIsopen(false);
   };
   const handleCloseDepartmentModal = () => {
-    fetchDepartments()
+    fetchDepartments();
     setIsDepartopen(false);
   };
   const handleCloseCommunityModal = () => {
-    fetchCenters()
+    fetchCenters();
     setCommunityModal(false);
   };
   const handleClick = (e: any) => {
@@ -95,53 +95,47 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
     }
   };
   const handleEditClick = (data: any) => {
-    setSingleEmployeeData(data)
+    setSingleEmployeeData(data);
     setIsopen(true);
     setHeading("Edit Employee");
   };
   const onEdit = (data: any) => {
-    setDingleDepartments(data?.row)
+    setDingleDepartments(data?.row);
     setIsDepartopen(true);
     setDepartHeading("Edit Department");
   };
   const onCommunityEdit = (data: any) => {
-    setSingleCenter(data.row)
+    setSingleCenter(data.row);
     setCommunityModal(true);
     setCenterHeading("Edit center");
   };
 
   const fetchDepartments = async () => {
     try {
-      const response = await getAllDepartments()
-      setDepartments(response?.data?.departments)
-    } catch (error) {
-      
-    }
-  }
+      const response = await getAllDepartments();
+      setDepartments(response?.data?.departments);
+    } catch (error) {}
+  };
 
   const fetchCenters = async () => {
     try {
-      const response = await getAllCenters()
-      setCenter(response?.data?.centers)
-    } catch (error) {
-      
-    }
-  }
+      const response = await getAllCenters();
+      setCenter(response?.data?.centers);
+    } catch (error) {}
+  };
 
   const fetchEmployee = async () => {
-try {
-  const response = await getEmployee()
-  setEmployee(response?.data?.users)
-} catch (error) {
-  
-}
-  }
+    try {
+      const response = await getEmployee();
+      setEmployee(response?.data?.users);
+    } catch (error) {}
+  };
 
   useEffect(() => {
-    fetchDepartments()
-    fetchCenters()
-    fetchEmployee()
-  }, [])
+    fetchDepartments();
+    fetchCenters();
+    fetchEmployee();
+  }, []);
   return (
     <AppHuman>
       <Grid container spacing={2}>
@@ -190,10 +184,26 @@ try {
           </AppBar>
         </Grid>
         <Grid item xs={12}>
-          {value === 0 && <HrCollapsibleTable handleClick={handleEditClick} employeeData={employee} refresh={fetchEmployee}/>}
-          {value === 1 && <HRTableComponent onEdit={onEdit} row={departments}   refresh={handleCloseDepartmentModal}/>}
+          {value === 0 && (
+            <HrCollapsibleTable
+              handleClick={handleEditClick}
+              employeeData={employee}
+              refresh={fetchEmployee}
+            />
+          )}
+          {value === 1 && (
+            <HRTableComponent
+              onEdit={onEdit}
+              row={departments}
+              refresh={handleCloseDepartmentModal}
+            />
+          )}
           {value === 2 && (
-            <CommunityTableComponent onCommunityEdit={onCommunityEdit} row={center}  refresh={handleCloseCommunityModal}/>
+            <CommunityTableComponent
+              onCommunityEdit={onCommunityEdit}
+              row={typeof center == "undefined" || !center ? [] : center}
+              refresh={handleCloseCommunityModal}
+            />
           )}
         </Grid>
       </Grid>
@@ -202,7 +212,6 @@ try {
         handleClose={handleCloseModal}
         heading={heading}
         singleEmployeeData={singleEmployeeData}
-
       />
       <DepartmentInfo
         open={isDepartOpen}

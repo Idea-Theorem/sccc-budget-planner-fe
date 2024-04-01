@@ -23,6 +23,10 @@ import ProgramSetting from "../pages/Dashboards/ProgramHead/program-setting";
 import ProgramCodes from "../pages/Dashboards/ProgramHead/programCodes";
 import HRSettings from "../pages/Components/HRComponents/HRSettings";
 import ProgramsDraftScreen from "../pages/Dashboards/ProgramHead/draft";
+import SuperAdminProgramScreen from "../pages/SuperAdmin/superAdminProgram";
+import SuperReviewBudget from "../pages/SuperAdmin/SuperReviewBudget";
+import SuperAdminScreen from "../pages/SuperAdmin";
+import SuperDepartmentDetail from "../pages/SuperAdmin/superDepartmentDetail";
 
 const authRoutes: RouteObject = {
   path: "*",
@@ -59,6 +63,36 @@ const adminRoute: RouteObject = {
         },
         { path: "programs", element: <AdminProgramScreen /> },
         { path: "settings", element: <AdminProgramScreen /> },
+      ],
+    },
+  ],
+};
+
+const superAdminRoute: RouteObject = {
+  path: "",
+  element: <Layout />,
+  children: [
+    {
+      path: "/super-admin",
+      element: (
+        <SideBarLayout>
+          <SecureLayout />
+        </SideBarLayout>
+      ),
+      children: [
+        { index: true, element: <SuperAdminScreen /> },
+        {
+          path: "review-budget",
+          children: [
+            { index: true, element: <SuperReviewBudget /> },
+            {
+              path: "department-detail",
+              element: <DepartmentDetailScreen />,
+            },
+          ],
+        },
+        { path: "super-department", element: <SuperDepartmentDetail /> },
+        { path: "program", element: <SuperAdminProgramScreen /> },
       ],
     },
   ],
@@ -171,4 +205,5 @@ export const publicRoutes: RouteObject[] = [
   programHeadRoute,
   hrRoute,
   departmentHeadRoute,
+  superAdminRoute,
 ];

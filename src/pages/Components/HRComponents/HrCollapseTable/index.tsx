@@ -89,7 +89,6 @@ const HrCollapseableTable = styled(Box)(({ theme }) => ({
 }));
 
 function createData(
-
   calories?: string,
   fat?: string,
   carbs?: string,
@@ -121,10 +120,10 @@ function createData(
 }
 
 function Row(props: {
-  row: ReturnType<typeof createData> |  any;
+  row: ReturnType<typeof createData> | any;
   handleClick: any;
-  employeeData?: any
-  handleDelete?: any
+  employeeData?: any;
+  handleDelete?: any;
 }) {
   const { row, handleClick, employeeData, handleDelete } = props;
   const [open, setOpen] = React.useState(false);
@@ -142,13 +141,19 @@ function Row(props: {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {row.firstname + " " +  row.lastname }
+          {row.firstname + " " + row.lastname}
         </TableCell>
         <TableCell>{row.calories}</TableCell>
         <TableCell>{row.fat}</TableCell>
         <TableCell>{row.hire_date}</TableCell>
         <TableCell>
-          <Stack direction="row" gap="10px" alignItems="center">
+          <Stack
+            direction="row"
+            gap="10px"
+            alignItems="center"
+            justifyContent="flex-end"
+            width="100%"
+          >
             <Button
               variant="text"
               color="error"
@@ -210,7 +215,11 @@ const rows = [
   ),
 ];
 
-export default function HrCollapsibleTable({ handleClick, employeeData, refresh}: any) {
+export default function HrCollapsibleTable({
+  handleClick,
+  employeeData,
+  refresh,
+}: any) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -227,12 +236,10 @@ export default function HrCollapsibleTable({ handleClick, employeeData, refresh}
 
   const handleDelete = async (data: any) => {
     try {
-      await deleteEmployee(data?.id)
-      refresh()
-    } catch (error) {
-      
-    }
-  }
+      await deleteEmployee(data?.id);
+      refresh();
+    } catch (error) {}
+  };
   return (
     <>
       <HrCollapseableTable className="dashboardTable">
@@ -251,7 +258,13 @@ export default function HrCollapsibleTable({ handleClick, employeeData, refresh}
               {employeeData
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row: any, index: number) => (
-                  <Row key={index} row={row} handleClick={handleClick} employeeData={employeeData} handleDelete={handleDelete}/>
+                  <Row
+                    key={index}
+                    row={row}
+                    handleClick={handleClick}
+                    employeeData={employeeData}
+                    handleDelete={handleDelete}
+                  />
                 ))}
             </TableBody>
           </Table>

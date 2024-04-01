@@ -65,6 +65,7 @@ const BasicTabs = (props: BasicTabsProps) => {
   const { programList } = useSelector((state: RootState) => state.program);
   const navigate = useNavigate();
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    console.log(event);
     setValue(newValue);
     if (newValue === 0) {
       setStatus(Status.PENDING);

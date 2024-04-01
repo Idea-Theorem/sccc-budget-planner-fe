@@ -12,10 +12,10 @@ export const salaryRates = [
 
   export const employeementType = [
     {
-      name: "PART_TIME"
+      name: "FULL_TIME"
     },
     {
-      name: "FULL_TIME"
+      name: "PART_TIME"
     }
   ]
 

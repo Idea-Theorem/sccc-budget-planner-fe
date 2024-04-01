@@ -19,7 +19,6 @@ import {
 } from "../../store/reducers/programSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { FormikProps } from "formik";
 
 const TabsProgramAreas = styled(Box)(({ theme }) => ({
   ".MuiTabs-flexContainer": {
@@ -128,7 +127,6 @@ export default function TabsProgramArea({
   title,
   handleSalaryExpenseReceived,
   handleSupplyExpenseReceived,
-  formik,
 }: Props) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -141,15 +139,15 @@ export default function TabsProgramArea({
 
   const handleInputChange = (key: string, value: number) => {
     if (title == "income") {
-      const newIncomeArray = [...incomeList];
+      const newIncomeArray: any = [...incomeList];
       newIncomeArray[key] = { ...newIncomeArray[key], amount: Number(value) };
       dispatch(storeIncomeList(newIncomeArray));
     } else if (title == "supply-expense") {
-      const newSupplyArray = [...supplyList];
+      const newSupplyArray: any = [...supplyList];
       newSupplyArray[key] = { ...newSupplyArray[key], amount: Number(value) };
       dispatch(storeSupplyList(newSupplyArray));
     } else if (title == "salary-expense") {
-      const newSalaryArray = [...salaryList];
+      const newSalaryArray: any = [...salaryList];
       newSalaryArray[key] = { ...newSalaryArray[key], amount: Number(value) };
       dispatch(storeSalaryList(newSalaryArray));
     }
@@ -200,7 +198,7 @@ export default function TabsProgramArea({
               </TableRow>
             </TableHead>
             <TableBody>
-              {entities?.map((row: any, index: number) => (
+              {entities?.map((row: any, index: any) => (
                 <TableRow
                   key={row.item}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -214,7 +212,9 @@ export default function TabsProgramArea({
                       type="text"
                       placeholder="$00,000.00"
                       value={row.amount || ""} // Set value from state
-                      onChange={(e) => handleInputChange(index, e.target.value)} // Update state on change
+                      onChange={(e: any) =>
+                        handleInputChange(index, e.target.value)
+                      } // Update state on change
                     />
                     {/* {row.amount} */}
                   </TableCell>

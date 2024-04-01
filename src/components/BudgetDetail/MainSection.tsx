@@ -68,7 +68,6 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
   const {
     values,
     handleChange,
-    errors,
     // handleSubmit,
     setFieldValue,
     isSubmitting,
@@ -133,7 +132,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
 
   const handleChangeEvent = (e: any) => {
     const newName = e.target.value;
-    formik.setFieldValue('name', newName);
+    formik.setFieldValue("name", newName);
   };
 
   const handleBlur = () => {
@@ -164,19 +163,25 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
       <Grid className="createProgramContent" item xs={12}>
         <Grid item xs={12}>
           <Stack className="createProgramContentHead">
-              {isEditing ? (
-                    <Input
-                    autoFocus
-                    type="text"
-                    value={formik.values.name}
-                    onChange={handleChangeEvent}
-                    onBlur={handleBlur}
-                  />
-              ) : (
-                <Typography className="mainHeading" variant="h5" onClick={handleClick}>
-                {formik.values?.name ? formik.values?.name : singleProgram?.name}
+            {isEditing ? (
+              <Input
+                autoFocus
+                type="text"
+                value={formik.values.name}
+                onChange={handleChangeEvent}
+                onBlur={handleBlur}
+              />
+            ) : (
+              <Typography
+                className="mainHeading"
+                variant="h5"
+                onClick={handleClick}
+              >
+                {formik.values?.name
+                  ? formik.values?.name
+                  : singleProgram?.name}
               </Typography>
-              )}
+            )}
             <Stack direction={"row"} gap={"20px"}>
               {actions.map((action: ActionsType, index: number) => (
                 // <Button
