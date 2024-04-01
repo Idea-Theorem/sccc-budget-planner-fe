@@ -14,6 +14,8 @@ import LogoImg from "../../assets/logo.png";
 import CollapsibleMenu from "../CollapsableManue";
 import { SidebarAction } from "../../types/common";
 import { useAuth } from "../../contexts/AuthContext";
+import { Collapse } from "@mui/material";
+import { ExpandLess, ExpandMore } from "@mui/icons-material";
 
 const SideArea = styled(Box)(({ theme }) => ({
   background: theme.palette.primary.main,
@@ -126,13 +128,19 @@ export default function ResponsiveDrawer(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const { user } = useAuth();
-  const { withMore, withoutMore } = filterSidebarActionsWithMore(
+  const [openHR, setOpenHR] = React.useState(false);
+
+  const handleToggleHR = () => {
+    setOpenHR(!openHR);
+  };
+  const { withMore, withoutMore, rolesArray } = filterSidebarActionsWithMore(
     SIDEBARACTIONS,
     user
     // "Admin"
     // "HR",
     // "Department Head"
   );
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -145,26 +153,44 @@ export default function ResponsiveDrawer(props: Props) {
         <img src={LogoImg} alt="Description image" />
       </Box>
       <List>
-        {withoutMore.map((item: SidebarAction, index: number) => (
-          <ListItem
-            key={index}
-            disablePadding
-            onClick={() => navigate(item.path ?? "")}
-            className={location.pathname === item.path ? "active" : ""}
-          >
-            <ListItemButton>
-              <ListItemText primary={item.title} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-        {withMore?.map((item: SidebarAction, index: number) => (
-          <CollapsibleMenu
-            onClick={() => navigate(item.path ?? "")}
-            key={index}
-            title={item?.title}
-            item={item?.more}
-            className={location.pathname === item.path ? "activecollapse" : ""}
-          />
+        {rolesArray?.map((item, index) => (
+          <React.Fragment key={index}>
+            {item.role === "HR" && item.more ? (
+              <>
+                <ListItem disablePadding button onClick={handleToggleHR}>
+                  <ListItemText primary={item.title} />
+                  {openHR ? <ExpandLess /> : <ExpandMore />}
+                </ListItem>
+                <Collapse in={openHR} timeout="auto" unmountOnExit>
+                  {item.more.map((nestedItem, nestedIndex) => (
+                    <ListItem
+                      key={nestedIndex}
+                      disablePadding
+                      onClick={() => navigate(nestedItem.path ?? "")}
+                      className={
+                        location.pathname === nestedItem.path ? "active" : ""
+                      }
+                    >
+                      <ListItemButton>
+                        <ListItemText primary={nestedItem.title} />
+                      </ListItemButton>
+                    </ListItem>
+                  ))}
+                </Collapse>
+              </>
+            ) : (
+              <ListItem
+                disablePadding
+                button
+                onClick={() => navigate(item.path ?? "")}
+                className={location.pathname === item.path ? "active" : ""}
+              >
+                <ListItemButton>
+                  <ListItemText primary={item.title} />
+                </ListItemButton>
+              </ListItem>
+            )}
+          </React.Fragment>
         ))}
       </List>
     </Box>

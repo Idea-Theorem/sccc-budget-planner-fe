@@ -18,6 +18,9 @@ import EditNoteIcon from "@mui/icons-material/EditNote";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { deleteEmployee } from "../../../../services/employeeServices";
+import { SaveAlt } from "@mui/icons-material";
+import TextFields from "../../../../components/Input/textfield";
+import * as XLSX from "xlsx";
 
 // Define StyledInputSearch using styled component
 const HrCollapseableTable = styled(Box)(({ theme }) => ({
@@ -240,9 +243,20 @@ export default function HrCollapsibleTable({
       refresh();
     } catch (error) {}
   };
+
+  const exportToExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(employeeData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Data");
+    XLSX.writeFile(workbook, "data.xlsx");
+  };
   return (
     <>
       <HrCollapseableTable className="dashboardTable">
+        <IconButton aria-label="export" onClick={exportToExcel}>
+          <SaveAlt />
+        </IconButton>
+        <TextFields placeholder="search..." />
         <TableContainer component={Paper}>
           <Table aria-label="collapsible table">
             <TableHead>

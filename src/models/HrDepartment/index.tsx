@@ -5,11 +5,18 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { Save, Clear } from "@mui/icons-material"; // Import Clear icon from Material-UI
 import Grid from "@mui/material/Grid"; // Import Grid component from MUI
-import Modal from '@mui/material/Modal';
+import Modal from "@mui/material/Modal";
 import { TextField } from "@mui/material";
 import { useFormik } from "formik";
 import { createDepartmentSchema } from "../../utils/yupSchema";
-import { createDepartment, updateDepartment } from "../../services/departmentServices";
+import {
+  createDepartment,
+  getAllDepartments,
+  updateDepartment,
+} from "../../services/departmentServices";
+import SelectDemo from "../../components/Select";
+import { useEffect, useState } from "react";
+import { getAllCenters } from "../../services/centersServices";
 
 const DepartmentInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
@@ -119,35 +126,43 @@ interface IDepartmentInfo {
   heading?: string;
   subheading?: string;
   handleClose?: any;
-  open?: any
-  singleDepartments?: any
-  setDingleDepartments?: any
+  open?: any;
+  singleDepartments?: any;
+  setDingleDepartments?: any;
 }
 
-const DepartmentInfo: React.FC<IDepartmentInfo> = ({ heading, subheading, handleClose, open, singleDepartments, setDingleDepartments }) => {
+const DepartmentInfo: React.FC<IDepartmentInfo> = ({
+  heading,
+  subheading,
+  handleClose,
+  open,
+  singleDepartments,
+  setDingleDepartments,
+}) => {
+  const [center, setCenter] = useState<any>(null);
+  const [activecenter, setActiveCenter] = useState<any>(null);
+
   const formik = useFormik<any>({
     validateOnBlur: false,
     validationSchema: createDepartmentSchema,
     enableReinitialize: true,
     initialValues: {
       name: singleDepartments?.name ? singleDepartments?.name : "",
+      center_id: "",
     },
-    onSubmit: async values => {
+    onSubmit: async (values) => {
       try {
         if (heading == "Edit Department") {
-        await updateDepartment(values, singleDepartments?.id)
+          await updateDepartment(values, singleDepartments?.id);
         } else {
-        await createDepartment(values)
+          await createDepartment(values);
         }
-        formik.resetForm()
-        setDingleDepartments(null)
-        handleClose()
-      } catch (error) {
-
-      }
+        formik.resetForm();
+        setDingleDepartments(null);
+        handleClose();
+      } catch (error) {}
     },
-  })
-
+  });
 
   const {
     values,
@@ -155,7 +170,23 @@ const DepartmentInfo: React.FC<IDepartmentInfo> = ({ heading, subheading, handle
     isSubmitting,
     errors,
     handleSubmit,
-  } = formik
+    setFieldValue,
+  } = formik;
+  const receiveCenter = (name: string) => {
+    const filteredID = center.find((item: any) => item?.name === name);
+    setFieldValue("center_id", filteredID?.id);
+    setActiveCenter(filteredID?.name);
+  };
+
+  useEffect(() => {
+    fetchCenters();
+  }, []);
+  const fetchCenters = async () => {
+    try {
+      const response = await getAllCenters();
+      setCenter(response?.data?.centers);
+    } catch (error) {}
+  };
 
   return (
     <Modal
@@ -172,16 +203,27 @@ const DepartmentInfo: React.FC<IDepartmentInfo> = ({ heading, subheading, handle
           <Typography className="subtitle">{subheading}</Typography>
           <Grid container spacing={4}>
             <Grid item xs={6}>
-              <TextField variant="standard" label="Department Name"
+              <TextField
+                variant="standard"
+                label="Department Name"
                 value={values.name}
                 name="name"
                 onChange={handleChange}
-                helperText={errors.name ? errors.name.toString() : ''}
+                helperText={errors.name ? errors.name.toString() : ""}
+                error={errors.name ? true : false}
               />
             </Grid>
-            {/* <Grid item xs={6}>
-            <TextField variant="standard" label="Employee Count" />
-          </Grid> */}
+            <Grid item xs={6}>
+              <Grid className="selectGrid" item xs={6}>
+                <SelectDemo
+                  title="Community Center"
+                  value={activecenter}
+                  list={center}
+                  receiveValue={receiveCenter}
+                  error={errors.center_id ? true : false}
+                />
+              </Grid>
+            </Grid>
           </Grid>
         </Box>
         <Stack
@@ -213,8 +255,9 @@ const DepartmentInfo: React.FC<IDepartmentInfo> = ({ heading, subheading, handle
               variant="outlined"
               color="primary"
               size="medium"
-              startIcon={<Save />}>
-              {isSubmitting ? "Saving..." : 'Save'}
+              startIcon={<Save />}
+            >
+              {isSubmitting ? "Saving..." : "Save"}
             </Button>
           </Stack>
         </Stack>

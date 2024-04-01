@@ -7,7 +7,8 @@ const AuthContext = createContext({
   user: "",
   login: (_: LoginState) => {},
   logout: () => {},
-  authToken: ""
+  authToken: "",
+  loginLoading: "",
 });
 
 // const users = [
@@ -23,20 +24,23 @@ export const useAuth = () => useContext(AuthContext);
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState(localStorage.getItem("user") || "");
   const [authToken, setAuthToken] = useState("");
+  const [loginLoading, setLoginLoading] = useState(false);
   const navigate = useNavigate();
 
   const login = async (values: LoginState) => {
     try {
-      const respone  = await loggedIn(values)
-      setUser(respone?.data?.user)
-      setAuthToken(respone?.data?.token)
-      localStorage.setItem("userInfo", JSON.stringify(respone?.data?.user) )
-      localStorage.setItem("authToken", respone?.data?.token)
+      setLoginLoading(true);
+      const respone = await loggedIn(values);
+      setUser(respone?.data?.user);
+      setAuthToken(respone?.data?.token);
+      localStorage.setItem("userInfo", JSON.stringify(respone?.data?.user));
+      localStorage.setItem("authToken", respone?.data?.token);
+      setLoginLoading(false);
       navigate("/hr");
     } catch (error) {
-      
+      setLoginLoading(false);
     }
- 
+
     // const usr = users.find((user) => user === email);
     // setUser(usr as string);
     // localStorage.setItem("user", email);
@@ -58,7 +62,9 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.removeItem("user");
   };
   return (
-    <AuthContext.Provider value={{ user, login, logout , authToken}}>
+    <AuthContext.Provider
+      value={{ user, login, logout, authToken, loginLoading }}
+    >
       {children}
     </AuthContext.Provider>
   );
