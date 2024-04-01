@@ -83,7 +83,7 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
 
           "& .MuiInputLabel-root": {
             fontSize: "12px",
-            color: "rgba(0, 0, 0, 0.7)",
+            // color: "rgba(0, 0, 0, 0.7)",
 
             "& + .MuiInputBase-root": {
               marginTop: "-2px",
@@ -315,7 +315,6 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
   const salartRate = (salaryRate: any) => {
     setFieldValue("salary_rate", salaryRate);
   };
-
   return (
     <Modal
       open={open}
@@ -332,6 +331,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
           <Grid container spacing={4}>
             <Grid item xs={6}>
               <TextFields
+                error={errors.firstname ? true : false}
                 variant="standard"
                 label="First Name"
                 value={values.firstname}
@@ -348,6 +348,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                 name="lastname"
                 onChange={handleChange}
                 helperText={errors.lastname ? errors.lastname.toString() : ""}
+                error={errors.lastname ? true : false}
               />
             </Grid>
             <Grid item xs={6}>
@@ -358,6 +359,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                 name="email"
                 onChange={handleChange}
                 helperText={errors.email ? errors.email.toString() : ""}
+                error={errors.email ? true : false}
               />
             </Grid>
             <Grid item xs={6}>
@@ -369,6 +371,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                 name="password"
                 onChange={handleChange}
                 helperText={errors.password ? errors.password.toString() : ""}
+                error={errors.password ? true : false}
               />
             </Grid>
             <Grid className="selectGrid" item xs={6}>
@@ -388,13 +391,19 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                 value={personName}
                 onChange={handleMultiSelectChange}
                 input={<OutlinedInput label="Tag" />}
-                renderValue={(selected) => selected.join(", ")}
+                renderValue={(selected) =>
+                  selected
+                    .map((name) => name.toLowerCase().replace(/_/g, " "))
+                    .join(", ")
+                }
                 MenuProps={MenuProps}
               >
                 {role.map((item: any, index: number) => (
                   <MenuItem key={index} value={item.name}>
                     <Checkbox checked={personName.indexOf(item.name) > -1} />
-                    <ListItemText primary={item.name} />
+                    <ListItemText
+                      primary={item.name.toLowerCase().replace(/_/g, " ")}
+                    />
                   </MenuItem>
                 ))}
               </Select>
@@ -419,12 +428,8 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
               value={values?.compensation_type}
               list={compensationType}
               receiveValue={receiveCompensationType}
+              error={errors.compensation_type ? true : false}
             />
-            <Box>
-              {errors.compensation_type
-                ? errors.compensation_type.toString()
-                : ""}
-            </Box>
           </Grid>
           <Grid className="selectGrid" item xs={6}>
             <SelectDemo
@@ -432,10 +437,8 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
               value={values?.employment_type}
               list={employeementType}
               receiveValue={EmployeementType}
+              error={errors.employment_type ? true : false}
             />
-            <Box>
-              {errors.employment_type ? errors.employment_type.toString() : ""}
-            </Box>
           </Grid>
           <Grid className="selectGrid" item xs={6}>
             <SelectDemo
@@ -443,8 +446,8 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
               value={values?.salary_rate}
               list={salaryRates}
               receiveValue={salartRate}
+              error={errors.salary_rate ? true : false}
             />
-            <Box>{errors.salary_rate ? errors.salary_rate.toString() : ""}</Box>
           </Grid>
         </Grid>
         <Stack

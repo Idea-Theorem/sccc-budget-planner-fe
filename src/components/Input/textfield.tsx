@@ -14,6 +14,8 @@ interface ITextFields {
   type?: string;
   name?: string;
   helperText?: any;
+  size?: any;
+  error?: any;
 }
 
 const TextFields: React.FC<ITextFields> = ({
@@ -27,6 +29,8 @@ const TextFields: React.FC<ITextFields> = ({
   type,
   name,
   helperText,
+  size,
+  error,
 }) => {
   return (
     <Box component="form" noValidate autoComplete="off">
@@ -35,6 +39,7 @@ const TextFields: React.FC<ITextFields> = ({
         id="standard-basic"
         label={label}
         variant={variant}
+        size={size}
         value={value}
         disabled={disabled}
         onDoubleClick={onDoubleClick}
@@ -42,6 +47,7 @@ const TextFields: React.FC<ITextFields> = ({
         placeholder={placeholder}
         name={name}
         helperText={helperText}
+        error={error}
       />
     </Box>
   );

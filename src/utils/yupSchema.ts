@@ -71,6 +71,10 @@ export const createEmployeeSchema =  yup.object().shape({
     name: yup
       .string()
       .required("Name is required!"),
+      center_id: yup
+      .string()
+      .required("Community Center is required!"),
+      
   })
 
   export const createCentresSchema =  yup.object().shape({

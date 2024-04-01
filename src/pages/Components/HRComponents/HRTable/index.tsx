@@ -113,10 +113,9 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
   ".MuiStack-root": {
     "&.MuiButtonBase-root": {
       color: theme.palette.text.primary,
-    }
-  }
+    },
+  },
 }));
-
 
 // const rows = [
 //   {
@@ -134,12 +133,12 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
 // ];
 interface HRTableProps {
   onEdit?: any;
-  row?: any
-  refresh?: any
+  row?: any;
+  refresh?: any;
 }
 const HRTableComponent: React.FC<HRTableProps> = ({ onEdit, row, refresh }) => {
-  const [deleteRow, setDeleteRow] = useState<any>(false)
-  const [loading, setLoading] = useState<any>(false)
+  const [deleteRow, setDeleteRow] = useState<any>(false);
+  const [loading, setLoading] = useState<any>(false);
   const columns: GridColDef[] = [
     {
       field: "name",
@@ -167,13 +166,22 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit, row, refresh }) => {
       headerName: "",
       flex: 0.5,
       renderCell: (data?: any) => (
-        <Stack direction="row" gap="10px" alignItems="center" justifyContent="flex-end" width="100%">
+        <Stack
+          direction="row"
+          gap="10px"
+          alignItems="center"
+          justifyContent="flex-end"
+          width="100%"
+        >
           <Button
             variant="text"
             color="error"
             size="small"
             startIcon={<DeleteOutlineIcon />}
-            onClick={()=>{setIsOpen(true);setDeleteRow(data)}}
+            onClick={() => {
+              setIsOpen(true);
+              setDeleteRow(data);
+            }}
           >
             Delete
           </Button>
@@ -191,28 +199,28 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit, row, refresh }) => {
     },
   ];
 
-  const [isOpen, setIsOpen] =useState(false)
-  const closeModel =()=>{
-    setIsOpen(false)
-  }
+  const [isOpen, setIsOpen] = useState(false);
+  const closeModel = () => {
+    setIsOpen(false);
+  };
 
   const handleDelete = async () => {
     try {
-      setLoading(true)
-      await deleteDepartment(deleteRow?.id)
-      setLoading(false)
-      refresh()
-      closeModel()
+      setLoading(true);
+      await deleteDepartment(deleteRow?.id);
+      setLoading(false);
+      refresh();
+      closeModel();
     } catch (error) {
-        setLoading(false)
+      setLoading(false);
     }
-  }
+  };
   return (
     <>
       <StyledBox className="mainTableBlock">
-        <InputSearch placeholder="Search..." /> 
+        <InputSearch placeholder="Search..." />
         <StyleDataGrid
-          rows={row}
+          rows={row || []}
           columns={columns}
           initialState={{
             pagination: {
@@ -224,7 +232,13 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit, row, refresh }) => {
           slots={{ toolbar: GridToolbar }}
         />
       </StyledBox>
-      <DeleteModal open={isOpen} handleOK={() => handleDelete()} handleClose={closeModel} loading={loading} heading="Are you sure you want to delete?"/>
+      <DeleteModal
+        open={isOpen}
+        handleOK={() => handleDelete()}
+        handleClose={closeModel}
+        loading={loading}
+        heading="Are you sure you want to delete?"
+      />
     </>
   );
 };

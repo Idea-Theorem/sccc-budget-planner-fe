@@ -32,6 +32,7 @@
     "redux": "^5.0.1",
     "redux-persist": "^6.0.0",
     "uuid": "^9.0.1",
+    "xlsx": "^0.18.5",
     "yup": "^1.4.0"
   },
   "devDependencies": {
