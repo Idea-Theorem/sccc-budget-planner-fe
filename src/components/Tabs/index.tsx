@@ -10,7 +10,6 @@ import Status from "../../utils/dumpData";
 import { useDispatch, useSelector } from "react-redux";
 import { storeProgramList } from "../../store/reducers/programSlice";
 import { RootState } from "../../store";
-import { modifyCreatedAt } from "../../utils";
 import { storeSingleProgram } from "../../store/reducers/programSlice";
 import { useNavigate } from "react-router";
 
@@ -27,6 +26,9 @@ interface BasicTabsProps {
   tabsTitleArray: TabTitle[];
   table: any;
   row?: any;
+  currentStatus?: any;
+  handleActionReieve?:any
+  setTabstatus?:any
 }
 
 const CustomTabPanel = (props: TabPanelProps) => {
@@ -62,17 +64,20 @@ const BasicTabs = (props: BasicTabsProps) => {
   const dispatch = useDispatch();
   const { programList } = useSelector((state: RootState) => state.program);
   const navigate = useNavigate();
-
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
     if (newValue === 0) {
       setStatus(Status.PENDING);
+      props?.setTabstatus(Status.PENDING)
     } else if (newValue == 1) {
-      setStatus(Status.REJECTED);
-    } else if (newValue == 2) {
       setStatus(Status.APPROVED);
+      props?.setTabstatus(Status.APPROVED)
+    } else if (newValue == 2) {
+      setStatus(Status.REJECTED);
+      props?.setTabstatus(Status.REJECTED)
     } else if (newValue == 3) {
       setStatus(Status.DRAFTED);
+      props?.setTabstatus(Status.DRAFTED)
     }
   };
 
@@ -118,6 +123,8 @@ const BasicTabs = (props: BasicTabsProps) => {
             onRowClick={(rowData) => handleClick(rowData)}
             columns={item}
             row={typeof programList == "undefined" ? [] : programList}
+            status={props?.currentStatus}
+            handleActionReieve={props?.handleActionReieve}
           />
         </CustomTabPanel>
       ))}
@@ -181,9 +188,12 @@ export default function TabsArea(props: BasicTabsProps) {
   return (
     <TabsAreas>
       <BasicTabs
+       setTabstatus={props?.setTabstatus}
         tabsTitleArray={props?.tabsTitleArray}
         table={props?.table}
         row={props?.row}
+        currentStatus={props?.currentStatus}
+        handleActionReieve={props?.handleActionReieve}
       />
     </TabsAreas>
   );

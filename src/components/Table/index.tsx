@@ -176,14 +176,23 @@ interface TableColumn {
 interface ColumnnsProps {
   columns: TableColumn[];
   row?: any;
+  status?: any;
   onRowClick: (rowData: any) => void;
+  onSelectionModelChange?: (selection: any) => void;
+  handleActionReieve?: any;
 }
 const TableComponent = (props: ColumnnsProps) => {
+  
+
+  const handleSelectionChange = (selection: any) => {
+    const selectedRowIds = selection.flat();
+    props?.handleActionReieve(selectedRowIds)
+  };
   const handleRowClick = (params: any) => {
     if (props.onRowClick) {
       props.onRowClick(params.row);
     }
-  };
+  };  
   return (
     <>
       <StyledBox className="mainTableBlock">
@@ -201,6 +210,7 @@ const TableComponent = (props: ColumnnsProps) => {
           disableRowSelectionOnClick
           slots={{ toolbar: GridToolbar }}
           onRowClick={handleRowClick}
+          onRowSelectionModelChange={handleSelectionChange}
         />
       </StyledBox>
     </>

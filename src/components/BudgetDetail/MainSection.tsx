@@ -11,7 +11,7 @@ import { getAllDepartments } from "../../services/departmentServices";
 import { useEffect, useState } from "react";
 import Status, { ProgramCode } from "../../utils/dumpData";
 import { useFormik } from "formik";
-import { createProgram } from "../../services/programServices";
+import { createProgram, updateProgram } from "../../services/programServices";
 import { Input, TextField } from '@mui/material';
 import {
   storeIncomeList,
@@ -30,7 +30,6 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
   const { singleProgram } = useSelector((state: RootState) => state.program);
-
   const formik = useFormik<any>({
     validateOnBlur: false,
     // validationSchema:  editEmployeeSchema,
@@ -70,7 +69,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
     values,
     handleChange,
     errors,
-    handleSubmit,
+    // handleSubmit,
     setFieldValue,
     isSubmitting,
   } = formik;
@@ -114,6 +113,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
   };
 
   const handleSave = async () => {
+
     try {
       let obj = {
         ...values,
@@ -126,6 +126,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
       dispatch(storeSalaryList([]));
       navigate("/program-head/draft");
     } catch (error) {}
+  }
   const handleClick = () => {
     setIsEditing(true);
   };
@@ -138,6 +139,26 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
   const handleBlur = () => {
     setIsEditing(false);
   };
+  const handleSubmit =async (action: any)=>{
+    let data ={}
+    if(action === "Reject"){
+       data = {
+        progamIds: [singleProgram?.id],
+        status: "REJECTED",
+      };
+    }
+    else{
+       data = {
+        progamIds: [singleProgram?.id],
+        status: "APPROVED",
+      };
+    }
+    if(data){
+      const response = await updateProgram(data)
+      navigate("/department-head/review-budgets")
+    }
+
+  }
   return (
     <Grid item xs={9}>
       <Grid className="createProgramContent" item xs={12}>
@@ -171,7 +192,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
                 <Buttons
                   key={index}
                   btntext={action?.title}
-                  onClick={action.title == "Submit" ? handleSubmit : handleSave}
+                  onClick={()=>{handleSubmit(action?.title)}}
                   variant={action.variant}
                   color={action.color}
                   size={action.size}
