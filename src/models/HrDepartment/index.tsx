@@ -11,7 +11,6 @@ import { useFormik } from "formik";
 import { createDepartmentSchema } from "../../utils/yupSchema";
 import {
   createDepartment,
-  getAllDepartments,
   updateDepartment,
 } from "../../services/departmentServices";
 import SelectDemo from "../../components/Select";

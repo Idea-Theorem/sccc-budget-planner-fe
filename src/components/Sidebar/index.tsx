@@ -11,8 +11,7 @@ import { filterSidebarActionsWithMore } from "../../utils/filterSideBarActios";
 import { SIDEBARACTIONS } from "../../utils/sideBarActions";
 import { useNavigate, useLocation } from "react-router-dom";
 import LogoImg from "../../assets/logo.png";
-import CollapsibleMenu from "../CollapsableManue";
-import { SidebarAction } from "../../types/common";
+// import { SidebarAction } from "../../types/common";
 import { useAuth } from "../../contexts/AuthContext";
 import { Collapse } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
@@ -133,7 +132,7 @@ export default function ResponsiveDrawer(props: Props) {
   const handleToggleHR = () => {
     setOpenHR(!openHR);
   };
-  const { withMore, withoutMore, rolesArray } = filterSidebarActionsWithMore(
+  const { rolesArray } = filterSidebarActionsWithMore(
     SIDEBARACTIONS,
     user
     // "Admin"
@@ -153,7 +152,7 @@ export default function ResponsiveDrawer(props: Props) {
         <img src={LogoImg} alt="Description image" />
       </Box>
       <List>
-        {rolesArray?.map((item, index) => (
+        {rolesArray?.map((item: any, index: any) => (
           <React.Fragment key={index}>
             {item.role === "HR" && item.more ? (
               <>
@@ -162,7 +161,7 @@ export default function ResponsiveDrawer(props: Props) {
                   {openHR ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
                 <Collapse in={openHR} timeout="auto" unmountOnExit>
-                  {item.more.map((nestedItem, nestedIndex) => (
+                  {item.more.map((nestedItem: any, nestedIndex: any) => (
                     <ListItem
                       key={nestedIndex}
                       disablePadding

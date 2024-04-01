@@ -24,7 +24,7 @@ export const useAuth = () => useContext(AuthContext);
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState(localStorage.getItem("user") || "");
   const [authToken, setAuthToken] = useState("");
-  const [loginLoading, setLoginLoading] = useState(false);
+  const [loginLoading, setLoginLoading] = useState<any>(false);
   const navigate = useNavigate();
 
   const login = async (values: LoginState) => {

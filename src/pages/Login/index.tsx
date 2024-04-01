@@ -10,7 +10,6 @@ import { useAuth } from "../../contexts/AuthContext";
 import { FormikProps, useFormik } from "formik";
 import * as yup from "yup";
 import LoginState from "../../interfaces/ITheme.interface";
-import TextFields from "../../components/Input/textfield";
 
 const LoginArea = styled(Box)(({ theme }) => ({
   "&.loginBlock": {
@@ -138,8 +137,7 @@ const Input = () => {
     },
   });
 
-  const { values, touched, handleChange, isSubmitting, errors, handleSubmit } =
-    formik;
+  const { values, touched, handleChange, errors, handleSubmit } = formik;
 
   return (
     <LoginArea className="loginBlock">
