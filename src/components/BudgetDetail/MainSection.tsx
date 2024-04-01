@@ -35,7 +35,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
     // validationSchema:  editEmployeeSchema,
     enableReinitialize: true,
     initialValues: {
-      name: singleProgram ? singleProgram?.name : "React Js",
+      name: singleProgram ? singleProgram?.name : "Program",
       code: "",
       department_id: "",
       from_date: "",

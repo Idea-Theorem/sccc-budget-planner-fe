@@ -5,7 +5,7 @@ import { CircularProgress } from "@mui/material";
 
 interface StyledButtonProps extends ButtonProps {
   btntext?: string;
-  loading?: boolean;
+  loading?: any;
   onClick?: any;
 }
 

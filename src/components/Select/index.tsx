@@ -28,17 +28,35 @@ const StyledSelect = styled(Select)(({ theme }) => ({
   color: theme.palette.gfGrey.GF75,
 }));
 
-export default function SelectDemo({title, list,receiveValue, value}: any) {
+export default function SelectDemo({
+  title,
+  list,
+  receiveValue,
+  value,
+  error,
+}: any) {
   const handleChange = (event: any) => {
-  
-    receiveValue(event.target.value)
+    receiveValue(event.target.value);
   };
+  function convertToLowerAndRemoveUnderscore(inputString: string | number) {
+    if (typeof inputString === "number") {
+      return inputString;
+    }
+    // Check if inputString exists
+    if (inputString) {
+      // Convert the input string to lowercase and remove underscores
+      return inputString.toLowerCase().replace(/_/g, " ");
+    } else {
+      // If inputString is undefined or null, return an empty string
+      return "";
+    }
+  }
 
   return (
-    <StyledFormControl size="medium" variant="standard">
+    <StyledFormControl size="medium" variant="standard" error={error}>
       <StyledInputLabel>{title}</StyledInputLabel>
       <StyledSelect
-       value={value}
+        value={value}
         labelId="select-label"
         id="select-demo"
         label="Label"
@@ -46,8 +64,9 @@ export default function SelectDemo({title, list,receiveValue, value}: any) {
         className="select-list"
       >
         {list?.map((item: any) => (
-
-        <MenuItem value={item.name}>{item.name}</MenuItem>
+          <MenuItem value={item.name}>
+            {convertToLowerAndRemoveUnderscore(item.name)}
+          </MenuItem>
         ))}
       </StyledSelect>
     </StyledFormControl>
