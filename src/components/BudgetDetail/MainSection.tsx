@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import Status, { ProgramCode } from "../../utils/dumpData";
 import { useFormik } from "formik";
 import { createProgram, updateProgram } from "../../services/programServices";
-import { Input, TextField } from '@mui/material';
+import { Input } from '@mui/material';
 import {
   storeIncomeList,
   storeSalaryList,
@@ -67,10 +67,8 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
 
   const {
     values,
-    handleChange,
-    // handleSubmit,
+    handleSubmit,
     setFieldValue,
-    isSubmitting,
   } = formik;
 
   const fetchDepartments = async () => {
@@ -138,7 +136,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
   const handleBlur = () => {
     setIsEditing(false);
   };
-  const handleSubmit =async (action: any)=>{
+  const handleStatausSubmit =async (action: any)=>{
     let data ={}
     if(action === "Reject"){
        data = {
@@ -153,7 +151,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
       };
     }
     if(data){
-      const response = await updateProgram(data)
+      await updateProgram(data)
       navigate("/department-head/review-budgets")
     }
 
@@ -197,7 +195,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
                 <Buttons
                   key={index}
                   btntext={action?.title}
-                  onClick={()=>{handleSubmit(action?.title)}}
+                  onClick={action.title == "Submit" ? handleSubmit : action.title == "Reject" ||  action.title == "Revise" ? () => handleStatausSubmit(action.title) : handleSave }
                   variant={action.variant}
                   color={action.color}
                   size={action.size}
