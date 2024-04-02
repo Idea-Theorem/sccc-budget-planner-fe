@@ -5,6 +5,8 @@ import Stack from "@mui/material/Stack";
 import DropdownButton from "../Button/dropDownButton";
 interface SubHeaderProps {
   title?: string;
+  onStatusChange?: any 
+  handleUpdate?: any
 }
 
 const StyledBox = styled(Box)(({ theme }) => ({
@@ -44,14 +46,18 @@ const StyledBox = styled(Box)(({ theme }) => ({
 
 const SubHeader = (props: SubHeaderProps) => {
   const array = [
-    {text: "Approve"},
+    {text: "Approved"},
     {text: "Rejected"},
   ]
+ 
+  const handleOptionSelect = (selectedStatus: any) => {
+    props.onStatusChange(selectedStatus);
+  };
   return (
     <StyledBox className="reviewSubhead">
       <Stack>
         <Typography variant="h4">{props.title}</Typography>
-        <DropdownButton title="Actions" array={array}/>
+        <DropdownButton title="Action" array={array} onSelect={handleOptionSelect} handleUpdate={props?.handleUpdate}/>  
       </Stack>
     </StyledBox>
   );
