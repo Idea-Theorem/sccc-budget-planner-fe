@@ -27,8 +27,8 @@ interface BasicTabsProps {
   table: any;
   row?: any;
   currentStatus?: any;
-  handleActionReieve?:any
-  setTabstatus?:any
+  handleActionReieve?: any;
+  setTabstatus?: any;
 }
 
 const CustomTabPanel = (props: TabPanelProps) => {
@@ -69,16 +69,16 @@ const BasicTabs = (props: BasicTabsProps) => {
     setValue(newValue);
     if (newValue === 0) {
       setStatus(Status.PENDING);
-      props?.setTabstatus(Status.PENDING)
+      props?.setTabstatus(Status.PENDING);
     } else if (newValue == 1) {
       setStatus(Status.APPROVED);
-      props?.setTabstatus(Status.APPROVED)
+      props?.setTabstatus(Status.APPROVED);
     } else if (newValue == 2) {
       setStatus(Status.REJECTED);
-      props?.setTabstatus(Status.REJECTED)
+      props?.setTabstatus(Status.REJECTED);
     } else if (newValue == 3) {
       setStatus(Status.DRAFTED);
-      props?.setTabstatus(Status.DRAFTED)
+      props?.setTabstatus(Status.DRAFTED);
     }
   };
 
@@ -189,7 +189,7 @@ export default function TabsArea(props: BasicTabsProps) {
   return (
     <TabsAreas>
       <BasicTabs
-       setTabstatus={props?.setTabstatus}
+        setTabstatus={props?.setTabstatus}
         tabsTitleArray={props?.tabsTitleArray}
         table={props?.table}
         row={props?.row}

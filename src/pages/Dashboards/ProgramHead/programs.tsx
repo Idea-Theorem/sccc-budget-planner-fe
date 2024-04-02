@@ -244,8 +244,8 @@ const PHProgramsScreen = () => {
       <TabsArea
         tabsTitleArray={[
           { title: "Pending" },
-          { title: "Rejected" },
           { title: "Approved" },
+          { title: "Rejected" },
           { title: "Drafts" },
           { title: "History" },
         ]}

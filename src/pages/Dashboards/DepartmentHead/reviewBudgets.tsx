@@ -68,7 +68,7 @@ const DHReviewBudgets = () => {
       },
       {
         field: "lYearBudget",
-        headerName: "Last Year Budget",
+        headerName: "Previous Year Budget",
         sortable: false,
         editable: false,
         flex: 1,
@@ -104,8 +104,8 @@ const DHReviewBudgets = () => {
     ],
     [
       {
-        field: "department.name",
-        headerName: "Department Name",
+        field: "name",
+        headerName: "Program Name",
         sortable: false,
         editable: false,
         flex: 1,
@@ -236,24 +236,23 @@ const DHReviewBudgets = () => {
     } catch (error) {}
   };
   const handleStatusChange = (selectedStatus: any) => {
-    if(selectedStatus === "Approve"){
-      setStatus("APPROVED")
-    } else if(selectedStatus === "Rejected"){
-      setStatus("REJECTED")
+    if (selectedStatus === "Approve") {
+      setStatus("APPROVED");
+    } else if (selectedStatus === "Rejected") {
+      setStatus("REJECTED");
     }
   };
   const handleActionReieve = (data: any) => {
     setSelectedRows(data);
   };
-  const handleUpdate =async (selectedOption: any)=>{
-
+  const handleUpdate = async (selectedOption: any) => {
     const data = {
       progamIds: selectedRows,
       status: selectedOption,
     };
-  const response = await updateProgram(data)
-  setUpdateprogram(response?.data)
-  }
+    const response = await updateProgram(data);
+    setUpdateprogram(response?.data);
+  };
 
   return (
     <StyledBox className="appContainer">
@@ -261,7 +260,7 @@ const DHReviewBudgets = () => {
         <Typography variant="h3">Review Budgets</Typography>
       </Box>
       <SubHeader
-      handleUpdate={handleUpdate}
+        handleUpdate={handleUpdate}
         title="Recreation & Culture"
         onStatusChange={handleStatusChange}
       />
@@ -270,7 +269,7 @@ const DHReviewBudgets = () => {
       </Typography>
       <Box className="approvedTableBlock">
         <Box className="approvedProgramBlock">
-          <ApprovedProgram />
+          <ApprovedProgram tabstatus={tabstatus} />
         </Box>
         <TabsArea
           setTabstatus={setTabstatus}
