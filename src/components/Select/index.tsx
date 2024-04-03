@@ -34,6 +34,7 @@ export default function SelectDemo({
   receiveValue,
   value,
   error,
+  disabled,
 }: any) {
   const handleChange = (event: any) => {
     receiveValue(event.target.value);
@@ -56,6 +57,7 @@ export default function SelectDemo({
     <StyledFormControl size="medium" variant="standard" error={error}>
       <StyledInputLabel>{title}</StyledInputLabel>
       <StyledSelect
+        disabled={disabled}
         value={value}
         labelId="select-label"
         id="select-demo"

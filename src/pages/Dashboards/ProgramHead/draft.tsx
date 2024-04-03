@@ -3,6 +3,12 @@ import Box from "@mui/material/Box";
 import MainHeaderComponent from "../../../components/MainHeader";
 import TabsArea from "../../../components/Tabs";
 import { useNavigate } from "react-router-dom";
+import {
+  storeProgramFromStatus,
+  storeSingleProgram,
+} from "../../../store/reducers/programSlice";
+import Status from "../../../utils/dumpData";
+import { useDispatch } from "react-redux";
 const StyledBox = styled(Box)(() => ({
   "&.appContainer": {
     ".appHeader": {
@@ -12,6 +18,7 @@ const StyledBox = styled(Box)(() => ({
 }));
 const ProgramsDraftScreen = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const tableColumnsTitleArray = [
     [
       {
@@ -63,7 +70,11 @@ const ProgramsDraftScreen = () => {
       <MainHeaderComponent
         title="Programs"
         btnTitle="Create New Programs"
-        onClick={() => navigate("/program-head/create")}
+        onClick={() => {
+          navigate("/program-head/create");
+          dispatch(storeSingleProgram(null));
+          dispatch(storeProgramFromStatus(Status.CREATED));
+        }}
       />
       <TabsArea
         tabsTitleArray={[{ title: "Drafts" }]}

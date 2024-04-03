@@ -43,6 +43,7 @@ const TabsProgram = ({
   handleSupplyExpenseReceived,
   handleSalaryExpenseReceived,
   formik,
+  disabled,
 }: any) => {
   const [value, setValue] = React.useState(0);
 
@@ -75,6 +76,7 @@ const TabsProgram = ({
       </Box>
       <CustomTabPanel value={value} index={0}>
         <ProgramTable
+          disabled={disabled}
           handleReceived={handleReceived}
           title="income"
           formik={formik}
@@ -82,6 +84,7 @@ const TabsProgram = ({
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         <ProgramTable
+          disabled={disabled}
           handleSupplyExpenseReceived={handleSupplyExpenseReceived}
           title="supply-expense"
           formik={formik}
@@ -89,6 +92,7 @@ const TabsProgram = ({
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
         <ProgramTable
+          disabled={disabled}
           handleSalaryExpenseReceived={handleSalaryExpenseReceived}
           title="salary-expense"
           formik={formik}
@@ -126,10 +130,12 @@ export default function TabsProgramArea({
   handleSupplyExpenseReceived,
   handleSalaryExpenseReceived,
   formik,
+  disabled,
 }: any) {
   return (
     <TabsAreas>
       <TabsProgram
+        disabled={disabled}
         handleReceived={handleReceived}
         handleSupplyExpenseReceived={handleSupplyExpenseReceived}
         handleSalaryExpenseReceived={handleSalaryExpenseReceived}

@@ -28,13 +28,26 @@ const DateStack = styled(Stack)(({ theme }) => ({
 
 const LeftSection = () => {
   return (
+    // <Grid item xs={3}>
+    //   <DateStack
+    //     className="selected"
+    //     direction={"row"}
+    //     justifyContent={"flex-end"}
+    //     alignItems={"center"}
+    //   >
+    //     <DateTypography variant="h5">{moment().format("D MMM")}</DateTypography>
+    //   </DateStack>
+    // </Grid>
     <Grid item xs={3}>
       <DateStack
         className="selected"
-        direction={"row"}
-        justifyContent={"flex-end"}
-        alignItems={"center"}
+        direction={"column"}
+        justifyContent={"end"}
+        alignItems={"end"}
       >
+        <DateTypography variant="h5">Revise 1 (4-Mar)</DateTypography>
+      </DateStack>
+      <DateStack direction={"column"} justifyContent={"end"} alignItems={"end"}>
         <DateTypography variant="h5">2-Mar</DateTypography>
       </DateStack>
     </Grid>

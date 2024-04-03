@@ -121,12 +121,14 @@ interface Props {
   title?: string;
   handleSalaryExpenseReceived?: any;
   formik?: any;
+  disabled?: any;
 }
 export default function TabsProgramArea({
   handleReceived,
   title,
   handleSalaryExpenseReceived,
   handleSupplyExpenseReceived,
+  disabled,
 }: Props) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -209,6 +211,7 @@ export default function TabsProgramArea({
                   </TableCell>
                   <TableCell align="right">
                     <TextFields
+                      disabled={disabled}
                       type="text"
                       placeholder="$00,000.00"
                       value={row.amount || ""} // Set value from state

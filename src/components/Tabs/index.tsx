@@ -8,10 +8,14 @@ import TableComponent from "../Table";
 import { getAllProgramsViaStatus } from "../../services/programServices";
 import Status from "../../utils/dumpData";
 import { useDispatch, useSelector } from "react-redux";
-import { storeProgramList } from "../../store/reducers/programSlice";
+import {
+  storeProgramFromStatus,
+  storeProgramList,
+} from "../../store/reducers/programSlice";
 import { RootState } from "../../store";
 import { storeSingleProgram } from "../../store/reducers/programSlice";
 import { useNavigate } from "react-router";
+import { useLocation } from "react-router-dom";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -63,7 +67,9 @@ const BasicTabs = (props: BasicTabsProps) => {
   const [status, setStatus] = React.useState(Status.PENDING);
   const dispatch = useDispatch();
   const { programList } = useSelector((state: RootState) => state.program);
-  const navigate = useNavigate();
+  const navigate: any = useNavigate();
+  const location = useLocation();
+
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     console.log(event);
     setValue(newValue);
@@ -81,7 +87,6 @@ const BasicTabs = (props: BasicTabsProps) => {
       props?.setTabstatus(Status.DRAFTED);
     }
   };
-
   React.useEffect(() => {
     if (props?.tabsTitleArray.length > 0) {
       if (props?.tabsTitleArray[0].title == "Drafts") {
@@ -93,7 +98,6 @@ const BasicTabs = (props: BasicTabsProps) => {
   React.useEffect(() => {
     fetchProgramList(status);
   }, [status]);
-
   const fetchProgramList = async (status: string) => {
     try {
       const response = await getAllProgramsViaStatus(status);
@@ -101,10 +105,29 @@ const BasicTabs = (props: BasicTabsProps) => {
       dispatch(storeProgramList(response?.data?.programs));
     } catch (error) {}
   };
+
   const handleClick = (rowData: any) => {
-    dispatch(storeSingleProgram(rowData));
-    navigate("/department-head/program-review");
+    if (
+      location?.pathname == "/program-head/program" &&
+      status == Status.REJECTED
+    ) {
+      dispatch(storeProgramFromStatus(Status.REJECTED));
+      dispatch(storeSingleProgram(rowData));
+      navigate("/program-head/create");
+    } else if (location?.pathname == "/program-head/draft") {
+      dispatch(storeSingleProgram(rowData));
+      dispatch(storeProgramFromStatus(Status.DRAFTED));
+      navigate("/program-head/create");
+    } else if (
+      location?.pathname == "/department-head/review-budgets" &&
+      status == Status.PENDING
+    ) {
+      dispatch(storeProgramFromStatus(Status.PENDING));
+      dispatch(storeSingleProgram(rowData));
+      navigate("/department-head/program-review");
+    }
   };
+
   return (
     <Box width="100%">
       <Box borderBottom="1" borderColor="divider">

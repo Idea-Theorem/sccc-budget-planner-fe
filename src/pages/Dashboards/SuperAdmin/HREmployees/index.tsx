@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import TabsComponent from "../../../Components/HRComponents/HRTabs";
 import { Typography } from "@mui/material";
+import { useAuth } from "../../../../contexts/AuthContext";
 
 const StyledBox = styled(Box)(() => ({
   "& .dashboardCards": {
@@ -60,15 +61,27 @@ const StyledBox = styled(Box)(() => ({
 interface SuperAdminProps {
   name: string;
 }
-const tabNames = ["Employees", "Departments", "Community Centres"];
+
 const HREmployeees: React.FC<SuperAdminProps> = () => {
+  const { currentRole } = useAuth();
+  const handleTabsDynamically = () => {
+    if (currentRole == "HR") {
+      return ["Employees"];
+    } else if (currentRole == "Admin") {
+      return ["Employees", "Departments"];
+    } else if (currentRole == "Super_Admin") {
+      return ["Employees", "Departments", "Community Centres"];
+    } else {
+      return [];
+    }
+  };
   return (
     <StyledBox className="appContainer">
       <Typography className="hrBlockTitle" variant="h3">
         HR (Human Resources)
       </Typography>
 
-      <TabsComponent tabNames={tabNames} />
+      <TabsComponent tabNames={handleTabsDynamically()} />
     </StyledBox>
   );
 };

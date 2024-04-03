@@ -12,6 +12,12 @@ import { useState } from "react";
 import TabsProgramArea from "../../components/TabsProgram";
 import TabsArea from "../../components/Tabs";
 import { EditNote, Save } from "@mui/icons-material";
+import {
+  storeProgramFromStatus,
+  storeSingleProgram,
+} from "../../store/reducers/programSlice";
+import Status from "../../utils/dumpData";
+import { useDispatch } from "react-redux";
 
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.appContainer": {
@@ -254,6 +260,7 @@ const HomeScreen = () => {
   const [firstLevel, setFirstLevel] = useState(false);
 
   const [secondLevel, setSecondLevel] = useState(false);
+  const dispatch = useDispatch();
   const tableColumnsTitleArray = [
     [
       {
@@ -440,7 +447,11 @@ const HomeScreen = () => {
               <Buttons
                 startIcon={<AddIcon />}
                 btntext="Create New Program"
-                onClick={() => setFirstLevel(true)}
+                onClick={() => {
+                  setFirstLevel(true);
+                  dispatch(storeSingleProgram(null));
+                  dispatch(storeProgramFromStatus(Status.CREATED));
+                }}
               />
             </Stack>
           </Box>
