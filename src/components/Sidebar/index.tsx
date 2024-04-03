@@ -13,8 +13,9 @@ import { useNavigate, useLocation } from "react-router-dom";
 import LogoImg from "../../assets/logo.png";
 // import { SidebarAction } from "../../types/common";
 import { useAuth } from "../../contexts/AuthContext";
-import { Collapse } from "@mui/material";
+import { Collapse, Grid } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
+import SelectDemo from "../Select";
 
 const SideArea = styled(Box)(({ theme }) => ({
   background: theme.palette.primary.main,
@@ -126,13 +127,13 @@ interface Props {
 export default function ResponsiveDrawer(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const { user } = useAuth();
+  const { user, setCurrentRole, currentRole } = useAuth();
   const [openHR, setOpenHR] = React.useState(false);
 
   const handleToggleHR = () => {
     setOpenHR(!openHR);
   };
-  const { rolesArray } = filterSidebarActionsWithMore(
+  const { rolesArray, withMore } = filterSidebarActionsWithMore(
     SIDEBARACTIONS,
     user
     // "Admin"
@@ -146,15 +147,28 @@ export default function ResponsiveDrawer(props: Props) {
   const handleDrawerClose = () => {
     setMobileOpen(false);
   };
+
+  const handleReceive = (item: string) => {
+    localStorage.setItem("currentRole", item);
+    setCurrentRole(item);
+  };
   const drawer = (
     <Box>
       <Box className="siteLogo">
         <img src={LogoImg} alt="Description image" />
       </Box>
+      <Grid className="selectGrid" item xs={6}>
+        <SelectDemo
+          title="Department"
+          value={currentRole}
+          list={user.roles}
+          receiveValue={handleReceive}
+        />
+      </Grid>
       <List>
-        {rolesArray?.map((item: any, index: any) => (
+        {withMore?.map((item: any, index: any) => (
           <React.Fragment key={index}>
-            {item.role === "HR" && item.more ? (
+            {item.role === currentRole && item.more ? (
               <>
                 <ListItem disablePadding button onClick={handleToggleHR}>
                   <ListItemText primary={item.title} />

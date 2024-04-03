@@ -21,7 +21,6 @@ import { deleteEmployee } from "../../../../services/employeeServices";
 import { SaveAlt } from "@mui/icons-material";
 import TextFields from "../../../../components/Input/textfield";
 import * as XLSX from "xlsx";
-import { Typography } from "@mui/material";
 
 // Define StyledInputSearch using styled component
 const HrCollapseableTable = styled(Box)(({ theme }) => ({
@@ -129,7 +128,7 @@ function Row(props: {
   employeeData?: any;
   handleDelete?: any;
 }) {
-  const { row, handleClick, employeeData, handleDelete } = props;
+  const { row, handleClick, handleDelete } = props;
   const [open, setOpen] = React.useState(false);
   return (
     <React.Fragment>
@@ -195,7 +194,7 @@ function Row(props: {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {[0].map((historyRow) => (
+                  {[0].map(() => (
                     <TableRow key={row.id}>
                       <TableCell component="th" scope="row">
                         {row.email}
