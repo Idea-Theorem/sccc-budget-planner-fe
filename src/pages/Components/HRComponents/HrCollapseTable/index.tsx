@@ -18,11 +18,11 @@ import EditNoteIcon from "@mui/icons-material/EditNote";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { deleteEmployee } from "../../../../services/employeeServices";
-import { SaveAlt } from "@mui/icons-material";
-import TextFields from "../../../../components/Input/textfield";
+import { SaveAlt, Search } from "@mui/icons-material";
 import * as XLSX from "xlsx";
+import InputAdornment from "@mui/material/InputAdornment";
+import TextField from "@mui/material/TextField";
 
-// Define StyledInputSearch using styled component
 const HrCollapseableTable = styled(Box)(({ theme }) => ({
   ".MuiTableCell-root": {
     background: "none",
@@ -82,7 +82,7 @@ const HrCollapseableTable = styled(Box)(({ theme }) => ({
         "& .MuiTableCell-body": {
           fontFamily: "Work Sans",
           fontSize: "14px",
-          fontWeight: "600",
+          fontWeight: "400",
           lineHeight: "20.02px",
           color: theme.palette.common.blackshades["4p"],
         },
@@ -145,9 +145,6 @@ function Row(props: {
         <TableCell component="th" scope="row">
           {row.firstname + " " + row.lastname}
         </TableCell>
-        {/* {row?.roles?.map((item: any) => {
-          return <TableCell>{item.name}</TableCell>;
-        })} */}
         <TableCell>{row.roles[0].name}</TableCell>
         <TableCell>{row.department.name}</TableCell>
         <TableCell>{row.hire_date}</TableCell>
@@ -183,25 +180,27 @@ function Row(props: {
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
+            <Box>
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Email Address</TableCell>
+                    <TableCell style={{ paddingLeft: "62px" }}>
+                      Email Address
+                    </TableCell>
                     <TableCell>Compensation type</TableCell>
-                    <TableCell align="right">Employement Type</TableCell>
-                    <TableCell align="right">Salary</TableCell>
+                    <TableCell>Employement Type</TableCell>
+                    <TableCell>Salary</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {[0].map(() => (
                     <TableRow key={row.id}>
-                      <TableCell component="th" scope="row">
+                      <TableCell style={{ paddingLeft: "62px" }}>
                         {row.email}
                       </TableCell>
                       <TableCell>{row.compensation_type}</TableCell>
-                      <TableCell align="right">{row.employment_type}</TableCell>
-                      <TableCell align="right">{row.salary_rate}</TableCell>
+                      <TableCell>{row.employment_type}</TableCell>
+                      <TableCell>{row.salary_rate}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -264,10 +263,27 @@ export default function HrCollapsibleTable({
   return (
     <>
       <HrCollapseableTable className="dashboardTable">
-        <IconButton aria-label="export" onClick={exportToExcel}>
-          <SaveAlt />
-        </IconButton>
-        <TextFields placeholder="search..." />
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <IconButton aria-label="export" onClick={exportToExcel}>
+            <SaveAlt />
+          </IconButton>
+          <TextField
+            id="input-with-icon-textfield"
+            placeholder="Search..."
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Search style={{ color: "#0000008F" }} />
+                </InputAdornment>
+              ),
+            }}
+            variant="standard"
+          />
+        </Stack>
         <TableContainer component={Paper}>
           <Table aria-label="collapsible table">
             <TableHead>

@@ -119,6 +119,16 @@ const DepartmentInfoArea = styled(Box)(({ theme }) => ({
       textTransform: "capitalize",
     },
   },
+  ".MuiFormControl-root": {
+    margin: "0 0 20px",
+  },
+  ".community-area": {
+    "& .MuiInputLabel-root": {
+      "& + .MuiInputBase-root": {
+        marginTop: "0",
+      },
+    },
+  },
 }));
 
 interface IDepartmentInfo {
@@ -201,7 +211,7 @@ const DepartmentInfo: React.FC<IDepartmentInfo> = ({
         <Box>
           <Typography className="subtitle">{subheading}</Typography>
           <Grid container spacing={4}>
-            <Grid item xs={6}>
+            <Grid item xs={12}>
               <TextField
                 variant="standard"
                 label="Department Name"
@@ -212,16 +222,14 @@ const DepartmentInfo: React.FC<IDepartmentInfo> = ({
                 error={errors.name ? true : false}
               />
             </Grid>
-            <Grid item xs={6}>
-              <Grid className="selectGrid" item xs={6}>
-                <SelectDemo
-                  title="Community Center"
-                  value={activecenter}
-                  list={center}
-                  receiveValue={receiveCenter}
-                  error={errors.center_id ? true : false}
-                />
-              </Grid>
+            <Grid item xs={12} className="community-area">
+              <SelectDemo
+                title="Community Center"
+                value={activecenter}
+                list={center}
+                receiveValue={receiveCenter}
+                error={errors.center_id ? true : false}
+              />
             </Grid>
           </Grid>
         </Box>

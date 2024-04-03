@@ -10,13 +10,13 @@ import LoginState from "../interfaces/ITheme.interface";
 import { loggedIn } from "../services/authServices";
 
 const AuthContext = createContext({
-  user: "",
+  user: null as null | string,
   login: (_: LoginState) => {},
   logout: () => {},
   authToken: "",
   loginLoading: "",
   currentRole: "",
-  setCurrentRole: "",
+  setCurrentRole: (_: string |  boolean) => {},
 });
 
 // const users = [
@@ -30,8 +30,8 @@ const AuthContext = createContext({
 export const useAuth = () => useContext(AuthContext);
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState(localStorage.getItem("user") || "");
-  const [currentRole, setCurrentRole] = useState<string>("");
+  const [user, setUser] = useState<null | string>(null);
+  const [currentRole, setCurrentRole] = useState<any>("");
   const [authToken, setAuthToken] = useState("");
   const [loginLoading, setLoginLoading] = useState<any>(false);
   const navigate = useNavigate();
@@ -40,7 +40,10 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     const user: any = localStorage.getItem("userInfo");
 
     const toParse = JSON.parse(user);
-    setUser(toParse);
+    if(toParse && toParse.roles){
+
+      setUser(toParse);
+    }
     const currentRole: any = localStorage.getItem("currentRole");
     if (currentRole) {
       setCurrentRole(currentRole);
@@ -81,7 +84,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const logout = () => {
-    setUser("");
+    setUser(null);
     localStorage.removeItem("user");
   };
   return (
