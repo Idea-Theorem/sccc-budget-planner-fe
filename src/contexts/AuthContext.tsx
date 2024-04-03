@@ -31,7 +31,7 @@ export const useAuth = () => useContext(AuthContext);
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState(localStorage.getItem("user") || "");
-  const [currentRole, setCurrentRole] = useState<string>("");
+  const [currentRole, setCurrentRole] = useState<any>("");
   const [authToken, setAuthToken] = useState("");
   const [loginLoading, setLoginLoading] = useState<any>(false);
   const navigate = useNavigate();

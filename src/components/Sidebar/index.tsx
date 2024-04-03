@@ -133,12 +133,9 @@ export default function ResponsiveDrawer(props: Props) {
   const handleToggleHR = () => {
     setOpenHR(!openHR);
   };
-  const { rolesArray, withMore } = filterSidebarActionsWithMore(
+  const {  withMore } = filterSidebarActionsWithMore(
     SIDEBARACTIONS,
-    user
-    // "Admin"
-    // "HR",
-    // "Department Head"
+
   );
 
   const navigate = useNavigate();
