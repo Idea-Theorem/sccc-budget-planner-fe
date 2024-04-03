@@ -5,12 +5,12 @@ export const SIDEBARACTIONS: SidebarAction[] = [
     more: [{title: "Settings", path: "/program-head/program-settings"},
     {title: "Codes", path: "/program-head/program-codes"} ]
   },
-  {
-    email: "programhead@gmail.com",
-    role: "Program_Head",
-    title: "Programs",
-    path: "/program-head",
-  },
+  // {
+  //   email: "programhead@gmail.com",
+  //   role: "Program_Head",
+  //   title: "Programs",
+  //   path: "/program-head",
+  // },
   {
     email: "departmenthead@gmail.com",
     role: "Department_Head",
@@ -33,8 +33,8 @@ export const SIDEBARACTIONS: SidebarAction[] = [
     email: "admin@gmail.com",
     role: "Admin",
     title: "Review Budgets",
-    // path: "/admin/review-budget",
-    path:"/department-head/review-budgets",
+    path: "/admin/review-budget",
+    // path:"/department-head/review-budgets",
 
     
   },
@@ -56,7 +56,7 @@ export const SIDEBARACTIONS: SidebarAction[] = [
     role: "HR",
     title: "HR",
     path: "/hr",
-    // more: [{ title: "Settings", path: "/hr/settings" }],
+    more: [{ title: "Settings", path: "/hr/settings" }],
   
   },
   { email: "suparadmin@gmail.com", role: "Super_Admin", title: "Dashboard", path: "/admin" },
@@ -70,8 +70,7 @@ export const SIDEBARACTIONS: SidebarAction[] = [
     email: "suparadmin@gmail.com",
     role: "Super_Admin",
     title: "Programs",
-    // path: "/program-head/program",
-    path: "/program-head"
+    path: "/program-head/program",
   },
   { email: "suparadmin@gmail.com", role: "Super_Admin", title: "HR",  path: "/hr" },
 ];

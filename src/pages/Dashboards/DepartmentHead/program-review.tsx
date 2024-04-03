@@ -26,7 +26,7 @@ const ProgramReview = () => {
           },
       ];
   return (
-    <BudgetDetail actions={actions} clickBack={() => navigate("/program-head")}/>
+    <BudgetDetail actions={actions} clickBack={() => navigate("/program-head")}/> 
   );
 };
 

@@ -128,9 +128,8 @@ function Row(props: {
   employeeData?: any;
   handleDelete?: any;
 }) {
-  const { row, handleClick, employeeData, handleDelete } = props;
+  const { row, handleClick, handleDelete } = props;
   const [open, setOpen] = React.useState(false);
-
   return (
     <React.Fragment>
       <TableRow>
@@ -146,8 +145,11 @@ function Row(props: {
         <TableCell component="th" scope="row">
           {row.firstname + " " + row.lastname}
         </TableCell>
-        <TableCell>{row.calories}</TableCell>
-        <TableCell>{row.fat}</TableCell>
+        {/* {row?.roles?.map((item: any) => {
+          return <TableCell>{item.name}</TableCell>;
+        })} */}
+        <TableCell>{row.roles[0].name}</TableCell>
+        <TableCell>{row.department.name}</TableCell>
         <TableCell>{row.hire_date}</TableCell>
         <TableCell>
           <Stack
@@ -179,18 +181,27 @@ function Row(props: {
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell padding="none" colSpan={6}>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Table size="small" aria-label="purchases">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Email Address</TableCell>
+                    <TableCell>Compensation type</TableCell>
+                    <TableCell align="right">Employement Type</TableCell>
+                    <TableCell align="right">Salary</TableCell>
+                  </TableRow>
+                </TableHead>
                 <TableBody>
-                  {employeeData?.map((historyRow: any, index: number) => (
-                    <TableRow key={index}>
-                      <TableCell>&nbsp;</TableCell>
-                      <TableCell>{historyRow.date}</TableCell>
-                      <TableCell>{historyRow.customerId}</TableCell>
-                      <TableCell>{historyRow.amount}</TableCell>
-                      <TableCell>{historyRow.yearend}</TableCell>
+                  {[0].map(() => (
+                    <TableRow key={row.id}>
+                      <TableCell component="th" scope="row">
+                        {row.email}
+                      </TableCell>
+                      <TableCell>{row.compensation_type}</TableCell>
+                      <TableCell align="right">{row.employment_type}</TableCell>
+                      <TableCell align="right">{row.salary_rate}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
