@@ -16,7 +16,7 @@ const AuthContext = createContext({
   authToken: "",
   loginLoading: "",
   currentRole: "",
-  setCurrentRole: "",
+  setCurrentRole: (_: string |  boolean) => {},
 });
 
 // const users = [
@@ -30,7 +30,7 @@ const AuthContext = createContext({
 export const useAuth = () => useContext(AuthContext);
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState(localStorage.getItem("user") || "");
+  const [user, setUser] = useState<any>();
   const [currentRole, setCurrentRole] = useState<any>("");
   const [authToken, setAuthToken] = useState("");
   const [loginLoading, setLoginLoading] = useState<any>(false);
@@ -40,7 +40,10 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     const user: any = localStorage.getItem("userInfo");
 
     const toParse = JSON.parse(user);
-    setUser(toParse);
+    if(toParse && toParse.email){
+
+      setUser(toParse);
+    }
     const currentRole: any = localStorage.getItem("currentRole");
     if (currentRole) {
       setCurrentRole(currentRole);
@@ -81,7 +84,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const logout = () => {
-    setUser("");
+    setUser(null);
     localStorage.removeItem("user");
   };
   return (

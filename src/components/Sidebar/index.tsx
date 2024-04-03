@@ -145,7 +145,7 @@ export default function ResponsiveDrawer(props: Props) {
     setMobileOpen(false);
   };
 
-  const handleReceive = (item: string) => {
+  const handleReceive = (item: any) => {
     localStorage.setItem("currentRole", item);
     setCurrentRole(item);
   };
@@ -158,7 +158,7 @@ export default function ResponsiveDrawer(props: Props) {
         <SelectDemo
           title="Department"
           value={currentRole}
-          list={user.roles}
+          list={user && user.roles}
           receiveValue={handleReceive}
         />
       </Grid>
