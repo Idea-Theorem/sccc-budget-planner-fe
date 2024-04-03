@@ -21,7 +21,7 @@ export const SIDEBARACTIONS: SidebarAction[] = [
     email: "departmenthead@gmail.com",
     role: "Department_Head",
     title: "Programs",
-    path: "/department-head/program",
+    path: "/program-head",
   },
   {
     email: "admin@gmail.com",

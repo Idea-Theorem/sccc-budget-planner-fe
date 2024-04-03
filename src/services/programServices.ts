@@ -6,7 +6,7 @@ const createProgram = async (data: any) => {
   };
 
   const getAllProgramsViaStatus = async (status: any) => {
-    return await HTTP_CLIENT.get(`/program/${status}`);
+    return await HTTP_CLIENT.get(`/program/?status=${status}`);
   };
 
 
@@ -14,10 +14,12 @@ const createProgram = async (data: any) => {
 //     return await HTTP_CLIENT.get("/user");
 //   };
 const getProgram = async (status: any) => {
-    return await HTTP_CLIENT.get(`/program/${status}`)
+    return await HTTP_CLIENT.get(`/program/?status=${status}`)
   };
-
-
+  
+  const programUpdate = async (data: any, id: string) => {
+    return await HTTP_CLIENT.put(`/program/${id}`, data);
+  };
 
   const updateProgram = async (data: any) => {
     return await HTTP_CLIENT.put(`/program/updateStatus`, data);
@@ -34,9 +36,8 @@ const getProgram = async (status: any) => {
 export {
     createProgram,
     getAllProgramsViaStatus,
-//     getEmployee,
+   programUpdate,
 updateProgram,
     getProgram,
-//   deleteEmployee,
-//   updateEmployee
+
 };

@@ -5,7 +5,7 @@ export function filterSidebarActionsWithMore(
   sidebarActions: SidebarAction[],
   role: any
 ) {
-const {user, currentRole} = useAuth()
+const { currentRole} = useAuth()
 
 // const user : any= localStorage.getItem('userInfo');
 // const modifyUser: any = JSON.parse(user)

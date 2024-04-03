@@ -83,7 +83,10 @@ export const salaryRates = [
     REJECTED = 'REJECTED',
     APPROVED = 'APPROVED',
     DRAFTED = 'DRAFTED',
+    CREATED = 'CREATED',
+    REVISED = 'REVISED',
   }
   
   export default Status;
+
 

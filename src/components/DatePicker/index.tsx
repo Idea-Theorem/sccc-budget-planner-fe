@@ -7,9 +7,8 @@ import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 
 interface DatePickerArea {
- label?: string
+  label?: string;
 }
-
 
 const DatePickerArea = styled(Box)(() => ({
   "&.MuiBox-root": {
@@ -42,27 +41,32 @@ const DatePickerArea = styled(Box)(() => ({
   },
 }));
 
-const BasicDatePicker = ({receiveDate,singleEmployeeData, label}: any) => {
+const BasicDatePicker = ({
+  receiveDate,
+  singleEmployeeData,
+  label,
+  disabled,
+}: any) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
-    receiveDate(date)
+    receiveDate(date);
   };
 
   useEffect(() => {
-    if(singleEmployeeData?.hire_date){
-      setSelectedDate(singleEmployeeData?.hire_date)
-    }else {
-
+    if (singleEmployeeData?.hire_date) {
+      setSelectedDate(singleEmployeeData?.hire_date);
+    } else {
       receiveDate(new Date());
     }
-  }, [singleEmployeeData])
+  }, [singleEmployeeData]);
 
   return (
     <DatePickerArea>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
+          disabled={disabled}
           className="date-picker-standard"
           value={selectedDate}
           onChange={handleDateChange}

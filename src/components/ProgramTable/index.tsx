@@ -127,6 +127,7 @@ export default function TabsProgramArea({
   title,
   handleSalaryExpenseReceived,
   handleSupplyExpenseReceived,
+  disabled,
 }: Props) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -209,6 +210,7 @@ export default function TabsProgramArea({
                   </TableCell>
                   <TableCell align="right">
                     <TextFields
+                      disabled={disabled}
                       type="text"
                       placeholder="$00,000.00"
                       value={row.amount || ""} // Set value from state

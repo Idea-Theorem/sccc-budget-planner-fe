@@ -42,7 +42,7 @@ const AppHuman = styled(Box)(({ theme }) => ({
 }));
 
 interface TabProps {
-  tabNames: string[];
+  tabNames: any;
 }
 
 const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {

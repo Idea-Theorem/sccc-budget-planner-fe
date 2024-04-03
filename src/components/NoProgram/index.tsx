@@ -2,7 +2,13 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 // import Link from "@mui/material/Link";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import Status from "../../utils/dumpData";
+import {
+  storeProgramFromStatus,
+  storeSingleProgram,
+} from "../../store/reducers/programSlice";
 
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.programsEmptyBox": {
@@ -44,13 +50,22 @@ const StyledBox = styled(Box)(({ theme }) => ({
 }));
 
 const NoProgramExistComponent = () => {
+  const navigate: any = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleRedirect = () => {
+    dispatch(storeProgramFromStatus(Status.CREATED));
+    dispatch(storeSingleProgram(null));
+
+    navigate("/program-head/create");
+  };
   return (
     <StyledBox className="programsEmptyBox">
       <Typography variant="h6">No existing programs</Typography>
-      <Box>
+      <Box onClick={handleRedirect}>
         <Link
           className="linkCreate"
-          to="/program-head/create"
+          to="#"
           // underline="always"
           // variant="subtitle2"
         >
