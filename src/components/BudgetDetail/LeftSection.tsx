@@ -2,7 +2,6 @@ import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import { Grid } from "../../pages/Components/MUIComponents/index";
-import moment from "moment";
 
 const DateTypography = styled(Typography)(({ theme }) => ({
   fontSize: "14px",

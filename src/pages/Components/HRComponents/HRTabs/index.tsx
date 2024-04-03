@@ -147,7 +147,9 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
             textColor="primary"
           >
             {typeof tabNames != "undefined" &&
-              tabNames?.map((name, index) => <Tab key={index} label={name} />)}
+              tabNames?.map((name: any, index: number) => (
+                <Tab key={index} label={name} />
+              ))}
           </Tabs>
         </Grid>
         <Grid item xs={12}>

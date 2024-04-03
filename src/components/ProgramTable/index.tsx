@@ -121,6 +121,7 @@ interface Props {
   title?: string;
   handleSalaryExpenseReceived?: any;
   formik?: any;
+  disabled?: any;
 }
 export default function TabsProgramArea({
   handleReceived,

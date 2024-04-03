@@ -16,7 +16,7 @@ import {
   programUpdate,
   updateProgram,
 } from "../../services/programServices";
-import { Box, Input } from "@mui/material";
+import { Input } from "@mui/material";
 import {
   storeIncomeList,
   storeProgramFromStatus,
