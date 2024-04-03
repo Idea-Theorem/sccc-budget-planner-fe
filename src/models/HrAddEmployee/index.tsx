@@ -148,6 +148,26 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
       LineHeight: "1",
     },
   },
+  ".multiselectgrid": {
+    ".MuiFormLabel-root": {
+      display: "block",
+    },
+    ".MuiInputBase-root": {
+      margin: "0",
+      width: "100%",
+    },
+    ".MuiSelect-select": {
+      display: "block",
+      width: "100%",
+      padding: "2px 0",
+      minHeight: "inherit",
+    },
+    ".MuiOutlinedInput-notchedOutline": {
+      border: "0px",
+      borderRadius: "0px",
+      borderBottom: "1px solid #0000006B",
+    },
+  },
 }));
 
 interface IHrAddEmployee {
@@ -382,11 +402,12 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                 receiveValue={receiveDepartments}
               />
             </Grid>
-            <Grid className="selectGrid" item xs={6}>
+            <Grid className="selectGrid multiselectgrid" item xs={6}>
               <InputLabel id="demo-multiple-checkbox-label">Role</InputLabel>
               <Select
                 labelId="demo-multiple-checkbox-label"
                 id="demo-multiple-checkbox"
+                variant="standard"
                 multiple
                 value={personName}
                 onChange={handleMultiSelectChange}

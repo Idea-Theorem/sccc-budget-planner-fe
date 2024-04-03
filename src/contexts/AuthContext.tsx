@@ -1,14 +1,22 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { useNavigate } from "react-router-dom";
 import LoginState from "../interfaces/ITheme.interface";
 import { loggedIn } from "../services/authServices";
 
 const AuthContext = createContext({
-  user: "",
+  user: null as null | string,
   login: (_: LoginState) => {},
   logout: () => {},
   authToken: "",
   loginLoading: "",
+  currentRole: "",
+  setCurrentRole: (_: string |  boolean) => {},
 });
 
 // const users = [
@@ -22,16 +30,34 @@ const AuthContext = createContext({
 export const useAuth = () => useContext(AuthContext);
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState(localStorage.getItem("user") || "");
+  const [user, setUser] = useState<null | string>(null);
+  const [currentRole, setCurrentRole] = useState<any>("");
   const [authToken, setAuthToken] = useState("");
   const [loginLoading, setLoginLoading] = useState<any>(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const user: any = localStorage.getItem("userInfo");
+
+    const toParse = JSON.parse(user);
+    if(toParse && toParse.roles){
+
+      setUser(toParse);
+    }
+    const currentRole: any = localStorage.getItem("currentRole");
+    if (currentRole) {
+      setCurrentRole(currentRole);
+    } else {
+      setCurrentRole(toParse.roles[0].name);
+    }
+  }, []);
 
   const login = async (values: LoginState) => {
     try {
       setLoginLoading(true);
       const respone = await loggedIn(values);
       setUser(respone?.data?.user);
+      setCurrentRole(respone?.data?.user?.roles[0].name);
       setAuthToken(respone?.data?.token);
       localStorage.setItem("userInfo", JSON.stringify(respone?.data?.user));
       localStorage.setItem("authToken", respone?.data?.token);
@@ -58,12 +84,20 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const logout = () => {
-    setUser("");
+    setUser(null);
     localStorage.removeItem("user");
   };
   return (
     <AuthContext.Provider
-      value={{ user, login, logout, authToken, loginLoading }}
+      value={{
+        user,
+        login,
+        logout,
+        authToken,
+        loginLoading,
+        currentRole,
+        setCurrentRole,
+      }}
     >
       {children}
     </AuthContext.Provider>

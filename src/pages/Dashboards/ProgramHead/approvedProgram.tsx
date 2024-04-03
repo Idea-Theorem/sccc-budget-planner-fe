@@ -4,6 +4,7 @@ import AddIcCallOutlined from "@mui/icons-material/AddIcCallOutlined";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
+import Status from "../../../utils/dumpData";
 
 const StyledBox = styled(Box)(({ theme }) => ({
   ".MuiTypography-root": {
@@ -18,7 +19,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
   },
 }));
 
-const ApprovedProgram = () => {
+const ApprovedProgram = ({ tabstatus }: any) => {
   return (
     <StyledBox>
       <Stack direction="row" alignItems="center" justifyContent="space-between">
@@ -28,9 +29,20 @@ const ApprovedProgram = () => {
           alignItems="center"
           gap="2px"
         >
-          <Typography className="textFull">2</Typography>
+          <Typography className="textFull">
+            {tabstatus == Status.PENDING
+              ? "1"
+              : tabstatus == Status.APPROVED
+              ? "2"
+              : tabstatus == Status.REJECTED
+              ? "3"
+              : ""}
+          </Typography>
           <Typography className="divider">/</Typography>
-          <Typography className="textValue"> 4 Programs Approved</Typography>
+          <Typography className="textValue">
+            {" "}
+            3 Programs {tabstatus?.toLowerCase()}
+          </Typography>
         </Stack>
         <Stack>
           <Button

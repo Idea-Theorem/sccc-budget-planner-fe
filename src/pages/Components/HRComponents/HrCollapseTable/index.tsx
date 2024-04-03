@@ -18,11 +18,11 @@ import EditNoteIcon from "@mui/icons-material/EditNote";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { deleteEmployee } from "../../../../services/employeeServices";
-import { SaveAlt } from "@mui/icons-material";
-import TextFields from "../../../../components/Input/textfield";
+import { SaveAlt, Search } from "@mui/icons-material";
 import * as XLSX from "xlsx";
+import InputAdornment from "@mui/material/InputAdornment";
+import TextField from "@mui/material/TextField";
 
-// Define StyledInputSearch using styled component
 const HrCollapseableTable = styled(Box)(({ theme }) => ({
   ".MuiTableCell-root": {
     background: "none",
@@ -82,7 +82,7 @@ const HrCollapseableTable = styled(Box)(({ theme }) => ({
         "& .MuiTableCell-body": {
           fontFamily: "Work Sans",
           fontSize: "14px",
-          fontWeight: "600",
+          fontWeight: "400",
           lineHeight: "20.02px",
           color: theme.palette.common.blackshades["4p"],
         },
@@ -128,9 +128,8 @@ function Row(props: {
   employeeData?: any;
   handleDelete?: any;
 }) {
-  const { row, handleClick, employeeData, handleDelete } = props;
+  const { row, handleClick, handleDelete } = props;
   const [open, setOpen] = React.useState(false);
-
   return (
     <React.Fragment>
       <TableRow>
@@ -146,8 +145,8 @@ function Row(props: {
         <TableCell component="th" scope="row">
           {row.firstname + " " + row.lastname}
         </TableCell>
-        <TableCell>{row.calories}</TableCell>
-        <TableCell>{row.fat}</TableCell>
+        <TableCell>{row.roles[0].name}</TableCell>
+        <TableCell>{row.department.name}</TableCell>
         <TableCell>{row.hire_date}</TableCell>
         <TableCell>
           <Stack
@@ -179,18 +178,29 @@ function Row(props: {
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell padding="none" colSpan={6}>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
+            <Box>
               <Table size="small" aria-label="purchases">
+                <TableHead>
+                  <TableRow>
+                    <TableCell style={{ paddingLeft: "62px" }}>
+                      Email Address
+                    </TableCell>
+                    <TableCell>Compensation type</TableCell>
+                    <TableCell>Employement Type</TableCell>
+                    <TableCell>Salary</TableCell>
+                  </TableRow>
+                </TableHead>
                 <TableBody>
-                  {employeeData?.map((historyRow: any, index: number) => (
-                    <TableRow key={index}>
-                      <TableCell>&nbsp;</TableCell>
-                      <TableCell>{historyRow.date}</TableCell>
-                      <TableCell>{historyRow.customerId}</TableCell>
-                      <TableCell>{historyRow.amount}</TableCell>
-                      <TableCell>{historyRow.yearend}</TableCell>
+                  {[0].map(() => (
+                    <TableRow key={row.id}>
+                      <TableCell style={{ paddingLeft: "62px" }}>
+                        {row.email}
+                      </TableCell>
+                      <TableCell>{row.compensation_type}</TableCell>
+                      <TableCell>{row.employment_type}</TableCell>
+                      <TableCell>{row.salary_rate}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -253,10 +263,27 @@ export default function HrCollapsibleTable({
   return (
     <>
       <HrCollapseableTable className="dashboardTable">
-        <IconButton aria-label="export" onClick={exportToExcel}>
-          <SaveAlt />
-        </IconButton>
-        <TextFields placeholder="search..." />
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <IconButton aria-label="export" onClick={exportToExcel}>
+            <SaveAlt />
+          </IconButton>
+          <TextField
+            id="input-with-icon-textfield"
+            placeholder="Search..."
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Search style={{ color: "#0000008F" }} />
+                </InputAdornment>
+              ),
+            }}
+            variant="standard"
+          />
+        </Stack>
         <TableContainer component={Paper}>
           <Table aria-label="collapsible table">
             <TableHead>
