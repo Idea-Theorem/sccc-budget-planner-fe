@@ -146,16 +146,17 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
             indicatorColor="primary"
             textColor="primary"
           >
-            {tabNames.map((name, index) => (
-              <Tab key={index} label={name} />
-            ))}
+            {typeof tabNames != "undefined" &&
+              tabNames?.map((name, index) => <Tab key={index} label={name} />)}
           </Tabs>
         </Grid>
         <Grid item xs={12}>
           <AppBar position="static">
             <Toolbar>
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                {tabNames[value] === "Community Centres"
+                {typeof tabNames == "undefined"
+                  ? ""
+                  : tabNames[value] === "Community Centres"
                   ? "Centres"
                   : tabNames[value] === "Departments"
                   ? "Departments"
@@ -171,7 +172,9 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
                 startIcon={<AddIcon />}
                 onClick={() => handleClick(tabNames[value])}
                 btntext={`Add New ${
-                  tabNames[value] === "Community Centres"
+                  typeof tabNames == "undefined"
+                    ? ""
+                    : tabNames[value] === "Community Centres"
                     ? "Centre"
                     : tabNames[value] === "Departments"
                     ? "Department"

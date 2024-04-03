@@ -63,10 +63,7 @@ interface SuperAdminProps {
 }
 
 const HREmployeees: React.FC<SuperAdminProps> = () => {
-  // const tabNames = ["Employees", "Departments", "Community Centres"];
-
   const { currentRole } = useAuth();
-
   const handleTabsDynamically = () => {
     if (currentRole == "HR") {
       return ["Employees"];
@@ -75,7 +72,7 @@ const HREmployeees: React.FC<SuperAdminProps> = () => {
     } else if (currentRole == "Super_Admin") {
       return ["Employees", "Departments", "Community Centres"];
     } else {
-      [];
+      return [];
     }
   };
   return (
