@@ -193,7 +193,8 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
   const [activeDepartment, setActiveDepartment] = useState<any>(null);
 
   const formik = useFormik<any>({
-    validateOnBlur: false,
+    validateOnBlur: true,
+    validateOnChange: false,
     validationSchema:
       heading == "Edit Employee" ? editEmployeeSchema : createEmployeeSchema,
     enableReinitialize: true,
@@ -367,6 +368,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                 value={values.lastname}
                 name="lastname"
                 onChange={handleChange}
+                onBlur={handleChange}
                 helperText={errors.lastname ? errors.lastname.toString() : ""}
                 error={errors.lastname ? true : false}
               />
