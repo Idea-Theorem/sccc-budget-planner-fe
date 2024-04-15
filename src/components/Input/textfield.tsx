@@ -16,6 +16,7 @@ interface ITextFields {
   helperText?: any;
   size?: any;
   error?: any;
+  onBlur?: any;
 }
 
 const TextFields: React.FC<ITextFields> = ({
@@ -31,6 +32,7 @@ const TextFields: React.FC<ITextFields> = ({
   helperText,
   size,
   error,
+  onBlur,
 }) => {
   return (
     <Box component="form" noValidate autoComplete="off">
@@ -47,7 +49,8 @@ const TextFields: React.FC<ITextFields> = ({
         placeholder={placeholder}
         name={name}
         helperText={helperText}
-        error={error}
+        error={error && error}
+        onBlur={onBlur}
       />
     </Box>
   );

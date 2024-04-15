@@ -10,13 +10,13 @@ import LoginState from "../interfaces/ITheme.interface";
 import { loggedIn } from "../services/authServices";
 
 const AuthContext = createContext({
-  user: null as null | string,
+  user: null as null | any,
   login: (_: LoginState) => {},
   logout: () => {},
   authToken: "",
   loginLoading: "",
   currentRole: "",
-  setCurrentRole: (_: string |  boolean) => {},
+  setCurrentRole: (_: string | boolean) => {},
 });
 
 // const users = [
@@ -30,7 +30,7 @@ const AuthContext = createContext({
 export const useAuth = () => useContext(AuthContext);
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<null | string>(null);
+  const [user, setUser] = useState<null | any>(null);
   const [currentRole, setCurrentRole] = useState<any>("");
   const [authToken, setAuthToken] = useState("");
   const [loginLoading, setLoginLoading] = useState<any>(false);
@@ -40,8 +40,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     const user: any = localStorage.getItem("userInfo");
 
     const toParse = JSON.parse(user);
-    if(toParse && toParse.roles){
-
+    if (toParse && toParse.roles) {
       setUser(toParse);
     }
     const currentRole: any = localStorage.getItem("currentRole");
