@@ -8,6 +8,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import LoginState from "../interfaces/ITheme.interface";
 import { loggedIn } from "../services/authServices";
+import StatusModal from "../components/StatusModal";
 
 const AuthContext = createContext({
   user: null as null | any,
@@ -34,6 +35,8 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [currentRole, setCurrentRole] = useState<any>("");
   const [authToken, setAuthToken] = useState("");
   const [loginLoading, setLoginLoading] = useState<any>(false);
+  const [statusData, setStatusData] = useState<any>(null);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -61,9 +64,18 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
       localStorage.setItem("userInfo", JSON.stringify(respone?.data?.user));
       localStorage.setItem("authToken", respone?.data?.token);
       setLoginLoading(false);
+      setStatusData({
+        type: "success",
+        message: "User LoggedIn Successfully",
+      });
       navigate("/hr");
-    } catch (error) {
+    } catch (error: any) {
       setLoginLoading(false);
+      console.log(error);
+      setStatusData({
+        type: "error",
+        message: error.response.data.message,
+      });
     }
 
     // const usr = users.find((user) => user === email);
@@ -87,19 +99,25 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.removeItem("user");
   };
   return (
-    <AuthContext.Provider
-      value={{
-        user,
-        login,
-        logout,
-        authToken,
-        loginLoading,
-        currentRole,
-        setCurrentRole,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
+    <>
+      <StatusModal
+        statusData={statusData}
+        onClose={() => setStatusData(null)}
+      />
+      <AuthContext.Provider
+        value={{
+          user,
+          login,
+          logout,
+          authToken,
+          loginLoading,
+          currentRole,
+          setCurrentRole,
+        }}
+      >
+        {children}
+      </AuthContext.Provider>
+    </>
   );
 };
 
