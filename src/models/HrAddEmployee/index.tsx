@@ -32,6 +32,7 @@ import {
 } from "../../services/employeeServices";
 import { getAllDepartments } from "../../services/departmentServices";
 import TextFields from "../../components/Input/textfield";
+import StatusModal from "../../components/StatusModal";
 
 const EmployeeInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
@@ -178,6 +179,7 @@ interface IHrAddEmployee {
   handleClose?: any;
   open?: any;
   singleEmployeeData?: any;
+  setSingleEmployeeData?: any;
 }
 
 const HrAddEmployee: React.FC<IHrAddEmployee> = ({
@@ -186,11 +188,13 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
   handleClose,
   open,
   singleEmployeeData,
+  setSingleEmployeeData,
 }) => {
   const [personName, setPersonName] = useState<string[]>([]);
   const [role, setRole] = useState<any>([]);
   const [departments, setDepartments] = useState<any>([]);
   const [activeDepartment, setActiveDepartment] = useState<any>(null);
+  const [statusData, setStatusData] = useState<any>(null);
 
   const formik = useFormik<any>({
     validateOnBlur: true,
@@ -226,13 +230,29 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
           delete values.password;
 
           await updateEmployee(values, singleEmployeeData?.id);
+          setStatusData({
+            type: "success",
+            message: "Employee Update Successfully",
+          });
         } else {
           await createEmployee(values);
+          setStatusData({
+            type: "success",
+            message: "Employee Added Successfully",
+          });
         }
         handleClose();
         setPersonName([]);
+        setDepartments([]);
+        setActiveDepartment(null);
+        setSingleEmployeeData(null);
         formik.resetForm();
-      } catch (error) {}
+      } catch (error: any) {
+        setStatusData({
+          type: "success",
+          message: error.response.data.message,
+        });
+      }
     },
   });
   const {
@@ -258,6 +278,12 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
         array.push(item.name);
       });
       setPersonName(array);
+    } else {
+      setPersonName([]);
+      setDepartments([]);
+      setActiveDepartment(null);
+      setSingleEmployeeData(null);
+      fetchUserRole();
     }
   }, [singleEmployeeData]);
 
@@ -337,170 +363,178 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
     setFieldValue("salary_rate", salaryRate);
   };
   return (
-    <Modal
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <EmployeeInfoArea>
-        <Box>
-          <Typography variant="h6">{heading}</Typography>
-        </Box>
-        <Box>
-          <Typography className="body1">Account Information</Typography>
+    <>
+      <StatusModal
+        statusData={statusData}
+        onClose={() => setStatusData(null)}
+      />
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <EmployeeInfoArea>
+          <Box>
+            <Typography variant="h6">{heading}</Typography>
+          </Box>
+          <Box>
+            <Typography className="body1">Account Information</Typography>
+            <Grid container spacing={4}>
+              <Grid item xs={6}>
+                <TextFields
+                  error={errors.firstname ? true : false}
+                  variant="standard"
+                  label="First Name"
+                  value={values.firstname}
+                  name="firstname"
+                  onChange={handleChange}
+                  helperText={
+                    errors.firstname ? errors.firstname.toString() : ""
+                  }
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextFields
+                  variant="standard"
+                  label="Last Name"
+                  value={values.lastname}
+                  name="lastname"
+                  onChange={handleChange}
+                  onBlur={handleChange}
+                  helperText={errors.lastname ? errors.lastname.toString() : ""}
+                  error={errors.lastname ? true : false}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextFields
+                  variant="standard"
+                  label="Email"
+                  value={values.email}
+                  name="email"
+                  onChange={handleChange}
+                  helperText={errors.email ? errors.email.toString() : ""}
+                  error={errors.email ? true : false}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextFields
+                  variant="standard"
+                  label="Password"
+                  disabled={heading == "Edit Employee" ? true : false}
+                  value={values.password}
+                  name="password"
+                  onChange={handleChange}
+                  helperText={errors.password ? errors.password.toString() : ""}
+                  error={errors.password ? true : false}
+                />
+              </Grid>
+              <Grid className="selectGrid" item xs={6}>
+                <SelectDemo
+                  title="Department"
+                  value={activeDepartment}
+                  list={departments}
+                  receiveValue={receiveDepartments}
+                />
+              </Grid>
+              <Grid className="selectGrid multiselectgrid" item xs={6}>
+                <InputLabel id="demo-multiple-checkbox-label">Role</InputLabel>
+                <Select
+                  labelId="demo-multiple-checkbox-label"
+                  id="demo-multiple-checkbox"
+                  variant="standard"
+                  multiple
+                  value={personName}
+                  onChange={handleMultiSelectChange}
+                  input={<OutlinedInput label="Tag" />}
+                  renderValue={(selected) =>
+                    selected
+                      .map((name) => name.toLowerCase().replace(/_/g, " "))
+                      .join(", ")
+                  }
+                  MenuProps={MenuProps}
+                >
+                  {role.map((item: any, index: number) => (
+                    <MenuItem key={index} value={item.name}>
+                      <Checkbox checked={personName.indexOf(item.name) > -1} />
+                      <ListItemText
+                        primary={item.name.toLowerCase().replace(/_/g, " ")}
+                      />
+                    </MenuItem>
+                  ))}
+                </Select>
+                <Box>{errors.roles ? errors.roles.toString() : ""}</Box>
+              </Grid>
+              <Grid item xs={6} className="label-area">
+                <BasicDatePicker
+                  singleEmployeeData={singleEmployeeData}
+                  receiveDate={receiveDate}
+                  label="Hire Date"
+                />
+              </Grid>
+            </Grid>
+          </Box>
+          <Box className="secondaryRow">
+            <Typography className="subtitle">{title}</Typography>
+          </Box>
           <Grid container spacing={4}>
-            <Grid item xs={6}>
-              <TextFields
-                error={errors.firstname ? true : false}
-                variant="standard"
-                label="First Name"
-                value={values.firstname}
-                name="firstname"
-                onChange={handleChange}
-                helperText={errors.firstname ? errors.firstname.toString() : ""}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextFields
-                variant="standard"
-                label="Last Name"
-                value={values.lastname}
-                name="lastname"
-                onChange={handleChange}
-                onBlur={handleChange}
-                helperText={errors.lastname ? errors.lastname.toString() : ""}
-                error={errors.lastname ? true : false}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextFields
-                variant="standard"
-                label="Email"
-                value={values.email}
-                name="email"
-                onChange={handleChange}
-                helperText={errors.email ? errors.email.toString() : ""}
-                error={errors.email ? true : false}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextFields
-                variant="standard"
-                label="Password"
-                disabled={heading == "Edit Employee" ? true : false}
-                value={values.password}
-                name="password"
-                onChange={handleChange}
-                helperText={errors.password ? errors.password.toString() : ""}
-                error={errors.password ? true : false}
+            <Grid className="selectGrid" item xs={6}>
+              <SelectDemo
+                title="Compensation Type"
+                value={values?.compensation_type}
+                list={compensationType}
+                receiveValue={receiveCompensationType}
+                error={errors.compensation_type ? true : false}
               />
             </Grid>
             <Grid className="selectGrid" item xs={6}>
               <SelectDemo
-                title="Department"
-                value={activeDepartment}
-                list={departments}
-                receiveValue={receiveDepartments}
+                title="Employment Type"
+                value={values?.employment_type}
+                list={employeementType}
+                receiveValue={EmployeementType}
+                error={errors.employment_type ? true : false}
               />
             </Grid>
-            <Grid className="selectGrid multiselectgrid" item xs={6}>
-              <InputLabel id="demo-multiple-checkbox-label">Role</InputLabel>
-              <Select
-                labelId="demo-multiple-checkbox-label"
-                id="demo-multiple-checkbox"
-                variant="standard"
-                multiple
-                value={personName}
-                onChange={handleMultiSelectChange}
-                input={<OutlinedInput label="Tag" />}
-                renderValue={(selected) =>
-                  selected
-                    .map((name) => name.toLowerCase().replace(/_/g, " "))
-                    .join(", ")
-                }
-                MenuProps={MenuProps}
-              >
-                {role.map((item: any, index: number) => (
-                  <MenuItem key={index} value={item.name}>
-                    <Checkbox checked={personName.indexOf(item.name) > -1} />
-                    <ListItemText
-                      primary={item.name.toLowerCase().replace(/_/g, " ")}
-                    />
-                  </MenuItem>
-                ))}
-              </Select>
-              <Box>{errors.roles ? errors.roles.toString() : ""}</Box>
-            </Grid>
-            <Grid item xs={6} className="label-area">
-              <BasicDatePicker
-                singleEmployeeData={singleEmployeeData}
-                receiveDate={receiveDate}
-                label="Hire Date"
+            <Grid className="selectGrid" item xs={6}>
+              <SelectDemo
+                title="Salary/Rate"
+                value={values?.salary_rate}
+                list={salaryRates}
+                receiveValue={salartRate}
+                error={errors.salary_rate ? true : false}
               />
             </Grid>
           </Grid>
-        </Box>
-        <Box className="secondaryRow">
-          <Typography className="subtitle">{title}</Typography>
-        </Box>
-        <Grid container spacing={4}>
-          <Grid className="selectGrid" item xs={6}>
-            <SelectDemo
-              title="Compensation Type"
-              value={values?.compensation_type}
-              list={compensationType}
-              receiveValue={receiveCompensationType}
-              error={errors.compensation_type ? true : false}
-            />
-          </Grid>
-          <Grid className="selectGrid" item xs={6}>
-            <SelectDemo
-              title="Employment Type"
-              value={values?.employment_type}
-              list={employeementType}
-              receiveValue={EmployeementType}
-              error={errors.employment_type ? true : false}
-            />
-          </Grid>
-          <Grid className="selectGrid" item xs={6}>
-            <SelectDemo
-              title="Salary/Rate"
-              value={values?.salary_rate}
-              list={salaryRates}
-              receiveValue={salartRate}
-              error={errors.salary_rate ? true : false}
-            />
-          </Grid>
-        </Grid>
-        <Stack
-          className="formButtons"
-          direction="row"
-          justifyContent="flex-end"
-          alignItems="center"
-          gap="10px"
-        >
-          <Button
-            variant="text"
-            color="error"
-            size="medium"
-            startIcon={<Clear />}
-            onClick={handleClose}
+          <Stack
+            className="formButtons"
+            direction="row"
+            justifyContent="flex-end"
+            alignItems="center"
+            gap="10px"
           >
-            Cancel
-          </Button>
-          <Button
-            variant="outlined"
-            color="primary"
-            size="medium"
-            startIcon={<Save />}
-            onClick={() => handleSubmit()}
-          >
-            {isSubmitting ? " Saving..." : "Save"}
-          </Button>
-        </Stack>
-      </EmployeeInfoArea>
-    </Modal>
+            <Button
+              variant="text"
+              color="error"
+              size="medium"
+              startIcon={<Clear />}
+              onClick={handleClose}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="outlined"
+              color="primary"
+              size="medium"
+              startIcon={<Save />}
+              onClick={() => handleSubmit()}
+            >
+              {isSubmitting ? " Saving..." : "Save"}
+            </Button>
+          </Stack>
+        </EmployeeInfoArea>
+      </Modal>
+    </>
   );
 };
 

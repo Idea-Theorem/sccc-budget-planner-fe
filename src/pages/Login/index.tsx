@@ -127,6 +127,7 @@ const Input = () => {
 
   const formik: FormikProps<LoginState> = useFormik<LoginState>({
     validateOnBlur: false,
+    validateOnChange: false,
     validationSchema,
     initialValues: {
       email: "",

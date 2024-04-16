@@ -62,12 +62,6 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
   const handleChange = (_: ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
-  const routes = [
-    { path: "/hr/addemployees" },
-    { path: "/hr/adddepartment" },
-    { path: "/hr/addcenter" },
-  ];
-  console.log(routes);
 
   const handleCloseModal = () => {
     fetchEmployee();
@@ -136,6 +130,7 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
     fetchCenters();
     fetchEmployee();
   }, []);
+
   return (
     <AppHuman>
       <Grid container spacing={2}>
@@ -217,6 +212,7 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
         handleClose={handleCloseModal}
         heading={heading}
         singleEmployeeData={singleEmployeeData}
+        setSingleEmployeeData={setSingleEmployeeData}
       />
       <DepartmentInfo
         open={isDepartOpen}

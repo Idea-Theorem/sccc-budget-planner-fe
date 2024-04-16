@@ -8,6 +8,7 @@ import { Button, Stack } from "@mui/material";
 import { useState } from "react";
 import DeleteModal from "../../../../models/DeleteModal";
 import { deleteDepartment } from "../../../../services/departmentServices";
+import StatusModal from "../../../../components/StatusModal";
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
@@ -139,6 +140,8 @@ interface HRTableProps {
 const HRTableComponent: React.FC<HRTableProps> = ({ onEdit, row, refresh }) => {
   const [deleteRow, setDeleteRow] = useState<any>(false);
   const [loading, setLoading] = useState<any>(false);
+  const [statusData, setStatusData] = useState<any>(null);
+
   const columns: GridColDef[] = [
     {
       field: "name",
@@ -209,9 +212,17 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit, row, refresh }) => {
       setLoading(true);
       await deleteDepartment(deleteRow?.id);
       setLoading(false);
+      setStatusData({
+        type: "success",
+        message: "Department Deleted Successfully",
+      });
       refresh();
       closeModel();
-    } catch (error) {
+    } catch (error: any) {
+      setStatusData({
+        type: "error",
+        message: error.response.data.message,
+      });
       setLoading(false);
     }
   };
@@ -238,6 +249,10 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit, row, refresh }) => {
         handleClose={closeModel}
         loading={loading}
         heading="Are you sure you want to delete?"
+      />
+      <StatusModal
+        statusData={statusData}
+        onClose={() => setStatusData(null)}
       />
     </>
   );

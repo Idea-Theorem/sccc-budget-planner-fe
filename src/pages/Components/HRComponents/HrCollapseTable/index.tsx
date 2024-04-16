@@ -22,6 +22,7 @@ import { SaveAlt, Search } from "@mui/icons-material";
 import * as XLSX from "xlsx";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
+import StatusModal from "../../../../components/StatusModal";
 
 const HrCollapseableTable = styled(Box)(({ theme }) => ({
   ".MuiTableCell-root": {
@@ -213,20 +214,20 @@ function Row(props: {
   );
 }
 
-const rows = [
-  createData(
-    "Tomohiro Komase",
-    "Program Head",
-    "Recreation & Culture",
-    "02-Mar-2024"
-  ),
-  createData(
-    "Vishesh Thind",
-    "Department Head",
-    "Recreation & Culture",
-    "02-Mar-2024"
-  ),
-];
+// const rows = [
+//   createData(
+//     "Tomohiro Komase",
+//     "Program Head",
+//     "Recreation & Culture",
+//     "02-Mar-2024"
+//   ),
+//   createData(
+//     "Vishesh Thind",
+//     "Department Head",
+//     "Recreation & Culture",
+//     "02-Mar-2024"
+//   ),
+// ];
 
 export default function HrCollapsibleTable({
   handleClick,
@@ -235,6 +236,7 @@ export default function HrCollapsibleTable({
 }: any) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [statusData, setStatusData] = React.useState<any>(null);
 
   const handleChangePage = (_: unknown, newPage: number) => {
     setPage(newPage);
@@ -250,8 +252,17 @@ export default function HrCollapsibleTable({
   const handleDelete = async (data: any) => {
     try {
       await deleteEmployee(data?.id);
+      setStatusData({
+        type: "success",
+        message: "Employee Deleted Successfully",
+      });
       refresh();
-    } catch (error) {}
+    } catch (error: any) {
+      setStatusData({
+        type: "error",
+        message: error.response.data.message,
+      });
+    }
   };
 
   const exportToExcel = () => {
@@ -311,10 +322,14 @@ export default function HrCollapsibleTable({
           </Table>
         </TableContainer>
       </HrCollapseableTable>
+      <StatusModal
+        statusData={statusData}
+        onClose={() => setStatusData(null)}
+      />
       <TablePagination
         rowsPerPageOptions={[5, 10, 15]}
         component="div"
-        count={rows.length}
+        count={employeeData.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

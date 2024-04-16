@@ -16,6 +16,7 @@ import {
 import SelectDemo from "../../components/Select";
 import { useEffect, useState } from "react";
 import { getAllCenters } from "../../services/centersServices";
+import StatusModal from "../../components/StatusModal";
 
 const DepartmentInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
@@ -150,6 +151,7 @@ const DepartmentInfo: React.FC<IDepartmentInfo> = ({
 }) => {
   const [center, setCenter] = useState<any>(null);
   const [activecenter, setActiveCenter] = useState<any>(null);
+  const [statusData, setStatusData] = useState<any>(null);
 
   const formik = useFormik<any>({
     validateOnBlur: false,
@@ -163,13 +165,26 @@ const DepartmentInfo: React.FC<IDepartmentInfo> = ({
       try {
         if (heading == "Edit Department") {
           await updateDepartment(values, singleDepartments?.id);
+          setStatusData({
+            type: "success",
+            message: "Department Update Successfully",
+          });
         } else {
           await createDepartment(values);
+          setStatusData({
+            type: "success",
+            message: "Department Create Successfully",
+          });
         }
         formik.resetForm();
         setDingleDepartments(null);
         handleClose();
-      } catch (error) {}
+      } catch (error: any) {
+        setStatusData({
+          type: "error",
+          message: error.response.data.message,
+        });
+      }
     },
   });
 
@@ -198,48 +213,46 @@ const DepartmentInfo: React.FC<IDepartmentInfo> = ({
   };
 
   return (
-    <Modal
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <DepartmentInfoArea>
-        <Box>
-          <Typography variant="h6">{heading}</Typography>
-        </Box>
-        <Box>
-          <Typography className="subtitle">{subheading}</Typography>
-          <Grid container spacing={4}>
-            <Grid item xs={12}>
-              <TextField
-                variant="standard"
-                label="Department Name"
-                value={values.name}
-                name="name"
-                onChange={handleChange}
-                helperText={errors.name ? errors.name.toString() : ""}
-                error={errors.name ? true : false}
-              />
+    <>
+      <StatusModal
+        statusData={statusData}
+        onClose={() => setStatusData(null)}
+      />
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <DepartmentInfoArea>
+          <Box>
+            <Typography variant="h6">{heading}</Typography>
+          </Box>
+          <Box>
+            <Typography className="subtitle">{subheading}</Typography>
+            <Grid container spacing={4}>
+              <Grid item xs={12}>
+                <TextField
+                  variant="standard"
+                  label="Department Name"
+                  value={values.name}
+                  name="name"
+                  onChange={handleChange}
+                  helperText={errors.name ? errors.name.toString() : ""}
+                  error={errors.name ? true : false}
+                />
+              </Grid>
+              <Grid item xs={12} className="community-area">
+                <SelectDemo
+                  title="Community Center"
+                  value={activecenter}
+                  list={center}
+                  receiveValue={receiveCenter}
+                  error={errors.center_id ? true : false}
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={12} className="community-area">
-              <SelectDemo
-                title="Community Center"
-                value={activecenter}
-                list={center}
-                receiveValue={receiveCenter}
-                error={errors.center_id ? true : false}
-              />
-            </Grid>
-          </Grid>
-        </Box>
-        <Stack
-          className="formButtons"
-          direction="row"
-          justifyContent="flex-end"
-          alignItems="center"
-          gap="10px"
-        >
+          </Box>
           <Stack
             className="formButtons"
             direction="row"
@@ -247,29 +260,37 @@ const DepartmentInfo: React.FC<IDepartmentInfo> = ({
             alignItems="center"
             gap="10px"
           >
-            <Button
-              variant="text"
-              color="error"
-              size="medium"
-              startIcon={<Clear />}
-              onClick={handleClose}
+            <Stack
+              className="formButtons"
+              direction="row"
+              justifyContent="flex-end"
+              alignItems="center"
+              gap="10px"
             >
-              Cancel
-            </Button>
-            <Button
-              disabled={isSubmitting}
-              onClick={() => handleSubmit()}
-              variant="outlined"
-              color="primary"
-              size="medium"
-              startIcon={<Save />}
-            >
-              {isSubmitting ? "Saving..." : "Save"}
-            </Button>
+              <Button
+                variant="text"
+                color="error"
+                size="medium"
+                startIcon={<Clear />}
+                onClick={handleClose}
+              >
+                Cancel
+              </Button>
+              <Button
+                disabled={isSubmitting}
+                onClick={() => handleSubmit()}
+                variant="outlined"
+                color="primary"
+                size="medium"
+                startIcon={<Save />}
+              >
+                {isSubmitting ? "Saving..." : "Save"}
+              </Button>
+            </Stack>
           </Stack>
-        </Stack>
-      </DepartmentInfoArea>
-    </Modal>
+        </DepartmentInfoArea>
+      </Modal>
+    </>
   );
 };
 
