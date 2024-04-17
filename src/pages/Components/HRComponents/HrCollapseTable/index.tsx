@@ -1,0 +1,340 @@
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Collapse from "@mui/material/Collapse";
+import IconButton from "@mui/material/IconButton";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import TablePagination from "@mui/material/TablePagination";
+import { styled } from "@mui/system";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import EditNoteIcon from "@mui/icons-material/EditNote";
+import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
+import { deleteEmployee } from "../../../../services/employeeServices";
+import { SaveAlt, Search } from "@mui/icons-material";
+import * as XLSX from "xlsx";
+import InputAdornment from "@mui/material/InputAdornment";
+import TextField from "@mui/material/TextField";
+import StatusModal from "../../../../components/StatusModal";
+
+const HrCollapseableTable = styled(Box)(({ theme }) => ({
+  ".MuiTableCell-root": {
+    background: "none",
+    border: "none",
+  },
+
+  "&.dashboardTable": {
+    padding: "30px",
+
+    "& .MuiPaper-rounded": {
+      borderRadius: "0",
+      boxShadow: "none",
+
+      "& .MuiTableHead-root": {
+        borderBottom: "1px solid rgba(191, 191, 191, 1)",
+      },
+
+      "& .totalRow": {
+        borderTop: "1px solid #d9d9d9",
+
+        "&.last": {
+          borderColor: "#000",
+        },
+      },
+
+      "& .MuiTableCell-head": {
+        color: theme.palette.text.primary,
+        fontFamily: "Work Sans",
+        fontSize: "14px",
+        fontWeight: "600",
+        lineHeight: "24px",
+        borderBottom: "1px solid theme.palette.text.primary",
+
+        "& span": {
+          fontSize: "14px",
+          fontWeight: "400",
+        },
+      },
+
+      "& .MuiTableCell-body": {
+        fontFamily: "Work Sans",
+        fontSize: "14px",
+        fontWeight: "400",
+        lineHeight: "20.02px",
+        color: theme.palette.common.blackshades["4p"],
+      },
+
+      "& .MuiCollapse-wrapperInner": {
+        "& .MuiTableRow-root": {
+          borderTop: "none",
+        },
+
+        "& .MuiBox-root": {
+          margin: "0",
+        },
+
+        "& .MuiTableCell-body": {
+          fontFamily: "Work Sans",
+          fontSize: "14px",
+          fontWeight: "400",
+          lineHeight: "20.02px",
+          color: theme.palette.common.blackshades["4p"],
+        },
+      },
+    },
+  },
+}));
+
+function createData(
+  calories?: string,
+  fat?: string,
+  carbs?: string,
+  protein?: string,
+  price?: string
+) {
+  return {
+    name,
+    calories,
+    fat,
+    carbs,
+    protein,
+    price,
+    history: [
+      {
+        date: "Email Address",
+        customerId: "Compensation Type",
+        amount: "Employment Type",
+        yearend: "Salary",
+      },
+      {
+        date: "tkomase@ideatheorem.com",
+        customerId: "Hourly Rate",
+        amount: "Fulltime",
+        yearend: "$20/h",
+      },
+    ],
+  };
+}
+
+function Row(props: {
+  row: ReturnType<typeof createData> | any;
+  handleClick: any;
+  employeeData?: any;
+  handleDelete?: any;
+}) {
+  const { row, handleClick, handleDelete } = props;
+  const [open, setOpen] = React.useState(false);
+  return (
+    <React.Fragment>
+      <TableRow>
+        <TableCell padding="none" size="small">
+          <IconButton
+            aria-label="expand row"
+            size="small"
+            onClick={() => setOpen(!open)}
+          >
+            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          </IconButton>
+        </TableCell>
+        <TableCell component="th" scope="row">
+          {row.firstname + " " + row.lastname}
+        </TableCell>
+        <TableCell>{row.roles[0].name}</TableCell>
+        <TableCell>{row.department.name}</TableCell>
+        <TableCell>{row.hire_date}</TableCell>
+        <TableCell>
+          <Stack
+            direction="row"
+            gap="10px"
+            alignItems="center"
+            justifyContent="flex-end"
+            width="100%"
+          >
+            <Button
+              variant="text"
+              color="error"
+              size="small"
+              startIcon={<DeleteOutlineIcon />}
+              onClick={() => handleDelete(row)}
+            >
+              Delete
+            </Button>
+            <Button
+              variant="outlined"
+              color="primary"
+              size="small"
+              startIcon={<EditNoteIcon />}
+              onClick={() => handleClick(row)}
+            >
+              Edit
+            </Button>
+          </Stack>
+        </TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <Box>
+              <Table size="small" aria-label="purchases">
+                <TableHead>
+                  <TableRow>
+                    <TableCell style={{ paddingLeft: "62px" }}>
+                      Email Address
+                    </TableCell>
+                    <TableCell>Compensation type</TableCell>
+                    <TableCell>Employement Type</TableCell>
+                    <TableCell>Salary</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {[0].map(() => (
+                    <TableRow key={row.id}>
+                      <TableCell style={{ paddingLeft: "62px" }}>
+                        {row.email}
+                      </TableCell>
+                      <TableCell>{row.compensation_type}</TableCell>
+                      <TableCell>{row.employment_type}</TableCell>
+                      <TableCell>{row.salary_rate}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </Box>
+          </Collapse>
+        </TableCell>
+      </TableRow>
+    </React.Fragment>
+  );
+}
+
+// const rows = [
+//   createData(
+//     "Tomohiro Komase",
+//     "Program Head",
+//     "Recreation & Culture",
+//     "02-Mar-2024"
+//   ),
+//   createData(
+//     "Vishesh Thind",
+//     "Department Head",
+//     "Recreation & Culture",
+//     "02-Mar-2024"
+//   ),
+// ];
+
+export default function HrCollapsibleTable({
+  handleClick,
+  employeeData,
+  refresh,
+}: any) {
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [statusData, setStatusData] = React.useState<any>(null);
+
+  const handleChangePage = (_: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+
+  const handleDelete = async (data: any) => {
+    try {
+      await deleteEmployee(data?.id);
+      setStatusData({
+        type: "success",
+        message: "Employee Deleted Successfully",
+      });
+      refresh();
+    } catch (error: any) {
+      setStatusData({
+        type: "error",
+        message: error.response.data.message,
+      });
+    }
+  };
+
+  const exportToExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(employeeData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Data");
+    XLSX.writeFile(workbook, "data.xlsx");
+  };
+  return (
+    <>
+      <HrCollapseableTable className="dashboardTable">
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <IconButton aria-label="export" onClick={exportToExcel}>
+            <SaveAlt />
+          </IconButton>
+          <TextField
+            id="input-with-icon-textfield"
+            placeholder="Search..."
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Search style={{ color: "#0000008F" }} />
+                </InputAdornment>
+              ),
+            }}
+            variant="standard"
+          />
+        </Stack>
+        <TableContainer component={Paper}>
+          <Table aria-label="collapsible table">
+            <TableHead>
+              <TableRow>
+                <TableCell>&nbsp;</TableCell>
+                <TableCell>Employee Name</TableCell>
+                <TableCell>Position</TableCell>
+                <TableCell>Department</TableCell>
+                <TableCell>Hire date</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {employeeData
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row: any, index: number) => (
+                  <Row
+                    key={index}
+                    row={row}
+                    handleClick={handleClick}
+                    employeeData={employeeData}
+                    handleDelete={handleDelete}
+                  />
+                ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </HrCollapseableTable>
+      <StatusModal
+        statusData={statusData}
+        onClose={() => setStatusData(null)}
+      />
+      <TablePagination
+        rowsPerPageOptions={[5, 10, 15]}
+        component="div"
+        count={employeeData.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+    </>
+  );
+}

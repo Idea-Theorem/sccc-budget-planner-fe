@@ -1,4 +1,3 @@
-import * as React from "react";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -29,27 +28,48 @@ const StyledSelect = styled(Select)(({ theme }) => ({
   color: theme.palette.gfGrey.GF75,
 }));
 
-export default function SelectDemo() {
-  const [value, selectValue] = React.useState("");
-
-  const handleChange = (event) => {
-    selectValue(event.target.value);
+export default function SelectDemo({
+  title,
+  list,
+  receiveValue,
+  value,
+  error,
+  disabled,
+}: any) {
+  const handleChange = (event: any) => {
+    receiveValue(event.target.value);
   };
+  function convertToLowerAndRemoveUnderscore(inputString: string | number) {
+    if (typeof inputString === "number") {
+      return inputString;
+    }
+    // Check if inputString exists
+    if (inputString) {
+      // Convert the input string to lowercase and remove underscores
+      return inputString.toLowerCase().replace(/_/g, " ");
+    } else {
+      // If inputString is undefined or null, return an empty string
+      return "";
+    }
+  }
 
   return (
-    <StyledFormControl size="medium" variant="standard">
-      <StyledInputLabel>Department</StyledInputLabel>
+    <StyledFormControl size="medium" variant="standard" error={error}>
+      <StyledInputLabel>{title}</StyledInputLabel>
       <StyledSelect
+        disabled={disabled}
+        value={value}
         labelId="select-label"
         id="select-demo"
-        defaultValue={10}
         label="Label"
         onChange={handleChange}
         className="select-list"
       >
-        <MenuItem value={10}>Ten</MenuItem>
-        <MenuItem value={20}>Twenty</MenuItem>
-        <MenuItem value={30}>Thirty</MenuItem>
+        {list?.map((item: any) => (
+          <MenuItem value={item.name}>
+            {convertToLowerAndRemoveUnderscore(item.name)}
+          </MenuItem>
+        ))}
       </StyledSelect>
     </StyledFormControl>
   );
