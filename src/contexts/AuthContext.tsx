@@ -36,7 +36,6 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [authToken, setAuthToken] = useState("");
   const [loginLoading, setLoginLoading] = useState<any>(false);
   const [statusData, setStatusData] = useState<any>(null);
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -61,6 +60,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
       setUser(respone?.data?.user);
       setCurrentRole(respone?.data?.user?.roles[0].name);
       setAuthToken(respone?.data?.token);
+      localStorage.setItem("currentRole", respone?.data?.user?.roles[0].name);
       localStorage.setItem("userInfo", JSON.stringify(respone?.data?.user));
       localStorage.setItem("authToken", respone?.data?.token);
       setLoginLoading(false);
