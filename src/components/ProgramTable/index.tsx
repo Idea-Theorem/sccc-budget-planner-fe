@@ -21,6 +21,13 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 
 const TabsProgramAreas = styled(Box)(({ theme }) => ({
+  ".input-border": {
+    ".MuiInputBase-root": {
+      "&:before": {
+        display: "none",
+      },
+    },
+  },
   ".MuiTabs-flexContainer": {
     borderBottom: "1px solid #BFBFBF",
     height: "100%",
@@ -67,9 +74,9 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
 
         "&:last-child": {
           "& .MuiTableCell-body": {
-            borderTop: "1px solid #000",
+            // borderTop: "1px solid #000",
             color: "#000",
-            fontWeight: "600",
+            // fontWeight: "600",
             letterSpacing: "0.4px",
           },
         },
@@ -188,6 +195,20 @@ export default function TabsProgramArea({
   const closeModal = () => {
     setIsOpen(false);
   };
+
+  function getTotalAmount() {
+    let total = 0;
+    for (let i = 0; i < entities?.length; i++) {
+      total += entities[i].amount;
+    }
+    return String(total);
+  }
+
+  function capitalizeFirstLetter(str: string | any) {
+    if (str.length === 0) return "";
+
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
   return (
     <>
       <TabsProgramAreas>
@@ -209,9 +230,11 @@ export default function TabsProgramArea({
                   <TableCell component="th" scope="row">
                     {row.name}
                   </TableCell>
-                  <TableCell align="right">
+                  <TableCell align="right" className="input-border">
                     <TextFields
+                      autoFocus={false}
                       disabled={disabled}
+                      variant="standard"
                       type="text"
                       placeholder="$00,000.00"
                       value={row.amount || ""} // Set value from state
@@ -223,6 +246,21 @@ export default function TabsProgramArea({
                   </TableCell>
                 </TableRow>
               ))}
+              <TableRow
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                onClick={() => setIsOpen(false)}
+              >
+                <TableCell component="th" scope="row">
+                  Total {capitalizeFirstLetter(title)}
+                </TableCell>
+                <TableCell align="right">
+                  <TextFields
+                    type="text"
+                    placeholder="$00,000.00"
+                    value={getTotalAmount()}
+                  />
+                </TableCell>
+              </TableRow>
             </TableBody>
           </Table>
         </TableContainer>
