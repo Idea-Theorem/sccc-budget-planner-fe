@@ -277,6 +277,8 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
       singleEmployeeData?.roles.map((item: any) => {
         array.push(item.name);
       });
+      fetchDepartments();
+
       setPersonName(array);
     } else {
       setPersonName([]);

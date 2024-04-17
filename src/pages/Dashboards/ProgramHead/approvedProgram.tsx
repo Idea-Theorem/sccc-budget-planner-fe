@@ -5,6 +5,9 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Status from "../../../utils/dumpData";
+import React, { useEffect } from "react";
+import { getPrograms } from "../../../services/adminServices";
+import { getProgram } from "../../../services/programServices";
 
 const StyledBox = styled(Box)(({ theme }) => ({
   ".MuiTypography-root": {
@@ -20,30 +23,39 @@ const StyledBox = styled(Box)(({ theme }) => ({
 }));
 
 const ApprovedProgram = ({ tabstatus }: any) => {
+  const [programs, setPrograms] = React.useState<any>({});
+  const [pendingprograms, setPendingPrograms] = React.useState<any>(0);
+  useEffect(() => {
+    fetchProgram();
+  }, []);
+  const fetchProgram = async () => {
+    try {
+      const response = await getPrograms();
+      const res = await getProgram(Status.PENDING);
+      setPrograms(response?.data);
+      setPendingPrograms(res?.data?.programs?.length);
+    } catch (error) {}
+  };
   return (
     <StyledBox>
       <Stack direction="row" alignItems="center" justifyContent="space-between">
-        <Stack
-          className="textRange"
-          direction="row"
-          alignItems="center"
-          gap="2px"
-        >
-          <Typography className="textFull">
-            {tabstatus == Status.PENDING
-              ? "1"
-              : tabstatus == Status.APPROVED
-              ? "2"
-              : tabstatus == Status.REJECTED
-              ? "3"
-              : ""}
-          </Typography>
-          <Typography className="divider">/</Typography>
-          <Typography className="textValue">
-            {" "}
-            3 Programs {tabstatus?.toLowerCase()}
-          </Typography>
-        </Stack>
+        {tabstatus == Status.APPROVED && (
+          <Stack
+            className="textRange"
+            direction="row"
+            alignItems="center"
+            gap="2px"
+          >
+            <Typography className="textFull">
+              {programs.approvedCount}
+            </Typography>
+            <Typography className="divider">/</Typography>
+            <Typography className="textValue">
+              {" "}
+              {pendingprograms} Programs {tabstatus?.toLowerCase()}
+            </Typography>
+          </Stack>
+        )}
         <Stack>
           <Button
             variant="contained"
