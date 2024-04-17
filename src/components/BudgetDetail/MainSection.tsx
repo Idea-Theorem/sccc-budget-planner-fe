@@ -77,9 +77,10 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
       dispatch(storeIncomeList([]));
       dispatch(storeSupplyList([]));
       dispatch(storeSalaryList([]));
-      dispatch(storeSingleProgram(null));
+      // dispatch(storeSingleProgram(null));
     };
   }, []);
+
   useEffect(() => {
     if (singleProgram) {
       dispatch(storeIncomeList(singleProgram?.income));
@@ -89,12 +90,6 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
       setActiveDepartment(singleProgram?.department?.name);
       setFieldValue("code", singleProgram?.code);
     }
-    // return () => {
-    //   dispatch(storeIncomeList([]));
-    //   dispatch(storeSupplyList([]));
-    //   dispatch(storeSalaryList([]));
-    //   dispatch(storeSingleProgram(null));
-    // };
   }, []);
 
   const { values, handleSubmit, setFieldValue } = formik;

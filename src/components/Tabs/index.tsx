@@ -64,6 +64,7 @@ function a11yProps(index: number) {
 
 const BasicTabs = (props: BasicTabsProps) => {
   const [value, setValue] = React.useState(0);
+  const [loading, setLoading] = React.useState(false);
   const [status, setStatus] = React.useState(Status.PENDING);
   const dispatch = useDispatch();
   const { programList } = useSelector((state: RootState) => state.program);
@@ -100,10 +101,14 @@ const BasicTabs = (props: BasicTabsProps) => {
   }, [status]);
   const fetchProgramList = async (status: string) => {
     try {
+      setLoading(true);
       const response = await getAllProgramsViaStatus(status);
       // const modifyArray = modifyCreatedAt(response?.data?.programs);
       dispatch(storeProgramList(response?.data?.programs));
-    } catch (error) {}
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
   };
 
   const handleClick = (rowData: any) => {
@@ -115,6 +120,13 @@ const BasicTabs = (props: BasicTabsProps) => {
       dispatch(storeSingleProgram(rowData));
       navigate("/program-head/create");
     } else if (location?.pathname == "/program-head/draft") {
+      dispatch(storeSingleProgram(rowData));
+      dispatch(storeProgramFromStatus(Status.DRAFTED));
+      navigate("/program-head/create");
+    } else if (
+      location?.pathname == "/program-head/program" &&
+      status == Status.DRAFTED
+    ) {
       dispatch(storeSingleProgram(rowData));
       dispatch(storeProgramFromStatus(Status.DRAFTED));
       navigate("/program-head/create");
@@ -149,22 +161,10 @@ const BasicTabs = (props: BasicTabsProps) => {
             row={typeof programList == "undefined" ? [] : programList}
             status={props?.currentStatus}
             handleActionReieve={props?.handleActionReieve}
+            loading={loading}
           />
         </CustomTabPanel>
       ))}
-
-      {/* <CustomTabPanel value={value} index={1}>
-        <TableComponent columns={props.tableColumnsTitleArray} />
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={2}>
-        <TableComponent columns={props.tableColumnsTitleArray} />
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={3}>
-        <TableComponent columns={props.tableColumnsTitleArray} />
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={4}>
-        <TableComponent columns={props.tableColumnsTitleArray} />
-      </CustomTabPanel> */}
     </Box>
   );
 };

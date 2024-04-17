@@ -148,6 +148,24 @@ export default function ResponsiveDrawer(props: Props) {
     setCurrentRole(item);
   };
 
+  React.useEffect(() => {
+    switch (currentRole) {
+      case "Program_Head":
+        navigate("/program-head");
+        break;
+      case "Admin":
+        navigate("/admin");
+        break;
+      case "Super_Admin":
+        navigate("/super-admin");
+        break;
+      case "Department_Head":
+        navigate("/department-head/review-budgets");
+        break;
+      default:
+        navigate("/hr/employees");
+    }
+  }, [currentRole]);
   const drawer = (
     <Box>
       <Box className="siteLogo">

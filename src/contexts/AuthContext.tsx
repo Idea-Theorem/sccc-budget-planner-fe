@@ -68,7 +68,22 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         type: "success",
         message: "User LoggedIn Successfully",
       });
-      navigate("/hr");
+      switch (respone?.data?.user?.roles[0].name) {
+        case "Program_Head":
+          navigate("/program-head");
+          break;
+        case "Admin":
+          navigate("/admin");
+          break;
+        case "Super_Admin":
+          navigate("/super-admin");
+          break;
+        case "Department_Head":
+          navigate("/department-head/review-budgets");
+          break;
+        default:
+          navigate("/hr/employees");
+      }
     } catch (error: any) {
       setLoginLoading(false);
       console.log(error);
