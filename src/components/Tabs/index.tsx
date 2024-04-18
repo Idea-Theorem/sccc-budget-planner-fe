@@ -162,6 +162,7 @@ const BasicTabs = (props: BasicTabsProps) => {
             status={props?.currentStatus}
             handleActionReieve={props?.handleActionReieve}
             loading={loading}
+            currentTab={status}
           />
         </CustomTabPanel>
       ))}

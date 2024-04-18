@@ -6,6 +6,7 @@ const StatusModal = ({ statusData, onClose }: any) => {
       open={Boolean(statusData)}
       autoHideDuration={6000}
       onClose={onClose}
+      className="toast"
     >
       <Alert severity={statusData?.type == "error" ? "error" : "success"}>
         {statusData?.message}

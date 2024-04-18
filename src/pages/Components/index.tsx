@@ -238,7 +238,6 @@ const ComponentsScreen = () => {
       <HrAddEmployee
         heading="Add New Employee"
         subheading="Account Information"
-        title="Compensation Information"
       />
       <ThreadPopups />
       <ApprovedProgram />
