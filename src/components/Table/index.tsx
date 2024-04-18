@@ -25,6 +25,10 @@ const StyledBox = styled(Box)(({ theme }) => ({
 }));
 const StyleDataGrid = styled(DataGrid)(() => ({
   width: "100%",
+
+  ".pointer-cursor": {
+    cursor: "pointer",
+  },
   "&.MuiDataGrid-root": {
     borderWidth: "0 !important",
     borderStyle: "none",
@@ -124,6 +128,7 @@ interface ColumnnsProps {
   onSelectionModelChange?: (selection: any) => void;
   handleActionReieve?: any;
   loading: boolean;
+  currentTab?: any;
 }
 const TableComponent = (props: ColumnnsProps) => {
   const handleSelectionChange = (selection: any) => {
@@ -204,7 +209,7 @@ const TableComponent = (props: ColumnnsProps) => {
       </StyledGridOverlay>
     );
   }
-
+  console.log("status:::::::", props.currentTab);
   return (
     <>
       <StyledBox className="mainTableBlock">
@@ -229,6 +234,15 @@ const TableComponent = (props: ColumnnsProps) => {
             onRowClick={handleRowClick}
             onRowSelectionModelChange={handleSelectionChange}
             loading={props.loading}
+            getRowClassName={(params: any) => {
+              if (
+                props.currentTab == "REJECTED" ||
+                props.currentTab == "DRAFTED"
+              ) {
+                return "pointer-cursor";
+              }
+              return ""; // Return empty string if condition is not met
+            }}
           />
         </Box>
       </StyledBox>

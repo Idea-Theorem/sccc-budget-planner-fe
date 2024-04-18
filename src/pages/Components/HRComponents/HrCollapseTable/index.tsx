@@ -199,8 +199,15 @@ function Row(props: {
                       <TableCell style={{ paddingLeft: "62px" }}>
                         {row.email}
                       </TableCell>
-                      <TableCell>{row.compensation_type}</TableCell>
-                      <TableCell>{row.employment_type}</TableCell>
+                      <TableCell>
+                        {row.compensation_type.charAt(0).toUpperCase() +
+                          row.compensation_type.slice(1)}
+                      </TableCell>
+                      <TableCell>
+                        {row.employment_type.charAt(0).toUpperCase() +
+                          row.employment_type.slice(1)}
+                      </TableCell>
+
                       <TableCell>{row.salary_rate}</TableCell>
                     </TableRow>
                   ))}

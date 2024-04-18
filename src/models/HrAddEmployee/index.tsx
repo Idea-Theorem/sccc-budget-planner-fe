@@ -84,10 +84,11 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
 
           "& .MuiInputLabel-root": {
             fontSize: "12px",
-            // color: "rgba(0, 0, 0, 0.7)",
+            color: "rgba(0, 0, 0, 0.7)",
 
             "& + .MuiInputBase-root": {
               marginTop: "-2px",
+              textTransform: "capitalize",
 
               "&:before": {
                 display: "none",
@@ -289,12 +290,12 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
     }
   }, [singleEmployeeData]);
 
-  const ITEM_HEIGHT = 48;
-  const ITEM_PADDING_TOP = 8;
+  // const ITEM_HEIGHT = 48;
+  // const ITEM_PADDING_TOP = 8;
   const MenuProps = {
     PaperProps: {
       style: {
-        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        maxHeight: "inherit",
         width: 250,
       },
     },
@@ -364,6 +365,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
   const salartRate = (salaryRate: any) => {
     setFieldValue("salary_rate", salaryRate);
   };
+
   return (
     <>
       <StatusModal
@@ -381,7 +383,12 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
             <Typography variant="h6">{heading}</Typography>
           </Box>
           <Box>
-            <Typography className="body1">Account Information</Typography>
+            <Typography
+              className="body1"
+              tyle={{ color: "#303030", fontSize: "16px", fontWeight: "500" }}
+            >
+              Account Information
+            </Typography>
             <Grid container spacing={4}>
               <Grid item xs={6}>
                 <TextFields
@@ -438,9 +445,26 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                   list={departments}
                   receiveValue={receiveDepartments}
                 />
+                <Typography
+                  style={{
+                    color: "rgba(211, 47, 47, 1)",
+                    fontSize: "12px",
+                    fontWeight: "400",
+                  }}
+                >
+                  {errors.roles ? errors.roles.toString() : ""}
+                </Typography>
               </Grid>
               <Grid className="selectGrid multiselectgrid" item xs={6}>
-                <InputLabel id="demo-multiple-checkbox-label">Role</InputLabel>
+                <InputLabel
+                  id="demo-multiple-checkbox-label"
+                  style={{
+                    fontSize: "12px",
+                    fontWeight: "400",
+                  }}
+                >
+                  Role
+                </InputLabel>
                 <Select
                   labelId="demo-multiple-checkbox-label"
                   id="demo-multiple-checkbox"
@@ -450,22 +474,34 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                   onChange={handleMultiSelectChange}
                   input={<OutlinedInput label="Tag" />}
                   renderValue={(selected) =>
-                    selected
-                      .map((name) => name.toLowerCase().replace(/_/g, " "))
-                      .join(", ")
+                    selected.map((name) => name.replace(/_/g, " ")).join(", ")
                   }
                   MenuProps={MenuProps}
                 >
                   {role.map((item: any, index: number) => (
-                    <MenuItem key={index} value={item.name}>
+                    <MenuItem
+                      key={index}
+                      value={item.name}
+                      style={{ textTransform: "capitalize" }}
+                    >
                       <Checkbox checked={personName.indexOf(item.name) > -1} />
                       <ListItemText
-                        primary={item.name.toLowerCase().replace(/_/g, " ")}
+                        style={{ textTransform: "capitalize" }}
+                        primary={item.name.replace(/_/g, " ")}
                       />
                     </MenuItem>
                   ))}
                 </Select>
-                <Box>{errors.roles ? errors.roles.toString() : ""}</Box>
+                <Typography
+                  style={{
+                    color: "rgba(211, 47, 47, 1)",
+                    fontSize: "12px",
+                    fontWeight: "400",
+                    paddingTop: "3px",
+                  }}
+                >
+                  {errors.roles ? errors.roles.toString() : ""}
+                </Typography>
               </Grid>
               <Grid item xs={6} className="label-area">
                 <BasicDatePicker
@@ -477,7 +513,12 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
             </Grid>
           </Box>
           <Box className="secondaryRow">
-            <Typography className="subtitle">{title}</Typography>
+            <Typography
+              className="subtitle"
+              style={{ color: "#303030", fontSize: "16px", fontWeight: "500" }}
+            >
+              Compensation Information
+            </Typography>
           </Box>
           <Grid container spacing={4}>
             <Grid className="selectGrid" item xs={6}>
@@ -488,6 +529,15 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                 receiveValue={receiveCompensationType}
                 error={errors.compensation_type ? true : false}
               />
+              <Typography
+                style={{
+                  color: "rgba(211, 47, 47, 1)",
+                  fontSize: "12px",
+                  fontWeight: "400",
+                }}
+              >
+                {errors.roles ? errors.roles.toString() : ""}
+              </Typography>
             </Grid>
             <Grid className="selectGrid" item xs={6}>
               <SelectDemo
@@ -497,6 +547,15 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                 receiveValue={EmployeementType}
                 error={errors.employment_type ? true : false}
               />
+              <Typography
+                style={{
+                  color: "rgba(211, 47, 47, 1)",
+                  fontSize: "12px",
+                  fontWeight: "400",
+                }}
+              >
+                {errors.roles ? errors.roles.toString() : ""}
+              </Typography>
             </Grid>
             <Grid className="selectGrid" item xs={6}>
               <SelectDemo
@@ -506,6 +565,15 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                 receiveValue={salartRate}
                 error={errors.salary_rate ? true : false}
               />
+              <Typography
+                style={{
+                  color: "rgba(211, 47, 47, 1)",
+                  fontSize: "12px",
+                  fontWeight: "400",
+                }}
+              >
+                {errors.roles ? errors.roles.toString() : ""}
+              </Typography>
             </Grid>
           </Grid>
           <Stack
@@ -516,8 +584,8 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
             gap="10px"
           >
             <Button
+              style={{ color: "#303030" }}
               variant="text"
-              color="error"
               size="medium"
               startIcon={<Clear />}
               onClick={handleClose}
@@ -525,7 +593,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
               Cancel
             </Button>
             <Button
-              variant="outlined"
+              variant="contained"
               color="primary"
               size="medium"
               startIcon={<Save />}

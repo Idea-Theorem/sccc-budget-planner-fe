@@ -28,7 +28,8 @@ import { useAppDispatch } from "../../store/hooks";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { EditNote } from "@mui/icons-material";
+import { EditNote, UploadFile } from "@mui/icons-material";
+import SaveIcon from "@mui/icons-material/Save";
 
 const MainSection = ({ actions }: { actions: ActionsType[] }) => {
   const [departments, setDepartments] = useState<any>([]);
@@ -222,10 +223,10 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
                     key={0}
                     btntext="Save"
                     onClick={handleSave}
-                    variant="contained"
+                    variant="outlined"
                     color="primary"
                     size="medium"
-                    startIcon={<EditNote />}
+                    startIcon={<SaveIcon />}
                   />
                 </>
               ) : programFromStatus == Status.DRAFTED ||
@@ -235,10 +236,10 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
                     key={0}
                     btntext="Save"
                     onClick={handleSave}
-                    variant="contained"
+                    variant="outlined"
                     color="primary"
                     size="medium"
-                    startIcon={<EditNote />}
+                    startIcon={<SaveIcon />}
                   />
                   <Buttons
                     key={0}
@@ -251,7 +252,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
                     variant="contained"
                     color="primary"
                     size="medium"
-                    startIcon={<EditNote />}
+                    startIcon={<UploadFile />}
                   />
                 </>
               ) : programFromStatus == Status.REJECTED ? (
@@ -299,7 +300,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
               disabled={disable}
             />
             <SelectDemo
-              title="Departments"
+              title="Department"
               receiveValue={receiveDepartment}
               list={departments}
               value={activeDepartment}

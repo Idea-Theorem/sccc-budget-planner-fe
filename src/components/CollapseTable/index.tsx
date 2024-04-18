@@ -94,7 +94,7 @@ const CollapseableTable = styled(Box)(({ theme }) => ({
 
         "&:nth-child(2)": {
           width: "44%",
-          padding :"18px 6px",
+          padding: "18px 6px",
         },
 
         "&:nth-child(3)": {
