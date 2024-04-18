@@ -3,14 +3,13 @@ import { Snackbar, Alert } from "@mui/material";
 const StatusModal = ({ statusData, onClose }: any) => {
   return (
     <Snackbar
-      open={true}
+      open={Boolean(statusData)}
       autoHideDuration={6000}
       onClose={onClose}
       className="toast"
     >
       <Alert severity={statusData?.type == "error" ? "error" : "success"}>
-        {/* {statusData?.message} */}
-        error
+        {statusData?.message}
       </Alert>
     </Snackbar>
   );

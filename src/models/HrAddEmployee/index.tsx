@@ -176,7 +176,6 @@ interface IHrAddEmployee {
   heading?: string;
   headinginfo?: string;
   subheading?: string;
-  title?: string;
   handleClose?: any;
   open?: any;
   singleEmployeeData?: any;
@@ -185,7 +184,6 @@ interface IHrAddEmployee {
 
 const HrAddEmployee: React.FC<IHrAddEmployee> = ({
   heading,
-  title,
   handleClose,
   open,
   singleEmployeeData,
@@ -385,7 +383,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
           <Box>
             <Typography
               className="body1"
-              tyle={{ color: "#303030", fontSize: "16px", fontWeight: "500" }}
+              style={{ color: "#303030", fontSize: "16px", fontWeight: "500" }}
             >
               Account Information
             </Typography>

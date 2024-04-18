@@ -234,7 +234,7 @@ const TableComponent = (props: ColumnnsProps) => {
             onRowClick={handleRowClick}
             onRowSelectionModelChange={handleSelectionChange}
             loading={props.loading}
-            getRowClassName={(params: any) => {
+            getRowClassName={() => {
               if (
                 props.currentTab == "REJECTED" ||
                 props.currentTab == "DRAFTED"
