@@ -79,7 +79,7 @@ const SideArea = styled(Box)(({ theme }) => ({
   },
 
   ".MuiButtonBase-root": {
-    color: "#f5f5f5",
+    color: "#303030",
 
     "&:hover": {
       color: "#fff",
@@ -89,7 +89,7 @@ const SideArea = styled(Box)(({ theme }) => ({
 
   "& .activecollapse": {
     background: theme.palette.background.DarkGray,
-    color: "#F5F5F5",
+    color: "#303030",
   },
 
   ".MuiCollapse-root": {
@@ -117,6 +117,8 @@ const SideArea = styled(Box)(({ theme }) => ({
       lineHeight: "20.02px",
       fontWeight: "400",
       fontFamily: "Roboto, sans-serif",
+      textAlign: "center",
+      
     },
   },
 }));

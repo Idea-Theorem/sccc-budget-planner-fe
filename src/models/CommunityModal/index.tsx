@@ -24,6 +24,8 @@ const DepartmentInfoArea = styled(Box)(({ theme }) => ({
   top: "50%",
   position: "relative",
 
+ 
+
   "& .MuiTypography-h6": {
     color: "#000",
     fontFamily: "Work Sans",
@@ -65,6 +67,7 @@ const DepartmentInfoArea = styled(Box)(({ theme }) => ({
 
             "& + .MuiInputBase-root": {
               marginTop: "-2px",
+              textTransform: "capitalize",
 
               "&:before": {
                 display: "none",

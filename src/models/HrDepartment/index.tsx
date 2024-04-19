@@ -72,6 +72,7 @@ const DepartmentInfoArea = styled(Box)(({ theme }) => ({
 
             "& + .MuiInputBase-root": {
               marginTop: "-2px",
+              textTransform: "capitalize",
 
               "&:before": {
                 display: "none",

@@ -65,7 +65,17 @@ export const createEmployeeSchema =  yup.object().shape({
       .number()
       .required("Salary Rates is required!"),
   })
-
+  export const programSchema =  yup.object().shape({
+    name: yup
+      .string()
+      .required("Program Name is required!"),
+      code: yup
+      .string()
+      .required("Program Code is required!"),
+      department_id: yup
+      .string()
+      .required("Departments is required!"),
+  })
 
   export const createDepartmentSchema =  yup.object().shape({
     name: yup
