@@ -75,7 +75,11 @@ export default function SelectDemo({
         className="select-list"
       >
         {list?.map((item: any) => (
-          <MenuItem value={item.name}>
+          <MenuItem
+            value={item.name}
+            className="list"
+            style={{ textTransform: "capitalize" }}
+          >
             {convertToLowerAndRemoveUnderscore(item.name)}
           </MenuItem>
         ))}

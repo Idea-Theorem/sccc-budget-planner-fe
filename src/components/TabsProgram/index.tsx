@@ -108,7 +108,7 @@ const TabsAreas = styled(Box)(({ theme }) => ({
     height: "100%",
   },
   "&.MuiButtonBase-root": {
-    color: theme.palette.error.main, //Example used plz exact style according to figma
+    color: theme.palette.error.main,
   },
   ".tabs-lists": {
     width: "100%",
@@ -119,6 +119,9 @@ const TabsAreas = styled(Box)(({ theme }) => ({
       margin: "-11px 0 0",
       padding: "9px 0 0",
     },
+  },
+  ".MuiInputBase-input": {
+    marginRight: "-100px",
   },
   ".MuiTableCell-head": {
     padding: "0 15px !important",
