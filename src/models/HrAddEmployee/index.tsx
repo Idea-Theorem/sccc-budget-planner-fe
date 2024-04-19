@@ -444,7 +444,6 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                   list={departments}
                   receiveValue={receiveDepartments}
                   error={errors.department_id ? true : false}
-                  errorMessage={errors.department_id}
                 />
                 <Typography
                   style={{
@@ -453,7 +452,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                     fontWeight: "400",
                   }}
                 >
-                  {errors.roles ? errors.roles.toString() : ""}
+                  {errors.department_id ? errors.department_id.toString() : ""}
                 </Typography>
               </Grid>
               <Grid className="selectGrid multiselectgrid" item xs={6}>
@@ -529,7 +528,6 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                 list={compensationType}
                 receiveValue={receiveCompensationType}
                 error={errors.compensation_type ? true : false}
-                errorMessage={errors.compensation_type}
               />
               <Typography
                 style={{
@@ -538,7 +536,9 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                   fontWeight: "400",
                 }}
               >
-                {errors.roles ? errors.roles.toString() : ""}
+                {errors.compensation_type
+                  ? errors.compensation_type.toString()
+                  : ""}
               </Typography>
             </Grid>
             <Grid className="selectGrid" item xs={6}>
@@ -548,7 +548,6 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                 list={employeementType}
                 receiveValue={EmployeementType}
                 error={errors.employment_type ? true : false}
-                errorMessage={errors.employment_type}
               />
               <Typography
                 style={{
@@ -557,7 +556,9 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                   fontWeight: "400",
                 }}
               >
-                {errors.roles ? errors.roles.toString() : ""}
+                {errors.employment_type
+                  ? errors.employment_type.toString()
+                  : ""}
               </Typography>
             </Grid>
             <Grid className="selectGrid" item xs={6}>
@@ -567,7 +568,6 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                 list={salaryRates}
                 receiveValue={salartRate}
                 error={errors.salary_rate ? true : false}
-                errorMessage={errors.salary_rate}
               />
               <Typography
                 style={{
@@ -576,7 +576,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                   fontWeight: "400",
                 }}
               >
-                {errors.roles ? errors.roles.toString() : ""}
+                {errors.salary_rate ? errors.salary_rate.toString() : ""}
               </Typography>
             </Grid>
           </Grid>
