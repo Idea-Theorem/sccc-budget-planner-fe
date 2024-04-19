@@ -262,6 +262,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
     setFieldValue,
     isSubmitting,
   } = formik;
+
   useEffect(() => {
     fetchUserRole();
     fetchDepartments();
@@ -442,6 +443,8 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                   value={activeDepartment}
                   list={departments}
                   receiveValue={receiveDepartments}
+                  error={errors.department_id ? true : false}
+                  errorMessage={errors.department_id}
                 />
                 <Typography
                   style={{
@@ -526,6 +529,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                 list={compensationType}
                 receiveValue={receiveCompensationType}
                 error={errors.compensation_type ? true : false}
+                errorMessage={errors.compensation_type}
               />
               <Typography
                 style={{
@@ -544,6 +548,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                 list={employeementType}
                 receiveValue={EmployeementType}
                 error={errors.employment_type ? true : false}
+                errorMessage={errors.employment_type}
               />
               <Typography
                 style={{
@@ -562,6 +567,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                 list={salaryRates}
                 receiveValue={salartRate}
                 error={errors.salary_rate ? true : false}
+                errorMessage={errors.salary_rate}
               />
               <Typography
                 style={{

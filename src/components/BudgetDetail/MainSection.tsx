@@ -16,7 +16,7 @@ import {
   programUpdate,
   updateProgram,
 } from "../../services/programServices";
-import { Input } from "@mui/material";
+import { Box, Input } from "@mui/material";
 import {
   storeIncomeList,
   storeProgramFromStatus,
@@ -28,6 +28,8 @@ import { useAppDispatch } from "../../store/hooks";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import { programSchema } from "../../utils/yupSchema";
+import TextFields from "../Input/textfield";
 import { EditNote, UploadFile } from "@mui/icons-material";
 import SaveIcon from "@mui/icons-material/Save";
 
@@ -44,10 +46,10 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
 
   const formik = useFormik<any>({
     validateOnBlur: false,
-    // validationSchema:  editEmployeeSchema,
+    validationSchema: programSchema,
     enableReinitialize: true,
     initialValues: {
-      name: singleProgram ? singleProgram?.name : "Program",
+      name: singleProgram ? singleProgram?.name : "",
       code: "",
       department_id: "",
       from_date: "",
@@ -93,7 +95,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
     }
   }, []);
 
-  const { values, handleSubmit, setFieldValue } = formik;
+  const { values, handleSubmit, setFieldValue, errors } = formik;
 
   const fetchDepartments = async () => {
     try {
@@ -197,13 +199,16 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
         <Grid item xs={12}>
           <Stack className="createProgramContentHead">
             {isEditing ? (
-              <Input
+              <TextFields
                 disabled={disable}
                 autoFocus
                 type="text"
                 value={formik.values.name}
                 onChange={handleChangeEvent}
                 onBlur={handleBlur}
+                variant="standard"
+                error={errors.name ? true : false}
+                helperText={errors.name ? errors.name.toString() : ""}
               />
             ) : (
               <Typography
@@ -211,9 +216,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
                 variant="h5"
                 onClick={handleClick}
               >
-                {formik.values?.name
-                  ? formik.values?.name
-                  : singleProgram?.name}
+                Enter Program Name
               </Typography>
             )}
             <Stack direction={"row"} gap={"20px"}>
@@ -298,6 +301,9 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
               list={ProgramCode}
               value={values.code}
               disabled={disable}
+              placeholder="Please Select"
+              error={errors.code ? true : false}
+              errorMessage={errors.code}
             />
             <SelectDemo
               title="Department"
@@ -305,6 +311,9 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
               list={departments}
               value={activeDepartment}
               disabled={disable}
+              placeholder="Please Select"
+              error={errors.department_id ? true : false}
+              errorMessage={errors.department_id}
             />
           </Stack>
           <Stack className="createFormCalendarFields">

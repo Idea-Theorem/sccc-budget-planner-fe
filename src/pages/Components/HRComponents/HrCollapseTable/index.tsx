@@ -199,16 +199,13 @@ function Row(props: {
                       <TableCell style={{ paddingLeft: "62px" }}>
                         {row.email}
                       </TableCell>
-                      <TableCell>
-                        {row.compensation_type.charAt(0).toUpperCase() +
-                          row.compensation_type.slice(1)}
+                      <TableCell style={{ textTransform: "capitalize" }}>
+                        {row?.compensation_type?.toLowerCase()}
                       </TableCell>
-                      <TableCell>
-                        {row.employment_type.charAt(0).toUpperCase() +
-                          row.employment_type.slice(1)}
+                      <TableCell style={{ textTransform: "capitalize" }}>
+                        {row?.employment_type?.toLowerCase()}
                       </TableCell>
-
-                      <TableCell>{row.salary_rate}</TableCell>
+                      <TableCell>{row?.salary_rate}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
