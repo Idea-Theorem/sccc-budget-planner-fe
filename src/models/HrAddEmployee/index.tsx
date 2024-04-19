@@ -500,7 +500,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                     paddingTop: "3px",
                   }}
                 >
-                  {errors.roles ? errors.roles.toString() : ""}
+                  {errors.roles ? errors?.roles.toString() : ""}
                 </Typography>
               </Grid>
               <Grid item xs={6} className="label-area">
