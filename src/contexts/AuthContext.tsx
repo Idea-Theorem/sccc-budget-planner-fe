@@ -42,14 +42,14 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     const user: any = localStorage.getItem("userInfo");
 
     const toParse = JSON.parse(user);
-    if (toParse && toParse.roles) {
+    if (toParse && toParse?.roles) {
       setUser(toParse);
     }
     const currentRole: any = localStorage.getItem("currentRole");
     if (currentRole) {
       setCurrentRole(currentRole);
     } else {
-      setCurrentRole(toParse.roles[0].name);
+      setCurrentRole(toParse?.roles[0].name);
     }
   }, []);
 

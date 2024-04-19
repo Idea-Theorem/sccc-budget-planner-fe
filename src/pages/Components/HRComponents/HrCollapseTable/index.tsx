@@ -146,9 +146,9 @@ function Row(props: {
         <TableCell component="th" scope="row">
           {row.firstname + " " + row.lastname}
         </TableCell>
-        <TableCell>{row.roles[0].name}</TableCell>
-        <TableCell>{row.department.name}</TableCell>
-        <TableCell>{row.hire_date}</TableCell>
+        <TableCell>{row?.roles[0].name}</TableCell>
+        <TableCell>{row?.department.name}</TableCell>
+        <TableCell>{row?.hire_date}</TableCell>
         <TableCell>
           <Stack
             direction="row"
