@@ -28,6 +28,12 @@ const StyledSelect = styled(Select)(({ theme }) => ({
   color: theme.palette.gfGrey.GF75,
 }));
 
+const ErrorMessage = styled("div")(({ theme }) => ({
+  color: theme.palette.error.main,
+  fontSize: "12px",
+  marginTop: "8px",
+}));
+
 export default function SelectDemo({
   title,
   list,
@@ -35,6 +41,8 @@ export default function SelectDemo({
   value,
   error,
   disabled,
+  placeholder,
+  errorMessage,
 }: any) {
   const handleChange = (event: any) => {
     receiveValue(event.target.value);
@@ -57,6 +65,7 @@ export default function SelectDemo({
     <StyledFormControl size="medium" variant="standard" error={error}>
       <StyledInputLabel>{title}</StyledInputLabel>
       <StyledSelect
+        placeholder={placeholder}
         disabled={disabled}
         value={value}
         labelId="select-label"
@@ -71,6 +80,7 @@ export default function SelectDemo({
           </MenuItem>
         ))}
       </StyledSelect>
+      {error && errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
     </StyledFormControl>
   );
 }
