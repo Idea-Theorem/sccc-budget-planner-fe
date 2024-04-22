@@ -1,4 +1,4 @@
-import { EditNote, Save } from "@mui/icons-material";
+import { EditNote } from "@mui/icons-material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
@@ -14,6 +14,7 @@ import TabsProgramArea from "../../../components/TabsProgram";
 import { ActionsType } from "../../../types/common";
 import { Grid } from "../../Components/MUIComponents/index";
 import Buttons from "../../../components/Button";
+import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.appContainer": {
@@ -321,7 +322,7 @@ const CreateProgramScreen = () => {
                         variant="outlined"
                         color="primary"
                         size="medium"
-                        startIcon={<Save />}
+                        startIcon={<SaveOutlinedIcon />}
                         onClick={() => navigate("/program-head/program")}
                       >
                         Save

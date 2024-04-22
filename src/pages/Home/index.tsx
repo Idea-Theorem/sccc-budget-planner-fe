@@ -11,7 +11,8 @@ import BasicDatePicker from "../../components/DatePicker";
 import { useState } from "react";
 import TabsProgramArea from "../../components/TabsProgram";
 import TabsArea from "../../components/Tabs";
-import { EditNote, Save } from "@mui/icons-material";
+import { EditNote } from "@mui/icons-material";
+import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import {
   storeProgramFromStatus,
   storeSingleProgram,
@@ -551,7 +552,7 @@ const HomeScreen = () => {
                       Youth Swimming Class2
                     </Typography>
                     <Stack direction={"row"} gap={"20px"}>
-                      <Buttons startIcon={<Save />} btntext="Save" />
+                      <Buttons startIcon={<SaveOutlinedIcon />} btntext="Save" />
                       <Buttons startIcon={<EditNote />} btntext="ReSubmit" />
                     </Stack>
                   </Stack>

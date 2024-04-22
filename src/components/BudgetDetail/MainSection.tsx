@@ -31,7 +31,7 @@ import { RootState } from "../../store";
 import { programSchema } from "../../utils/yupSchema";
 import TextFields from "../Input/textfield";
 import { EditNote, UploadFile } from "@mui/icons-material";
-import SaveIcon from "@mui/icons-material/Save";
+import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 
 const MainSection = ({ actions }: { actions: ActionsType[] }) => {
   const [departments, setDepartments] = useState<any>([]);
@@ -229,7 +229,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
                     variant="outlined"
                     color="primary"
                     size="medium"
-                    startIcon={<SaveIcon />}
+                    startIcon={<SaveOutlinedIcon />}
                   />
                 </>
               ) : programFromStatus == Status.DRAFTED ||
@@ -242,7 +242,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
                     variant="outlined"
                     color="primary"
                     size="medium"
-                    startIcon={<SaveIcon />}
+                    startIcon={<SaveOutlinedIcon />}
                   />
                   <Buttons
                     key={0}
