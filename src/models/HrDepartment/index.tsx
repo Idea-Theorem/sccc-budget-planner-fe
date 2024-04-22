@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
-import { Save, Clear } from "@mui/icons-material"; // Import Clear icon from Material-UI
+import {  Clear } from "@mui/icons-material"; // Import Clear icon from Material-UI
 import Grid from "@mui/material/Grid"; // Import Grid component from MUI
 import Modal from "@mui/material/Modal";
 import { TextField } from "@mui/material";
@@ -17,6 +17,7 @@ import SelectDemo from "../../components/Select";
 import { useEffect, useState } from "react";
 import { getAllCenters } from "../../services/centersServices";
 import StatusModal from "../../components/StatusModal";
+import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 
 const DepartmentInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
@@ -283,7 +284,7 @@ const DepartmentInfo: React.FC<IDepartmentInfo> = ({
                 variant="outlined"
                 color="primary"
                 size="medium"
-                startIcon={<Save />}
+                startIcon={<SaveOutlinedIcon />}
               >
                 {isSubmitting ? "Saving..." : "Save"}
               </Button>

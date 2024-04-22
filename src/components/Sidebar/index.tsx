@@ -30,7 +30,7 @@ const SideArea = styled(Box)(({ theme }) => ({
   "& .MuiListItemButton-root": {
     transition: "0.3s",
     color: theme.palette.background.ContentArea,
-    padding: "8px 19px",
+    // padding: "8px 19px",
 
     "&:hover": {
       background: theme.palette.background.lightGray,
@@ -78,8 +78,13 @@ const SideArea = styled(Box)(({ theme }) => ({
     },
   },
 
+  ".MuiListItemButton-root": {
+    padding: "8px 0 !important",
+  },
+
   ".MuiButtonBase-root": {
     color: "#303030",
+    padding: "8px 19px",
 
     "&:hover": {
       color: "#fff",
