@@ -127,6 +127,23 @@ const StyledBox = styled(Box)(({ theme }) => ({
       flexDirection: "row",
       border: "0",
 
+      "&.full-width": {
+        
+        ".MuiStack-root ": {
+          width: "100%",
+        },
+
+        ".input-wrap": {
+          flexGrow: "1",
+          flexBasis: "0",
+          minWidth: "0",
+        },
+
+        ".MuiInput-underline": {
+          width: "100%",
+        },
+      },
+
       "& .MuiInputLabel-formControl": {
         color: "#000",
         fontFamily: "Work Sans",
