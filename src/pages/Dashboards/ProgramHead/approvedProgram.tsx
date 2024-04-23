@@ -30,7 +30,7 @@ const ApprovedProgram = ({ tabstatus }: any) => {
   const fetchProgram = async () => {
     try {
       const response = await getPrograms();
-      const res = await getProgram(Status.PENDING);
+      await getProgram(Status.PENDING);
       setPrograms(response?.data);
     } catch (error) {}
   };
