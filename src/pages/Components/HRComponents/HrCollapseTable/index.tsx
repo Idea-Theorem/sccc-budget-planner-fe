@@ -146,8 +146,10 @@ function Row(props: {
         <TableCell component="th" scope="row">
           {row.firstname + " " + row.lastname}
         </TableCell>
-        <TableCell>{row?.roles[0].name}</TableCell>
-        <TableCell>{row?.department.name}</TableCell>
+        <TableCell>{row?.roles[0].name?.replace(/_/g, " ")}</TableCell>
+        <TableCell style={{ textTransform: "capitalize" }}>
+          {row?.department.name}
+        </TableCell>
         <TableCell>{row?.hire_date}</TableCell>
         <TableCell>
           <Stack
@@ -203,7 +205,9 @@ function Row(props: {
                         {row?.compensation_type?.toLowerCase()}
                       </TableCell>
                       <TableCell style={{ textTransform: "capitalize" }}>
-                        {row?.employment_type?.toLowerCase()}
+                        {row?.employment_type
+                          ?.toLowerCase()
+                          ?.replace(/_/g, " ")}
                       </TableCell>
                       <TableCell>{row?.salary_rate}</TableCell>
                     </TableRow>

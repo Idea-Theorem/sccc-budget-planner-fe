@@ -209,7 +209,6 @@ const TableComponent = (props: ColumnnsProps) => {
       </StyledGridOverlay>
     );
   }
-  console.log("status:::::::", props.currentTab);
   return (
     <>
       <StyledBox className="mainTableBlock">
