@@ -3,14 +3,14 @@ import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
-import { Save, Clear } from "@mui/icons-material"; // Import Clear icon from Material-UI
+import { Clear } from "@mui/icons-material"; // Import Clear icon from Material-UI
 import Grid from "@mui/material/Grid"; // Import Grid component from MUI
 import Modal from "@mui/material/Modal";
 import { useFormik } from "formik";
 import { createCentresSchema } from "../../utils/yupSchema";
 import { TextField } from "@mui/material";
 import { createCenters, updateCenter } from "../../services/centersServices";
-
+import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 
 const DepartmentInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
@@ -23,8 +23,6 @@ const DepartmentInfoArea = styled(Box)(({ theme }) => ({
   transform: "translateY(-50%)",
   top: "50%",
   position: "relative",
-
- 
 
   "& .MuiTypography-h6": {
     color: "#000",
@@ -124,8 +122,8 @@ interface IDepartmentInfo {
   subheading?: string;
   handleClose?: any;
   open?: any;
-  singleCenter?: any
-  setSingleCenter?: any
+  singleCenter?: any;
+  setSingleCenter?: any;
 }
 
 const CommunityModal: React.FC<IDepartmentInfo> = ({
@@ -134,10 +132,9 @@ const CommunityModal: React.FC<IDepartmentInfo> = ({
   handleClose,
   open,
   singleCenter,
-  setSingleCenter
+  setSingleCenter,
 }) => {
-
-console.log(heading)
+  console.log(heading);
   const formik = useFormik<any>({
     validateOnBlur: false,
     validationSchema: createCentresSchema,
@@ -145,31 +142,21 @@ console.log(heading)
     initialValues: {
       name: singleCenter?.name ? singleCenter?.name : "",
     },
-    onSubmit: async values => {
+    onSubmit: async (values) => {
       try {
         if (heading == "Edit center") {
-        await updateCenter(values, singleCenter?.id)
+          await updateCenter(values, singleCenter?.id);
         } else {
-        await createCenters(values)
+          await createCenters(values);
         }
-        formik.resetForm()
-        setSingleCenter(null)
-        handleClose()
-      } catch (error) {
-
-      }
+        formik.resetForm();
+        setSingleCenter(null);
+        handleClose();
+      } catch (error) {}
     },
-  })
+  });
 
-
-  const {
-    values,
-    handleChange,
-    isSubmitting,
-    errors,
-    handleSubmit,
-  } = formik
-
+  const { values, handleChange, isSubmitting, errors, handleSubmit } = formik;
 
   return (
     <Modal
@@ -186,11 +173,13 @@ console.log(heading)
           <Typography className="subtitle">{subheading}</Typography>
           <Grid container spacing={4}>
             <Grid item xs={12}>
-              <TextField variant="standard" label="Center Name" 
+              <TextField
+                variant="standard"
+                label="Center Name"
                 value={values.name}
                 name="name"
                 onChange={handleChange}
-                helperText={errors.name ? errors.name.toString() : ''}
+                helperText={errors.name ? errors.name.toString() : ""}
               />
             </Grid>
           </Grid>
@@ -222,10 +211,10 @@ console.log(heading)
               variant="outlined"
               color="primary"
               size="medium"
-              startIcon={<Save />}
+              startIcon={<SaveOutlinedIcon />}
               onClick={() => handleSubmit()}
             >
-             {isSubmitting ? "Saving..." : "Save"} 
+              {isSubmitting ? "Saving..." : "Save"}
             </Button>
           </Stack>
         </Stack>
