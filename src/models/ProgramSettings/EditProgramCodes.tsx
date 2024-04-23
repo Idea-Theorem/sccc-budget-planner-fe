@@ -3,10 +3,11 @@ import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
 import TextFields from "../../components/Input/textfield";
-import { Save, Clear} from "@mui/icons-material"; 
+import { Clear} from "@mui/icons-material"; 
 import Grid from "@mui/material/Grid"; 
 import { Button } from "@mui/material";
 import Modal from '@mui/material/Modal';
+import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 
 
 const EmployeeInfoArea = styled(Box)(({ theme }) => ({
@@ -108,7 +109,7 @@ const EditProgramCodesModal: React.FC<IHrAddEmployee> = ({
         variant="outlined" 
         color="primary" 
         size="medium" 
-        startIcon={<Save />}>
+        startIcon={<SaveOutlinedIcon />}>
           Save
         </Button>
       </Stack>
