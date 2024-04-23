@@ -24,16 +24,14 @@ const StyledBox = styled(Box)(({ theme }) => ({
 
 const ApprovedProgram = ({ tabstatus }: any) => {
   const [programs, setPrograms] = React.useState<any>({});
-  const [pendingprograms, setPendingPrograms] = React.useState<any>(0);
   useEffect(() => {
     fetchProgram();
   }, []);
   const fetchProgram = async () => {
     try {
       const response = await getPrograms();
-      const res = await getProgram(Status.PENDING);
+      await getProgram(Status.PENDING);
       setPrograms(response?.data);
-      setPendingPrograms(res?.data?.programs?.length);
     } catch (error) {}
   };
   return (
@@ -52,20 +50,22 @@ const ApprovedProgram = ({ tabstatus }: any) => {
             <Typography className="divider">/</Typography>
             <Typography className="textValue">
               {" "}
-              {pendingprograms} Programs {tabstatus?.toLowerCase()}
+              {programs.programsCount} Programs {tabstatus?.toLowerCase()}
             </Typography>
           </Stack>
         )}
-        <Stack>
-          <Button
-            variant="contained"
-            color="primary"
-            size="medium"
-            startIcon={<AddIcCallOutlined />}
-          >
-            Submit
-          </Button>
-        </Stack>
+        {tabstatus == Status.APPROVED && (
+          <Stack>
+            <Button
+              variant="contained"
+              color="primary"
+              size="medium"
+              startIcon={<AddIcCallOutlined />}
+            >
+              Submit
+            </Button>
+          </Stack>
+        )}
       </Stack>
     </StyledBox>
   );
