@@ -18,8 +18,8 @@ import EditNoteIcon from "@mui/icons-material/EditNote";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { deleteEmployee } from "../../../../services/employeeServices";
-import { Search } from "@mui/icons-material";
-import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
+import { SaveAlt, Search } from "@mui/icons-material";
+import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import * as XLSX from "xlsx";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
@@ -289,7 +289,7 @@ export default function HrCollapsibleTable({
           justifyContent="space-between"
         >
           <IconButton aria-label="export" onClick={exportToExcel}>
-            <SaveOutlinedIcon />
+            <SaveAlt />
           </IconButton>
           <TextField
             id="input-with-icon-textfield"
