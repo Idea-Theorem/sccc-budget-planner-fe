@@ -19,7 +19,6 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { deleteEmployee } from "../../../../services/employeeServices";
 import { SaveAlt, Search } from "@mui/icons-material";
-import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import * as XLSX from "xlsx";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
@@ -292,7 +291,7 @@ export default function HrCollapsibleTable({
             <SaveAlt />
           </IconButton>
           <TextField
-            id="input-with-icon-textfield"
+            id="input-with-icon-textfield" 
             placeholder="Search..."
             InputProps={{
               startAdornment: (
