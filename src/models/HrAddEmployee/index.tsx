@@ -16,10 +16,8 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Checkbox from "@mui/material/Checkbox";
 import { useEffect, useState } from "react";
 import { getUserRole } from "../../services/authServices";
-import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
-import {
-  salaryRates,
-} from "../../utils/dumpData";
+import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
+import { salaryRates } from "../../utils/dumpData";
 import { useFormik } from "formik";
 import {
   createEmployeeSchema,
@@ -170,6 +168,67 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
       borderBottom: "1px solid #0000006B",
     },
   },
+  ".info-lists-wrap": {
+    padding: "50px 44px 0 33px",
+    position: "relative",
+  },
+
+  ".delete-icon": {
+    position: "absolute",
+    top: "73px",
+    right: "25px",
+    width: "16.67px",
+    height: "16.67px",
+    cursor: "pointer",
+
+    button: {
+      border: "1px solid #303030",
+      borderRadius: "100%",
+      background: "#fff",
+      fontSize: "22px",
+      color: "#303030",
+      width: "16.67px",
+      height: "16.67px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      cursor: "pointer",
+    },
+  },
+
+  ".input-wrap": {
+    ".select-list": {
+      "&:before": {
+        display: "none",
+      },
+    },
+    ".MuiInput-input": {
+      marginTop: "-1px",
+    },
+  },
+
+  ".item-role-area": {
+    label: {
+      marginTop: "-23px",
+      fontSize: "12px",
+      color: "rgba(0, 0, 0, 0.7)",
+    },
+
+    input: {
+      padding: "4px 0 9px",
+    },
+  },
+
+  ".dell-icon": {
+    border: "none",
+    background: "none",
+    display: "flex",
+    alignItems: "center",
+    fontWeight: "500",
+    gap: "5px",
+    color: "#048071",
+    cursor: "pointer",
+  },
 }));
 
 interface IHrAddEmployee {
@@ -196,15 +255,14 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
   const [statusData, setStatusData] = useState<any>(null);
   const [data, setData] = useState([
     {
-      department_id: '', 
-      title: '', 
-      hourlyRate: '', 
-      salaryRate: '' 
-    }
+      department_id: "",
+      title: "",
+      hourlyRate: "",
+      salaryRate: "",
+    },
   ]);
 
-  console.log("data:::::::", data)
-
+  console.log("data:::::::", data);
 
   const formik = useFormik<any>({
     validateOnBlur: true,
@@ -235,7 +293,6 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
       //   : "",
     },
     onSubmit: async (values) => {
-  
       try {
         if (heading == "Edit Employee") {
           delete values.password;
@@ -248,8 +305,8 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
         } else {
           let obj = {
             ...values,
-            employeDepartments: data
-          }
+            employeDepartments: data,
+          };
           await createEmployee(obj);
           setStatusData({
             type: "success",
@@ -381,10 +438,11 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
     setFieldValue("salary_rate", salaryRate);
   };
 
-  
-
   const handleAddObject = () => {
-    setData([...data, { department_id: '', title: '', hourlyRate: '', salaryRate: '' }]);
+    setData([
+      ...data,
+      { department_id: "", title: "", hourlyRate: "", salaryRate: "" },
+    ]);
   };
 
   const handleDepartmentChange = (index: any, value: any) => {
@@ -407,10 +465,10 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
   };
 
   const filterdDepartment = (id) => {
-  const filterObject = departments.find(item => item.id === id)
-  console.log("filterObject::::::::",)
-  return filterObject?.name
-  }
+    const filterObject = departments.find((item) => item.id === id);
+    console.log("filterObject::::::::");
+    return filterObject?.name;
+  };
   return (
     <>
       <StatusModal
@@ -432,7 +490,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
               className="body1"
               style={{ color: "#303030", fontSize: "16px", fontWeight: "500" }}
             >
-              Account Information
+              Employee Information
             </Typography>
             <Grid container spacing={4}>
               <Grid item xs={6}>
@@ -558,63 +616,90 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
               </Grid>
             </Grid>
           </Box>
-          <button onClick={handleAddObject}>+</button>
-
-          <Box className="secondaryRow">
+          <Box
+            className="secondaryRow"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
             <Typography
               className="subtitle"
               style={{ color: "#303030", fontSize: "16px", fontWeight: "500" }}
             >
-              Compensation Information
+              Department Works For
             </Typography>
+            <button className="dell-icon" onClick={handleAddObject}>
+              +
+              <Typography
+                className="subtitle"
+                style={{
+                  color: "#048071",
+                  fontSize: "14px",
+                  fontWeight: "500",
+                  lineHeight: "1",
+                  margin: "0",
+                }}
+              >
+                Add
+              </Typography>
+            </button>
           </Box>
 
           <Grid container spacing={4}>
-
-          <div>
-      {data.map((item, index) => (
-        <Grid container spacing={2} key={index}>
-          <Grid className="selectGrid" item xs={6}>
-            <SelectDepartments
-              title="Department"
-              value={filterdDepartment(item.department_id) }
-              list={departments}
-              receiveValue={(value: any) => handleDepartmentChange(index, value)}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextFields
-              variant="standard"
-              label="Title"
-              value={item.title}
-              name="title"
-              onChange={(e: any) => handleInputChange(index, e)}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextFields
-              variant="standard"
-              label="Hourly Rate"
-              value={item.hourlyRate}
-              name="hourlyRate"
-              onChange={(e: any) => handleInputChange(index, e)}
-            />
-          </Grid>
-          <Grid className="selectGrid" item xs={6}>
-            <SelectDemo
-              title="Benefit Percentage"
-              value={item.salaryRate}
-              list={salaryRates}
-              receiveValue={(value: any) => handleInputChange(index, { target: { name: 'salaryRate', value } })}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <button onClick={() => handleDelete(index)}>Delete</button>
-          </Grid>
-        </Grid>
-      ))}
-    </div>
-             
+            {data.map((item, index) => (
+              <Grid
+                container
+                spacing={2}
+                key={index}
+                className="info-lists-wrap"
+              >
+                <Grid className="selectGrid" item xs={3}>
+                  <SelectDepartments
+                    title="Department"
+                    value={filterdDepartment(item.department_id)}
+                    list={departments}
+                    receiveValue={(value: any) =>
+                      handleDepartmentChange(index, value)
+                    }
+                  />
+                </Grid>
+                <Grid className="item-role-area" item xs={3}>
+                  <TextFields
+                    variant="standard"
+                    label="Title"
+                    value={item.title}
+                    name="title"
+                    onChange={(e: any) => handleInputChange(index, e)}
+                  />
+                </Grid>
+                <Grid className="item-role-area" item xs={3}>
+                  <TextFields
+                    variant="standard"
+                    label="Hourly Rate"
+                    value={item.hourlyRate}
+                    name="hourlyRate"
+                    onChange={(e: any) => handleInputChange(index, e)}
+                  />
+                </Grid>
+                <Grid className="selectGrid" item xs={3}>
+                  <SelectDemo
+                    title="Benefit Percentage"
+                    value={item.salaryRate}
+                    list={salaryRates}
+                    receiveValue={(value: any) =>
+                      handleInputChange(index, {
+                        target: { name: "salaryRate", value },
+                      })
+                    }
+                  />
+                </Grid>
+                <Grid item xs={3} className="delete-icon">
+                  <button onClick={() => handleDelete(index)}>-</button>
+                </Grid>
+              </Grid>
+            ))}
           </Grid>
           <Stack
             className="formButtons"
