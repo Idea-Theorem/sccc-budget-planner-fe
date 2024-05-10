@@ -2,9 +2,14 @@ import { styled } from "@mui/material/styles";
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import InputSearch from "../../../components/Input";
-import { Typography } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import EditProgramModal from "../../../models/ProgramSettings/EditProgram";
+import * as React from "react";
+import Status from "../../../utils/dumpData";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import EditNoteIcon from "@mui/icons-material/EditNote";
+import { getAllProgramsViaStatus } from "../../../services/programServices";
 
 const StyledBox = styled(Box)(({}) => ({
   "&.mainTableBlock": {
@@ -118,78 +123,133 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
   },
 }));
 
-const rows = [
-  {
-    id: 1,
-    departmentName: "Youth Swimming Class",
-    status: "1505",
-    lYearBudget: "01-Jan-2022-2024",
-    depart: "Recreation & Culture",
-  },
-  {
-    id: 2,
-    departmentName: "Youth Tablle Tennis Class",
-    status: "1220",
-    lYearBudget: "01-Jan-2022-2024",
-    depart: "Recreation & Culture",
-  },
-  {
-    id: 3,
-    departmentName: "Youth Hockey Class",
-    status: "2230",
-    lYearBudget: "01-Jan-2022-2024",
-    depart: "Recreation & Culture",
-  },
-  {
-    id: 4,
-    departmentName: "Youth Basketball Class",
-    status: "4500",
-    lYearBudget: "01-Jan-2022-2024",
-    depart: "Recreation & Culture",
-  },
-  {
-    id: 5,
-    departmentName: "Finance literature",
-    status: "New",
-    lYearBudget: "15-Mar-2022-2024",
-    depart: "Finance",
-  },
-];
+// const rows = [
+//   {
+//     id: 1,
+//     departmentName: "Youth Swimming Class",
+//     status: "1505",
+//     lYearBudget: "01-Jan-2022-2024",
+//     depart: "Recreation & Culture",
+//   },
+//   {
+//     id: 2,
+//     departmentName: "Youth Tablle Tennis Class",
+//     status: "1220",
+//     lYearBudget: "01-Jan-2022-2024",
+//     depart: "Recreation & Culture",
+//   },
+//   {
+//     id: 3,
+//     departmentName: "Youth Hockey Class",
+//     status: "2230",
+//     lYearBudget: "01-Jan-2022-2024",
+//     depart: "Recreation & Culture",
+//   },
+//   {
+//     id: 4,
+//     departmentName: "Youth Basketball Class",
+//     status: "4500",
+//     lYearBudget: "01-Jan-2022-2024",
+//     depart: "Recreation & Culture",
+//   },
+//   {
+//     id: 5,
+//     departmentName: "Finance literature",
+//     status: "New",
+//     lYearBudget: "15-Mar-2022-2024",
+//     depart: "Finance",
+//   },
+// ];
 interface HRTableProps {}
 const ProgramSetting: React.FC<HRTableProps> = ({}) => {
   const columns: GridColDef[] = [
     {
-      field: "departmentName",
+      field: "name",
       headerName: "Program Name",
       sortable: false,
       editable: false,
       flex: 1,
     },
     {
-      field: "status",
+      field: "code",
       headerName: "Program Code",
       sortable: false,
       editable: false,
       flex: 1,
     },
     {
-      field: "lYearBudget",
+      field: "to_date",
       headerName: "Duration",
       sortable: false,
       editable: false,
-      flex: 1,
+      flex: 1, 
     },
     {
-      field: "depart",
+      field: "department.name",
       headerName: "Department",
+      sortable: false,
+      editable: false,
+      flex: 1,
+      valueGetter: (params) => params.row.department.name
+    },
+    {
+      field: "buttonsColumn",
+      headerName: "",
+      flex: 0.4,
+      renderCell: () => (
+        <Stack
+          direction="row"
+          gap="10px"
+          alignItems="center"
+          ml="auto                                       "
+        >
+          <Button
+            variant="text"
+            color="error"
+            size="small"
+            startIcon={<DeleteOutlineIcon />}
+          >
+            Delete
+          </Button>
+          <Button
+            variant="outlined"
+            color="primary"
+            size="small"
+            startIcon={<EditNoteIcon />}
+          >
+            Edit
+          </Button>
+        </Stack>
+      ),
+    },
+    {
+      field: "",
+      headerName: "",
       sortable: false,
       editable: false,
       flex: 1,
     },
   ];
   const [isOpen, setIsOpen] = useState(false);
+  const [status, setStatus] = React.useState(Status.DRAFTED);
+  // const [loading, setLoading] = React.useState(false);
+  const [settingData, setSettingData] = React.useState([])
   const closeModal = () => {
     setIsOpen(false);
+  };
+  React.useEffect(() => { 
+    fetchProgramList(status);
+  }, [status]);
+  const fetchProgramList = async (status: string) => {
+    try {
+      // setLoading(true);
+      const response = await getAllProgramsViaStatus(status);
+      setSettingData(response?.data?.programs)
+      console.log("response:::::::::", response)
+      // setLoading(false);
+    } catch (error) {
+      // setLoading(false);
+    }
   };
   return (
     <StyledBox>
@@ -198,7 +258,7 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
       <StyledBox className="mainTableBlock">
         <InputSearch placeholder="Search..." />
         <StyleDataGrid
-          rows={rows}
+          rows={settingData}
           columns={columns}
           initialState={{
             pagination: {

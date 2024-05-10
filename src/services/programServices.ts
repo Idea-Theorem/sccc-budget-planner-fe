@@ -25,9 +25,9 @@ const getProgram = async (status: any) => {
     return await HTTP_CLIENT.put(`/program/updateStatus`, data);
   };
   
-// const deleteEmployee = async (id: string) => {
-//     return await HTTP_CLIENT.delete(`/user/${id}`);
-//   }
+const deleteProgram = async (id: string) => {
+    return await HTTP_CLIENT.delete(`/program/${id}`);
+  }
 
 
 
@@ -39,5 +39,5 @@ export {
    programUpdate,
 updateProgram,
     getProgram,
-
+    deleteProgram
 };

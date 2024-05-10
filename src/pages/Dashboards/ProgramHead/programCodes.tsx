@@ -5,6 +5,10 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { Button, Stack, Typography } from "@mui/material";
 import InputSearch from "../../../components/Input";
+import { deleteProgram, getAllProgramsViaStatus } from "../../../services/programServices";
+import React, { useState } from "react";
+import Status from "../../../utils/dumpData";
+import DeleteModal from "../../../models/DeleteModal";
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
@@ -152,14 +156,14 @@ interface HRTableProps {
 const HRTableComponent: React.FC<HRTableProps> = ({ onEdit }) => {
   const columns: GridColDef[] = [
     {
-      field: "departmentName",
+      field: "name",
       headerName: "Program Name",
       sortable: false,
       editable: false,
       flex: 1,
     },
     {
-      field: "status",
+      field: "code",
       headerName: "Program Code",
       sortable: false,
       editable: false,
@@ -169,7 +173,7 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit }) => {
       field: "buttonsColumn",
       headerName: "",
       flex: 0.4,
-      renderCell: () => (
+      renderCell: (params: any) => (
         <Stack
           direction="row"
           gap="10px"
@@ -181,6 +185,7 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit }) => {
             color="error"
             size="small"
             startIcon={<DeleteOutlineIcon />}
+            onClick={() => handleDelete(params.row)}
           >
             Delete
           </Button>
@@ -189,7 +194,8 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit }) => {
             color="primary"
             size="small"
             startIcon={<EditNoteIcon />}
-            onClick={onEdit}
+            // onClick={onEdit}
+            onClick={() => handleEditClick(params.row)}
           >
             Edit
           </Button>
@@ -197,6 +203,44 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit }) => {
       ),
     },
   ];
+  const [selectedRow, setSelectedRow] = useState<any>(null);
+  const [codeData, setCodeData] = React.useState([])
+  const [status, setStatus] = React.useState(Status.DRAFTED);
+  const [selectedRowdelete, setSelectedDelete] = useState<any>(null);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  React.useEffect(() => { 
+    fetchProgramList(status);
+  }, [status]);
+  const fetchProgramList = async (status: string) => {
+    try {
+      // setLoading(true);
+      const response = await getAllProgramsViaStatus(status); 
+      setCodeData(response?.data?.programs)
+      // setLoading(false);
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+    const handleEditClick = (rowData: any) => {
+      setSelectedRow(rowData); 
+    };
+    
+  const handleDelete = (rowData: any)=>{
+    setSelectedDelete(rowData?.id);
+    setDeleteModalOpen(true);
+  }
+  const handleDeleteConfirmation = async () => {
+    if(selectedRowdelete){
+      try {
+        const response = await deleteProgram(selectedRowdelete);
+        setDeleteModalOpen(false) 
+      } catch (error) {
+        console.error('Error deleting record:', error);
+      } finally {
+        // setIsDeleting(false);
+      }
+    }
+  };
   return (
     <StyledBox>
       <Typography className="hrBlockTitle" variant="h3">
@@ -208,7 +252,7 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit }) => {
       <StyledBox className="mainTableBlock">
         <InputSearch placeholder="Search..." />
         <StyleDataGrid
-          rows={rows}
+          rows={codeData}
           columns={columns}
           initialState={{
             pagination: {
@@ -220,6 +264,7 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit }) => {
           slots={{ toolbar: GridToolbar }}
         />
       </StyledBox>
+      <DeleteModal heading="Are you sure you want to delete?" open={deleteModalOpen} handleClose={()=>setDeleteModalOpen(false)} handleOK={()=> handleDeleteConfirmation()}/>
     </StyledBox>
   );
 };
