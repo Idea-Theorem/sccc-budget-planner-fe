@@ -96,7 +96,7 @@ const BasicTabs = (props: BasicTabsProps) => {
     }
   }, [props?.tabsTitleArray]);
 
-  React.useEffect(() => {
+  React.useEffect(() => { 
     fetchProgramList(status);
   }, [status]);
   const fetchProgramList = async (status: string) => {
