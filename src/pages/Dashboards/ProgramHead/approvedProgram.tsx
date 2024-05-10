@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import AddIcCallOutlined from "@mui/icons-material/AddIcCallOutlined";
+import UploadFileOutlinedIcon from '@mui/icons-material/UploadFileOutlined';
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
@@ -60,7 +60,7 @@ const ApprovedProgram = ({ tabstatus }: any) => {
               variant="contained"
               color="primary"
               size="medium"
-              startIcon={<AddIcCallOutlined />}
+              startIcon={<UploadFileOutlinedIcon />}
             >
               Submit
             </Button>

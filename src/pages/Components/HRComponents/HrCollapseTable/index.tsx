@@ -294,7 +294,7 @@ export default function HrCollapsibleTable({
             <SaveAlt />
           </IconButton>
           <TextField
-            id="input-with-icon-textfield"
+            id="input-with-icon-textfield" 
             placeholder="Search..."
             InputProps={{
               startAdornment: (

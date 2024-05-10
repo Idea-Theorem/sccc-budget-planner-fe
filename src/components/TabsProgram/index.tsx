@@ -127,7 +127,7 @@ const TabsAreas = styled(Box)(({ theme }) => ({
     },
   },
   ".MuiInputBase-input": {
-    marginRight: "-100px",
+    textAlign: "right",
   },
   ".MuiTableCell-head": {
     padding: "0 15px !important",

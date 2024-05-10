@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -62,29 +63,31 @@ export default function SelectDemo({
   }
 
   return (
-    <StyledFormControl size="medium" variant="standard" error={error}>
-      <StyledInputLabel>{title}</StyledInputLabel>
-      <StyledSelect
-        placeholder={placeholder}
-        disabled={disabled}
-        value={value}
-        labelId="select-label"
-        id="select-demo"
-        label="Label"
-        onChange={handleChange}
-        className="select-list"
-      >
-        {list?.map((item: any) => (
-          <MenuItem
-            value={item.name}
-            className="list"
-            style={{ textTransform: "capitalize" }}
+    <StyledFormControl size="medium" variant="standard" error={error} className="full-width">
+        <StyledInputLabel>{title}</StyledInputLabel>
+        <Box className="input-wrap">
+          <StyledSelect
+            placeholder={placeholder}
+            disabled={disabled}
+            value={value}
+            labelId="select-label"
+            id="select-demo"
+            label="Label"
+            onChange={handleChange}
+            className="select-list"
           >
-            {convertToLowerAndRemoveUnderscore(item.name)}
-          </MenuItem>
-        ))}
-      </StyledSelect>
-      {error && errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+            {list?.map((item: any) => (
+              <MenuItem
+                value={item.name}
+                className="list"
+                style={{ textTransform: "capitalize" }}
+              >
+                {convertToLowerAndRemoveUnderscore(item.name)}
+              </MenuItem>
+            ))}
+          </StyledSelect>
+          {error && errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+        </Box>
     </StyledFormControl>
   );
 }
