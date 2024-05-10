@@ -148,7 +148,7 @@ function Row(props: {
         </TableCell>
         <TableCell>{row?.roles[0].name?.replace(/_/g, " ")}</TableCell>
         <TableCell style={{ textTransform: "capitalize" }}>
-          {row?.department.name}
+          {row?.department?.name}
         </TableCell>
         <TableCell>{row?.hire_date}</TableCell>
         <TableCell>
@@ -190,26 +190,29 @@ function Row(props: {
                     <TableCell style={{ paddingLeft: "62px" }}>
                       Email Address
                     </TableCell>
-                    <TableCell>Compensation type</TableCell>
-                    <TableCell>Employement Type</TableCell>
-                    <TableCell>Salary</TableCell>
+                    <TableCell>Department</TableCell>
+
+                    <TableCell>Hoourly Rate</TableCell>
+                    <TableCell>Benefit %</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {[0].map(() => (
+                  {row?.employeDepartments?.map((element) => (
                     <TableRow key={row.id}>
                       <TableCell style={{ paddingLeft: "62px" }}>
                         {row.email}
                       </TableCell>
                       <TableCell style={{ textTransform: "capitalize" }}>
-                        {row?.compensation_type?.toLowerCase()}
+                        {element?.department?.name.toLowerCase()}
                       </TableCell>
                       <TableCell style={{ textTransform: "capitalize" }}>
-                        {row?.employment_type
+                        {element?.hourlyRate?.toLowerCase()}
+                      </TableCell>
+                      <TableCell style={{ textTransform: "capitalize" }}>
+                        {element?.salaryRate
                           ?.toLowerCase()
                           ?.replace(/_/g, " ")}
                       </TableCell>
-                      <TableCell>{row?.salary_rate}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
