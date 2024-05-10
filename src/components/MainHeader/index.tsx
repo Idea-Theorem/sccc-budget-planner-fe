@@ -3,7 +3,8 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import AddIcon from "@mui/icons-material/Add";
-import DropdownButton from "../Button/dropDownButton";
+// import DropdownButton from "../Button/dropDownButton";
+import IosShareIcon from "@mui/icons-material/IosShare";
 import Buttons from "../Button";
 
 const AppHeader = styled(Box)(({ theme }) => ({
@@ -86,12 +87,12 @@ interface MainHeaderProps {
   array?: any;
   action?: boolean;
   subdes?: string;
-  classname?: string; 
+  classname?: string;
   onClick?: () => void;
 }
 
 const MainHeaderComponent = (props: MainHeaderProps) => {
-  const { classname } = props; 
+  const { classname } = props;
   return (
     <AppHeader className={`${classname} appHeader`}>
       <Stack className="appHeaderHolder">
@@ -100,7 +101,12 @@ const MainHeaderComponent = (props: MainHeaderProps) => {
           <Typography variant="h6">{props.subdes}</Typography>
         </Box>
         {props?.action ? (
-          <DropdownButton title="Actions" array={props?.array} />
+          // <DropdownButton title="Actions" array={props?.array} />
+          <Buttons
+            startIcon={<IosShareIcon />}
+            btntext="Export"
+            variant="contained"
+          />
         ) : (
           <Buttons
             startIcon={<AddIcon />}
