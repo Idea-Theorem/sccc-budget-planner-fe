@@ -4,8 +4,8 @@ import Box from "@mui/material/Box"; // Import Box
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 const MenuItemList = styled(Box)({});
 interface DropdownButtonProps {
@@ -32,7 +32,7 @@ const DropdownButton = (props: DropdownButtonProps) => {
         aria-controls="dropdown-menu"
         aria-haspopup="true"
         onClick={handleClick}
-        startIcon={isOpen ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
+        startIcon={isOpen ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
       >
         {props?.title}
       </Button>
@@ -44,7 +44,7 @@ const DropdownButton = (props: DropdownButtonProps) => {
       >
         {props?.array?.map((item: any) => (
           <MenuItem onClick={handleClose} style={{ width: "109px" }}>{item?.text}</MenuItem>
-          ))}
+        ))}
       </Menu>
     </MenuItemList>
   );
