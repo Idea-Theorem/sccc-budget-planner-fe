@@ -202,7 +202,7 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit, row, refresh }) => {
     },
   ];
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<any>(false);
   const closeModel = () => {
     setIsOpen(false);
   };

@@ -60,7 +60,7 @@ const DeleteModal: React.FC<IDeleteModal> = ({
 }) => {
   return (
     <Modal
-      open={open}
+      open={typeof open !== 'undefined' && open}
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"

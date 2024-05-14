@@ -7,12 +7,11 @@ import { styled } from "@mui/material/styles";
 import TableComponent from "../Table";
 import { getAllProgramsViaStatus } from "../../services/programServices";
 import Status from "../../utils/dumpData";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   storeProgramFromStatus,
   storeProgramList,
 } from "../../store/reducers/programSlice";
-import { RootState } from "../../store";
 import { storeSingleProgram } from "../../store/reducers/programSlice";
 import { useNavigate } from "react-router";
 import { useLocation } from "react-router-dom";

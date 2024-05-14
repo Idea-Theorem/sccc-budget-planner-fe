@@ -241,7 +241,7 @@ const DHReviewBudgets = () => {
   const fetchDepartments = async () => {
     try {
       const response = await getAllDepartments();
-      const filteredID = response?.data?.departments.find((item: any) => item?.name === activeDepartment);
+       response?.data?.departments.find((item: any) => item?.name === activeDepartment);
       setDepartmentID(response?.data?.departments[0]?.id)
       setActiveDepartment(response?.data?.departments[0]?.name)
       setDepartments(response?.data?.departments);

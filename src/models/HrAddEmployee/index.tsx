@@ -252,6 +252,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
   const [role, setRole] = useState<any>([]);
   const [departments, setDepartments] = useState<any>([]);
   const [activeDepartment, setActiveDepartment] = useState<any>(null);
+  console.log(activeDepartment)
   const [statusData, setStatusData] = useState<any>(null);
   const [data, setData] = useState([
     {
@@ -401,11 +402,11 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
     } catch (error) {}
   };
 
-  const receiveDepartments = (name: string) => {
-    const filteredID = departments.find((item: any) => item?.name === name);
-    setFieldValue("department_id", filteredID?.id);
-    setActiveDepartment(filteredID?.name);
-  };
+  // const receiveDepartments = (name: string) => {
+  //   const filteredID = departments.find((item: any) => item?.name === name);
+  //   setFieldValue("department_id", filteredID?.id);
+  //   setActiveDepartment(filteredID?.name);
+  // };
 
   useEffect(() => {
     let roleIds: any = [];
@@ -428,17 +429,17 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
     setFieldValue("hire_date", date);
   };
 
-  const receiveCompensationType = (compensationType: string) => {
-    setFieldValue("compensation_type", compensationType);
-  };
+  // const receiveCompensationType = (compensationType: string) => {
+  //   setFieldValue("compensation_type", compensationType);
+  // };
 
-  const EmployeementType = (employementType: string) => {
-    setFieldValue("employment_type", employementType);
-  };
+  // const EmployeementType = (employementType: string) => {
+  //   setFieldValue("employment_type", employementType);
+  // };
 
-  const salartRate = (salaryRate: any) => {
-    setFieldValue("salary_rate", salaryRate);
-  };
+  // const salartRate = (salaryRate: any) => {
+  //   setFieldValue("salary_rate", salaryRate);
+  // };
 
   const handleAddObject = () => {
     setData([
@@ -455,19 +456,19 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
 
   const handleInputChange = (index: any, event: any) => {
     const { name, value } = event.target;
-    const newData = [...data];
+    const newData: any = [...data];
     newData[index][name] = value;
     setData(newData);
   };
 
-  const handleDelete = (index) => {
+  const handleDelete = (index: any) => {
     const newData = [...data];
     newData.splice(index, 1);
     setData(newData);
   };
 
-  const filterdDepartment = (id) => {
-  const filterObject = departments.find(item => item.id === id)
+  const filterdDepartment = (id: any) => {
+  const filterObject = departments.find((item: any) => item.id === id)
   return filterObject?.name
   }
   return (

@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import TabsArea from "../../../components/Tabs";
 import Status from "../../../utils/dumpData";
 import { Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { RootState } from "../../../store";
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
@@ -195,11 +195,19 @@ const RecreationAndCultureScreen = ({}: any) => {
   const { singleDepart } = useSelector((state: RootState) => state.program);
   const { singleDepartName } = useSelector((state: RootState) => state.program);
   const [tabstatus, setTabstatus] = React.useState(Status.PENDING); 
+  console.log(tabstatus)
   const [status, setStatus] = React.useState<string>("");
   const navigate = useNavigate();
   const goBack = () => {
     navigate("/admin/review-budget")
+    
   };
+
+  useEffect(() => {
+    if(false){
+      setStatus("")
+    }
+  }, [])
   return (
     <StyledBox className="appContainer">
         <Typography onClick={()=> goBack()}>Back</Typography>

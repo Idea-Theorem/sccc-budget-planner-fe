@@ -5,7 +5,7 @@ import TabsArea from "../../../components/Tabs";
 import React, { useEffect } from "react";
 import Status from "../../../utils/dumpData";
 import { getPendingPrograms } from "../../../services/adminServices";
-import { getDepartmentOnRowCLick, updateProgram } from "../../../services/programServices";
+import { getDepartmentOnRowCLick } from "../../../services/programServices";
 import { useNavigate } from "react-router-dom";
 import { storeSingleDepart, storeSingleDepartName } from "../../../store/reducers/programSlice";
 import { useDispatch} from "react-redux";

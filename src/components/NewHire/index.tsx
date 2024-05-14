@@ -1,4 +1,3 @@
-import Typography from "@mui/material/Typography";
 import { salaryRates } from "../../utils/dumpData";
 import { styled } from "@mui/material/styles";
 import SelectDemo from "../Select";
@@ -221,14 +220,14 @@ export default function TabsNewHire() {
     ]);
   };
 
-  const handleDeleteRecord = (index) => {
+  const handleDeleteRecord = (index: any) => {
     const newFormData = [...formData];
     newFormData.splice(index, 1);
     setFormData(newFormData);
   };
 
-  const handleInputChange = (index, name, value) => {
-    const newFormData = [...formData];
+  const handleInputChange = (index: any, name: any, value: any) => {
+    const newFormData: any = [...formData];
     newFormData[index][name] = value;
     setFormData(newFormData);
   };
@@ -241,7 +240,7 @@ export default function TabsNewHire() {
               title="Benefit Percentage"
               value={record.employee}
               list={salaryRates}
-              receiveValue={(value) =>
+              receiveValue={(value: any) =>
                 handleInputChange(index, "employee", value)
               }
             />
@@ -252,7 +251,7 @@ export default function TabsNewHire() {
               label="Hourly Rate"
               name="hourlyRate"
               value={record.hourlyRate}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 handleInputChange(index, "hourlyRate", e.target.value)
               }
             />
@@ -263,7 +262,7 @@ export default function TabsNewHire() {
               label="Hours per week"
               name="hoursPerWeek"
               value={record.hoursPerWeek}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 handleInputChange(index, "hoursPerWeek", e.target.value)
               }
             />
@@ -274,7 +273,7 @@ export default function TabsNewHire() {
               label="Working weeks"
               name="workingWeeks"
               value={record.workingWeeks}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 handleInputChange(index, "workingWeeks", e.target.value)
               }
             />
@@ -285,7 +284,7 @@ export default function TabsNewHire() {
               label="Benefit"
               name="benefit"
               value={record.benefit}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 handleInputChange(index, "benefit", e.target.value)
               }
             />
@@ -296,7 +295,7 @@ export default function TabsNewHire() {
               label="Amount"
               name="amount"
               value={record.amount}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 handleInputChange(index, "amount", e.target.value)
               }
             />

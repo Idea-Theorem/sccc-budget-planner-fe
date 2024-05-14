@@ -197,7 +197,7 @@ function Row(props: {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row?.employeDepartments?.map((element) => (
+                  {row?.employeDepartments?.map((element: any) => (
                     <TableRow key={row.id}>
                       <TableCell style={{ paddingLeft: "62px" }}>
                         {row.email}

@@ -7,7 +7,6 @@ import { Button, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import Buttons from "../../../components/Button";
-import { deleteRole, getAllRole } from "../../../services/roleServices";
 import BenefitModal from "../../../models/BenefitModal";
 import { deleteBenefit, getAllBenefit } from "../../../services/benefitServices";
 const StyledBox = styled(Box)(({ theme }) => ({
@@ -135,6 +134,7 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
 // ];
 const Benefit = () => { 
 const [loading, setLoading] = useState<boolean>(false)
+console.log(loading)
 const [singleCenter, setSingleCenter] = useState<any>(null);
 const [center, setCenter] = useState<any>([]);
 const [isCommunityOpen, setCommunityModal] = useState(false);
@@ -175,7 +175,7 @@ const onCommunityEdit = (data: any) => {
     }
   }
 
-  const handleClick = (e: any) => {
+  const handleClick = () => {
       setCommunityModal(true);
       setCenterHeading("Add New benefit");
   }

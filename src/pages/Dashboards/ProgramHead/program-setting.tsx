@@ -242,9 +242,8 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
   ];
   const [settingData, setSettingData] = React.useState([])
   const [selectedRow, setSelectedRow] = useState<any>(null);
-  console.log("selectedRow::::::", selectedRow)
   const [selectedRowdelete, setSelectedDelete] = useState<any>(null);
-  const [deleteModalOpen, setDeleteModal] = useState(false);
+  const [deleteModalOpen, setDeleteModal] = useState<any>(false);
   const [editModalOpen, setEditModal] = useState(false);
 
 

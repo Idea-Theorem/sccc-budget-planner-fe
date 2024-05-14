@@ -5,10 +5,7 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { Button, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
-import InputSearch from "../../../components/Input";
 import AddIcon from "@mui/icons-material/Add";
-import { deleteCenter, getAllCenters } from "../../../services/centersServices";
-import CommunityModal from "../../../models/CommunityModal";
 import Buttons from "../../../components/Button";
 import { deleteRole, getAllRole } from "../../../services/roleServices";
 import RoleModal from "../../../models/RoleModal";
@@ -181,7 +178,7 @@ const onCommunityEdit = (data: any) => {
   }
 
 
-  const handleClick = (e: any) => {
+  const handleClick = () => {
    
       setCommunityModal(true);
       setCenterHeading("Add New Role");
