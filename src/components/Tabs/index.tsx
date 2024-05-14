@@ -142,6 +142,8 @@ const BasicTabs = (props: BasicTabsProps) => {
     }
   };
 
+  console.log("props?.row::::::::", props?.row)
+
   return (
     <Box width="100%">
       <Box borderBottom="1" borderColor="divider">

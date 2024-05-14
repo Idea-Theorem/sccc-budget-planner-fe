@@ -234,7 +234,7 @@ const DHReviewBudgets = () => {
   const [programListing, setprogramListing] = useState<any>([]);
   const [filteredProgramListing, setFilteredProgramListing] = useState<any>([]);
   dispatch(storeProgramList(filteredProgramListing)); 
-  const [activeDepartment, setActiveDepartment] = useState<any>("finance dept");
+  const [activeDepartment, setActiveDepartment] = useState<any>("");
   useEffect(()=>{
     fetchDepartments()
   },[])
@@ -242,7 +242,8 @@ const DHReviewBudgets = () => {
     try {
       const response = await getAllDepartments();
       const filteredID = response?.data?.departments.find((item: any) => item?.name === activeDepartment);
-      setDepartmentID(filteredID?.id)
+      setDepartmentID(response?.data?.departments[0]?.id)
+      setActiveDepartment(response?.data?.departments[0]?.name)
       setDepartments(response?.data?.departments);
     } catch (error) {}
   };
@@ -293,7 +294,7 @@ const DHReviewBudgets = () => {
   const handleActionReieve = (data: any) => {
     setSelectedRows(data);
   };
-  const handleUpdate = async (selectedOption: any) => {
+  const handleUpdate = async (selectedOption: any) => { 
     const data = {
       progamIds: selectedRows,
       status: selectedOption,
@@ -303,7 +304,11 @@ const DHReviewBudgets = () => {
   };
 
   const handleSumbit = async ()=>{
-    await getSingleDepartments(departmentId)
+    let obj = {
+      departmentIds: [departmentId],
+      status: Status.PENDING
+    }
+    await getSingleDepartments(obj)
   }
   return (
     <StyledBox className="appContainer">

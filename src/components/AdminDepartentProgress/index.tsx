@@ -67,7 +67,7 @@ const StyledBox = styled(Box)(() => ({
 const AdminDepartmentProgress = ({ department }: any) => {
   const [rowData, setRowData] = React.useState<any>([]);
   useEffect(() => {
-    if (department.length !== 0) {
+    if (department?.length !== 0 && typeof department !== "undefined") {
       setRowData(department[0]?.Program);
     }
   }, [department]);

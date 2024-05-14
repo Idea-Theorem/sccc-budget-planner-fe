@@ -144,7 +144,7 @@ function Row(props: {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {row.firstname + " " + row.lastname}
+          {row?.firstname + " " + row?.lastname}
         </TableCell>
         <TableCell>{row?.roles[0].name?.replace(/_/g, " ")}</TableCell>
         <TableCell style={{ textTransform: "capitalize" }}>
@@ -313,7 +313,7 @@ export default function HrCollapsibleTable({
                 <TableCell>&nbsp;</TableCell>
                 <TableCell>Employee Name</TableCell>
                 <TableCell>Position</TableCell>
-                <TableCell>Department</TableCell>
+                <TableCell></TableCell>
                 <TableCell>Hire date</TableCell>
               </TableRow>
             </TableHead>

@@ -335,6 +335,9 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
     isSubmitting,
   } = formik;
 
+  console.log("errors:::::::::", errors)
+  console.log("values:::::::::", values)
+
   useEffect(() => {
     fetchUserRole();
     fetchDepartments();
@@ -493,10 +496,10 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
             <Grid container spacing={4}>
               <Grid item xs={6}>
                 <TextFields
-                  error={errors.firstname ? true : false}
+                  error={errors?.firstname ? true : false}
                   variant="standard"
                   label="First Name"
-                  value={values.firstname}
+                  value={values?.firstname}
                   name="firstname"
                   onChange={handleChange}
                   helperText={

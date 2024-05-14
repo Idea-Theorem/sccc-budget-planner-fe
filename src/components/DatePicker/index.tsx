@@ -51,14 +51,14 @@ const BasicDatePicker = ({
 
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
-    // receiveDate(date);
+    receiveDate(date);
   };
 
   useEffect(() => {
     if (singleEmployeeData?.hire_date) {
       setSelectedDate(singleEmployeeData?.hire_date);
     } else {
-      // receiveDate(new Date());
+      receiveDate(new Date());
     }
   }, [singleEmployeeData]);
 

@@ -8,7 +8,8 @@ import {
   storeSingleProgram,
 } from "../../../store/reducers/programSlice";
 import Status from "../../../utils/dumpData";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../store";
 const StyledBox = styled(Box)(() => ({
   "&.appContainer": {
     ".appHeader": {
@@ -19,6 +20,8 @@ const StyledBox = styled(Box)(() => ({
 const PHProgramsScreen = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { programList } = useSelector((state: RootState) => state.program); 
+
   const tableColumnsTitleArray = [
     [
       {
@@ -261,6 +264,7 @@ const PHProgramsScreen = () => {
           { title: "History" },
         ]}
         table={tableColumnsTitleArray}
+        row={programList}
       />
     </StyledBox>
   );

@@ -230,7 +230,7 @@ const ReviewBudgetScreen = () => {
   };
   const handleUpdate = async (selectedOption: any) => {
     const data = {
-      progamIds: selectedRows,
+      departmentIds: selectedRows,
       status: selectedOption,
     };
     const response = await getSingleDepartments(data);

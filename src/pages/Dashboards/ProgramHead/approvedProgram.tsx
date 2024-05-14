@@ -56,8 +56,9 @@ const ApprovedProgram = ({ tabstatus, count, totalCount, handleClick }: any) => 
         )}
         {tabstatus == Status.APPROVED && (
           <Stack>
-            {count === totalCount && 
+           
             <Button
+            disabled={count !== totalCount ? true : false}
               variant="contained"
               color="primary"
               size="medium"
@@ -66,7 +67,7 @@ const ApprovedProgram = ({ tabstatus, count, totalCount, handleClick }: any) => 
             >
               Submit
             </Button>
-            }
+            
           </Stack>
         )}
       </Stack>
