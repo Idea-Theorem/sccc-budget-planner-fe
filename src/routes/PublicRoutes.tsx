@@ -29,6 +29,7 @@ import SuperAdminScreen from "../pages/SuperAdmin";
 import SuperDepartmentDetail from "../pages/SuperAdmin/superDepartmentDetail";
 import HRRole from "../pages/Dashboards/ProgramHead/hrRole";
 import RecreationAndCultureScreen from "../pages/Dashboards/Admin/recreation-culture";
+import Benefit from "../pages/Dashboards/ProgramHead/benefit";
 
 const authRoutes: RouteObject = {
   path: "*",
@@ -148,6 +149,7 @@ const hrRoute: RouteObject = {
         { path: "addcenter", element: <AddCenter /> },
         { path: "settings", element: <HRSettings /> },
         { path: "role", element: <HRRole /> },
+        { path: "benefits", element: <Benefit /> },
       ],
     },
   ],

@@ -56,7 +56,8 @@ export const SIDEBARACTIONS: SidebarAction[] = [
     title: "HR",
     path: "/hr",
     more: [{ title: "Settings", path: "/hr/settings" },
-    { title: "Role", path: "/hr/role" }
+    { title: "Role", path: "/hr/role" },
+    { title: "Benefits", path: "/hr/benefits" },
 
     ],
 
