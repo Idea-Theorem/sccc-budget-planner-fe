@@ -44,8 +44,8 @@ const DepartmentInfoArea = styled(Box)(({ theme }) => ({
 interface IDeleteModal {
   heading?: string;
   subheading?: string;
-  handleClose: () => void;
-  open: boolean;
+  handleClose?: () => void;
+  open?: boolean;
   selectRow?: any
   handleOK?: any
   loading?: any

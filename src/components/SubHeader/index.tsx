@@ -48,7 +48,7 @@ const SubHeader = (props: SubHeaderProps) => {
   const array = [
     {text: "Approved"},
     {text: "Rejected"},
-  ]
+  ] 
  
   const handleOptionSelect = (selectedStatus: any) => {
     props.onStatusChange(selectedStatus);

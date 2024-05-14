@@ -262,7 +262,6 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
     },
   ]);
 
-  console.log("data:::::::", data);
 
   const formik = useFormik<any>({
     validateOnBlur: true,
@@ -465,10 +464,9 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
   };
 
   const filterdDepartment = (id) => {
-    const filterObject = departments.find((item) => item.id === id);
-    console.log("filterObject::::::::");
-    return filterObject?.name;
-  };
+  const filterObject = departments.find(item => item.id === id)
+  return filterObject?.name
+  }
   return (
     <>
       <StatusModal

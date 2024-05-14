@@ -1,6 +1,5 @@
 import { Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import UploadFileOutlinedIcon from '@mui/icons-material/UploadFileOutlined';
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
@@ -8,6 +7,7 @@ import Status from "../../../utils/dumpData";
 import React, { useEffect } from "react";
 import { getPrograms } from "../../../services/adminServices";
 import { getProgram } from "../../../services/programServices";
+import { AddIcCallOutlined } from "@mui/icons-material";
 
 const StyledBox = styled(Box)(({ theme }) => ({
   ".MuiTypography-root": {
@@ -22,7 +22,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
   },
 }));
 
-const ApprovedProgram = ({ tabstatus }: any) => {
+const ApprovedProgram = ({ tabstatus, count, totalCount, handleClick }: any) => {
   const [programs, setPrograms] = React.useState<any>({});
   useEffect(() => {
     fetchProgram();
@@ -45,25 +45,28 @@ const ApprovedProgram = ({ tabstatus }: any) => {
             gap="2px"
           >
             <Typography className="textFull">
-              {programs.approvedCount}
+              {count}
             </Typography>
             <Typography className="divider">/</Typography>
             <Typography className="textValue">
               {" "}
-              {programs.programsCount} Programs {tabstatus?.toLowerCase()}
+              {totalCount} Programs {tabstatus?.toLowerCase()}
             </Typography>
           </Stack>
         )}
         {tabstatus == Status.APPROVED && (
           <Stack>
+            {count === totalCount && 
             <Button
               variant="contained"
               color="primary"
               size="medium"
-              startIcon={<UploadFileOutlinedIcon />}
+              startIcon={<AddIcCallOutlined />}
+              onClick={handleClick}
             >
               Submit
             </Button>
+            }
           </Stack>
         )}
       </Stack>

@@ -18,7 +18,8 @@ const StyledBox = styled(Box)(() => ({
 const AdminScreen = () => {
   const array = [{ text: "Export" }, { text: "Reset" }];
   const [programs, setPrograms] = React.useState<any>({});
-  const [department, setDepartment] = React.useState<any>({});
+  const [department, setDepartment] = React.useState<any>([]);
+  console.log("department:::::::", department)
   const { user } = useAuth();
 
   useEffect(() => {
@@ -36,13 +37,13 @@ const AdminScreen = () => {
   const fetchDepartment = async () => {
     try {
       const response = await getDepartment();
-      setDepartment(response?.data);
+      setDepartment(response?.data?.departments);
     } catch (error) {}
   };
   return (
     <StyledBox className="appContainer">
       <MainHeaderComponent
-        array={array}
+        array={array} 
         title="Dashboard"
         btnTitle="Actions"
         subTitle={user.firstname + " " + user.lastname}
@@ -72,7 +73,7 @@ const AdminScreen = () => {
           done={department.approvedCount}
         />
       </Box>
-      <AdminDepartmentProgress />
+      <AdminDepartmentProgress department={department}/>
       <CollapsibleTable />
     </StyledBox>
   );
