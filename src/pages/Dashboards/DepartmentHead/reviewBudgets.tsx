@@ -10,6 +10,8 @@ import Status from "../../../utils/dumpData";
 import { useDispatch, useSelector } from "react-redux";
 import { storeProgramList } from "../../../store/reducers/programSlice";
 import { RootState } from "../../../store";
+import SelectDemo from "../../../components/Select";
+import { departmentCount, getAllDepartments, getSingleDepartments } from "../../../services/departmentServices";
 const StyledBox = styled(Box)(() => ({
   "& .reviewBudgetHead": {
     marginBottom: "23px",
@@ -225,14 +227,61 @@ const DHReviewBudgets = () => {
   const [tabstatus, setTabstatus] = React.useState(Status.PENDING);
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
   const [updateprogram, setUpdateprogram] = useState<string[]>([]);
+  const [departments, setDepartments] = useState<any>([]);
+  const [count, setCount] = useState<any>(null);
+  const [departmentId, setDepartmentID] = useState<any>(null);
+  const [totalCount, setTotalCount] = useState<any>(null);
+  const [programListing, setprogramListing] = useState<any>([]);
+  const [filteredProgramListing, setFilteredProgramListing] = useState<any>([]);
+  dispatch(storeProgramList(filteredProgramListing)); 
+  const [activeDepartment, setActiveDepartment] = useState<any>("");
+  useEffect(()=>{
+    fetchDepartments()
+  },[])
+  const fetchDepartments = async () => {
+    try {
+      const response = await getAllDepartments();
+       response?.data?.departments.find((item: any) => item?.name === activeDepartment);
+      setDepartmentID(response?.data?.departments[0]?.id)
+      setActiveDepartment(response?.data?.departments[0]?.name)
+      setDepartments(response?.data?.departments);
+    } catch (error) {}
+  };
+  useEffect(()=>{
+    if(departmentId){
+      getDepartmentCount(departmentId)
+    }
 
+  },[tabstatus])
+  const receiveDepartment = (value: any) => {
+    const filteredID = departments.find((item: any) => item?.name === value);
+    setActiveDepartment(filteredID?.name);
+    setDepartmentID(filteredID?.id)
+    const filteredProgramList = programListing?.filter((item: any)=> item?.department_id === filteredID?.id)
+    dispatch(storeProgramList(filteredProgramList)); 
+    getDepartmentCount(filteredID?.id)
+  };
+  const getDepartmentCount = async (id: any)=>{
+    try {
+      const response = await departmentCount(id)
+      setCount(response?.data?.approvedCount)
+      setTotalCount(response?.data?.approvedCount + response?.data?.pendingCount)
+    } catch (error) {
+      
+    }
+  }
+  
   useEffect(() => {
     fetchProgram();
-  }, [updateprogram]);
+    
+  }, [updateprogram, activeDepartment, tabstatus]);
   const fetchProgram = async () => {
     try {
       const response = await getProgram(tabstatus);
-      dispatch(storeProgramList(response?.data?.programs));
+      const newArray = response?.data?.programs?.filter((item: any)=> item?.department?.id === departmentId)
+      setFilteredProgramListing(newArray)
+      
+      setprogramListing(response?.data?.programs)
     } catch (error) {}
   };
   const handleStatusChange = (selectedStatus: any) => {
@@ -245,7 +294,7 @@ const DHReviewBudgets = () => {
   const handleActionReieve = (data: any) => {
     setSelectedRows(data);
   };
-  const handleUpdate = async (selectedOption: any) => {
+  const handleUpdate = async (selectedOption: any) => { 
     const data = {
       progamIds: selectedRows,
       status: selectedOption,
@@ -254,12 +303,19 @@ const DHReviewBudgets = () => {
     setUpdateprogram(response?.data);
   };
 
+  const handleSumbit = async ()=>{
+    let obj = {
+      departmentIds: [departmentId],
+      status: Status.PENDING
+    }
+    await getSingleDepartments(obj)
+  }
   return (
     <StyledBox className="appContainer">
       <Box className="reviewBudgetHead">
         <Typography variant="h3">Review Budgets</Typography>
       </Box>
-      <SubHeader
+      <SubHeader 
         handleUpdate={handleUpdate}
         title="Recreation & Culture"
         onStatusChange={handleStatusChange}
@@ -267,10 +323,18 @@ const DHReviewBudgets = () => {
       <Typography className="totalBudgetText">
         Total Budget: $00,000.00
       </Typography>
+      <SelectDemo
+      title="Department"
+      receiveValue={receiveDepartment}
+      list={departments}
+      value={activeDepartment}
+      placeholder="Please Select"
+      />
       <Box className="approvedTableBlock">
         <Box className="approvedProgramBlock">
-          <ApprovedProgram tabstatus={tabstatus} />
-        </Box>
+          <ApprovedProgram tabstatus={tabstatus} count={count} totalCount={totalCount} handleClick={()=> handleSumbit()}
+          />
+        </Box> 
         <TabsArea
           setTabstatus={setTabstatus}
           tabsTitleArray={[

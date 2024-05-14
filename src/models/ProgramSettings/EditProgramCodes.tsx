@@ -60,15 +60,17 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
 
 interface IHrAddEmployee {
   handleClose?: any;
-  open?: any 
+  open?: any
+  formik?: any 
 }
 
 const EditProgramCodesModal: React.FC<IHrAddEmployee> = ({
   handleClose,
-  open
+  open,
+  formik
 }) => {
- 
-  return (
+console.log("formik::::::::", formik?.values)
+return (
 <Modal
   open={open}
   onClose={handleClose}
@@ -82,15 +84,15 @@ const EditProgramCodesModal: React.FC<IHrAddEmployee> = ({
       <Box>
         <Grid container spacing={4}>
           <Grid item xs={6}>
-            <TextFields variant="standard" label="Program Name" /> 
+            <TextFields variant="standard" label="Program Name"  value={formik?.values?.name} name="name"/> 
           </Grid>
           <Grid item xs={6}>
-            <TextFields variant="standard" label="Program Code" />
+            <TextFields variant="standard" label="Program Code" value={formik?.values?.code} name="code" onChange={formik?.handleChange}/>
           </Grid>
         </Grid>
       </Box>
       <Stack
-        className="formButtons"
+        className="formButtons" 
         direction="row"
         justifyContent="flex-end"
         alignItems="center"
@@ -106,6 +108,7 @@ const EditProgramCodesModal: React.FC<IHrAddEmployee> = ({
           Cancel
         </Button>
         <Button 
+        onClick={()=> formik?.handleSubmit()}
         variant="outlined" 
         color="primary" 
         size="medium" 

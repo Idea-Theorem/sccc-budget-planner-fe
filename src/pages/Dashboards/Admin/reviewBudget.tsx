@@ -2,6 +2,14 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MainHeaderComponent from "../../../components/MainHeader";
 import TabsArea from "../../../components/Tabs";
+import React, { useEffect } from "react";
+import Status from "../../../utils/dumpData";
+import { getPendingPrograms } from "../../../services/adminServices";
+import { getDepartmentOnRowCLick } from "../../../services/programServices";
+import { useNavigate } from "react-router-dom";
+import { storeSingleDepart, storeSingleDepartName } from "../../../store/reducers/programSlice";
+import { useDispatch} from "react-redux";
+import { getSingleDepartments } from "../../../services/departmentServices";
 const StyledBox = styled(Box)(() => ({
   "& .dashboardCards": {
     display: "flex",
@@ -14,7 +22,7 @@ const ReviewBudgetScreen = () => {
   const tableColumnsTitleArray = [
     [
       {
-        field: "departmentName",
+        field: "name",
         headerName: "Department Name",
         sortable: false,
         editable: false,
@@ -72,7 +80,7 @@ const ReviewBudgetScreen = () => {
     ],
     [
       {
-        field: "departmentName",
+        field: "name",
         headerName: "Department Name",
         sortable: false,
         editable: false,
@@ -130,7 +138,7 @@ const ReviewBudgetScreen = () => {
     ],
     [
       {
-        field: "departmentName",
+        field: "name",
         headerName: "Department Name",
         sortable: false,
         editable: false,
@@ -188,9 +196,55 @@ const ReviewBudgetScreen = () => {
     ],
   ];
   const array = [
-    {text: "Approve"},
-    {text: "Reject"},
+    {text: "Approved"},
+    {text: "Rejected"},
   ]
+  
+ 
+  const [tabstatus, setTabstatus] = React.useState(Status.PENDING);
+  const [departmentList, setDepartmentList] = React.useState<any>([]);
+  const [updateprogram, setUpdateprogram] = React.useState<any>([]);
+  const [selectedRows, setSelectedRows] = React.useState<any>([]);
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const [status, setStatus] = React.useState<string>("");
+  useEffect(() => {
+    fetchProgram();
+    
+  }, [tabstatus, updateprogram]);
+  const fetchProgram = async () => {
+    try {
+      const response = await getPendingPrograms(tabstatus);
+      setDepartmentList(response?.data)
+    } catch (error) {}
+  };
+  const handleStatusChange = (selectedStatus: any) => {
+    if (selectedStatus === "Approve") {
+      setStatus("APPROVED");
+    } else if (selectedStatus === "Rejected") {
+      setStatus("REJECTED");
+    }
+  };
+  const handleActionReieve = (data: any) => {
+    setSelectedRows(data);
+  };
+  const handleUpdate = async (selectedOption: any) => {
+    const data = {
+      departmentIds: selectedRows,
+      status: selectedOption,
+    };
+    const response = await getSingleDepartments(data);
+    setUpdateprogram(response?.data);
+  };
+  const onRowClick = async (data: any)=>{
+  if(data){
+    const response  = await getDepartmentOnRowCLick(data?.id)
+    dispatch(storeSingleDepart(response?.data?.departments))
+    dispatch(storeSingleDepartName(data))
+    navigate("/admin/recreation")
+  }
+    
+  }
   return (
     <StyledBox className="appContainer">
       <MainHeaderComponent
@@ -198,16 +252,23 @@ const ReviewBudgetScreen = () => {
         action={true} 
         title="Review Budgets"
         btnTitle="Actions"
-      />
-      <TabsArea
+        onStatusChange={handleStatusChange}
+        handleUpdate={handleUpdate}
+      /> 
+      <TabsArea 
+      setTabstatus={setTabstatus}
         tabsTitleArray={[
           { title: "Pending" },
-          { title: "Rejected" },
           { title: "Approved" },
+          { title: "Rejected" },
           { title: "Drafts" },
           { title: "History" },
         ]}
         table={tableColumnsTitleArray}
+        row={departmentList?.departments}
+        currentStatus={status}
+        handleActionReieve={handleActionReieve}
+        onRowClick = {onRowClick}
       />
     </StyledBox> 
   );

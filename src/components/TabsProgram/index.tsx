@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import ProgramTable from "../ProgramTable";
+import TabsNewHire from "../NewHire";
 
 interface TabsProgramPanelProps {
   children?: React.ReactNode;
@@ -91,12 +92,17 @@ const TabsProgram = ({
         />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        <ProgramTable
+        {
+          false ? 
+          <TabsNewHire />
+          :   <ProgramTable
           disabled={disabled}
           handleSalaryExpenseReceived={handleSalaryExpenseReceived}
           title="salary-expense"
           formik={formik}
         />
+        }
+     
       </CustomTabPanel>
     </Box>
   );

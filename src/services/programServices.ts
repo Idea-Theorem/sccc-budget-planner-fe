@@ -16,7 +16,9 @@ const createProgram = async (data: any) => {
 const getProgram = async (status: any) => {
     return await HTTP_CLIENT.get(`/program/?status=${status}`)
   };
-  
+  const getDepartments = async () => {
+    return await HTTP_CLIENT.get(`/department`)
+  };
   const programUpdate = async (data: any, id: string) => {
     return await HTTP_CLIENT.put(`/program/${id}`, data);
   };
@@ -25,19 +27,23 @@ const getProgram = async (status: any) => {
     return await HTTP_CLIENT.put(`/program/updateStatus`, data);
   };
   
-// const deleteEmployee = async (id: string) => {
-//     return await HTTP_CLIENT.delete(`/user/${id}`);
-//   }
-
+const deleteProgram = async (id: string) => {
+    return await HTTP_CLIENT.delete(`/program/${id}`);
+  }
+  const getDepartmentOnRowCLick = async (id: string) => {
+    return await HTTP_CLIENT.get(`/department/programs/${id}`);
+  }
 
 
 
 
 export {
     createProgram,
+    getDepartments,
     getAllProgramsViaStatus,
    programUpdate,
 updateProgram,
     getProgram,
-
+    deleteProgram,
+    getDepartmentOnRowCLick
 };

@@ -3,12 +3,11 @@ import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
 import TextFields from "../../components/Input/textfield";
-import { Clear} from "@mui/icons-material"; 
+import { Clear, Save} from "@mui/icons-material"; 
 import Grid from "@mui/material/Grid"; 
 import BasicDatePicker from "../../components/DatePicker";
 import { Button } from "@mui/material";
 import Modal from '@mui/material/Modal';
-import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 
 
 const EmployeeInfoArea = styled(Box)(({ theme }) => ({
@@ -62,11 +61,13 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
 interface IHrAddEmployee {
   handleClose?: any;
   open?: any 
+  formik?: any 
 }
 
 const EditProgramModal: React.FC<IHrAddEmployee> = ({
   handleClose,
-  open
+  open, 
+  formik
 }) => {
  
   return (
@@ -83,10 +84,10 @@ const EditProgramModal: React.FC<IHrAddEmployee> = ({
       <Box>
         <Grid container spacing={4}>
           <Grid item xs={6}>
-            <TextFields variant="standard" label="Program Name" />
+            <TextFields variant="standard" label="Program Name" name="name" onChange={formik?.handleChange} value={formik?.values?.name}/>
           </Grid>
           <Grid item xs={6}>
-            <TextFields variant="standard" label="Program Code" />
+            <TextFields variant="standard" label="Program Code" name="code" value={formik?.values?.code}/>
           </Grid>
           <Grid item xs={6}> 
             <BasicDatePicker />
@@ -95,7 +96,7 @@ const EditProgramModal: React.FC<IHrAddEmployee> = ({
             <BasicDatePicker />
           </Grid>
           <Grid item xs={6}>
-            <TextFields variant="standard" label="Department" />
+            <TextFields variant="standard" label="Department" name="department" onChange={formik?.handleChange} value={formik?.values?.department}/>
           </Grid>
         </Grid>
       </Box>
@@ -119,7 +120,8 @@ const EditProgramModal: React.FC<IHrAddEmployee> = ({
         variant="outlined" 
         color="primary" 
         size="medium" 
-        startIcon={<SaveOutlinedIcon />}>
+        startIcon={<Save />}
+        onClick={()=> formik?.handleSubmit()}>
           Save
         </Button>
       </Stack>

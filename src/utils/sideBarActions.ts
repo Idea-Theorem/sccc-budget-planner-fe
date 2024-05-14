@@ -1,9 +1,10 @@
 import { SidebarAction } from "../types/common";
 
 export const SIDEBARACTIONS: SidebarAction[] = [
-  { role: "Program_Head", title: "Programs", path: "/program-head", 
-    more: [{title: "Settings", path: "/program-head/program-settings"},
-    {title: "Codes", path: "/program-head/program-codes"} ]
+  {
+    role: "Program_Head", title: "Programs", path: "/program-head",
+    more: [{ title: "Settings", path: "/program-head/program-settings" },
+    { title: "Codes", path: "/program-head/program-codes" }]
   },
   // {
   //   email: "programhead@gmail.com",
@@ -35,8 +36,6 @@ export const SIDEBARACTIONS: SidebarAction[] = [
     title: "Review Budgets",
     path: "/admin/review-budget",
     // path:"/department-head/review-budgets",
-
-    
   },
   {
     email: "admin@gmail.com",
@@ -56,14 +55,18 @@ export const SIDEBARACTIONS: SidebarAction[] = [
     role: "HR",
     title: "HR",
     path: "/hr",
-    more: [{ title: "Settings", path: "/hr/settings" }],
-  
+    more: [{ title: "Settings", path: "/hr/settings" },
+    { title: "Role", path: "/hr/role" },
+    { title: "Benefits", path: "/hr/benefits" },
+
+    ],
+
   },
   { email: "suparadmin@gmail.com", role: "Super_Admin", title: "Dashboard", path: "/super-admin" },
   {
     email: "suparadmin@gmail.com",
     role: "Super_Admin",
-    path:"/department-head/review-budgets",
+    path: "/department-head/review-budgets",
     title: "Review Budgets",
   },
   {
@@ -72,5 +75,5 @@ export const SIDEBARACTIONS: SidebarAction[] = [
     title: "Programs",
     path: "/program-head/program",
   },
-  { email: "suparadmin@gmail.com", role: "Super_Admin", title: "HR",  path: "/hr" },
+  { email: "suparadmin@gmail.com", role: "Super_Admin", title: "HR", path: "/hr" },
 ];

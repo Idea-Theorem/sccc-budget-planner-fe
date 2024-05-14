@@ -6,6 +6,9 @@ import { HTTP_CLIENT } from "../utils/axiosClient";
 const getAllDepartments = async () => {
   return await HTTP_CLIENT.get("/department");
 };
+const getSingleDepartments = async (id: any) => {
+  return await HTTP_CLIENT.post("/department/update-status", id);
+};
 
 const createDepartment = async (data: any) => {
     return await HTTP_CLIENT.post("/department", data);
@@ -18,12 +21,15 @@ const createDepartment = async (data: any) => {
   const deleteDepartment = async (id: string) => {
     return await HTTP_CLIENT.delete(`/department/${id}`);
   };
-
+  const departmentCount = async (id: string) => {
+    return await HTTP_CLIENT.get(`department/program-count/${id}`);
+  };
   
 
 
 export {
-
+  departmentCount,
+  getSingleDepartments,
   getAllDepartments,
   createDepartment,
   updateDepartment,

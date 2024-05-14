@@ -1,14 +1,14 @@
 import { styled } from "@mui/material/styles";
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
-import InputSearch from "../../../../components/Input";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { Button, Stack } from "@mui/material";
-import { useState } from "react";
-import DeleteModal from "../../../../models/DeleteModal";
-import { deleteDepartment } from "../../../../services/departmentServices";
-import StatusModal from "../../../../components/StatusModal";
+import { useEffect, useState } from "react";
+import AddIcon from "@mui/icons-material/Add";
+import Buttons from "../../../components/Button";
+import BenefitModal from "../../../models/BenefitModal";
+import { deleteBenefit, getAllBenefit } from "../../../services/benefitServices";
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
@@ -56,9 +56,9 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
     // color: "#979797",
     // fontSize: "14px",
     // lineHeight: "24px",
-    // "&:hover": {
-    //   background: "none",
-    // },
+    "&:hover": {
+      background: "none",
+    },
   },
   "& .MuiDataGrid-columnHeaderTitle": {
     color: "rgba(0, 0, 0, 0.87)",
@@ -114,38 +114,77 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
   ".MuiStack-root": {
     "&.MuiButtonBase-root": {
       color: theme.palette.text.primary,
-    },
-  },
+    }
+  }
 }));
 
 // const rows = [
 //   {
 //     id: 1,
-//     name: "Recreation & Culture",
-//     // status: "5",
+//     departmentName: "SCCC",
+//     status: "25",
 //     lYearBudget: "02-Mar-2024",
 //   },
 //   {
-//     id: 2,
-//     name: "HR",
-//     // status: "5",
+//     id: 2, 
+//     departmentName: "ACCC",
+//     status: "20",
 //     lYearBudget: "02-Mar-2024",
 //   },
 // ];
-interface HRTableProps {
-  onEdit?: any;
-  row?: any;
-  refresh?: any;
-}
-const HRTableComponent: React.FC<HRTableProps> = ({ onEdit, row, refresh }) => {
-  const [deleteRow, setDeleteRow] = useState<any>(false);
-  const [loading, setLoading] = useState<any>(false);
-  const [statusData, setStatusData] = useState<any>(null);
+const Benefit = () => { 
+const [loading, setLoading] = useState<boolean>(false)
+console.log(loading)
+const [singleCenter, setSingleCenter] = useState<any>(null);
+const [center, setCenter] = useState<any>([]);
+const [isCommunityOpen, setCommunityModal] = useState(false);
+const [centerHeading, setCenterHeading] = useState<string>("");
+
+
+const fetchCenters = async () => {
+  try {
+    const response = await getAllBenefit();
+    setCenter(response?.data?.centers);
+  } catch (error) {}
+};
+
+useEffect(()=> {
+  fetchCenters();
+},[])
+
+const handleCloseCommunityModal = () => {
+  fetchCenters();
+  setCommunityModal(false);
+};
+
+const onCommunityEdit = (data: any) => {
+  setSingleCenter(data.row);
+  setCommunityModal(true);
+  setCenterHeading("Edit benefit");
+};
+
+  const handleDelete = async (data: any) => {
+    try {
+      setLoading(true)
+      await deleteBenefit(data?.id)
+      fetchCenters()
+      setLoading(false)
+    } catch (error) {
+      setLoading(false)
+
+    }
+  }
+
+  const handleClick = () => {
+      setCommunityModal(true);
+      setCenterHeading("Add New benefit");
+  }
+
 
   const columns: GridColDef[] = [
     {
       field: "name",
-      headerName: "Department Name",
+      headerName: "Center Name",
       sortable: false,
       editable: false,
       flex: 1,
@@ -168,23 +207,14 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit, row, refresh }) => {
       field: "buttonsColumn",
       headerName: "",
       flex: 0.5,
-      renderCell: (data?: any) => (
-        <Stack
-          direction="row"
-          gap="10px"
-          alignItems="center"
-          justifyContent="flex-end"
-          width="100%"
-        >
+      renderCell: (data: any ) => (
+        <Stack direction="row" gap="10px" alignItems="center" justifyContent="flex-end" width="100%">
           <Button
             variant="text"
             color="error"
             size="small"
             startIcon={<DeleteOutlineIcon />}
-            onClick={() => {
-              setIsOpen(true);
-              setDeleteRow(data);
-            }}
+            onClick={() => handleDelete(data)}
           >
             Delete
           </Button>
@@ -193,7 +223,7 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit, row, refresh }) => {
             color="primary"
             size="small"
             startIcon={<EditNoteIcon />}
-            onClick={() => onEdit(data)}
+            onClick={() => onCommunityEdit(data)}
           >
             Edit
           </Button>
@@ -201,60 +231,43 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit, row, refresh }) => {
       ),
     },
   ];
-
-  const [isOpen, setIsOpen] = useState<any>(false);
-  const closeModel = () => {
-    setIsOpen(false);
-  };
-
-  const handleDelete = async () => {
-    try {
-      setLoading(true);
-      await deleteDepartment(deleteRow?.id);
-      setLoading(false);
-      setStatusData({
-        type: "success",
-        message: "Department Deleted Successfully",
-      });
-      refresh();
-      closeModel();
-    } catch (error: any) {
-      setStatusData({
-        type: "error",
-        message: error.response.data.message,
-      });
-      setLoading(false);
-    }
-  };
   return (
     <>
       <StyledBox className="mainTableBlock">
-        <InputSearch placeholder="Search..." />
-        <StyleDataGrid
-          rows={row || []}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 5 },
-            },
-          }}
-          pageSizeOptions={[5, 10, 15]}
-          disableRowSelectionOnClick
-          slots={{ toolbar: GridToolbar }}
-        />
+        {/* <InputSearch placeholder="Search..." /> */}
+        <Buttons
+          variant="contained"
+          color="primary"
+          size="medium"
+          btntext="Add New benefit"
+          startIcon={<AddIcon />}
+          onClick={handleClick}
+        /> 
+        {center.length == 0 ? "" :
+         <StyleDataGrid
+         rows={center.length == 0 ? [] : center}
+         columns={columns}
+         initialState={{
+           pagination: {
+             paginationModel: { page: 0, pageSize: 5 },
+           },
+         }}
+         pageSizeOptions={[5, 10, 15]}
+         disableRowSelectionOnClick
+         slots={{ toolbar: GridToolbar }}
+       />
+        }
+       
       </StyledBox>
-      <DeleteModal
-        open={isOpen}
-        handleOK={() => handleDelete()}
-        handleClose={closeModel}
-        loading={loading}
-        heading="Are you sure you want to delete?"
-      />
-      <StatusModal
-        statusData={statusData}
-        onClose={() => setStatusData(null)}
+      <BenefitModal
+        open={isCommunityOpen}
+        handleClose={handleCloseCommunityModal}
+        heading={centerHeading}
+        subheading="Benefits Information"
+        singleCenter={singleCenter}
+        setSingleCenter={setSingleCenter}
       />
     </>
   );
 };
-export default HRTableComponent;
+export default Benefit;

@@ -8,7 +8,8 @@ import {
   storeSingleProgram,
 } from "../../../store/reducers/programSlice";
 import Status from "../../../utils/dumpData";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../store";
 const StyledBox = styled(Box)(() => ({
   "&.appContainer": {
     ".appHeader": {
@@ -19,6 +20,7 @@ const StyledBox = styled(Box)(() => ({
 const ProgramsDraftScreen = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { programList } = useSelector((state: RootState) => state.program); 
   const tableColumnsTitleArray = [
     [
       {
@@ -65,6 +67,12 @@ const ProgramsDraftScreen = () => {
       },
     ],
   ];
+
+  const onRowClick = (rowData: any) => {
+    dispatch(storeSingleProgram(rowData));
+    dispatch(storeProgramFromStatus(Status.DRAFTED));
+    navigate("/program-head/create");
+  }
   return (
     <StyledBox className="appContainer">
       <MainHeaderComponent
@@ -79,6 +87,8 @@ const ProgramsDraftScreen = () => {
       <TabsArea
         tabsTitleArray={[{ title: "Drafts" }]}
         table={tableColumnsTitleArray}
+        row={programList}
+        onRowClick={onRowClick}
       />
     </StyledBox>
   );

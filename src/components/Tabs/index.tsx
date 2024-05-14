@@ -7,12 +7,11 @@ import { styled } from "@mui/material/styles";
 import TableComponent from "../Table";
 import { getAllProgramsViaStatus } from "../../services/programServices";
 import Status from "../../utils/dumpData";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   storeProgramFromStatus,
   storeProgramList,
 } from "../../store/reducers/programSlice";
-import { RootState } from "../../store";
 import { storeSingleProgram } from "../../store/reducers/programSlice";
 import { useNavigate } from "react-router";
 import { useLocation } from "react-router-dom";
@@ -29,6 +28,7 @@ interface TabTitle {
 interface BasicTabsProps {
   tabsTitleArray: TabTitle[];
   table: any;
+  onRowClick?: any;
   row?: any;
   currentStatus?: any;
   handleActionReieve?: any;
@@ -67,7 +67,7 @@ const BasicTabs = (props: BasicTabsProps) => {
   const [loading, setLoading] = React.useState(false);
   const [status, setStatus] = React.useState(Status.PENDING);
   const dispatch = useDispatch();
-  const { programList } = useSelector((state: RootState) => state.program);
+  // const { programList } = useSelector((state: RootState) => state.program);
   const navigate: any = useNavigate();
   const location = useLocation();
 
@@ -96,7 +96,7 @@ const BasicTabs = (props: BasicTabsProps) => {
     }
   }, [props?.tabsTitleArray]);
 
-  React.useEffect(() => {
+  React.useEffect(() => { 
     fetchProgramList(status);
   }, [status]);
   const fetchProgramList = async (status: string) => {
@@ -112,6 +112,7 @@ const BasicTabs = (props: BasicTabsProps) => {
   };
 
   const handleClick = (rowData: any) => {
+    props?.onRowClick(rowData)
     if (
       location?.pathname == "/program-head/program" &&
       status == Status.REJECTED
@@ -140,6 +141,8 @@ const BasicTabs = (props: BasicTabsProps) => {
     }
   };
 
+  console.log("props?.row::::::::", props?.row)
+
   return (
     <Box width="100%">
       <Box borderBottom="1" borderColor="divider">
@@ -158,7 +161,7 @@ const BasicTabs = (props: BasicTabsProps) => {
           <TableComponent
             onRowClick={(rowData) => handleClick(rowData)}
             columns={item}
-            row={typeof programList == "undefined" ? [] : programList}
+            row={typeof props?.row == "undefined" ? [] : props?.row}
             status={props?.currentStatus}
             handleActionReieve={props?.handleActionReieve}
             loading={loading}
@@ -219,6 +222,7 @@ export default function TabsArea(props: BasicTabsProps) {
         row={props?.row}
         currentStatus={props?.currentStatus}
         handleActionReieve={props?.handleActionReieve}
+        onRowClick={props?.onRowClick}
       />
     </TabsAreas>
   );
