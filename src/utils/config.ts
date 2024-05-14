@@ -8,6 +8,6 @@ const mainnetConfig = {
 //   Base_URL: "https://office-management-4c6782fe80e7.herokuapp.com",
 // };
 
-const defaultConfig = mainnetConfig;
+const defaultConfig = testnetConfig;
 
 export default defaultConfig;

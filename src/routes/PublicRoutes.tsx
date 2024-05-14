@@ -27,6 +27,7 @@ import SuperAdminProgramScreen from "../pages/SuperAdmin/superAdminProgram";
 import SuperReviewBudget from "../pages/SuperAdmin/SuperReviewBudget";
 import SuperAdminScreen from "../pages/SuperAdmin";
 import SuperDepartmentDetail from "../pages/SuperAdmin/superDepartmentDetail";
+import HRRole from "../pages/Dashboards/ProgramHead/hrRole";
 
 const authRoutes: RouteObject = {
   path: "*",
@@ -144,6 +145,7 @@ const hrRoute: RouteObject = {
         { path: "adddepartment", element: <AddDepartment /> },
         { path: "addcenter", element: <AddCenter /> },
         { path: "settings", element: <HRSettings /> },
+        { path: "role", element: <HRRole /> },
       ],
     },
   ],
