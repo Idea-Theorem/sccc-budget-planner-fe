@@ -16,7 +16,6 @@ export default function TabsNewHire() {
       amount: "",
     },
   ]);
-console.log("formData::::::::", formData)
   const handleAddRecord = () => {
     setFormData([...formData, {
       employee:"",

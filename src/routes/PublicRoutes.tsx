@@ -27,6 +27,7 @@ import SuperAdminProgramScreen from "../pages/SuperAdmin/superAdminProgram";
 import SuperReviewBudget from "../pages/SuperAdmin/SuperReviewBudget";
 import SuperAdminScreen from "../pages/SuperAdmin";
 import SuperDepartmentDetail from "../pages/SuperAdmin/superDepartmentDetail";
+import RecreationAndCultureScreen from "../pages/Dashboards/Admin/recreation-culture";
 
 const authRoutes: RouteObject = {
   path: "*",
@@ -61,6 +62,7 @@ const adminRoute: RouteObject = {
             },
           ],
         },
+        { path: "recreation", element: <RecreationAndCultureScreen /> },
         { path: "programs", element: <AdminProgramScreen /> },
         { path: "settings", element: <AdminProgramScreen /> },
       ],

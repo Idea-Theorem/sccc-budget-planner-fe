@@ -5,10 +5,12 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { Button, Stack, Typography } from "@mui/material";
 import InputSearch from "../../../components/Input";
-import { deleteProgram, getAllProgramsViaStatus } from "../../../services/programServices";
+import { deleteProgram, getAllProgramsViaStatus, programUpdate } from "../../../services/programServices";
 import React, { useState } from "react";
 import Status from "../../../utils/dumpData";
 import DeleteModal from "../../../models/DeleteModal";
+import EditProgramCodesModal from "../../../models/ProgramSettings/EditProgramCodes";
+import { useFormik } from "formik";
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
@@ -118,42 +120,10 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
   },
 }));
 
-const rows = [
-  {
-    id: 1,
-    departmentName: "Recreation & Culture",
-    status: "5",
-  },
-  {
-    id: 2,
-    departmentName: "HR",
-    status: "5",
-  },
-  {
-    id: 3,
-    departmentName: "Recreation & Culture",
-    status: "5",
-  },
-  {
-    id: 4,
-    departmentName: "HR",
-    status: "5",
-  },
-  {
-    id: 5,
-    departmentName: "Recreation & Culture",
-    status: "5",
-  },
-  {
-    id: 6,
-    departmentName: "HR",
-    status: "5",
-  },
-];
 interface HRTableProps {
   onEdit?: any;
 }
-const HRTableComponent: React.FC<HRTableProps> = ({ onEdit }) => {
+const HRTableComponent: React.FC<HRTableProps> = ({  }) => {
   const columns: GridColDef[] = [
     {
       field: "name",
@@ -204,40 +174,59 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit }) => {
     },
   ];
   const [selectedRow, setSelectedRow] = useState<any>(null);
+  console.log("::::::::::::::::::", selectedRow)
   const [codeData, setCodeData] = React.useState([])
-  const [status, setStatus] = React.useState(Status.DRAFTED);
   const [selectedRowdelete, setSelectedDelete] = useState<any>(null);
-  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModal] = useState(false);
+  const [editModalOpen, setEditModal] = useState(false); 
+
+  const formik = useFormik<any>({
+    validateOnBlur: false,
+    // validationSchema: programSchema, 
+    enableReinitialize: true,
+    initialValues: {
+      name: selectedRow ? selectedRow?.name : "",
+      code: selectedRow ? selectedRow?.code : "",
+      department_id: selectedRow ? selectedRow?.department_id : "",
+    },
+    onSubmit: async (values: any) => {
+      try {
+        await programUpdate(values , selectedRow?.id)
+        fetchProgramList(Status.DRAFTED)
+        setEditModal(false)
+      } catch (error) {
+        console.log(error)
+      }
+    },
+  });
   React.useEffect(() => { 
-    fetchProgramList(status);
-  }, [status]);
+    fetchProgramList(Status.DRAFTED);
+  }, []);
   const fetchProgramList = async (status: string) => {
     try {
-      // setLoading(true);
       const response = await getAllProgramsViaStatus(status); 
       setCodeData(response?.data?.programs)
-      // setLoading(false);
     } catch (error) {
-      // setLoading(false);
+      console.log(error)
     }
   };
     const handleEditClick = (rowData: any) => {
       setSelectedRow(rowData); 
+      setEditModal(true)
     };
     
   const handleDelete = (rowData: any)=>{
     setSelectedDelete(rowData?.id);
-    setDeleteModalOpen(true);
+    setDeleteModal(true);
   }
   const handleDeleteConfirmation = async () => {
     if(selectedRowdelete){
       try {
-        const response = await deleteProgram(selectedRowdelete);
-        setDeleteModalOpen(false) 
+        await deleteProgram(selectedRowdelete);
+        fetchProgramList(Status.DRAFTED)
+        setDeleteModal(false) 
       } catch (error) {
         console.error('Error deleting record:', error);
-      } finally {
-        // setIsDeleting(false);
       }
     }
   };
@@ -264,7 +253,8 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit }) => {
           slots={{ toolbar: GridToolbar }}
         />
       </StyledBox>
-      <DeleteModal heading="Are you sure you want to delete?" open={deleteModalOpen} handleClose={()=>setDeleteModalOpen(false)} handleOK={()=> handleDeleteConfirmation()}/>
+      <DeleteModal heading="Are you sure you want to delete?" open={deleteModalOpen} handleClose={()=>setDeleteModal(false)} handleOK={()=> handleDeleteConfirmation()}/>
+      <EditProgramCodesModal open={editModalOpen} handleClose={()=> setEditModal(false)} formik={formik}/>
     </StyledBox>
   );
 };

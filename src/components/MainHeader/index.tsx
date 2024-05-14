@@ -6,6 +6,7 @@ import AddIcon from "@mui/icons-material/Add";
 // import DropdownButton from "../Button/dropDownButton";
 import IosShareIcon from "@mui/icons-material/IosShare";
 import Buttons from "../Button";
+import DropdownButton from "../Button/dropDownButton";
 
 const AppHeader = styled(Box)(({ theme }) => ({
   "&.appHeader": {
@@ -85,6 +86,8 @@ interface MainHeaderProps {
   subTitle?: string;
   date?: string;
   array?: any;
+  onStatusChange?: any;
+  handleUpdate?: any;
   action?: boolean;
   subdes?: string;
   classname?: string;
@@ -93,6 +96,9 @@ interface MainHeaderProps {
 
 const MainHeaderComponent = (props: MainHeaderProps) => {
   const { classname } = props;
+  const handleOptionSelect = (selectedStatus: any) => {
+    props.onStatusChange(selectedStatus);
+  };
   return (
     <AppHeader className={`${classname} appHeader`}>
       <Stack className="appHeaderHolder">
@@ -101,12 +107,12 @@ const MainHeaderComponent = (props: MainHeaderProps) => {
           <Typography variant="h6">{props.subdes}</Typography>
         </Box>
         {props?.action ? (
-          // <DropdownButton title="Actions" array={props?.array} />
-          <Buttons
-            startIcon={<IosShareIcon />}
-            btntext="Export"
-            variant="contained"
-          />
+          <DropdownButton title="Actions" array={props?.array} onSelect={handleOptionSelect} handleUpdate={props?.handleUpdate}/> 
+          // <Buttons
+          //   startIcon={<IosShareIcon />}
+          //   btntext="Export"
+          //   variant="contained"
+          // />
         ) : (
           <Buttons
             startIcon={<AddIcon />}
@@ -114,7 +120,8 @@ const MainHeaderComponent = (props: MainHeaderProps) => {
             btntext={props?.btnTitle}
             variant="contained"
           />
-        )}
+        )
+        }
       </Stack>
       {props?.subHeader && (
         <Box className="appSubHead">

@@ -22,7 +22,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
   },
 }));
 
-const ApprovedProgram = ({ tabstatus }: any) => {
+const ApprovedProgram = ({ tabstatus, count, totalCount, handleClick }: any) => {
   const [programs, setPrograms] = React.useState<any>({});
   useEffect(() => {
     fetchProgram();
@@ -45,25 +45,28 @@ const ApprovedProgram = ({ tabstatus }: any) => {
             gap="2px"
           >
             <Typography className="textFull">
-              {programs.approvedCount}
+              {count}
             </Typography>
             <Typography className="divider">/</Typography>
             <Typography className="textValue">
               {" "}
-              {programs.programsCount} Programs {tabstatus?.toLowerCase()}
+              {totalCount} Programs {tabstatus?.toLowerCase()}
             </Typography>
           </Stack>
         )}
         {tabstatus == Status.APPROVED && (
           <Stack>
+            {count === totalCount && 
             <Button
               variant="contained"
               color="primary"
               size="medium"
               startIcon={<AddIcCallOutlined />}
+              onClick={handleClick}
             >
               Submit
             </Button>
+            }
           </Stack>
         )}
       </Stack>

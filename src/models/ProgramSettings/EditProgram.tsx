@@ -61,11 +61,13 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
 interface IHrAddEmployee {
   handleClose?: any;
   open?: any 
+  formik?: any 
 }
 
 const EditProgramModal: React.FC<IHrAddEmployee> = ({
   handleClose,
-  open
+  open, 
+  formik
 }) => {
  
   return (
@@ -82,10 +84,10 @@ const EditProgramModal: React.FC<IHrAddEmployee> = ({
       <Box>
         <Grid container spacing={4}>
           <Grid item xs={6}>
-            <TextFields variant="standard" label="Program Name" />
+            <TextFields variant="standard" label="Program Name" name="name" onChange={formik?.handleChange} value={formik?.values?.name}/>
           </Grid>
           <Grid item xs={6}>
-            <TextFields variant="standard" label="Program Code" />
+            <TextFields variant="standard" label="Program Code" name="code" value={formik?.values?.code}/>
           </Grid>
           <Grid item xs={6}> 
             <BasicDatePicker />
@@ -94,7 +96,7 @@ const EditProgramModal: React.FC<IHrAddEmployee> = ({
             <BasicDatePicker />
           </Grid>
           <Grid item xs={6}>
-            <TextFields variant="standard" label="Department" />
+            <TextFields variant="standard" label="Department" name="department" onChange={formik?.handleChange} value={formik?.values?.department}/>
           </Grid>
         </Grid>
       </Box>
@@ -118,7 +120,8 @@ const EditProgramModal: React.FC<IHrAddEmployee> = ({
         variant="outlined" 
         color="primary" 
         size="medium" 
-        startIcon={<Save />}>
+        startIcon={<Save />}
+        onClick={()=> formik?.handleSubmit()}>
           Save
         </Button>
       </Stack>

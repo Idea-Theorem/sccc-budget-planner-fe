@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 import ProgramProgress from "./programProgress";
 import DepartmentButton from "./departmentButton";
-import { departments } from "../../utils/sampleData";
+import React, { useEffect } from "react";
 
 const StyledBox = styled(Box)(() => ({
   "&.dashboardStatsCard": {
@@ -64,13 +64,24 @@ const StyledBox = styled(Box)(() => ({
   },
 }));
 
-const AdminDepartmentProgress = () => {
+const AdminDepartmentProgress = ({ department }: any) => {
+  const [rowData, setRowData] = React.useState<any>([]);
+  useEffect(() => {
+    if (department.length !== 0) {
+      setRowData(department[0]?.Program);
+    }
+  }, [department]);
   return (
     <StyledBox className="dashboardStatsCard">
       <Typography variant="h3">Department %</Typography>
       <Box className="tagsList">
-        {departments.map((e, index) => (
-          <DepartmentButton key={index} text={e.title} color={e.color} />
+        {department?.map((e: any, index: any) => (
+          <DepartmentButton
+            key={index}
+            text={e?.name}
+            color={e?.color}
+            handleBtnClick={() => setRowData(e?.Program)}
+          />
         ))}
       </Box>
       <Box className="dashboardGraphsBlock">
@@ -78,38 +89,16 @@ const AdminDepartmentProgress = () => {
           <BasicPie />
         </Box>
         <Box className="dashboardGraphsList">
-          <Box color={"#3B00ED"} className="progress-wrap">
-            <ProgramProgress
-              title="Program 1"
-              amount="$00.000"
-              value={52}
-              color="inherit"
-            />
-          </Box>
-          <Box color={"#9C27B0"} className="progress-wrap">
-            <ProgramProgress
-              title="Program 2"
-              amount="$00.000"
-              value={42}
-              color="inherit"
-            />
-          </Box>
-          <Box color={"#D81B60"} className="progress-wrap">
-            <ProgramProgress
-              title="Program 3"
-              amount="$00.000"
-              value={26}
-              color="inherit"
-            />
-          </Box>
-          <Box color={"#FFC107"} className="progress-wrap">
-            <ProgramProgress
-              title="Program 4"
-              amount="$00.000"
-              value={34}
-              color="inherit"
-            />
-          </Box>
+          {rowData?.map((e: any) => (
+            <Box color={"#3B00ED"} className="progress-wrap">
+              <ProgramProgress
+                title={e?.name}
+                amount="$00.000"
+                value={52}
+                color="inherit"
+              />
+            </Box>
+          ))}
         </Box>
       </Box>
     </StyledBox>
