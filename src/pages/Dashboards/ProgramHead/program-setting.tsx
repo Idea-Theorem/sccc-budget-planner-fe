@@ -260,7 +260,6 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
     },
     onSubmit: async (values: any) => {
       try {
-        console.log("values::::::::", values)
         await programUpdate(values , selectedRow?.id)
         fetchProgramList(Status.DRAFTED)
         setEditModal(false)
@@ -269,7 +268,6 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
       }
     },
   });
-  console.log("values::::::::", formik?.values)
   React.useEffect(() => { 
     fetchProgramList(Status.DRAFTED);
   }, []);

@@ -89,14 +89,16 @@ const BasicTabs = (props: BasicTabsProps) => {
     }
   };
   React.useEffect(() => {
-    if (props?.tabsTitleArray.length > 0) {
-      if (props?.tabsTitleArray[0].title == "Drafts") {
-        setStatus(Status.DRAFTED);
-      }
+    if (location?.pathname == "/program-head/draft") {
+        // setStatus(Status.DRAFTED);
+        fetchProgramList(Status.DRAFTED)
     }
-  }, [props?.tabsTitleArray]);
+  }, [location?.pathname]);
 
   React.useEffect(() => { 
+    // if (location?.pathname == "/program-head/draft") {
+    //   return
+    // }
     fetchProgramList(status);
   }, [status]);
   const fetchProgramList = async (status: string) => {
@@ -140,8 +142,6 @@ const BasicTabs = (props: BasicTabsProps) => {
       navigate("/department-head/program-review");
     }
   };
-
-  console.log("props?.row::::::::", props?.row)
 
   return (
     <Box width="100%">

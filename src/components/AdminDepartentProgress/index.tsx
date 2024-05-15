@@ -5,6 +5,7 @@ import { styled } from "@mui/material/styles";
 import ProgramProgress from "./programProgress";
 import DepartmentButton from "./departmentButton";
 import React, { useEffect } from "react";
+import { getDepartmentInCenters } from "../../services/centersServices";
 
 const StyledBox = styled(Box)(() => ({
   "&.dashboardStatsCard": {
@@ -46,6 +47,8 @@ const StyledBox = styled(Box)(() => ({
 
     "& .dashboardGraphsList": {
       flexGrow: "1",
+      height:'250px',
+      overflowY:'auto',
       minWidth: "0",
     },
 
@@ -64,17 +67,45 @@ const StyledBox = styled(Box)(() => ({
   },
 }));
 
-const AdminDepartmentProgress = ({ department }: any) => {
+const AdminDepartmentProgress = ({ department , from, center}: any) => {
   const [rowData, setRowData] = React.useState<any>([]);
+  const [departmentInCenter, setDepartmentInCenter] = React.useState<any>([]);
   useEffect(() => {
     if (department?.length !== 0 && typeof department !== "undefined") {
       setRowData(department[0]?.Program);
     }
   }, [department]);
+
+  useEffect(() => {
+    if (department?.length !== 0 && typeof center !== "undefined") {
+      fetchDepartmentInCenters(center[0]?.id)
+    }
+  }, [center]);
+
+  const fetchDepartmentInCenters = async (id: any) => {
+try {
+  const response = await getDepartmentInCenters(id)
+  setDepartmentInCenter(response?.data?.center)
+} catch (error) {
+  
+}
+  }
   return (
     <StyledBox className="dashboardStatsCard">
       <Typography variant="h3">Department %</Typography>
-      <Box className="tagsList">
+      {from == "super-admin" ?
+        <Box className="tagsList">
+        {center?.map((e: any, index: any) => (
+          <DepartmentButton
+            key={index}
+            text={e?.name}
+            color={e?.color}
+            handleBtnClick={() => fetchDepartmentInCenters(e?.Program)}
+          />
+        ))}
+      </Box>
+      : 
+        <Box className="tagsList">
         {department?.map((e: any, index: any) => (
           <DepartmentButton
             key={index}
@@ -84,22 +115,40 @@ const AdminDepartmentProgress = ({ department }: any) => {
           />
         ))}
       </Box>
+      }
+    
       <Box className="dashboardGraphsBlock">
         <Box className="dashboardGraphBox">
           <BasicPie />
         </Box>
-        <Box className="dashboardGraphsList">
-          {rowData?.map((e: any) => (
-            <Box color={"#3B00ED"} className="progress-wrap">
-              <ProgramProgress
-                title={e?.name}
-                amount="$00.000"
-                value={52}
-                color="inherit"
-              />
-            </Box>
-          ))}
-        </Box>
+        {from == "super-admin" ?
+         <Box className="dashboardGraphsList">
+         {departmentInCenter?.map((e: any) => (
+           <Box color={"#3B00ED"} className="progress-wrap">
+             <ProgramProgress
+               title={e?.name}
+               amount="$00.000"
+               value={52}
+               color="inherit"
+             />
+           </Box>
+         ))}
+       </Box>
+        :
+         <Box className="dashboardGraphsList">
+         {rowData?.map((e: any) => (
+           <Box color={"#3B00ED"} className="progress-wrap">
+             <ProgramProgress
+               title={e?.name}
+               amount="$00.000"
+               value={52}
+               color="inherit"
+             />
+           </Box>
+         ))}
+       </Box>
+        }
+       
       </Box>
     </StyledBox>
   );

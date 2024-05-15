@@ -13,7 +13,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import LogoImg from "../../assets/logo.png";
 // import { SidebarAction } from "../../types/common";
 import { useAuth } from "../../contexts/AuthContext";
-import { Collapse, Grid } from "@mui/material";
+import { Button, Collapse, Grid } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import SelectDemo from "../Select";
 // import SelectDemo from "../Select";
@@ -173,6 +173,15 @@ export default function ResponsiveDrawer(props: Props) {
         navigate("/hr/employees");
     }
   }, [currentRole]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("currentRole");
+    localStorage.clear()
+    setCurrentRole("");
+    navigate("/");
+  }
+
   const drawer = (
     <Box>
       <Box className="siteLogo">
@@ -230,7 +239,11 @@ export default function ResponsiveDrawer(props: Props) {
             )}
           </React.Fragment>
         ))}
+    
       </List>
+      <Button variant="outlined" color="error" onClick={handleLogout}>
+  Logout
+</Button>
     </Box>
   );
 

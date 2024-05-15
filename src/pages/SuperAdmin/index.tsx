@@ -3,6 +3,9 @@ import Box from "@mui/material/Box";
 import MainHeaderComponent from "../../components/MainHeader";
 import AdminDataCard from "../../components/AdminDataCard";
 import AdminDepartmentProgress from "../../components/AdminDepartentProgress";
+import { getAllCenters } from "../../services/centersServices";
+import { useEffect, useState } from "react";
+import { addRandomColor } from "../../utils";
 const StyledBox = styled(Box)(() => ({
   "& .dashboardCards": {
     display: "flex",
@@ -12,6 +15,22 @@ const StyledBox = styled(Box)(() => ({
 }));
 const SuperAdminScreen = () => {
   const array = [{ text: "Export" }, { text: "Reset" }];
+  const [center, setCenter] = useState([])
+
+  useEffect(() => {
+    fetchCenter();
+  }, []);
+
+  const fetchCenter = async () => {
+    try {
+      const response = await getAllCenters();
+      const coloredArray = addRandomColor(response?.data?.centers)
+      setCenter(coloredArray)
+    } catch (error) {}
+  };
+
+  
+
   return (
     <StyledBox className="appContainer">
       <MainHeaderComponent
@@ -41,7 +60,7 @@ const SuperAdminScreen = () => {
         />
         <AdminDataCard title="Completed Dept." total="8" done="4" />
       </Box>
-      <AdminDepartmentProgress />
+      <AdminDepartmentProgress from="super-admin" center={center}/>
     </StyledBox>
   );
 };

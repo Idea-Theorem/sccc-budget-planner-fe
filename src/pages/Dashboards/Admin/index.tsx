@@ -8,6 +8,7 @@ import React, { useEffect } from "react";
 import { getDepartment, getPrograms } from "../../../services/adminServices";
 import { useAuth } from "../../../contexts/AuthContext";
 import moment from "moment";
+import { addRandomColor, getRandomColor } from "../../../utils";
 const StyledBox = styled(Box)(() => ({
   "& .dashboardCards": {
     display: "flex",
@@ -19,7 +20,6 @@ const AdminScreen = () => {
   const array = [{ text: "Export" }, { text: "Reset" }];
   const [programs, setPrograms] = React.useState<any>({});
   const [department, setDepartment] = React.useState<any>([]);
-  console.log("department:::::::", department)
   const { user } = useAuth();
 
   useEffect(() => {
@@ -37,9 +37,15 @@ const AdminScreen = () => {
   const fetchDepartment = async () => {
     try {
       const response = await getDepartment();
-      setDepartment(response?.data?.departments);
+      console.log("response:::::::::", response)
+      const coloredArray = addRandomColor(response?.data?.departments)
+      setDepartment(coloredArray);
     } catch (error) {}
   };
+
+
+;
+  
   return (
     <StyledBox className="appContainer">
       <MainHeaderComponent
@@ -73,7 +79,7 @@ const AdminScreen = () => {
           done={department.approvedCount}
         />
       </Box>
-      <AdminDepartmentProgress department={department}/>
+      <AdminDepartmentProgress department={department} from="admin"/>
       <CollapsibleTable />
     </StyledBox>
   );
