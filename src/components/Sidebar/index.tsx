@@ -98,7 +98,7 @@ const SideArea = styled(Box)(({ theme }) => ({
   },
 
   ".MuiCollapse-root": {
-    background: "#fff",
+    background: "#fafafa",
 
     "& .MuiListItem-root": {
       textAlign: "center",
