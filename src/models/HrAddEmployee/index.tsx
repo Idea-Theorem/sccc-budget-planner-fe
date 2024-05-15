@@ -2,7 +2,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
-import { Add, Clear, NoEncryption, PlusOne } from "@mui/icons-material"; // Import Clear icon from Material-UI
+import { Add, Clear } from "@mui/icons-material"; // Import Clear icon from Material-UI
 import Grid from "@mui/material/Grid"; // Import Grid component from MUI
 import SelectDemo from "../../components/Select";
 import BasicDatePicker from "../../components/DatePicker";
@@ -17,7 +17,6 @@ import Checkbox from "@mui/material/Checkbox";
 import { useEffect, useState } from "react";
 import { getUserRole } from "../../services/authServices";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
-import { salaryRates } from "../../utils/dumpData";
 import { useFormik } from "formik";
 import {
   createEmployeeSchema,

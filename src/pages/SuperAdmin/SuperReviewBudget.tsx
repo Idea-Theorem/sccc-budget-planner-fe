@@ -259,7 +259,7 @@ try {
     fetchCenter()
   }, [])
 
-  const handleBackFunctionality = (name: string) => {
+  const handleBackFunctionality = () => {
     fetchCenter()
     setStep(0)
   }

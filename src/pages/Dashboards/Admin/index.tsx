@@ -8,7 +8,7 @@ import React, { useEffect } from "react";
 import { getDepartment, getPrograms } from "../../../services/adminServices";
 import { useAuth } from "../../../contexts/AuthContext";
 import moment from "moment";
-import { addRandomColor, getRandomColor } from "../../../utils";
+import { addRandomColor } from "../../../utils";
 const StyledBox = styled(Box)(() => ({
   "& .dashboardCards": {
     display: "flex",
@@ -37,7 +37,6 @@ const AdminScreen = () => {
   const fetchDepartment = async () => {
     try {
       const response = await getDepartment();
-      console.log("response:::::::::", response)
       const coloredArray = addRandomColor(response?.data?.departments)
       setDepartment(coloredArray);
     } catch (error) {}
