@@ -139,13 +139,11 @@ const [center, setCenter] = useState<any>([]);
 const [isCommunityOpen, setCommunityModal] = useState(false);
 const [centerHeading, setCenterHeading] = useState<string>("");
 console.log(loading)
-console.log('::::::::::: center', center)
 
 const fetchCenters = async () => {
   try {
     const response = await getAllRole();
     setCenter(response?.data.role);
-    console.log('::::::::::: response', response)
 
   } catch (error) {}
 };

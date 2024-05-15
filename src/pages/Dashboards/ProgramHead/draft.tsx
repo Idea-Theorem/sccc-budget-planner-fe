@@ -8,8 +8,9 @@ import {
   storeSingleProgram,
 } from "../../../store/reducers/programSlice";
 import Status from "../../../utils/dumpData";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../store";
+import { useDispatch } from "react-redux";
+import React, { useState } from "react";
+import { getAllProgramsViaStatus } from "../../../services/programServices";
 const StyledBox = styled(Box)(() => ({
   "&.appContainer": {
     ".appHeader": {
@@ -20,7 +21,7 @@ const StyledBox = styled(Box)(() => ({
 const ProgramsDraftScreen = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { programList } = useSelector((state: RootState) => state.program); 
+const [program, setPrograms] = useState([])
   const tableColumnsTitleArray = [
     [
       {
@@ -68,6 +69,18 @@ const ProgramsDraftScreen = () => {
     ],
   ];
 
+  React.useEffect(() => { 
+    fetchProgramList();
+  }, []);
+  const fetchProgramList = async () => {
+    try {
+      const response = await getAllProgramsViaStatus(Status.DRAFTED);
+      setPrograms(response?.data?.programs)
+    } catch (error) {
+    }
+  };
+
+
   const onRowClick = (rowData: any) => {
     dispatch(storeSingleProgram(rowData));
     dispatch(storeProgramFromStatus(Status.DRAFTED));
@@ -87,7 +100,7 @@ const ProgramsDraftScreen = () => {
       <TabsArea
         tabsTitleArray={[{ title: "Drafts" }]}
         table={tableColumnsTitleArray}
-        row={programList}
+        row={program}
         onRowClick={onRowClick}
       />
     </StyledBox>

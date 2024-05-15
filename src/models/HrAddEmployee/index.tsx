@@ -2,7 +2,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
-import { Clear } from "@mui/icons-material"; // Import Clear icon from Material-UI
+import { Add, Clear } from "@mui/icons-material"; // Import Clear icon from Material-UI
 import Grid from "@mui/material/Grid"; // Import Grid component from MUI
 import SelectDemo from "../../components/Select";
 import BasicDatePicker from "../../components/DatePicker";
@@ -17,7 +17,6 @@ import Checkbox from "@mui/material/Checkbox";
 import { useEffect, useState } from "react";
 import { getUserRole } from "../../services/authServices";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
-import { salaryRates } from "../../utils/dumpData";
 import { useFormik } from "formik";
 import {
   createEmployeeSchema,
@@ -31,6 +30,7 @@ import { getAllDepartments } from "../../services/departmentServices";
 import TextFields from "../../components/Input/textfield";
 import StatusModal from "../../components/StatusModal";
 import SelectDepartments from "../../components/SelectDepartment";
+import { getAllBenefit } from "../../services/benefitServices";
 
 const EmployeeInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
@@ -131,6 +131,8 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
 
   "& .secondaryRow": {
     paddingTop: "29px",
+    position: "relative",
+    zIndex: "20",
   },
 
   "& .formButtons": {
@@ -171,6 +173,7 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
   ".info-lists-wrap": {
     padding: "50px 44px 0 33px",
     position: "relative",
+    // pointerEvents: "none",
   },
 
   ".delete-icon": {
@@ -250,6 +253,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
 }) => {
   const [personName, setPersonName] = useState<string[]>([]);
   const [role, setRole] = useState<any>([]);
+  const [benefit, setBenefit] = useState<any>([]);
   const [departments, setDepartments] = useState<any>([]);
   const [activeDepartment, setActiveDepartment] = useState<any>(null);
   console.log(activeDepartment)
@@ -336,12 +340,11 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
     isSubmitting,
   } = formik;
 
-  console.log("errors:::::::::", errors)
-  console.log("values:::::::::", values)
 
   useEffect(() => {
     fetchUserRole();
     fetchDepartments();
+    fetchBenefits()
   }, []);
 
   useEffect(() => {
@@ -392,6 +395,13 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
         (item: any) => item.name != "HR"
       );
       setRole(filterddata);
+    } catch (error) {}
+  };
+
+  const fetchBenefits = async () => {
+    try {
+      const response = await getAllBenefit();
+     setBenefit(response?.data?.centers)
     } catch (error) {}
   };
 
@@ -632,21 +642,10 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
             >
               Department Works For
             </Typography>
-            <button className="dell-icon" onClick={handleAddObject}>
-              +
-              <Typography
-                className="subtitle"
-                style={{
-                  color: "#048071",
-                  fontSize: "14px",
-                  fontWeight: "500",
-                  lineHeight: "1",
-                  margin: "0",
-                }}
-              >
-                Add
-              </Typography>
-            </button>
+            <Button onClick={() => handleAddObject()} variant="outlined" startIcon={<Add />}>
+             Add
+            </Button>
+           
           </Box>
 
           <Grid container spacing={4}>
@@ -689,7 +688,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                   <SelectDemo
                     title="Benefit Percentage"
                     value={item.salaryRate}
-                    list={salaryRates}
+                    list={benefit}
                     receiveValue={(value: any) =>
                       handleInputChange(index, {
                         target: { name: "salaryRate", value },

@@ -69,7 +69,6 @@ const EditProgramCodesModal: React.FC<IHrAddEmployee> = ({
   open,
   formik
 }) => {
-console.log("formik::::::::", formik?.values)
 return (
 <Modal
   open={open}

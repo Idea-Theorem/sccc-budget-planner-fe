@@ -12,6 +12,7 @@ import { storeProgramList } from "../../../store/reducers/programSlice";
 import { RootState } from "../../../store";
 import SelectDemo from "../../../components/Select";
 import { departmentCount, getAllDepartments, getSingleDepartments } from "../../../services/departmentServices";
+import StatusModal from "../../../components/StatusModal";
 const StyledBox = styled(Box)(() => ({
   "& .reviewBudgetHead": {
     marginBottom: "23px",
@@ -235,6 +236,8 @@ const DHReviewBudgets = () => {
   const [filteredProgramListing, setFilteredProgramListing] = useState<any>([]);
   dispatch(storeProgramList(filteredProgramListing)); 
   const [activeDepartment, setActiveDepartment] = useState<any>("");
+  const [statusData, setStatusData] = useState<any>(null);
+
   useEffect(()=>{
     fetchDepartments()
   },[])
@@ -308,7 +311,19 @@ const DHReviewBudgets = () => {
       departmentIds: [departmentId],
       status: Status.PENDING
     }
-    await getSingleDepartments(obj)
+    try {
+
+      await getSingleDepartments(obj)
+      setStatusData({
+        type: "success",
+        message: "Department Status Updated Successfully",
+      });
+    } catch (error: any) {
+      setStatusData({
+        type: "error",
+        message: error.response.data.message,
+      });
+    }
   }
   return (
     <StyledBox className="appContainer">
@@ -348,6 +363,10 @@ const DHReviewBudgets = () => {
           handleActionReieve={handleActionReieve}
         />
       </Box>
+      <StatusModal
+        statusData={statusData}
+        onClose={() => setStatusData(null)}
+      />
     </StyledBox>
   );
 };

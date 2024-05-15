@@ -90,11 +90,11 @@ interface MainHeaderProps {
   action?: boolean;
   subdes?: string;
   classname?: string;
-  onClick?: () => void;
+  onClick?:  any;
 }
 
 const MainHeaderComponent = (props: MainHeaderProps) => {
-  const { classname } = props;
+  const { classname, onClick } = props;
   const handleOptionSelect = (selectedStatus: any) => {
     props.onStatusChange(selectedStatus);
   };
@@ -102,7 +102,7 @@ const MainHeaderComponent = (props: MainHeaderProps) => {
     <AppHeader className={`${classname} appHeader`}>
       <Stack className="appHeaderHolder">
         <Box>
-          <Typography variant="h3">{props.title}</Typography>
+          <Typography variant="h3" onClick={() => onClick(props.title)}>{props.title}</Typography>
           <Typography variant="h6">{props.subdes}</Typography>
         </Box>
         {props?.action ? (

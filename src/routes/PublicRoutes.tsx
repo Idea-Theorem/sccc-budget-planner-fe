@@ -86,7 +86,7 @@ const superAdminRoute: RouteObject = {
       children: [
         { index: true, element: <SuperAdminScreen /> },
         {
-          path: "review-budget",
+          path: "review-budgets",
           children: [
             { index: true, element: <SuperReviewBudget /> },
             {

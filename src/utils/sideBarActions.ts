@@ -66,7 +66,7 @@ export const SIDEBARACTIONS: SidebarAction[] = [
   {
     email: "suparadmin@gmail.com",
     role: "Super_Admin",
-    path: "/department-head/review-budgets",
+    path: "/super-admin/review-budgets",
     title: "Review Budgets",
   },
   {

@@ -8,13 +8,13 @@ const getPendingPrograms = async (status: any) => {
   return await HTTP_CLIENT.get(`/department/status/${status}`);
 };
 const getDepartment = async () => {
-    return await HTTP_CLIENT.get("/department");
-  };
-  
+  return await HTTP_CLIENT.get("/department");
+};
+
 
 
 export {
-    getPrograms,
-    getPendingPrograms,
-    getDepartment
+  getPrograms,
+  getPendingPrograms,
+  getDepartment
 };

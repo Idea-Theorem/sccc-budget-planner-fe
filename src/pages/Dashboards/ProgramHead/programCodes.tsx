@@ -174,7 +174,6 @@ const HRTableComponent: React.FC<HRTableProps> = ({  }) => {
     },
   ];
   const [selectedRow, setSelectedRow] = useState<any>(null);
-  console.log("::::::::::::::::::", selectedRow)
   const [codeData, setCodeData] = React.useState([])
   const [selectedRowdelete, setSelectedDelete] = useState<any>(null);
   const [deleteModalOpen, setDeleteModal] = useState<any>(false);

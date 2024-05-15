@@ -2,6 +2,8 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MainHeaderComponent from "../../components/MainHeader";
 import TabsArea from "../../components/Tabs";
+import { getAllCenters, getDepartmentInCenters, getProgramInDepartment } from "../../services/centersServices";
+import { useEffect, useState } from "react";
 const StyledBox = styled(Box)(() => ({
   "& .dashboardCards": {
     display: "flex",
@@ -13,11 +15,15 @@ const StyledBox = styled(Box)(() => ({
   },
 }));
 const SuperReviewBudget = () => {
+
+  const [center, setCenters] = useState([])
+  const [currenttitle, setCurrentTitle] = useState("")
+  const [step, setStep] = useState(0)
   const tableColumnsTitleArray = [
     [
       {
-        field: "departmentName",
-        headerName: "Department Name",
+        field: "name",
+        headerName: "Center Name",
         sortable: false,
         editable: false,
         flex: 1,
@@ -25,6 +31,13 @@ const SuperReviewBudget = () => {
       {
         field: "status",
         headerName: "Status",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "created_at",
+        headerName: "Crerated At",
         sortable: false,
         editable: false,
         flex: 1,
@@ -74,8 +87,8 @@ const SuperReviewBudget = () => {
     ],
     [
       {
-        field: "departmentName",
-        headerName: "Department Name",
+        field: "name",
+        headerName: "Center Name",
         sortable: false,
         editable: false,
         flex: 1,
@@ -83,6 +96,13 @@ const SuperReviewBudget = () => {
       {
         field: "status",
         headerName: "Status",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "created_at",
+        headerName: "Crerated At",
         sortable: false,
         editable: false,
         flex: 1,
@@ -132,8 +152,8 @@ const SuperReviewBudget = () => {
     ],
     [
       {
-        field: "departmentName",
-        headerName: "Department Name",
+        field: "name",
+        headerName: "Center Name",
         sortable: false,
         editable: false,
         flex: 1,
@@ -141,6 +161,13 @@ const SuperReviewBudget = () => {
       {
         field: "status",
         headerName: "Status",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "created_at",
+        headerName: "Crerated At",
         sortable: false,
         editable: false,
         flex: 1,
@@ -193,13 +220,60 @@ const SuperReviewBudget = () => {
     {text: "Approve"},
     {text: "Reject"},
   ]
+
+  const fetchCenter = async () => {
+    try {
+      const response = await getAllCenters()
+      setCenters(response?.data?.centers)
+    } catch (error) {
+      
+    }
+  }
+  const handleSingleRow = async (row: any) => {
+    if(step == 1){
+      fetchProgramInDepartment(row.id)
+      setCurrentTitle(row.name)
+      setStep(2)
+      return
+    }
+    setCurrentTitle(row.name)
+    try {
+      const res = await getDepartmentInCenters(row?.id)
+      setCenters(res?.data?.center)
+      setStep(1)
+    } catch (error) {
+      
+    }
+  }
+
+  const fetchProgramInDepartment = async (id: string) => {
+try {
+  const res = await getProgramInDepartment(id)
+  setCenters(res?.data?.departments
+  )
+} catch (error) {
+  
+}
+  }
+  useEffect(() => {
+    fetchCenter()
+  }, [])
+
+  const handleBackFunctionality = () => {
+    fetchCenter()
+    setStep(0)
+  }
   return (
     <StyledBox className="appContainer">
       <MainHeaderComponent
         array={array}
         action={true} 
-        title="Review Budgets"
+        title={step == 0 ? "Review Budgets Center" : step == 1 ? "Review Budgets Center  >  Departments" : step == 2 ? "Review Budgets Center  >  Departments > Program":""}
+        subdes={currenttitle}
         btnTitle="Actions"
+        subHeader={true}
+        subTitle="Total Budget: $00,000.00"
+        onClick={handleBackFunctionality}
       />
       <TabsArea
         tabsTitleArray={[
@@ -210,6 +284,8 @@ const SuperReviewBudget = () => {
           { title: "History" },
         ]}
         table={tableColumnsTitleArray}
+        row={center}
+        onRowClick={handleSingleRow}
       />
     </StyledBox> 
   );
