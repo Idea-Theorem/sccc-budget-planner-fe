@@ -9,6 +9,7 @@ import AddIcon from "@mui/icons-material/Add";
 import Buttons from "../../../components/Button";
 import { deleteRole, getAllRole } from "../../../services/roleServices";
 import RoleModal from "../../../models/RoleModal";
+import moment from "moment";
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
@@ -187,7 +188,7 @@ const onCommunityEdit = (data: any) => {
   const columns: GridColDef[] = [
     {
       field: "name",
-      headerName: "Center Name",
+      headerName: "Role",
       sortable: false,
       editable: false,
       flex: 1,
@@ -248,7 +249,12 @@ const onCommunityEdit = (data: any) => {
         /> 
         {center.length == 0 ? "" :
          <StyleDataGrid
-         rows={center.length == 0 ? [] : center}
+        //  rows={center.length == 0 ? [] : center}
+         rows={center.length === 0 ? [] : center.map((row: any) => ({
+          ...row,
+          created_at: moment(row.created_at).format('D-MMMM-YYYY')
+        }))}
+        
          columns={columns}
          initialState={{
            pagination: {

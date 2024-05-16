@@ -144,7 +144,14 @@ const [centerHeading, setCenterHeading] = useState<string>("");
 const fetchCenters = async () => {
   try {
     const response = await getAllBenefit();
-    setCenter(response?.data?.centers);
+    const newData =  response?.data?.centers.map((item: any) => {
+      return {
+        ...item,
+        name: item.name + " " +"%", 
+        
+      };
+    });
+    setCenter(newData);
   } catch (error) {}
 };
 
@@ -184,7 +191,7 @@ const onCommunityEdit = (data: any) => {
   const columns: GridColDef[] = [
     {
       field: "name",
-      headerName: "Center Name",
+      headerName: "Benefit Percentage",
       sortable: false,
       editable: false,
       flex: 1,
@@ -196,13 +203,13 @@ const onCommunityEdit = (data: any) => {
     //   editable: false,
     //   flex: 1,
     // },
-    {
-      field: "created_at",
-      headerName: "Date Created",
-      sortable: false,
-      editable: false,
-      flex: 1,
-    },
+    // {
+    //   field: "created_at",
+    //   headerName: "Date Created",
+    //   sortable: false,
+    //   editable: false,
+    //   flex: 1,
+    // },
     {
       field: "buttonsColumn",
       headerName: "",

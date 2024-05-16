@@ -33,6 +33,7 @@ interface BasicTabsProps {
   currentStatus?: any;
   handleActionReieve?: any;
   setTabstatus?: any;
+  checkout?: boolean;
 }
 
 const CustomTabPanel = (props: TabPanelProps) => {
@@ -114,7 +115,10 @@ const BasicTabs = (props: BasicTabsProps) => {
   };
 
   const handleClick = (rowData: any) => {
-    props?.onRowClick(rowData)
+    debugger
+    if (props && props.onRowClick && typeof props.onRowClick === 'function') {
+      props.onRowClick(rowData);
+  }
     if (
       location?.pathname == "/program-head/program" &&
       status == Status.REJECTED
@@ -166,6 +170,7 @@ const BasicTabs = (props: BasicTabsProps) => {
             handleActionReieve={props?.handleActionReieve}
             loading={loading}
             currentTab={status}
+            checkout={props?.checkout}
           />
         </CustomTabPanel>
       ))}
@@ -223,6 +228,7 @@ export default function TabsArea(props: BasicTabsProps) {
         currentStatus={props?.currentStatus}
         handleActionReieve={props?.handleActionReieve}
         onRowClick={props?.onRowClick}
+        checkout={props?.checkout}
       />
     </TabsAreas>
   );

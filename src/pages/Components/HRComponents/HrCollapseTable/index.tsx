@@ -23,6 +23,7 @@ import * as XLSX from "xlsx";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import StatusModal from "../../../../components/StatusModal";
+import DeleteModal from "../../../../models/DeleteModal";
 
 const HrCollapseableTable = styled(Box)(({ theme }) => ({
   ".MuiTableCell-root": {
@@ -131,6 +132,15 @@ function Row(props: {
 }) {
   const { row, handleClick, handleDelete } = props;
   const [open, setOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = React.useState<any>(false);
+  const [loading, setLoading] = React.useState<any>(false);
+  const [currentRow, setCurrentRow] = React.useState<any>("");
+
+
+  const closeModel = () => {
+    setIsOpen(false);
+    setLoading(false)
+  };
   return (
     <React.Fragment>
       <TableRow>
@@ -138,7 +148,9 @@ function Row(props: {
           <IconButton
             aria-label="expand row"
             size="small"
-            onClick={() => setOpen(!open)}
+            onClick={() => setOpen(!open)
+              
+            }
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
@@ -164,7 +176,11 @@ function Row(props: {
               color="error"
               size="small"
               startIcon={<DeleteOutlineIcon />}
-              onClick={() => handleDelete(row)}
+              onClick={() =>{ 
+                setCurrentRow(row)
+                setIsOpen(true);
+
+              }}
             >
               Delete
             </Button>
@@ -187,12 +203,10 @@ function Row(props: {
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell style={{ paddingLeft: "62px" }}>
-                      Email Address
-                    </TableCell>
-                    <TableCell>Department</TableCell>
-
-                    <TableCell>Hoourly Rate</TableCell>
+                  
+                    <TableCell style={{ paddingLeft: "62px" }}>Department</TableCell>
+                    <TableCell>Title</TableCell>
+                    <TableCell>Hourly Rate</TableCell>
                     <TableCell>Benefit %</TableCell>
                   </TableRow>
                 </TableHead>
@@ -200,10 +214,10 @@ function Row(props: {
                   {row?.employeDepartments?.map((element: any) => (
                     <TableRow key={row.id}>
                       <TableCell style={{ paddingLeft: "62px" }}>
-                        {row.email}
+                      {element?.department?.name.toLowerCase()}
                       </TableCell>
                       <TableCell style={{ textTransform: "capitalize" }}>
-                        {element?.department?.name.toLowerCase()}
+                        {element?.title.toLowerCase()}
                       </TableCell>
                       <TableCell style={{ textTransform: "capitalize" }}>
                         {element?.hourlyRate?.toLowerCase()}
@@ -221,6 +235,13 @@ function Row(props: {
           </Collapse>
         </TableCell>
       </TableRow>
+      <DeleteModal
+        open={isOpen}
+        handleOK={() => handleDelete(currentRow)}
+        handleClose={closeModel}
+        loading={loading}
+        heading="Are you sure you want to delete?"
+      />
     </React.Fragment>
   );
 }
@@ -312,7 +333,7 @@ export default function HrCollapsibleTable({
               <TableRow>
                 <TableCell>&nbsp;</TableCell>
                 <TableCell>Employee Name</TableCell>
-                <TableCell>Position</TableCell>
+                <TableCell>Title</TableCell>
                 <TableCell></TableCell>
                 <TableCell>Hire date</TableCell>
               </TableRow>

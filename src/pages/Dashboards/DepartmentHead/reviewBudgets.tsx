@@ -361,6 +361,7 @@ const DHReviewBudgets = () => {
           row={programList}
           currentStatus={status}
           handleActionReieve={handleActionReieve}
+          checkout={true}
         />
       </Box>
       <StatusModal

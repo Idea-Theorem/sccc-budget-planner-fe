@@ -147,7 +147,7 @@ const Input = () => {
           <img src={LogoImg} alt="Description image" />
         </Box>
         <Typography variant="h5">Log In</Typography>
-        <form noValidate autoComplete="off">
+        <form noValidate autoComplete="off" onSubmit={handleSubmit}>
           <FormControl className="loginFormItem">
             <TextField
               error={errors.email ? true : false}
@@ -179,7 +179,8 @@ const Input = () => {
             variant="contained"
             size="large"
             fullWidth
-            onClick={() => handleSubmit()}
+            type="submit"
+            // onClick={() => handleSubmit()}
           />
         </form>
         <Box>

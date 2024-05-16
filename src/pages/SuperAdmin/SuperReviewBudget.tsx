@@ -23,7 +23,7 @@ const SuperReviewBudget = () => {
     [
       {
         field: "name",
-        headerName: "Center Name",
+        headerName: step == 0 ? "Center Name" : step == 1 ? "Department Name" : "Program Name",
         sortable: false,
         editable: false,
         flex: 1,
@@ -37,7 +37,7 @@ const SuperReviewBudget = () => {
       },
       {
         field: "created_at",
-        headerName: "Crerated At",
+        headerName: "Created At",
         sortable: false,
         editable: false,
         flex: 1,
@@ -102,7 +102,7 @@ const SuperReviewBudget = () => {
       },
       {
         field: "created_at",
-        headerName: "Crerated At",
+        headerName: "Created At",
         sortable: false,
         editable: false,
         flex: 1,
@@ -167,7 +167,7 @@ const SuperReviewBudget = () => {
       },
       {
         field: "created_at",
-        headerName: "Crerated At",
+        headerName: "Created At",
         sortable: false,
         editable: false,
         flex: 1,

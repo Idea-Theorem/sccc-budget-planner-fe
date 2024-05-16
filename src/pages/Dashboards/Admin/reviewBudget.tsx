@@ -269,6 +269,7 @@ const ReviewBudgetScreen = () => {
         currentStatus={status}
         handleActionReieve={handleActionReieve}
         onRowClick = {onRowClick}
+        checkout={true}
       />
     </StyledBox> 
   );

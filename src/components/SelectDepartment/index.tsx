@@ -61,6 +61,7 @@ export default function SelectDepartments({
     }
   }
 
+
   return (
     <StyledFormControl size="medium" variant="standard" error={error}>
       <StyledInputLabel>{title}</StyledInputLabel>
@@ -76,7 +77,7 @@ export default function SelectDepartments({
       >
         {list?.map((item: any) => (
           <MenuItem
-            value={item}
+            value={item.id}
             className="list"
             style={{ textTransform: "capitalize" }}
           >

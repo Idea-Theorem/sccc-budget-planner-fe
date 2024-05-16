@@ -81,7 +81,7 @@ const AdminDepartmentProgress = ({ department , from, center}: any) => {
       fetchDepartmentInCenters(center[0]?.id)
     }
   }, [center]);
-
+  
   const fetchDepartmentInCenters = async (id: any) => {
 try {
   const response = await getDepartmentInCenters(id)
@@ -100,7 +100,7 @@ try {
             key={index}
             text={e?.name}
             color={e?.color}
-            handleBtnClick={() => fetchDepartmentInCenters(e?.Program)}
+            handleBtnClick={() => fetchDepartmentInCenters(e?.id)}
           />
         ))}
       </Box>

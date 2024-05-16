@@ -6,6 +6,8 @@ import AdminDepartmentProgress from "../../components/AdminDepartentProgress";
 import { getAllCenters } from "../../services/centersServices";
 import { useEffect, useState } from "react";
 import { addRandomColor } from "../../utils";
+import moment from "moment";
+import { useAuth } from "../../contexts/AuthContext";
 const StyledBox = styled(Box)(() => ({
   "& .dashboardCards": {
     display: "flex",
@@ -16,6 +18,8 @@ const StyledBox = styled(Box)(() => ({
 const SuperAdminScreen = () => {
   const array = [{ text: "Export" }, { text: "Reset" }];
   const [center, setCenter] = useState([])
+  const { user } = useAuth();
+
 
   useEffect(() => {
     fetchCenter();
@@ -37,8 +41,8 @@ const SuperAdminScreen = () => {
         array={array}
         title="Dashboard"
         btnTitle="Actions"
-        subTitle="Welcome, Tomohiro!"
-        date="Monday, 5-Mar"
+        subTitle={"Welcome" + " " + user?.firstname + " " + user?.lastname}
+        date={moment().format("dddd D, MMM ")}
         subHeader={true}
         action={true}
       />
