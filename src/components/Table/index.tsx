@@ -129,6 +129,7 @@ interface ColumnnsProps {
   handleActionReieve?: any;
   loading: boolean;
   currentTab?: any;
+  checkout?: boolean | any
 }
 const TableComponent = (props: ColumnnsProps) => {
   const handleSelectionChange = (selection: any) => {
@@ -223,7 +224,7 @@ const TableComponent = (props: ColumnnsProps) => {
               },
             }}
             pageSizeOptions={[5, 10, 15]}
-            checkboxSelection
+            checkboxSelection={props.checkout}
             disableRowSelectionOnClick
             slots={{
               toolbar: GridToolbar,

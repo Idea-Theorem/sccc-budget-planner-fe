@@ -265,6 +265,7 @@ const PHProgramsScreen = () => {
         ]}
         table={tableColumnsTitleArray}
         row={programList}
+        checkout={false}
       />
     </StyledBox>
   );

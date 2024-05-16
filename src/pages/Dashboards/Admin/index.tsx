@@ -51,7 +51,7 @@ const AdminScreen = () => {
         array={array} 
         title="Dashboard"
         btnTitle="Actions"
-        subTitle={user?.firstname + " " + user?.lastname}
+        subTitle={"Welcome" + " " + user?.firstname + " " + user?.lastname}
         date={moment().format("dddd D, MMM ")}
         subHeader={true}
         action={true}

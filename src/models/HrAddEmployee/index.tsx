@@ -258,6 +258,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
   const [activeDepartment, setActiveDepartment] = useState<any>(null);
   console.log(activeDepartment)
   const [statusData, setStatusData] = useState<any>(null);
+
   const [data, setData] = useState([
     {
       department_id: "",
@@ -266,7 +267,6 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
       salaryRate: "",
     },
   ]);
-
 
   const formik = useFormik<any>({
     validateOnBlur: true,
@@ -322,6 +322,14 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
         setDepartments([]);
         setActiveDepartment(null);
         setSingleEmployeeData(null);
+        setData([
+          {
+            department_id: "",
+            title: "",
+            hourlyRate: "",
+            salaryRate: "",
+          },
+        ])
         formik.resetForm();
       } catch (error: any) {
         setStatusData({
@@ -346,18 +354,27 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
     fetchDepartments();
     fetchBenefits()
   }, []);
-
   useEffect(() => {
     if (singleEmployeeData) {
+      let modifyArray: any = []
       setActiveDepartment(singleEmployeeData?.department?.name);
       setFieldValue("department_id", singleEmployeeData?.department?.id);
       setFieldValue("hire_date", singleEmployeeData?.hire_date);
+      singleEmployeeData?.employeDepartments.forEach((item: any) => {
+        let obj = {
+          hourlyRate:item.hourlyRate,
+          department_id:item.department?.id,
+          salaryRate:item.salaryRate,
+          title:item.title,
+        }
+        modifyArray.push(obj)
+      })
+      setData(modifyArray)
       let array: any = [];
       singleEmployeeData?.roles.map((item: any) => {
         array.push(item.name);
       });
       fetchDepartments();
-
       setPersonName(array);
     } else {
       setPersonName([]);
@@ -365,6 +382,12 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
       setActiveDepartment(null);
       setSingleEmployeeData(null);
       fetchUserRole();
+      setData([{
+        department_id: "",
+        title: "",
+        hourlyRate: "",
+        salaryRate: "",
+      },])
     }
   }, [singleEmployeeData]);
 
@@ -460,7 +483,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
 
   const handleDepartmentChange = (index: any, value: any) => {
     const newData = [...data];
-    newData[index].department_id = value.id;
+    newData[index].department_id = value;
     setData(newData);
   };
 
@@ -477,10 +500,6 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
     setData(newData);
   };
 
-  const filterdDepartment = (id: any) => {
-  const filterObject = departments.find((item: any) => item.id === id)
-  return filterObject?.name
-  }
   return (
     <>
       <StatusModal
@@ -659,7 +678,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                 <Grid className="selectGrid" item xs={3}>
                   <SelectDepartments
                     title="Department"
-                    value={filterdDepartment(item.department_id)}
+                    value={item.department_id}
                     list={departments}
                     receiveValue={(value: any) =>
                       handleDepartmentChange(index, value)

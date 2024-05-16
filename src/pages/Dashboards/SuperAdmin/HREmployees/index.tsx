@@ -68,9 +68,9 @@ const HREmployeees: React.FC<SuperAdminProps> = () => {
     if (currentRole == "HR") {
       return ["Employees"];
     } else if (currentRole == "Admin") {
-      return ["Employees", "Departments"];
+      return ["Departments"];
     } else if (currentRole == "Super_Admin") {
-      return ["Employees", "Departments", "Community Centres"];
+      return ["Community Centres"];
     } else {
       return [];
     }
