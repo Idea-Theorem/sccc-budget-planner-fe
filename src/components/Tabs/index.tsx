@@ -92,7 +92,7 @@ const BasicTabs = (props: BasicTabsProps) => {
   React.useEffect(() => {
     if (location?.pathname == "/program-head/draft") {
         // setStatus(Status.DRAFTED);
-        fetchProgramList(Status.DRAFTED)
+        fetchProgramList(Status.DRAFTED, "")
     }
   }, [location?.pathname]);
 
@@ -100,7 +100,7 @@ const BasicTabs = (props: BasicTabsProps) => {
     // if (location?.pathname == "/program-head/draft") {
     //   return
     // }
-    fetchProgramList(status);
+    fetchProgramList(status, "");
   }, [status]);
   const fetchProgramList = async (status: string, Searchvalue: string) => {
     try {

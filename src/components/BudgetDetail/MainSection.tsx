@@ -37,7 +37,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
   const [activeDepartment, setActiveDepartment] = useState<any>(null);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [isEditing, setIsEditing] = useState(false);
+
   const [disable, setDisable] = useState(false);
   const { singleProgram, programFromStatus } = useSelector(
     (state: RootState) => state.program
@@ -159,9 +159,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
       navigate("/program-head/draft");
     } catch (error) {}
   };
-  const handleClick = () => {
-    setIsEditing(true);
-  };
+
 
   const handleChangeEvent = (e: any) => {
     const newName = e.target.value;
@@ -169,7 +167,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
   };
 
   const handleBlur = () => {
-    setIsEditing(false);
+    // setIsEditing(false);
   };
 
   const handleStatausSubmit = async (action: any) => {

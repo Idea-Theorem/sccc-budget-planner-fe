@@ -27,7 +27,7 @@ const ProgramHeadScreen = () => {
   const fetchProgramList = async () => {
     try {
       setLoading(true);
-      const response = await getAllProgramsViaStatus(Status.PENDING);
+      const response = await getAllProgramsViaStatus(Status.PENDING, "");
       if (response?.data?.programs.length > 0) {
         dispatch(storeProgramList(response?.data?.programs));
         setLoading(false);

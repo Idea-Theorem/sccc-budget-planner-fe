@@ -273,7 +273,7 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
   }, []);
   const fetchProgramList = async (status: string) => {
     try {
-      const response = await getAllProgramsViaStatus(status);
+      const response = await getAllProgramsViaStatus(status, "");
       setSettingData(response?.data?.programs)
     } catch (error) {
       console.log(error)
