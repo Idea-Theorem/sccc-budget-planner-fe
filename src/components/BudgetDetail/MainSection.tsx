@@ -197,11 +197,12 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
       <Grid className="createProgramContent" item xs={12}>
         <Grid item xs={12}>
           <Stack className="createProgramContentHead">
-            {isEditing ? (
+            
               <TextFields
                 disabled={disable}
                 autoFocus
                 type="text"
+                placeholder="Enter Program Name"
                 value={formik.values.name}
                 onChange={handleChangeEvent}
                 onBlur={handleBlur}
@@ -209,15 +210,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
                 error={errors.name ? true : false}
                 helperText={errors.name ? errors.name.toString() : ""}
               />
-            ) : (
-              <Typography
-                className="mainHeading"
-                variant="h5"
-                onClick={handleClick}
-              >
-                Enter Program Name
-              </Typography>
-            )}
+            
             <Stack direction={"row"} gap={"20px"}>
               {programFromStatus == Status.CREATED ? (
                 <>

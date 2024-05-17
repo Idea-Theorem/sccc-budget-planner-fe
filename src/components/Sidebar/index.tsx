@@ -98,7 +98,7 @@ const SideArea = styled(Box)(({ theme }) => ({
   },
 
   ".MuiCollapse-root": {
-    background: "#fff",
+    background: "#fafafa",
 
     "& .MuiListItem-root": {
       textAlign: "center",
@@ -188,7 +188,7 @@ export default function ResponsiveDrawer(props: Props) {
         <img src={LogoImg} alt="Description image" />
       </Box>
       <Grid className="selectGrid" item xs={6}>
-        <SelectDemo
+        <SelectDemo className="sidebar_select_input"
           title="Department"
           value={currentRole}
           list={user?.roles}
@@ -241,7 +241,7 @@ export default function ResponsiveDrawer(props: Props) {
         ))}
     
       </List>
-      <Button variant="outlined" color="error" onClick={handleLogout}>
+      <Button className="btnLogout" variant="outlined" color="error" onClick={handleLogout}>
   Logout
 </Button>
     </Box>
