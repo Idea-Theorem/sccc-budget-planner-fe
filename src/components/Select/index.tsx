@@ -7,7 +7,8 @@ import { styled } from "@mui/material/styles";
 
 const StyledFormControl = styled(FormControl)({
   width: "100%",
-  margin: "50px 0",
+  margin: "0",
+  padding: "8px 19px",
   borderBottom: "1px solid #0000006B",
 });
 
@@ -44,6 +45,8 @@ export default function SelectDemo({
   disabled,
   placeholder,
   errorMessage,
+  className="",
+  parentClass="",
 }: any) {
 
   const handleChange = (event: any) => {
@@ -64,9 +67,9 @@ export default function SelectDemo({
   }
 
   return (
-    <StyledFormControl size="medium" variant="standard" error={error} className="full-width">
+    <StyledFormControl size="medium" variant="standard" error={error} className={`full-width ${parentClass}`}>
         <StyledInputLabel>{title}</StyledInputLabel>
-        <Box className="input-wrap">
+        <Box className={`input-wrap ${className}`}>
           <StyledSelect
             placeholder={placeholder}
             disabled={disabled}

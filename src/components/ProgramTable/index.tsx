@@ -57,7 +57,7 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
         fontFamily: "Work Sans",
         fontSize: "16px",
         fontWeight: "500",
-        padding: "24px 15px 0",
+        padding: "24px 0 0 15px",
 
         "&.MuiTableCell-alignRight": {
           fontFamily: "Roboto",
@@ -231,7 +231,7 @@ export default function TabsProgramArea({
                     {row.name}
                   </TableCell>
                   <TableCell align="right" className="input-border">
-                    <TextFields
+                    <TextFields className="amount_field"
                       autoFocus={false}
                       disabled={disabled}
                       variant="standard"
@@ -254,7 +254,7 @@ export default function TabsProgramArea({
                   Total {capitalizeFirstLetter(title)}
                 </TableCell>
                 <TableCell align="right">
-                  <TextFields
+                  <TextFields className="amount_field"
                     type="text"
                     placeholder="$00,000.00"
                     value={getTotalAmount()}
