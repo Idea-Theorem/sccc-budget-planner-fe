@@ -74,7 +74,7 @@ const [program, setPrograms] = useState([])
   }, []);
   const fetchProgramList = async () => {
     try {
-      const response = await getAllProgramsViaStatus(Status.DRAFTED);
+      const response = await getAllProgramsViaStatus(Status.DRAFTED, "");
       setPrograms(response?.data?.programs)
     } catch (error) {
     }
