@@ -102,10 +102,10 @@ const BasicTabs = (props: BasicTabsProps) => {
     // }
     fetchProgramList(status);
   }, [status]);
-  const fetchProgramList = async (status: string) => {
+  const fetchProgramList = async (status: string, Searchvalue: string) => {
     try {
       setLoading(true);
-      const response = await getAllProgramsViaStatus(status);
+      const response = await getAllProgramsViaStatus(status, Searchvalue);
       // const modifyArray = modifyCreatedAt(response?.data?.programs);
       dispatch(storeProgramList(response?.data?.programs));
       setLoading(false);
@@ -146,6 +146,14 @@ const BasicTabs = (props: BasicTabsProps) => {
     }
   };
 
+  const handleProgramSearch = (value: string) => {
+    if(!value){
+      return
+    }
+    fetchProgramList(status, value)
+
+  }
+
   return (
     <Box width="100%">
       <Box borderBottom="1" borderColor="divider">
@@ -170,6 +178,7 @@ const BasicTabs = (props: BasicTabsProps) => {
             loading={loading}
             currentTab={status}
             checkout={props?.checkout}
+            handleProgramSearch={handleProgramSearch}
           />
         </CustomTabPanel>
       ))}
