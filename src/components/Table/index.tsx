@@ -214,7 +214,7 @@ const TableComponent = (props: ColumnnsProps) => {
     <>
       <StyledBox className="mainTableBlock">
         <InputSearch placeholder="Search..." />
-        <Box style={{ height: 500, width: "100%" }}>
+        <Box className="table_custom_style" style={{ height: props.loading ? 300 : "", width: "100%" }}>
           <StyleDataGrid
             rows={props.loading ? [] : props.row}
             columns={props?.columns}

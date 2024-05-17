@@ -338,7 +338,8 @@ const DHReviewBudgets = () => {
       <Typography className="totalBudgetText">
         Total Budget: $00,000.00
       </Typography>
-      <SelectDemo
+      <Box className="customSelect">
+      <SelectDemo parentClass="departmentSelect"
       title="Department"
       receiveValue={receiveDepartment}
       list={departments}
@@ -364,6 +365,8 @@ const DHReviewBudgets = () => {
           checkout={true}
         />
       </Box>
+      </Box>
+      
       <StatusModal
         statusData={statusData}
         onClose={() => setStatusData(null)}
