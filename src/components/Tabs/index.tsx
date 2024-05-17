@@ -115,7 +115,6 @@ const BasicTabs = (props: BasicTabsProps) => {
   };
 
   const handleClick = (rowData: any) => {
-    debugger
     if (props && props.onRowClick && typeof props.onRowClick === 'function') {
       props.onRowClick(rowData);
   }
