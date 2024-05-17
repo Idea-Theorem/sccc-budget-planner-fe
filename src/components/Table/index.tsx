@@ -2,6 +2,7 @@ import { styled } from "@mui/material/styles";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import InputSearch from "../Input";
+import { LinearProgress } from "@mui/material";
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
@@ -22,6 +23,10 @@ const StyledBox = styled(Box)(({ theme }) => ({
       },
     },
   },
+  ".MuiDataGrid-virtualScroller": {
+    overflowY: "auto",
+    overflowX: "hidden",
+  }
 }));
 const StyleDataGrid = styled(DataGrid)(() => ({
   width: "100%",
@@ -130,6 +135,7 @@ interface ColumnnsProps {
   loading: boolean;
   currentTab?: any;
   checkout?: boolean | any
+  handleProgramSearch?: any
 }
 const TableComponent = (props: ColumnnsProps) => {
   const handleSelectionChange = (selection: any) => {
@@ -213,8 +219,12 @@ const TableComponent = (props: ColumnnsProps) => {
   return (
     <>
       <StyledBox className="mainTableBlock">
-        <InputSearch placeholder="Search..." />
-        <Box className="table_custom_style" style={{ height: props.loading ? 300 : "", width: "100%" }}>
+        <InputSearch placeholder="Search..." onChange={(e: any) => props?.handleProgramSearch(e?.target?.value)} />
+        {/* {props.loading && 
+        
+        <LinearProgress color="success" />
+        } */}
+        <Box style={{ height: props.loading ? 300 : "", minHeight: 300  }}>
           <StyleDataGrid
             rows={props.loading ? [] : props.row}
             columns={props?.columns}

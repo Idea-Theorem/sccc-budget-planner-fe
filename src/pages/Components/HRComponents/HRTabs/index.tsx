@@ -131,6 +131,7 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
     fetchEmployee();
   }, []);
 
+
   return (
     <AppHuman>
       <Grid container spacing={2}>
