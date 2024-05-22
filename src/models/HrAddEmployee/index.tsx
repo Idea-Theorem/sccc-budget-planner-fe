@@ -349,6 +349,18 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
   } = formik;
 
 
+  const handleClear = () => {
+    setData([
+      {
+        department_id: "",
+        title: "",
+        hourlyRate: "",
+        salaryRate: "",
+      },
+    ])
+    handleClose()
+  }
+
   useEffect(() => {
     fetchUserRole();
     fetchDepartments();
@@ -733,7 +745,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
               variant="text"
               size="medium"
               startIcon={<Clear />}
-              onClick={handleClose}
+              onClick={handleClear}
             >
               Cancel
             </Button>
