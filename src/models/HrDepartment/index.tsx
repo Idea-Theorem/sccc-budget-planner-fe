@@ -209,7 +209,7 @@ const DepartmentInfo: React.FC<IDepartmentInfo> = ({
   }, []);
   const fetchCenters = async () => {
     try {
-      const response = await getAllCenters();
+      const response = await getAllCenters("");
       setCenter(response?.data?.centers);
     } catch (error) {}
   };

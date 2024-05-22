@@ -7,8 +7,9 @@ import { HTTP_CLIENT } from "../utils/axiosClient";
 const createCenters = async (data: any) => {
   return await HTTP_CLIENT.post("/center", data);
 };
-const getAllCenters = async () => {
-  return await HTTP_CLIENT.get("/center");
+const getAllCenters = async (value: string) => {
+  const modifyValue = typeof value === "undefined" ? "" : value;
+  return await HTTP_CLIENT.get(`/center?name=${modifyValue}`);
 };
 
 const updateCenter = async (data: any, id: string) => {

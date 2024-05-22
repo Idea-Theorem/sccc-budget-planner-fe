@@ -27,7 +27,7 @@ const SuperAdminScreen = () => {
 
   const fetchCenter = async () => {
     try {
-      const response = await getAllCenters();
+      const response = await getAllCenters("");
       const coloredArray = addRandomColor(response?.data?.centers)
       setCenter(coloredArray)
     } catch (error) {}

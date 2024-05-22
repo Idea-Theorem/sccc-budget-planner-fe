@@ -3,7 +3,8 @@ import Box from "@mui/material/Box";
 import MainHeaderComponent from "../../components/MainHeader";
 import TabsArea from "../../components/Tabs";
 import { getAllCenters, getDepartmentInCenters, getProgramInDepartment } from "../../services/centersServices";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import Status from "../../utils/dumpData";
 const StyledBox = styled(Box)(() => ({
   "& .dashboardCards": {
     display: "flex",
@@ -18,6 +19,9 @@ const SuperReviewBudget = () => {
 
   const [center, setCenters] = useState([])
   const [currenttitle, setCurrentTitle] = useState("")
+  const [tabstatus, setTabstatus] = React.useState(Status.PENDING);
+  console.log(tabstatus)
+
   const [step, setStep] = useState(0)
   const tableColumnsTitleArray = [
     [
@@ -28,78 +32,13 @@ const SuperReviewBudget = () => {
         editable: false,
         flex: 1,
       },
-      {
-        field: "status",
-        headerName: "Status",
-        sortable: false,
-        editable: false,
-        flex: 1,
-      },
-      {
-        field: "created_at",
-        headerName: "Created At",
-        sortable: false,
-        editable: false,
-        flex: 1,
-      },
-      {
-        field: "lYearBudget",
-        headerName: "Last Year Budget",
-        sortable: false,
-        editable: false,
-        flex: 1,
-      },
-      {
-        field: "budget",
-        headerName: "Budget",
-        sortable: false,
-        editable: false,
-        flex: 1,
-      },
-      {
-        field: "profit",
-        headerName: "Profit",
-        sortable: false,
-        editable: false,
-        flex: 1,
-      },
-      {
-        field: "nPrograms",
-        headerName: "No. Programs",
-        sortable: false,
-        editable: false,
-        flex: 1,
-      },
-      {
-        field: "sDate",
-        headerName: "Submission Date",
-        sortable: false,
-        editable: false,
-        flex: 1,
-      },
-      {
-        field: "comments",
-        headerName: "Comments",
-        sortable: false,
-        editable: false,
-        flex: 1,
-      },
-    ],
-    [
-      {
-        field: "name",
-        headerName: "Center Name",
-        sortable: false,
-        editable: false,
-        flex: 1,
-      },
-      {
-        field: "status",
-        headerName: "Status",
-        sortable: false,
-        editable: false,
-        flex: 1,
-      },
+      // {
+      //   field: "status",
+      //   headerName: "Status",
+      //   sortable: false,
+      //   editable: false,
+      //   flex: 1,
+      // },
       {
         field: "created_at",
         headerName: "Created At",
@@ -158,13 +97,78 @@ const SuperReviewBudget = () => {
         editable: false,
         flex: 1,
       },
+      // {
+      //   field: "status",
+      //   headerName: "Status",
+      //   sortable: false,
+      //   editable: false,
+      //   flex: 1,
+      // },
       {
-        field: "status",
-        headerName: "Status",
+        field: "created_at",
+        headerName: "Created At",
         sortable: false,
         editable: false,
         flex: 1,
       },
+      {
+        field: "lYearBudget",
+        headerName: "Last Year Budget",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "budget",
+        headerName: "Budget",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "profit",
+        headerName: "Profit",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "nPrograms",
+        headerName: "No. Programs",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "sDate",
+        headerName: "Submission Date",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "comments",
+        headerName: "Comments",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+    ],
+    [
+      {
+        field: "name",
+        headerName: "Center Name",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      // {
+      //   field: "status",
+      //   headerName: "Status",
+      //   sortable: false,
+      //   editable: false,
+      //   flex: 1,
+      // },
       {
         field: "created_at",
         headerName: "Created At",
@@ -221,15 +225,18 @@ const SuperReviewBudget = () => {
     {text: "Reject"},
   ]
 
-  const fetchCenter = async () => {
+  const fetchCenter = async (value: string) => {
     try {
-      const response = await getAllCenters()
+      const response = await getAllCenters(value)
       setCenters(response?.data?.centers)
     } catch (error) {
       
     }
   }
   const handleSingleRow = async (row: any) => {
+    if(step == 2){
+      return
+    }
     if(step == 1){
       fetchProgramInDepartment(row.id)
       setCurrentTitle(row.name)
@@ -256,12 +263,19 @@ try {
 }
   }
   useEffect(() => {
-    fetchCenter()
+    fetchCenter("")
   }, [])
 
   const handleBackFunctionality = () => {
-    fetchCenter()
+    fetchCenter("")
     setStep(0)
+  }
+
+  const receiveProgramSearch = async (value: string) => {
+    if(step === 0) {
+       await fetchCenter(value)
+
+    }
   }
   return (
     <StyledBox className="appContainer">
@@ -276,16 +290,18 @@ try {
         onClick={handleBackFunctionality}
       />
       <TabsArea
+      setTabstatus={setTabstatus}
         tabsTitleArray={[
           { title: "Pending" },
-          { title: "Rejected" },
           { title: "Approved" },
+          { title: "Rejected" },
           { title: "Drafts" },
           { title: "History" },
         ]}
         table={tableColumnsTitleArray}
         row={center}
         onRowClick={handleSingleRow}
+        receiveProgramSearch={receiveProgramSearch}
       />
     </StyledBox> 
   );

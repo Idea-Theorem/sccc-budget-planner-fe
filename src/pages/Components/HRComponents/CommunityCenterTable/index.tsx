@@ -136,8 +136,9 @@ interface HRTableProps {
   onCommunityEdit?: any;
   row?: any
   refresh?: any
+  onChange?: any
 }
-const CommunityTableComponent: React.FC<HRTableProps> = ({onCommunityEdit, row, refresh}) => { 
+const CommunityTableComponent: React.FC<HRTableProps> = ({onCommunityEdit, row, refresh, onChange}) => { 
 const [loading, setLoading] = useState<boolean>(false)
 console.log(loading)
 
@@ -205,7 +206,10 @@ console.log(loading)
   return (
     <>
       <StyledBox className="mainTableBlock">
-        <InputSearch placeholder="Search..." /> 
+        <InputSearch placeholder="Search..." 
+          onChange={onChange}
+        
+        /> 
         <StyleDataGrid
           rows={row}
           columns={columns}

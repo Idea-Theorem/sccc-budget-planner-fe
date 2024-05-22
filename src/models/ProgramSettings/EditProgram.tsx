@@ -69,7 +69,9 @@ const EditProgramModal: React.FC<IHrAddEmployee> = ({
   open, 
   formik
 }) => {
- 
+ const receivedate = (value: any) => {
+  formik.setFieldValue("from_date", value)
+ }
   return (
 <Modal
   open={open}
@@ -90,10 +92,10 @@ const EditProgramModal: React.FC<IHrAddEmployee> = ({
             <TextFields variant="standard" label="Program Code" name="code" value={formik?.values?.code}/>
           </Grid>
           <Grid item xs={6}> 
-            <BasicDatePicker />
+            <BasicDatePicker receiveDate={receivedate}/>
           </Grid>
           <Grid item xs={6}>
-            <BasicDatePicker />
+            <BasicDatePicker receiveDate={receivedate}/>
           </Grid>
           <Grid item xs={6}>
             <TextFields variant="standard" label="Department" name="department" onChange={formik?.handleChange} value={formik?.values?.department}/>
