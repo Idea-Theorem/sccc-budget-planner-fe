@@ -30,7 +30,7 @@ const StyledBox = styled(Box)(() => ({
     position: "relative",
 
     "& .MuiTabs-root": {
-      marginBottom: "66px",
+      marginBottom: "16px",
     },
   },
 

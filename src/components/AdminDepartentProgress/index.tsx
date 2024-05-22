@@ -47,7 +47,7 @@ const StyledBox = styled(Box)(() => ({
 
     "& .dashboardGraphsList": {
       flexGrow: "1",
-      height:'250px',
+      height:'184px',
       overflowY:'auto',
       minWidth: "0",
     },

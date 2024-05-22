@@ -42,7 +42,8 @@ const StyledBox = styled(Box)(() => ({
 
   "& .MuiToolbar-gutters": {
     padding: "0",
-    marginTop: "-6px",
+    marginTop: "0",
+    minHeight: "inherit",
 
     "& .MuiTypography-h6": {
       fontSize: "20px",

@@ -6,6 +6,18 @@
     display: none;
 }
 
+.sidebar_select_input .MuiSelect-select {
+    text-transform: uppercase;
+}
+
+.sidebar_select .full-width {
+    padding: 8px 19px;
+}
+
+.MuiMenu-list li{
+    text-transform: uppercase !important;
+}
+
 .btnLogout {
     bottom: 0;
     left: 0;
@@ -25,6 +37,7 @@
 
 .customSelect {
     position: relative;
+    text-transform: uppercase;
 }
 
 .customSelect .departmentSelect {
@@ -35,6 +48,10 @@
     width: auto;
     z-index: 5;
     padding: 3px 0 0;
+}
+
+.customSelect .departmentSelect .input-wrap div:first-child {
+    text-transform: uppercase;
 }
 
 .createProgramContentHead input {
@@ -57,4 +74,10 @@
 
 .amount_field {
     width: 90px;
+}
+
+.Upper_Header_Holder {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
