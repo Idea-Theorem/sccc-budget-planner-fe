@@ -221,9 +221,9 @@ const SuperReviewBudget = () => {
     {text: "Reject"},
   ]
 
-  const fetchCenter = async () => {
+  const fetchCenter = async (value: string) => {
     try {
-      const response = await getAllCenters()
+      const response = await getAllCenters(value)
       setCenters(response?.data?.centers)
     } catch (error) {
       
@@ -256,12 +256,21 @@ try {
 }
   }
   useEffect(() => {
-    fetchCenter()
+    fetchCenter("")
   }, [])
 
   const handleBackFunctionality = () => {
-    fetchCenter()
+    fetchCenter("")
     setStep(0)
+  }
+
+  const receiveProgramSearch = async (value: string) => {
+    if(step === 0) {
+       await fetchCenter(value)
+
+    }else if( step === 1) {
+
+    }
   }
   return (
     <StyledBox className="appContainer">
@@ -286,6 +295,7 @@ try {
         table={tableColumnsTitleArray}
         row={center}
         onRowClick={handleSingleRow}
+        receiveProgramSearch={receiveProgramSearch}
       />
     </StyledBox> 
   );

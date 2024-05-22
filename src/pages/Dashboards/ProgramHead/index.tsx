@@ -21,43 +21,44 @@ const ProgramHeadScreen = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+
   React.useEffect(() => {
     fetchProgramList();
   }, []);
+
   const fetchProgramList = async () => {
     try {
       setLoading(true);
       const response = await getAllProgramsViaStatus(Status.PENDING, "");
       if (response?.data?.programs.length > 0) {
         dispatch(storeProgramList(response?.data?.programs));
-        setLoading(false);
         navigate("/program-head/program");
       } else {
-        setLoading(false);
         navigate("/program-head");
       }
     } catch (error) {
+      // Handle error
+    } finally {
       setLoading(false);
     }
   };
+
+  if (loading) {
+    return <CircularProgress />;
+  }
+
   return (
     <StyledBox className="appContainer">
-      {loading ? (
-        <CircularProgress />
-      ) : (
-        <>
-          <MainHeaderComponent
-            title="Programs"
-            btnTitle="Create New Programs"
-            onClick={() => {
-              navigate("/program-head/create");
-              dispatch(storeSingleProgram(null));
-              dispatch(storeProgramFromStatus(Status.CREATED));
-            }}
-          />
-          <NoProgramExistComponent />
-        </>
-      )}
+      <MainHeaderComponent
+        title="Programs"
+        btnTitle="Create New Programs"
+        onClick={() => {
+          navigate("/program-head/create");
+          dispatch(storeSingleProgram(null));
+          dispatch(storeProgramFromStatus(Status.CREATED));
+        }}
+      />
+      <NoProgramExistComponent />
     </StyledBox>
   );
 };

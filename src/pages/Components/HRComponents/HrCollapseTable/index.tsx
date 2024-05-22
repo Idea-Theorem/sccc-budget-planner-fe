@@ -265,6 +265,7 @@ export default function HrCollapsibleTable({
   handleClick,
   employeeData,
   refresh,
+  onChange
 }: any) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -325,6 +326,7 @@ export default function HrCollapsibleTable({
               ),
             }}
             variant="standard"
+            onChange={(e: any) => onChange(e)}
           />
         </Stack>
         <TableContainer component={Paper}>

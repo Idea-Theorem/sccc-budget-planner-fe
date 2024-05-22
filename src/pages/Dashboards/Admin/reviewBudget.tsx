@@ -209,12 +209,12 @@ const ReviewBudgetScreen = () => {
   const dispatch = useDispatch()
   const [status, setStatus] = React.useState<string>("");
   useEffect(() => {
-    fetchProgram();
+    fetchProgram(tabstatus, "");
     
   }, [tabstatus, updateprogram]);
-  const fetchProgram = async () => {
+  const fetchProgram = async (tabstatus: any, value: string) => {
     try {
-      const response = await getPendingPrograms(tabstatus);
+      const response = await getPendingPrograms(tabstatus, value);
       setDepartmentList(response?.data)
     } catch (error) {}
   };
@@ -245,6 +245,10 @@ const ReviewBudgetScreen = () => {
   }
     
   }
+
+  const receiveProgramSearch = async (value: string) => {
+     await fetchProgram(tabstatus, value)
+  }
   return (
     <StyledBox className="appContainer">
       <MainHeaderComponent
@@ -270,6 +274,7 @@ const ReviewBudgetScreen = () => {
         handleActionReieve={handleActionReieve}
         onRowClick = {onRowClick}
         checkout={true}
+        receiveProgramSearch={receiveProgramSearch}
       />
     </StyledBox> 
   );

@@ -4,7 +4,7 @@ import TabsArea from "../../../components/Tabs";
 import Typography from "@mui/material/Typography";
 import SubHeader from "../../../components/SubHeader";
 import ApprovedProgram from "../ProgramHead/approvedProgram";
-import { getProgram, updateProgram } from "../../../services/programServices";
+import { getAllProgramsViaStatus, getProgram, updateProgram } from "../../../services/programServices";
 import React, { useEffect, useState } from "react";
 import Status from "../../../utils/dumpData";
 import { useDispatch, useSelector } from "react-redux";
@@ -243,7 +243,7 @@ const DHReviewBudgets = () => {
   },[])
   const fetchDepartments = async () => {
     try {
-      const response = await getAllDepartments();
+      const response = await getAllDepartments("");
        response?.data?.departments.find((item: any) => item?.name === activeDepartment);
       setDepartmentID(response?.data?.departments[0]?.id)
       setActiveDepartment(response?.data?.departments[0]?.name)
@@ -275,12 +275,12 @@ const DHReviewBudgets = () => {
   }
   
   useEffect(() => {
-    fetchProgram();
+    fetchProgram("");
     
   }, [updateprogram, activeDepartment, tabstatus]);
-  const fetchProgram = async () => {
+  const fetchProgram = async (value: string) => {
     try {
-      const response = await getProgram(tabstatus);
+      const response = await getAllProgramsViaStatus(tabstatus, value);
       const newArray = response?.data?.programs?.filter((item: any)=> item?.department?.id === departmentId)
       setFilteredProgramListing(newArray)
       
@@ -325,6 +325,10 @@ const DHReviewBudgets = () => {
       });
     }
   }
+
+  const receiveProgramSearch = async (value: string) => {
+await fetchProgram(value)
+  }
   return (
     <StyledBox className="appContainer">
       <Box className="reviewBudgetHead">
@@ -362,7 +366,8 @@ const DHReviewBudgets = () => {
           row={programList}
           currentStatus={status}
           handleActionReieve={handleActionReieve}
-          checkout={true}
+          checkout={true} 
+          receiveProgramSearch={receiveProgramSearch}
         />
       </Box>
       </Box>

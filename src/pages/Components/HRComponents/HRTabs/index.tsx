@@ -64,16 +64,16 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
   };
 
   const handleCloseModal = () => {
-    fetchEmployee();
+    fetchEmployee("");
     setSingleEmployeeData(null);
     setIsopen(false);
   };
   const handleCloseDepartmentModal = () => {
-    fetchDepartments();
+    fetchDepartments("");
     setIsDepartopen(false);
   };
   const handleCloseCommunityModal = () => {
-    fetchCenters();
+    fetchCenters("");
     setCommunityModal(false);
   };
   const handleClick = (e: any) => {
@@ -103,32 +103,46 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
     setCommunityModal(true);
     setCenterHeading("Edit center");
   };
-
-  const fetchDepartments = async () => {
+  const fetchDepartments = async (value: string) => {
     try {
-      const response = await getAllDepartments();
+      const response = await getAllDepartments(value);
       setDepartments(response?.data?.departments);
     } catch (error) {}
   };
 
-  const fetchCenters = async () => {
+  const fetchCenters = async (value: string) => {
     try {
-      const response = await getAllCenters();
+      const response = await getAllCenters(value);
       setCenter(response?.data?.centers);
     } catch (error) {}
   };
 
-  const fetchEmployee = async () => {
+  const fetchEmployee = async (value: string) => {
     try {
-      const response = await getEmployee();
+      const response = await getEmployee(value);
       setEmployee(response?.data?.users);
     } catch (error) {}
   };
 
+  const handleSearchCenters = async (e: any) => {
+    const {value} = e.target
+  await fetchCenters(value)
+  }
+
+  const handleDepartmentCenters = async (e: any) => {
+    const {value} = e.target
+    await fetchDepartments(value)
+      }
+
+      const handleEmployeeCenters = async (e: any) => {
+        const {value} = e.target
+        await fetchEmployee(value)
+          }
+
   useEffect(() => {
-    fetchDepartments();
-    fetchCenters();
-    fetchEmployee();
+    fetchDepartments("");
+    fetchCenters("");
+    fetchEmployee("");
   }, []);
 
 
@@ -185,7 +199,33 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
           </AppBar>
         </Grid>
         <Grid item xs={12}>
-          {value === 0 && (
+
+        {typeof tabNames == "undefined"
+                  ? ""
+                  : tabNames[value] === "Community Centres"
+                  ? <CommunityTableComponent
+                  onCommunityEdit={onCommunityEdit}
+                  row={typeof center == "undefined" || !center ? [] : center}
+                  refresh={handleCloseCommunityModal}
+                  onChange={handleSearchCenters}
+                />
+                  : tabNames[value] === "Departments"
+                  ?   <HRTableComponent
+                  onEdit={onEdit}
+                  row={departments}
+                  refresh={handleCloseDepartmentModal}
+                  onChange={handleDepartmentCenters}
+                />
+                  : tabNames[value] === "Employees"
+                  ? <HrCollapsibleTable
+                  handleClick={handleEditClick}
+                  employeeData={employee}
+                  refresh={fetchEmployee}
+                  onChange={handleEmployeeCenters}
+                />
+                  : null}
+
+          {/* {value === 0 && (
             <HrCollapsibleTable
               handleClick={handleEditClick}
               employeeData={employee}
@@ -205,7 +245,7 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
               row={typeof center == "undefined" || !center ? [] : center}
               refresh={handleCloseCommunityModal}
             />
-          )}
+          )} */}
         </Grid>
       </Grid>
       <AddEmployee
