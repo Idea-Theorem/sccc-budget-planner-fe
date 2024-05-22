@@ -244,6 +244,7 @@ const PHProgramsScreen = () => {
       },
     ],
   ];
+  
   return (
     <StyledBox className="appContainer">
       <MainHeaderComponent

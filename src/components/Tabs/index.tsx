@@ -34,6 +34,7 @@ interface BasicTabsProps {
   handleActionReieve?: any;
   setTabstatus?: any;
   checkout?: boolean;
+  receiveProgramSearch?: any
 }
 
 const CustomTabPanel = (props: TabPanelProps) => {
@@ -147,10 +148,8 @@ const BasicTabs = (props: BasicTabsProps) => {
   };
 
   const handleProgramSearch = (value: string) => {
-    if(!value){
-      return
-    }
     fetchProgramList(status, value)
+    props?.receiveProgramSearch(value)
 
   }
 
@@ -237,6 +236,7 @@ export default function TabsArea(props: BasicTabsProps) {
         handleActionReieve={props?.handleActionReieve}
         onRowClick={props?.onRowClick}
         checkout={props?.checkout}
+        receiveProgramSearch={props?.receiveProgramSearch}
       />
     </TabsAreas>
   );
