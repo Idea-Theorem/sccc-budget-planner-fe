@@ -98,7 +98,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
 
   const fetchDepartments = async () => {
     try {
-      const response = await getAllDepartments();
+      const response = await getAllDepartments("");
       setDepartments(response?.data?.departments);
     } catch (error) {}
   };

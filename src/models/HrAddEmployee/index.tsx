@@ -430,7 +430,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
 
   const fetchDepartments = async () => {
     try {
-      const response = await getAllDepartments();
+      const response = await getAllDepartments("");
       setDepartments(response?.data?.departments);
     } catch (error) {}
   };

@@ -4,7 +4,7 @@ import TabsArea from "../../../components/Tabs";
 import Typography from "@mui/material/Typography";
 import SubHeader from "../../../components/SubHeader";
 import ApprovedProgram from "../ProgramHead/approvedProgram";
-import { getAllProgramsViaStatus, getProgram, updateProgram } from "../../../services/programServices";
+import { getAllProgramsViaStatus, updateProgram } from "../../../services/programServices";
 import React, { useEffect, useState } from "react";
 import Status from "../../../utils/dumpData";
 import { useDispatch, useSelector } from "react-redux";
