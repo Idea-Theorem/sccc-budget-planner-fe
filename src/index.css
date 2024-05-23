@@ -81,3 +81,79 @@
     align-items: center;
     justify-content: space-between;
 }
+
+.mainTableBlock.approveActiveTab {
+    margin-top: 70px;
+}
+
+.loading_Ico {
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+}
+
+.table_text_header {
+    display: flex;
+}
+
+.table_text_header h4 {
+    font-size: 20px;
+    padding-right: 9px;
+    padding-left: 3px;
+    padding-bottom: 5px;
+    min-height: 50px;
+}
+
+.dropdown_Select div {
+    margin: 0;
+    border: 1px solid #f00;
+    border-radius: 5px;
+}
+.dropdown_Select div label {
+    display: none !important;
+}
+.dropdown_Select div:first-child div {
+    margin: 0 !important;
+    border: none !important;
+}
+.dropdown_Select div:first-child div::before {
+    display: none !important;
+}
+.dropdown_Select div:first-child {
+    border: 1px solid rgba(0, 0, 0, 0.23);
+}
+.dropdown_Select div:first-child input{
+    border: none !important;
+}
+.tableInfoArea {
+    position: relative;
+    padding-right: 40px;
+}
+
+.tableInfoArea .btnPlus {
+    top: 0;
+    right: 0;
+    position: absolute;
+}
+
+.btnMinus {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #000;
+    border-radius: 100%;
+    background: #fff;
+}
+
+.inputsRow {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.inputsRow .btnMinus {
+    top: 50%;
+    right: -40px;
+    margin: 7px 0 0;
+    position: absolute;
+    transform: translateY(-50%);
+}

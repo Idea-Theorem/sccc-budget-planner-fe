@@ -251,18 +251,30 @@ try {
 }
   }
   return (
-    <EmployeeInfoArea>
-      <Box>
-      <Typography variant="h3">Employee</Typography>
-      <Typography variant="h3">Hourly Rate</Typography>
-      <Typography variant="h3">Hour Per Week</Typography>
-      <Typography variant="h3">Working Weeks</Typography>
-      <Typography variant="h3">Benefit %</Typography> 
-      <Typography variant="h3">Amount</Typography> 
+    <EmployeeInfoArea className="tableInfoArea">
+      <Box className="table_text_header">
+        <Grid item xs={3} className="item-role-area">
+          <Typography variant="h4">Employee</Typography>
+        </Grid>
+        <Grid item xs={1.8} className="item-role-area">
+          <Typography variant="h4">Hourly Rate</Typography>
+        </Grid>
+        <Grid item xs={1.8} className="item-role-area">
+          <Typography variant="h4">Hour Per Week</Typography>
+        </Grid>
+        <Grid item xs={1.8} className="item-role-area">
+          <Typography variant="h4">Working Weeks</Typography>
+        </Grid>
+        <Grid item xs={1.8} className="item-role-area">
+          <Typography variant="h4">Benefit %</Typography>
+        </Grid> 
+        <Grid item xs={1.8} className="item-role-area">
+          <Typography variant="h4">Amount</Typography>
+        </Grid> 
       </Box>
       {formData.map((record, index) => (
-        <Grid key={index} container spacing={2}>
-          <Grid item xs={3} className="item-role-area">
+        <Grid className="inputsRow" key={index} container spacing={2}>
+          <Grid item xs={3} className="item-role-area dropdown_Select">
             <SelectDepartments
               title=""
               value={record.employee}
@@ -305,7 +317,7 @@ try {
               }
             />
           </Grid>
-          <Grid item xs={1.8} className="item-role-area">
+          <Grid item xs={1.8} className="item-role-area dropdown_Select">
           <SelectDemo
               title=""
               value={record.benefit}
@@ -325,11 +337,13 @@ try {
                 handleInputChange(index, "amount", e.target.value)
               }
             />
-            <button onClick={() => handleDeleteRecord(index)}>Delete</button>
+            <button className="btnMinus" onClick={() => handleDeleteRecord(index)}>
+              -
+            </button>
           </Grid>
         </Grid>
       ))}
-      <button onClick={handleAddRecord}>+</button>
+      <button className="btnPlus" onClick={handleAddRecord}>+</button>
     </EmployeeInfoArea>
   );
 }

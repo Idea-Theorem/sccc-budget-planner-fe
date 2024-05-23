@@ -44,7 +44,7 @@ const ProgramHeadScreen = () => {
   };
 
   if (loading) {
-    return <CircularProgress />;
+    return <span className="loading_Ico"><CircularProgress /></span>;
   }
 
   return (
