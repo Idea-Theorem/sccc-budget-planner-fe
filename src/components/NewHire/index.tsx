@@ -1,7 +1,7 @@
 import { salaryRates } from "../../utils/dumpData";
 import { styled } from "@mui/material/styles";
 import SelectDemo from "../Select";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import TextFields from "../Input/textfield";
 import { useState } from "react";
 
@@ -233,11 +233,19 @@ export default function TabsNewHire() {
   };
   return (
     <EmployeeInfoArea>
+      <Box>
+      <Typography variant="h3">Employee</Typography>
+      <Typography variant="h3">Hourly Rate</Typography>
+      <Typography variant="h3">Hour Per Week</Typography>
+      <Typography variant="h3">Working Weeks</Typography>
+      <Typography variant="h3">Benefit %</Typography> 
+      <Typography variant="h3">Amount</Typography> 
+      </Box>
       {formData.map((record, index) => (
         <Grid key={index} container spacing={2}>
           <Grid item xs={3} className="item-role-area">
             <SelectDemo
-              title="Benefit Percentage"
+              title=""
               value={record.employee}
               list={salaryRates}
               receiveValue={(value: any) =>
@@ -248,7 +256,7 @@ export default function TabsNewHire() {
           <Grid item xs={1.8} className="item-role-area">
             <TextFields
               variant="outlined"
-              label="Hourly Rate"
+              label=""
               name="hourlyRate"
               value={record.hourlyRate}
               onChange={(e: any) =>
@@ -259,7 +267,7 @@ export default function TabsNewHire() {
           <Grid item xs={1.8} className="item-role-area">
             <TextFields
               variant="outlined"
-              label="Hours per week"
+              label=""
               name="hoursPerWeek"
               value={record.hoursPerWeek}
               onChange={(e: any) =>
@@ -270,7 +278,7 @@ export default function TabsNewHire() {
           <Grid item xs={1.8} className="item-role-area">
             <TextFields
               variant="outlined"
-              label="Working weeks"
+              label=""
               name="workingWeeks"
               value={record.workingWeeks}
               onChange={(e: any) =>
@@ -279,20 +287,19 @@ export default function TabsNewHire() {
             />
           </Grid>
           <Grid item xs={1.8} className="item-role-area">
-            <TextFields
-              variant="outlined"
-              label="Benefit"
-              name="benefit"
-              value={record.benefit}
-              onChange={(e: any) =>
-                handleInputChange(index, "benefit", e.target.value)
+          <SelectDemo
+              title=""
+              value={record.employee}
+              list={salaryRates}
+              receiveValue={(value: any) =>
+                handleInputChange(index, "benefit", value)
               }
             />
           </Grid>
           <Grid item xs={1.8} className="item-role-area">
             <TextFields
               variant="outlined"
-              label="Amount"
+              label=""
               name="amount"
               value={record.amount}
               onChange={(e: any) =>

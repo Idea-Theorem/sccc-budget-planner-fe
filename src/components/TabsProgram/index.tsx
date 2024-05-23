@@ -93,7 +93,7 @@ const TabsProgram = ({
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
         {
-          false ? 
+          true ? 
           <TabsNewHire />
           :   <ProgramTable
           disabled={disabled}
