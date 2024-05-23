@@ -138,8 +138,6 @@ interface ColumnnsProps {
   approveTabAcriveClass?: boolean | any;
 }
 const TableComponent = (props: ColumnnsProps) => {
-  console.log("props::::::::::::",props.currentTab)
-  console.log("approveTabAcriveClass::::::::::::",props?.approveTabAcriveClass)
   const handleSelectionChange = (selection: any) => {
     const selectedRowIds = selection.flat();
     props?.handleActionReieve(selectedRowIds);

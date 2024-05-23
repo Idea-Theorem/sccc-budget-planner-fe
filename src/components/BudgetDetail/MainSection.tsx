@@ -7,7 +7,7 @@ import { Grid } from "../../pages/Components/MUIComponents/index";
 import TabsProgramArea from "../TabsProgram";
 import { ActionsType } from "../../types/common";
 import Buttons from "../Button";
-import { getAllDepartments } from "../../services/departmentServices";
+import { fetchEmployeeInDepartments, getAllDepartments } from "../../services/departmentServices";
 import { useEffect, useState } from "react";
 import Status, { ProgramCode } from "../../utils/dumpData";
 import { useFormik } from "formik";
@@ -34,6 +34,7 @@ import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 
 const MainSection = ({ actions }: { actions: ActionsType[] }) => {
   const [departments, setDepartments] = useState<any>([]);
+  const [employee, setEmployee] = useState<any>([]);
   const [activeDepartment, setActiveDepartment] = useState<any>(null);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -116,10 +117,18 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
     setFieldValue("code", value);
   };
 
-  const receiveDepartment = (value: any) => {
+
+
+  const receiveDepartment = async (value: any) => {
     const filteredID = departments.find((item: any) => item?.name === value);
     setFieldValue("department_id", filteredID?.id);
     setActiveDepartment(filteredID?.name);
+    const response = await fetchEmployeeInDepartments(filteredID?.id)
+    const modifyArray = response?.data?.departments?.map((user: any) => ({
+      ...user,
+      name: `${user.firstname} ${user.lastname}`
+  }));
+    setEmployee(modifyArray)
   };
 
   const receiveFromDate = (value: any) => {
@@ -195,7 +204,6 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
       <Grid className="createProgramContent" item xs={12}>
         <Grid item xs={12}>
           <Stack className="createProgramContentHead">
-            
               <TextFields
                 disabled={disable}
                 autoFocus
@@ -331,6 +339,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
             handleSupplyExpenseReceived={receiveSupplyExpense}
             handleSalaryExpenseReceived={receiveSalaryExpense}
             formik={formik}
+            employee={employee}
           />
         </Grid>
       </Grid>
