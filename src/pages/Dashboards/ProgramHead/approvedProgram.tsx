@@ -1,6 +1,5 @@
 import { Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import AddIcCallOutlined from "@mui/icons-material/AddIcCallOutlined";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
@@ -8,6 +7,7 @@ import Status from "../../../utils/dumpData";
 import React, { useEffect } from "react";
 import { getPrograms } from "../../../services/adminServices";
 import { getProgram } from "../../../services/programServices";
+import { UploadFileOutlined } from "@mui/icons-material";
 
 const StyledBox = styled(Box)(({ theme }) => ({
   ".MuiTypography-root": {
@@ -20,20 +20,23 @@ const StyledBox = styled(Box)(({ theme }) => ({
   ".MuiButtonBase-root": {
     textTransform: "capitalize",
   },
+  ".Mui-disabled": {
+    background: "#e0e0e0 !important",
+    color: "#8b8b8b !important",
+  },
 }));
 
-const ApprovedProgram = ({ tabstatus }: any) => {
+const ApprovedProgram = ({ tabstatus, count, totalCount, handleClick }: any) => {
   const [programs, setPrograms] = React.useState<any>({});
-  const [pendingprograms, setPendingPrograms] = React.useState<any>(0);
+  console.log(programs)
   useEffect(() => {
     fetchProgram();
   }, []);
   const fetchProgram = async () => {
     try {
       const response = await getPrograms();
-      const res = await getProgram(Status.PENDING);
+      await getProgram(Status.PENDING);
       setPrograms(response?.data);
-      setPendingPrograms(res?.data?.programs?.length);
     } catch (error) {}
   };
   return (
@@ -47,25 +50,31 @@ const ApprovedProgram = ({ tabstatus }: any) => {
             gap="2px"
           >
             <Typography className="textFull">
-              {programs.approvedCount}
+              {count}
             </Typography>
             <Typography className="divider">/</Typography>
             <Typography className="textValue">
               {" "}
-              {pendingprograms} Programs {tabstatus?.toLowerCase()}
+              {totalCount} Programs {tabstatus?.toLowerCase()}
             </Typography>
           </Stack>
         )}
-        <Stack>
-          <Button
-            variant="contained"
-            color="primary"
-            size="medium"
-            startIcon={<AddIcCallOutlined />}
-          >
-            Submit
-          </Button>
-        </Stack>
+        {tabstatus == Status.APPROVED && (
+          <Stack>
+           
+            <Button
+              disabled={count !== totalCount ? true : false}
+              variant="contained"
+              color="primary"
+              size="medium"
+              startIcon={<UploadFileOutlined />}
+              onClick={handleClick}
+            >
+              Submit
+            </Button>
+            
+          </Stack>
+        )}
       </Stack>
     </StyledBox>
   );

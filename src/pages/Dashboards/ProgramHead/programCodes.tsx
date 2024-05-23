@@ -5,6 +5,12 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { Button, Stack, Typography } from "@mui/material";
 import InputSearch from "../../../components/Input";
+import { deleteProgram, getAllProgramsViaStatus, programUpdate } from "../../../services/programServices";
+import React, { useState } from "react";
+import Status from "../../../utils/dumpData";
+import DeleteModal from "../../../models/DeleteModal";
+import EditProgramCodesModal from "../../../models/ProgramSettings/EditProgramCodes";
+import { useFormik } from "formik";
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
@@ -114,52 +120,20 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
   },
 }));
 
-const rows = [
-  {
-    id: 1,
-    departmentName: "Recreation & Culture",
-    status: "5",
-  },
-  {
-    id: 2,
-    departmentName: "HR",
-    status: "5",
-  },
-  {
-    id: 3,
-    departmentName: "Recreation & Culture",
-    status: "5",
-  },
-  {
-    id: 4,
-    departmentName: "HR",
-    status: "5",
-  },
-  {
-    id: 5,
-    departmentName: "Recreation & Culture",
-    status: "5",
-  },
-  {
-    id: 6,
-    departmentName: "HR",
-    status: "5",
-  },
-];
 interface HRTableProps {
   onEdit?: any;
 }
-const HRTableComponent: React.FC<HRTableProps> = ({ onEdit }) => {
+const HRTableComponent: React.FC<HRTableProps> = ({  }) => {
   const columns: GridColDef[] = [
     {
-      field: "departmentName",
+      field: "name",
       headerName: "Program Name",
       sortable: false,
       editable: false,
       flex: 1,
     },
     {
-      field: "status",
+      field: "code",
       headerName: "Program Code",
       sortable: false,
       editable: false,
@@ -169,7 +143,7 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit }) => {
       field: "buttonsColumn",
       headerName: "",
       flex: 0.4,
-      renderCell: () => (
+      renderCell: (params: any) => (
         <Stack
           direction="row"
           gap="10px"
@@ -181,6 +155,7 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit }) => {
             color="error"
             size="small"
             startIcon={<DeleteOutlineIcon />}
+            onClick={() => handleDelete(params.row)}
           >
             Delete
           </Button>
@@ -189,7 +164,8 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit }) => {
             color="primary"
             size="small"
             startIcon={<EditNoteIcon />}
-            onClick={onEdit}
+            // onClick={onEdit}
+            onClick={() => handleEditClick(params.row)}
           >
             Edit
           </Button>
@@ -197,6 +173,62 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit }) => {
       ),
     },
   ];
+  const [selectedRow, setSelectedRow] = useState<any>(null);
+  const [codeData, setCodeData] = React.useState([])
+  const [selectedRowdelete, setSelectedDelete] = useState<any>(null);
+  const [deleteModalOpen, setDeleteModal] = useState<any>(false);
+  const [editModalOpen, setEditModal] = useState(false); 
+
+  const formik = useFormik<any>({
+    validateOnBlur: false,
+    // validationSchema: programSchema, 
+    enableReinitialize: true,
+    initialValues: {
+      name: selectedRow ? selectedRow?.name : "",
+      code: selectedRow ? selectedRow?.code : "",
+      department_id: selectedRow ? selectedRow?.department_id : "",
+    },
+    onSubmit: async (values: any) => {
+      try {
+        await programUpdate(values , selectedRow?.id)
+        fetchProgramList(Status.DRAFTED)
+        setEditModal(false)
+      } catch (error) {
+        console.log(error)
+      }
+    },
+  });
+  React.useEffect(() => { 
+    fetchProgramList(Status.DRAFTED);
+  }, []);
+  const fetchProgramList = async (status: string) => {
+    try {
+      const response = await getAllProgramsViaStatus(status, ""); 
+      setCodeData(response?.data?.programs)
+    } catch (error) {
+      console.log(error)
+    }
+  };
+    const handleEditClick = (rowData: any) => {
+      setSelectedRow(rowData); 
+      setEditModal(true)
+    };
+    
+  const handleDelete = (rowData: any)=>{
+    setSelectedDelete(rowData?.id);
+    setDeleteModal(true);
+  }
+  const handleDeleteConfirmation = async () => {
+    if(selectedRowdelete){
+      try {
+        await deleteProgram(selectedRowdelete);
+        fetchProgramList(Status.DRAFTED)
+        setDeleteModal(false) 
+      } catch (error) {
+        console.error('Error deleting record:', error);
+      }
+    }
+  };
   return (
     <StyledBox>
       <Typography className="hrBlockTitle" variant="h3">
@@ -208,7 +240,7 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit }) => {
       <StyledBox className="mainTableBlock">
         <InputSearch placeholder="Search..." />
         <StyleDataGrid
-          rows={rows}
+          rows={codeData}
           columns={columns}
           initialState={{
             pagination: {
@@ -220,6 +252,8 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit }) => {
           slots={{ toolbar: GridToolbar }}
         />
       </StyledBox>
+      <DeleteModal heading="Are you sure you want to delete?" open={deleteModalOpen} handleClose={()=>setDeleteModal(false)} handleOK={()=> handleDeleteConfirmation()}/>
+      <EditProgramCodesModal open={editModalOpen} handleClose={()=> setEditModal(false)} formik={formik}/>
     </StyledBox>
   );
 };

@@ -44,8 +44,8 @@ const DepartmentInfoArea = styled(Box)(({ theme }) => ({
 interface IDeleteModal {
   heading?: string;
   subheading?: string;
-  handleClose: () => void;
-  open: boolean;
+  handleClose?: () => void;
+  open?: boolean;
   selectRow?: any
   handleOK?: any
   loading?: any
@@ -60,7 +60,7 @@ const DeleteModal: React.FC<IDeleteModal> = ({
 }) => {
   return (
     <Modal
-      open={open}
+      open={typeof open !== 'undefined' && open}
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"

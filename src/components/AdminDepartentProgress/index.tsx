@@ -4,7 +4,8 @@ import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 import ProgramProgress from "./programProgress";
 import DepartmentButton from "./departmentButton";
-import { departments } from "../../utils/sampleData";
+import React, { useEffect } from "react";
+import { getDepartmentInCenters } from "../../services/centersServices";
 
 const StyledBox = styled(Box)(() => ({
   "&.dashboardStatsCard": {
@@ -46,6 +47,8 @@ const StyledBox = styled(Box)(() => ({
 
     "& .dashboardGraphsList": {
       flexGrow: "1",
+      height:'184px',
+      overflowY:'auto',
       minWidth: "0",
     },
 
@@ -64,53 +67,88 @@ const StyledBox = styled(Box)(() => ({
   },
 }));
 
-const AdminDepartmentProgress = () => {
+const AdminDepartmentProgress = ({ department , from, center}: any) => {
+  const [rowData, setRowData] = React.useState<any>([]);
+  const [departmentInCenter, setDepartmentInCenter] = React.useState<any>([]);
+  useEffect(() => {
+    if (department?.length !== 0 && typeof department !== "undefined") {
+      setRowData(department[0]?.Program);
+    }
+  }, [department]);
+
+  useEffect(() => {
+    if (department?.length !== 0 && typeof center !== "undefined") {
+      fetchDepartmentInCenters(center[0]?.id)
+    }
+  }, [center]);
+  
+  const fetchDepartmentInCenters = async (id: any) => {
+try {
+  const response = await getDepartmentInCenters(id)
+  setDepartmentInCenter(response?.data?.center)
+} catch (error) {
+  
+}
+  }
   return (
     <StyledBox className="dashboardStatsCard">
       <Typography variant="h3">Department %</Typography>
-      <Box className="tagsList">
-        {departments.map((e, index) => (
-          <DepartmentButton key={index} text={e.title} color={e.color} />
+      {from == "super-admin" ?
+        <Box className="tagsList">
+        {center?.map((e: any, index: any) => (
+          <DepartmentButton
+            key={index}
+            text={e?.name}
+            color={e?.color}
+            handleBtnClick={() => fetchDepartmentInCenters(e?.id)}
+          />
         ))}
       </Box>
+      : 
+        <Box className="tagsList">
+        {department?.map((e: any, index: any) => (
+          <DepartmentButton
+            key={index}
+            text={e?.name}
+            color={e?.color}
+            handleBtnClick={() => setRowData(e?.Program)}
+          />
+        ))}
+      </Box>
+      }
+    
       <Box className="dashboardGraphsBlock">
         <Box className="dashboardGraphBox">
           <BasicPie />
         </Box>
-        <Box className="dashboardGraphsList">
-          <Box color={"#3B00ED"} className="progress-wrap">
-            <ProgramProgress
-              title="Program 1"
-              amount="$00.000"
-              value={52}
-              color="inherit"
-            />
-          </Box>
-          <Box color={"#9C27B0"} className="progress-wrap">
-            <ProgramProgress
-              title="Program 2"
-              amount="$00.000"
-              value={42}
-              color="inherit"
-            />
-          </Box>
-          <Box color={"#D81B60"} className="progress-wrap">
-            <ProgramProgress
-              title="Program 3"
-              amount="$00.000"
-              value={26}
-              color="inherit"
-            />
-          </Box>
-          <Box color={"#FFC107"} className="progress-wrap">
-            <ProgramProgress
-              title="Program 4"
-              amount="$00.000"
-              value={34}
-              color="inherit"
-            />
-          </Box>
-        </Box>
+        {from == "super-admin" ?
+         <Box className="dashboardGraphsList">
+         {departmentInCenter?.map((e: any) => (
+           <Box color={"#3B00ED"} className="progress-wrap">
+             <ProgramProgress
+               title={e?.name}
+               amount="$00.000"
+               value={52}
+               color="inherit"
+             />
+           </Box>
+         ))}
+       </Box>
+        :
+         <Box className="dashboardGraphsList">
+         {rowData?.map((e: any) => (
+           <Box color={"#3B00ED"} className="progress-wrap">
+             <ProgramProgress
+               title={e?.name}
+               amount="$00.000"
+               value={52}
+               color="inherit"
+             />
+           </Box>
+         ))}
+       </Box>
+        }
+       
       </Box>
     </StyledBox>
   );

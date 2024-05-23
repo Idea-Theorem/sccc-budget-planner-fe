@@ -3,8 +3,9 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import AddIcon from "@mui/icons-material/Add";
-import DropdownButton from "../Button/dropDownButton";
+// import DropdownButton from "../Button/dropDownButton";
 import Buttons from "../Button";
+import DropdownButton from "../Button/dropDownButton";
 
 const AppHeader = styled(Box)(({ theme }) => ({
   "&.appHeader": {
@@ -84,23 +85,33 @@ interface MainHeaderProps {
   subTitle?: string;
   date?: string;
   array?: any;
+  onStatusChange?: any;
+  handleUpdate?: any;
   action?: boolean;
   subdes?: string;
-  classname?: string; 
-  onClick?: () => void;
+  classname?: string;
+  onClick?:  any;
 }
 
 const MainHeaderComponent = (props: MainHeaderProps) => {
-  const { classname } = props; 
+  const { classname, onClick } = props;
+  const handleOptionSelect = (selectedStatus: any) => {
+    props.onStatusChange(selectedStatus);
+  };
   return (
     <AppHeader className={`${classname} appHeader`}>
       <Stack className="appHeaderHolder">
         <Box>
-          <Typography variant="h3">{props.title}</Typography>
+          <Typography variant="h3" onClick={() => onClick(props.title)}>{props.title}</Typography>
           <Typography variant="h6">{props.subdes}</Typography>
         </Box>
         {props?.action ? (
-          <DropdownButton title="Actions" array={props?.array} />
+          <DropdownButton title="Actions" array={props?.array} onSelect={handleOptionSelect} handleUpdate={props?.handleUpdate}/> 
+          // <Buttons
+          //   startIcon={<IosShareIcon />}
+          //   btntext="Export"
+          //   variant="contained"
+          // />
         ) : (
           <Buttons
             startIcon={<AddIcon />}
@@ -108,7 +119,8 @@ const MainHeaderComponent = (props: MainHeaderProps) => {
             btntext={props?.btnTitle}
             variant="contained"
           />
-        )}
+        )
+        }
       </Stack>
       {props?.subHeader && (
         <Box className="appSubHead">

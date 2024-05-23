@@ -136,8 +136,9 @@ interface HRTableProps {
   onEdit?: any;
   row?: any;
   refresh?: any;
+  onChange?: any
 }
-const HRTableComponent: React.FC<HRTableProps> = ({ onEdit, row, refresh }) => {
+const HRTableComponent: React.FC<HRTableProps> = ({ onEdit, row, refresh, onChange }) => {
   const [deleteRow, setDeleteRow] = useState<any>(false);
   const [loading, setLoading] = useState<any>(false);
   const [statusData, setStatusData] = useState<any>(null);
@@ -202,7 +203,7 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit, row, refresh }) => {
     },
   ];
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<any>(false);
   const closeModel = () => {
     setIsOpen(false);
   };
@@ -229,7 +230,7 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit, row, refresh }) => {
   return (
     <>
       <StyledBox className="mainTableBlock">
-        <InputSearch placeholder="Search..." />
+        <InputSearch placeholder="Search..." onChange={onChange} />
         <StyleDataGrid
           rows={row || []}
           columns={columns}

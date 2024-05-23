@@ -7,7 +7,7 @@ import { Grid } from "../../pages/Components/MUIComponents/index";
 import TabsProgramArea from "../TabsProgram";
 import { ActionsType } from "../../types/common";
 import Buttons from "../Button";
-import { getAllDepartments } from "../../services/departmentServices";
+import { fetchEmployeeInDepartments, getAllDepartments } from "../../services/departmentServices";
 import { useEffect, useState } from "react";
 import Status, { ProgramCode } from "../../utils/dumpData";
 import { useFormik } from "formik";
@@ -16,7 +16,6 @@ import {
   programUpdate,
   updateProgram,
 } from "../../services/programServices";
-import { Box, Input } from "@mui/material";
 import {
   storeIncomeList,
   storeProgramFromStatus,
@@ -35,10 +34,11 @@ import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 
 const MainSection = ({ actions }: { actions: ActionsType[] }) => {
   const [departments, setDepartments] = useState<any>([]);
+  const [employee, setEmployee] = useState<any>([]);
   const [activeDepartment, setActiveDepartment] = useState<any>(null);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [isEditing, setIsEditing] = useState(false);
+
   const [disable, setDisable] = useState(false);
   const { singleProgram, programFromStatus } = useSelector(
     (state: RootState) => state.program
@@ -99,7 +99,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
 
   const fetchDepartments = async () => {
     try {
-      const response = await getAllDepartments();
+      const response = await getAllDepartments("");
       setDepartments(response?.data?.departments);
     } catch (error) {}
   };
@@ -117,10 +117,18 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
     setFieldValue("code", value);
   };
 
-  const receiveDepartment = (value: any) => {
+
+
+  const receiveDepartment = async (value: any) => {
     const filteredID = departments.find((item: any) => item?.name === value);
     setFieldValue("department_id", filteredID?.id);
     setActiveDepartment(filteredID?.name);
+    const response = await fetchEmployeeInDepartments(filteredID?.id)
+    const modifyArray = response?.data?.departments?.map((user: any) => ({
+      ...user,
+      name: `${user.firstname} ${user.lastname}`
+  }));
+    setEmployee(modifyArray)
   };
 
   const receiveFromDate = (value: any) => {
@@ -160,9 +168,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
       navigate("/program-head/draft");
     } catch (error) {}
   };
-  const handleClick = () => {
-    setIsEditing(true);
-  };
+
 
   const handleChangeEvent = (e: any) => {
     const newName = e.target.value;
@@ -170,7 +176,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
   };
 
   const handleBlur = () => {
-    setIsEditing(false);
+    // setIsEditing(false);
   };
 
   const handleStatausSubmit = async (action: any) => {
@@ -198,11 +204,11 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
       <Grid className="createProgramContent" item xs={12}>
         <Grid item xs={12}>
           <Stack className="createProgramContentHead">
-            {isEditing ? (
               <TextFields
                 disabled={disable}
                 autoFocus
                 type="text"
+                placeholder="Enter Program Name"
                 value={formik.values.name}
                 onChange={handleChangeEvent}
                 onBlur={handleBlur}
@@ -210,15 +216,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
                 error={errors.name ? true : false}
                 helperText={errors.name ? errors.name.toString() : ""}
               />
-            ) : (
-              <Typography
-                className="mainHeading"
-                variant="h5"
-                onClick={handleClick}
-              >
-                Enter Program Name
-              </Typography>
-            )}
+            
             <Stack direction={"row"} gap={"20px"}>
               {programFromStatus == Status.CREATED ? (
                 <>
@@ -341,6 +339,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
             handleSupplyExpenseReceived={receiveSupplyExpense}
             handleSalaryExpenseReceived={receiveSalaryExpense}
             formik={formik}
+            employee={employee}
           />
         </Grid>
       </Grid>

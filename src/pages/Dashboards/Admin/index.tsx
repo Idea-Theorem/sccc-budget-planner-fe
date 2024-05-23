@@ -8,6 +8,7 @@ import React, { useEffect } from "react";
 import { getDepartment, getPrograms } from "../../../services/adminServices";
 import { useAuth } from "../../../contexts/AuthContext";
 import moment from "moment";
+import { addRandomColor } from "../../../utils";
 const StyledBox = styled(Box)(() => ({
   "& .dashboardCards": {
     display: "flex",
@@ -18,7 +19,7 @@ const StyledBox = styled(Box)(() => ({
 const AdminScreen = () => {
   const array = [{ text: "Export" }, { text: "Reset" }];
   const [programs, setPrograms] = React.useState<any>({});
-  const [department, setDepartment] = React.useState<any>({});
+  const [department, setDepartment] = React.useState<any>([]);
   const { user } = useAuth();
 
   useEffect(() => {
@@ -36,16 +37,21 @@ const AdminScreen = () => {
   const fetchDepartment = async () => {
     try {
       const response = await getDepartment();
-      setDepartment(response?.data);
+      const coloredArray = addRandomColor(response?.data?.departments)
+      setDepartment(coloredArray);
     } catch (error) {}
   };
+
+
+;
+  
   return (
     <StyledBox className="appContainer">
       <MainHeaderComponent
-        array={array}
+        array={array} 
         title="Dashboard"
         btnTitle="Actions"
-        subTitle={user.firstname + " " + user.lastname}
+        subTitle={"Welcome" + " " + user?.firstname + " " + user?.lastname}
         date={moment().format("dddd D, MMM ")}
         subHeader={true}
         action={true}
@@ -72,7 +78,7 @@ const AdminScreen = () => {
           done={department.approvedCount}
         />
       </Box>
-      <AdminDepartmentProgress />
+      <AdminDepartmentProgress department={department} from="admin"/>
       <CollapsibleTable />
     </StyledBox>
   );

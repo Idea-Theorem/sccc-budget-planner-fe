@@ -1,12 +1,15 @@
 import { styled } from "@mui/material/styles";
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
-import InputSearch from "../../../../components/Input";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { Button, Stack } from "@mui/material";
-import { deleteCenter } from "../../../../services/centersServices";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import AddIcon from "@mui/icons-material/Add";
+import Buttons from "../../../components/Button";
+import { deleteRole, getAllRole } from "../../../services/roleServices";
+import RoleModal from "../../../models/RoleModal";
+import moment from "moment";
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
@@ -116,8 +119,6 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
   }
 }));
 
-
-
 // const rows = [
 //   {
 //     id: 1,
@@ -132,31 +133,62 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
 //     lYearBudget: "02-Mar-2024",
 //   },
 // ];
-interface HRTableProps {
-  onCommunityEdit?: any;
-  row?: any
-  refresh?: any
-  onChange?: any
-}
-const CommunityTableComponent: React.FC<HRTableProps> = ({onCommunityEdit, row, refresh, onChange}) => { 
+const HRRole = () => { 
 const [loading, setLoading] = useState<boolean>(false)
+const [singleCenter, setSingleCenter] = useState<any>(null);
+const [center, setCenter] = useState<any>([]);
+const [isCommunityOpen, setCommunityModal] = useState(false);
+const [centerHeading, setCenterHeading] = useState<string>("");
 console.log(loading)
+
+const fetchCenters = async () => {
+  try {
+    const response = await getAllRole();
+    setCenter(response?.data.role);
+
+  } catch (error) {}
+};
+
+useEffect(()=> {
+  fetchCenters();
+},[])
+
+const handleCloseCommunityModal = () => {
+  fetchCenters();
+  setCommunityModal(false);
+};
+
+const onCommunityEdit = (data: any) => {
+  setSingleCenter(data.row);
+  setCommunityModal(true);
+  setCenterHeading("Edit role");
+};
 
   const handleDelete = async (data: any) => {
     try {
       setLoading(true)
-      await deleteCenter(data?.id)
+      await deleteRole(data?.id)
+      fetchCenters()
       setLoading(false)
-      refresh()
     } catch (error) {
       setLoading(false)
 
     }
   }
+
+
+  const handleClick = () => {
+   
+      setCommunityModal(true);
+      setCenterHeading("Add New Role");
+    
+  }
+
+
   const columns: GridColDef[] = [
     {
       field: "name",
-      headerName: "Center Name",
+      headerName: "Role",
       sortable: false,
       editable: false,
       flex: 1,
@@ -206,24 +238,48 @@ console.log(loading)
   return (
     <>
       <StyledBox className="mainTableBlock">
-        <InputSearch placeholder="Search..." 
-          onChange={onChange}
+        {/* <InputSearch placeholder="Search..." /> */}
+        <StyledBox className="Upper_Header_Holder">
+          <h3>Role</h3>
+          <Buttons
+            variant="contained"
+            color="primary"
+            size="medium"
+            btntext="Add New Role"
+            startIcon={<AddIcon />}
+            onClick={handleClick}
+          />
+        </StyledBox> 
+        {center.length == 0 ? "" :
+         <StyleDataGrid
+        //  rows={center.length == 0 ? [] : center}
+         rows={center.length === 0 ? [] : center.map((row: any) => ({
+          ...row,
+          created_at: moment(row.created_at).format('D-MMMM-YYYY')
+        }))}
         
-        /> 
-        <StyleDataGrid
-          rows={row}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 5 },
-            },
-          }}
-          pageSizeOptions={[5, 10, 15]}
-          disableRowSelectionOnClick
-          slots={{ toolbar: GridToolbar }}
-        />
+         columns={columns}
+         initialState={{
+           pagination: {
+             paginationModel: { page: 0, pageSize: 5 },
+           },
+         }}
+         pageSizeOptions={[5, 10, 15]}
+         disableRowSelectionOnClick
+         slots={{ toolbar: GridToolbar }}
+       />
+        }
+       
       </StyledBox>
+      <RoleModal
+        open={isCommunityOpen}
+        handleClose={handleCloseCommunityModal}
+        heading={centerHeading}
+        subheading="Role Information"
+        singleCenter={singleCenter}
+        setSingleCenter={setSingleCenter}
+      />
     </>
   );
 };
-export default CommunityTableComponent;
+export default HRRole;

@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import ProgramTable from "../ProgramTable";
+import TabsNewHire from "../NewHire";
 
 interface TabsProgramPanelProps {
   children?: React.ReactNode;
@@ -44,6 +45,7 @@ const TabsProgram = ({
   handleSalaryExpenseReceived,
   formik,
   disabled,
+  employee
 }: any) => {
   const [value, setValue] = React.useState(0);
 
@@ -91,12 +93,17 @@ const TabsProgram = ({
         />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        <ProgramTable
+        {
+          true ? 
+          <TabsNewHire employee={employee}/>
+          :   <ProgramTable
           disabled={disabled}
           handleSalaryExpenseReceived={handleSalaryExpenseReceived}
           title="salary-expense"
           formik={formik}
         />
+        }
+     
       </CustomTabPanel>
     </Box>
   );
@@ -121,7 +128,7 @@ const TabsAreas = styled(Box)(({ theme }) => ({
     },
   },
   ".MuiInputBase-input": {
-    marginRight: "-100px",
+    textAlign: "right",
   },
   ".MuiTableCell-head": {
     padding: "0 15px !important",
@@ -134,6 +141,7 @@ export default function TabsProgramArea({
   handleSalaryExpenseReceived,
   formik,
   disabled,
+  employee
 }: any) {
   return (
     <TabsAreas>
@@ -143,6 +151,7 @@ export default function TabsProgramArea({
         handleSupplyExpenseReceived={handleSupplyExpenseReceived}
         handleSalaryExpenseReceived={handleSalaryExpenseReceived}
         formik={formik}
+        employee={employee}
       />
     </TabsAreas>
   );

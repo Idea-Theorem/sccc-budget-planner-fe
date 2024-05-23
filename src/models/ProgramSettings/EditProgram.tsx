@@ -3,11 +3,13 @@ import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
 import TextFields from "../../components/Input/textfield";
-import { Save, Clear} from "@mui/icons-material"; 
+import { Clear, Save} from "@mui/icons-material"; 
 import Grid from "@mui/material/Grid"; 
 import BasicDatePicker from "../../components/DatePicker";
 import { Button } from "@mui/material";
 import Modal from '@mui/material/Modal';
+import SelectDepartments from "../../components/SelectDepartment";
+import ProgramDatePicker from "../../components/ProgramDatePicker";
 
 
 const EmployeeInfoArea = styled(Box)(({ theme }) => ({
@@ -61,13 +63,31 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
 interface IHrAddEmployee {
   handleClose?: any;
   open?: any 
+  formik?: any 
+  departmentList?: any
+  selectedRow?: any
 }
 
 const EditProgramModal: React.FC<IHrAddEmployee> = ({
   handleClose,
-  open
+  open, 
+  formik,
+  departmentList,
+  selectedRow
 }) => {
+ const receivedate = (value: any) => {
+  formik.setFieldValue("from_date", value)
+ }
+
+ const receiveToDate = (value: any) => {
+  formik.setFieldValue("to_date", value)
+ }
+
  
+
+ const handleDepartmentChange = (value: any) => {
+   formik.setFieldValue("department_id", value)
+ }
   return (
 <Modal
   open={open}
@@ -82,19 +102,25 @@ const EditProgramModal: React.FC<IHrAddEmployee> = ({
       <Box>
         <Grid container spacing={4}>
           <Grid item xs={6}>
-            <TextFields variant="standard" label="Program Name" />
+            <TextFields variant="standard" label="Program Name" name="name" onChange={formik?.handleChange} value={formik?.values?.name}/>
           </Grid>
           <Grid item xs={6}>
-            <TextFields variant="standard" label="Program Code" />
+            <TextFields variant="standard" label="Program Code" name="code" value={formik?.values?.code}/>
           </Grid>
           <Grid item xs={6}> 
-            <BasicDatePicker />
+            <ProgramDatePicker singleEmployeeData={selectedRow.from_date} receiveDate={receivedate}/>
           </Grid>
           <Grid item xs={6}>
-            <BasicDatePicker />
+            <ProgramDatePicker singleEmployeeData={selectedRow.to_date} receiveDate={receiveToDate}/> 
           </Grid>
           <Grid item xs={6}>
-            <TextFields variant="standard" label="Department" />
+            {/* <TextFields variant="standard" label="Department" name="department" onChange={formik?.handleChange} value={formik?.values?.department_id}/> */}
+            <SelectDepartments
+                    title="Department"
+                    value={formik?.values?.department_id}
+                    list={departmentList}
+                    receiveValue={handleDepartmentChange}
+                  />
           </Grid>
         </Grid>
       </Box>
@@ -118,7 +144,8 @@ const EditProgramModal: React.FC<IHrAddEmployee> = ({
         variant="outlined" 
         color="primary" 
         size="medium" 
-        startIcon={<Save />}>
+        startIcon={<Save />}
+        onClick={()=> formik?.handleSubmit()}>
           Save
         </Button>
       </Stack>

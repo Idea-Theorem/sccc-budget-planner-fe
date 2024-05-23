@@ -3,10 +3,11 @@ import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
 import TextFields from "../../components/Input/textfield";
-import { Save, Clear} from "@mui/icons-material"; 
+import { Clear} from "@mui/icons-material"; 
 import Grid from "@mui/material/Grid"; 
 import { Button } from "@mui/material";
 import Modal from '@mui/material/Modal';
+import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 
 
 const EmployeeInfoArea = styled(Box)(({ theme }) => ({
@@ -59,15 +60,16 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
 
 interface IHrAddEmployee {
   handleClose?: any;
-  open?: any 
+  open?: any
+  formik?: any 
 }
 
 const EditProgramCodesModal: React.FC<IHrAddEmployee> = ({
   handleClose,
-  open
+  open,
+  formik
 }) => {
- 
-  return (
+return (
 <Modal
   open={open}
   onClose={handleClose}
@@ -81,15 +83,15 @@ const EditProgramCodesModal: React.FC<IHrAddEmployee> = ({
       <Box>
         <Grid container spacing={4}>
           <Grid item xs={6}>
-            <TextFields variant="standard" label="Program Name" /> 
+            <TextFields variant="standard" label="Program Name"  value={formik?.values?.name} name="name"/> 
           </Grid>
           <Grid item xs={6}>
-            <TextFields variant="standard" label="Program Code" />
+            <TextFields variant="standard" label="Program Code" value={formik?.values?.code} name="code" onChange={formik?.handleChange}/>
           </Grid>
         </Grid>
       </Box>
       <Stack
-        className="formButtons"
+        className="formButtons" 
         direction="row"
         justifyContent="flex-end"
         alignItems="center"
@@ -105,10 +107,11 @@ const EditProgramCodesModal: React.FC<IHrAddEmployee> = ({
           Cancel
         </Button>
         <Button 
+        onClick={()=> formik?.handleSubmit()}
         variant="outlined" 
         color="primary" 
         size="medium" 
-        startIcon={<Save />}>
+        startIcon={<SaveOutlinedIcon />}>
           Save
         </Button>
       </Stack>

@@ -34,10 +34,11 @@ const StyledStack = styled(Stack)(() => ({
 interface Props {
   text?: string;
   color?: any
+  handleBtnClick?: any
 }
-const DepartmentButton: React.FC<Props> = ({text, color}) => {
+const DepartmentButton: React.FC<Props> = ({text, color, handleBtnClick}) => {
   return (
-    <StyledStack className="statsTag">
+    <StyledStack className="statsTag" onClick={handleBtnClick}>
       <Box bgcolor={color}/> 
       <Typography>{text}</Typography>
     </StyledStack>

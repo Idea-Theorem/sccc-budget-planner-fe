@@ -1,4 +1,3 @@
-import { Box } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -7,8 +6,7 @@ import { styled } from "@mui/material/styles";
 
 const StyledFormControl = styled(FormControl)({
   width: "100%",
-  margin: "0",
-  padding: "0",
+  margin: "50px 0",
   borderBottom: "1px solid #0000006B",
 });
 
@@ -36,7 +34,7 @@ const ErrorMessage = styled("div")(({ theme }) => ({
   marginTop: "8px",
 }));
 
-export default function SelectDemo({
+export default function SelectDepartments({
   title,
   list,
   receiveValue,
@@ -45,10 +43,7 @@ export default function SelectDemo({
   disabled,
   placeholder,
   errorMessage,
-  className="",
-  parentClass="",
 }: any) {
-
   const handleChange = (event: any) => {
     receiveValue(event.target.value);
   };
@@ -66,32 +61,31 @@ export default function SelectDemo({
     }
   }
 
+
   return (
-    <StyledFormControl size="medium" variant="standard" error={error} className={`full-width ${parentClass}`}>
-        <StyledInputLabel>{title}</StyledInputLabel>
-        <Box className={`input-wrap ${className}`}>
-          <StyledSelect
-            placeholder={placeholder}
-            disabled={disabled}
-            value={value}
-            labelId="select-label"
-            id="select-demo"
-            label="Label"
-            onChange={handleChange}
-            className="select-list"
+    <StyledFormControl size="medium" variant="standard" error={error}>
+      <StyledInputLabel>{title}</StyledInputLabel>
+      <StyledSelect
+        placeholder={placeholder}
+        disabled={disabled}
+        value={value}
+        labelId="select-label"
+        id="select-demo"
+        label="Label"
+        onChange={handleChange}
+        className="select-list"
+      >
+        {list?.map((item: any) => (
+          <MenuItem
+            value={item.id}
+            className="list"
+            style={{ textTransform: "capitalize" }}
           >
-            {list?.map((item: any) => (
-              <MenuItem
-                value={item.name}
-                className="list"
-                style={{ textTransform: "capitalize" }}
-              >
-                {convertToLowerAndRemoveUnderscore(item.name)}
-              </MenuItem>
-            ))}
-          </StyledSelect>
-          {error && errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
-        </Box>
+            {convertToLowerAndRemoveUnderscore(item.name)}
+          </MenuItem>
+        ))}
+      </StyledSelect>
+      {error && errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
     </StyledFormControl>
   );
 }

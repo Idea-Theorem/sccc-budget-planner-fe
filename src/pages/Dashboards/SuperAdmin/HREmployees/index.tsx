@@ -42,7 +42,8 @@ const StyledBox = styled(Box)(() => ({
 
   "& .MuiToolbar-gutters": {
     padding: "0",
-    marginTop: "-6px",
+    marginTop: "0",
+    minHeight: "inherit",
 
     "& .MuiTypography-h6": {
       fontSize: "20px",
@@ -68,9 +69,9 @@ const HREmployeees: React.FC<SuperAdminProps> = () => {
     if (currentRole == "HR") {
       return ["Employees"];
     } else if (currentRole == "Admin") {
-      return ["Employees", "Departments"];
+      return ["Departments"];
     } else if (currentRole == "Super_Admin") {
-      return ["Employees", "Departments", "Community Centres"];
+      return ["Community Centres"];
     } else {
       return [];
     }

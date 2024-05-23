@@ -13,7 +13,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import LogoImg from "../../assets/logo.png";
 // import { SidebarAction } from "../../types/common";
 import { useAuth } from "../../contexts/AuthContext";
-import { Collapse, Grid } from "@mui/material";
+import { Button, Collapse, Grid } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import SelectDemo from "../Select";
 // import SelectDemo from "../Select";
@@ -98,7 +98,7 @@ const SideArea = styled(Box)(({ theme }) => ({
   },
 
   ".MuiCollapse-root": {
-    background: "#fff",
+    background: "#fafafa",
 
     "& .MuiListItem-root": {
       textAlign: "center",
@@ -173,13 +173,22 @@ export default function ResponsiveDrawer(props: Props) {
         navigate("/hr/employees");
     }
   }, [currentRole]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("currentRole");
+    localStorage.clear()
+    setCurrentRole("");
+    navigate("/");
+  }
+
   const drawer = (
     <Box>
       <Box className="siteLogo">
         <img src={LogoImg} alt="Description image" />
       </Box>
-      <Grid className="selectGrid" item xs={6}>
-        <SelectDemo
+      <Grid className="selectGrid sidebar_select" item xs={6}>
+        <SelectDemo className="sidebar_select_input"
           title="Department"
           value={currentRole}
           list={user?.roles}
@@ -230,7 +239,11 @@ export default function ResponsiveDrawer(props: Props) {
             )}
           </React.Fragment>
         ))}
+    
       </List>
+      <Button className="btnLogout" variant="outlined" color="error" onClick={handleLogout}>
+  Logout
+</Button>
     </Box>
   );
 

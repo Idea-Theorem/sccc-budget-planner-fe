@@ -1,0 +1,159 @@
+.sidebar_select_input > div {
+    width: 100%;
+}
+
+.sidebar_select_input > div::before {
+    display: none;
+}
+
+.sidebar_select_input .MuiSelect-select {
+    text-transform: uppercase;
+}
+
+.sidebar_select .full-width {
+    padding: 8px 19px;
+}
+
+.MuiMenu-list li{
+    text-transform: uppercase !important;
+}
+
+.btnLogout {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    position: absolute;
+    padding: 20px 20px 12px !important;
+    border-color: #676779 !important;
+    background: #676779;
+    color: #fff !important;
+    border-radius: 0 !important;
+}
+
+.btnLogout:hover {
+    background: #414158 !important;
+    border-color: #414158 !important;
+}
+
+.customSelect {
+    position: relative;
+    text-transform: uppercase;
+}
+
+.customSelect .departmentSelect {
+    top: 0;
+    right: 0;
+    position: absolute;
+    border: none;
+    width: auto;
+    z-index: 5;
+    padding: 3px 0 0;
+}
+
+.customSelect .departmentSelect .input-wrap div:first-child {
+    text-transform: uppercase;
+}
+
+.createProgramContentHead input {
+    color: rgba(0, 0, 0, 0.87);
+    font-family: Work Sans;
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: 0.25px;
+}
+
+.createProgramContentHead input::placeholder {
+    opacity: 1;
+}
+
+/*.table_custom_style {
+    height: calc(100vh - 165px);
+    position: relative;
+}*/
+
+.amount_field {
+    width: 90px;
+}
+
+.Upper_Header_Holder {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.mainTableBlock.approveActiveTab {
+    margin-top: 70px;
+}
+
+.loading_Ico {
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+}
+
+.table_text_header {
+    display: flex;
+}
+
+.table_text_header h4 {
+    font-size: 20px;
+    padding-right: 9px;
+    padding-left: 3px;
+    padding-bottom: 5px;
+    min-height: 50px;
+}
+
+.dropdown_Select div {
+    margin: 0;
+    border: 1px solid #f00;
+    border-radius: 5px;
+}
+.dropdown_Select div label {
+    display: none !important;
+}
+.dropdown_Select div:first-child div {
+    margin: 0 !important;
+    border: none !important;
+}
+.dropdown_Select div:first-child div::before {
+    display: none !important;
+}
+.dropdown_Select div:first-child {
+    border: 1px solid rgba(0, 0, 0, 0.23);
+}
+.dropdown_Select div:first-child input{
+    border: none !important;
+}
+.tableInfoArea {
+    position: relative;
+    padding-right: 40px;
+}
+
+.tableInfoArea .btnPlus {
+    top: 0;
+    right: 0;
+    position: absolute;
+}
+
+.btnMinus {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #000;
+    border-radius: 100%;
+    background: #fff;
+}
+
+.inputsRow {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.inputsRow .btnMinus {
+    top: 50%;
+    right: -40px;
+    margin: 7px 0 0;
+    position: absolute;
+    transform: translateY(-50%);
+}

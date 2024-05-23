@@ -4,18 +4,22 @@ export type tokenState = {
   incomeList: any[];
   supplyList: any[];
   salaryList: any[];
+  singleDepart: any[];
   programList: any[];
 
   singleProgram: any; 
+  singleDepartName: any; 
   programFromStatus: any; 
 };
 
 const initialState: tokenState = {
   incomeList: [],
   supplyList: [],
+  singleDepart: [],
   salaryList: [],
   programList: [],
   singleProgram: null,
+  singleDepartName: null,
   programFromStatus: null,
 };
 
@@ -41,11 +45,17 @@ export const programSlice = createSlice({
     storeProgramList: (state, action) => {
       state.programList = action.payload;
     },
+    storeSingleDepart: (state, action) => {
+      state.singleDepart = action.payload;
+    },
+    storeSingleDepartName: (state, action) => {
+      state.singleDepartName = action.payload;
+    },
   },
 });
 
 export const {
-  storeIncomeList,storeSupplyList,storeSalaryList, storeProgramList,storeSingleProgram, storeProgramFromStatus
+  storeIncomeList,storeSupplyList,storeSalaryList, storeProgramList,storeSingleProgram, storeProgramFromStatus, storeSingleDepart, storeSingleDepartName
 } = programSlice.actions;
 
 export default programSlice.reducer;

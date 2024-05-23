@@ -22,6 +22,10 @@ const StyledBox = styled(Box)(({ theme }) => ({
       },
     },
   },
+  ".MuiDataGrid-virtualScroller": {
+    overflowY: "auto",
+    overflowX: "hidden",
+  }
 }));
 const StyleDataGrid = styled(DataGrid)(() => ({
   width: "100%",
@@ -129,6 +133,9 @@ interface ColumnnsProps {
   handleActionReieve?: any;
   loading: boolean;
   currentTab?: any;
+  checkout?: boolean | any
+  handleProgramSearch?: any
+  approveTabAcriveClass?: boolean | any;
 }
 const TableComponent = (props: ColumnnsProps) => {
   const handleSelectionChange = (selection: any) => {
@@ -209,12 +216,15 @@ const TableComponent = (props: ColumnnsProps) => {
       </StyledGridOverlay>
     );
   }
-  console.log("status:::::::", props.currentTab);
   return (
     <>
-      <StyledBox className="mainTableBlock">
-        <InputSearch placeholder="Search..." />
-        <Box style={{ height: 500, width: "100%" }}>
+      <StyledBox className={`mainTableBlock ${props.currentTab == "APPROVED" && props?.approveTabAcriveClass ? "approveActiveTab" : "" }`}>
+        <InputSearch placeholder="Search..." onChange={(e: any) => props?.handleProgramSearch(e?.target?.value)} />
+        {/* {props.loading && 
+        
+        <LinearProgress color="success" />
+        } */}
+        <Box style={{ height: props.loading ? 300 : "", minHeight: 300  }}>
           <StyleDataGrid
             rows={props.loading ? [] : props.row}
             columns={props?.columns}
@@ -224,7 +234,7 @@ const TableComponent = (props: ColumnnsProps) => {
               },
             }}
             pageSizeOptions={[5, 10, 15]}
-            checkboxSelection
+            checkboxSelection={props.checkout}
             disableRowSelectionOnClick
             slots={{
               toolbar: GridToolbar,
