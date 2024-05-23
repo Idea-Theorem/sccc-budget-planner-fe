@@ -135,8 +135,11 @@ interface ColumnnsProps {
   currentTab?: any;
   checkout?: boolean | any
   handleProgramSearch?: any
+  approveTabAcriveClass?: boolean | any;
 }
 const TableComponent = (props: ColumnnsProps) => {
+  console.log("props::::::::::::",props.currentTab)
+  console.log("approveTabAcriveClass::::::::::::",props?.approveTabAcriveClass)
   const handleSelectionChange = (selection: any) => {
     const selectedRowIds = selection.flat();
     props?.handleActionReieve(selectedRowIds);
@@ -217,7 +220,7 @@ const TableComponent = (props: ColumnnsProps) => {
   }
   return (
     <>
-      <StyledBox className="mainTableBlock">
+      <StyledBox className={`mainTableBlock ${props.currentTab == "APPROVED" && props?.approveTabAcriveClass ? "approveActiveTab" : "" }`}>
         <InputSearch placeholder="Search..." onChange={(e: any) => props?.handleProgramSearch(e?.target?.value)} />
         {/* {props.loading && 
         

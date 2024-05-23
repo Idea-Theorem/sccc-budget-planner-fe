@@ -368,6 +368,7 @@ await fetchProgram(value)
           handleActionReieve={handleActionReieve}
           checkout={true} 
           receiveProgramSearch={receiveProgramSearch}
+          approveTabAcriveClass = {true}
         />
       </Box>
       </Box>
