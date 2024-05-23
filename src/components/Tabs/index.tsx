@@ -35,6 +35,7 @@ interface BasicTabsProps {
   setTabstatus?: any;
   checkout?: boolean;
   receiveProgramSearch?: any
+  approveTabAcriveClass?: boolean
 }
 
 const CustomTabPanel = (props: TabPanelProps) => {
@@ -178,6 +179,7 @@ const BasicTabs = (props: BasicTabsProps) => {
             currentTab={status}
             checkout={props?.checkout}
             handleProgramSearch={handleProgramSearch}
+            approveTabAcriveClass={props?.approveTabAcriveClass}
           />
         </CustomTabPanel>
       ))}
@@ -237,6 +239,7 @@ export default function TabsArea(props: BasicTabsProps) {
         onRowClick={props?.onRowClick}
         checkout={props?.checkout}
         receiveProgramSearch={props?.receiveProgramSearch}
+        approveTabAcriveClass={props?.approveTabAcriveClass}
       />
     </TabsAreas>
   );
