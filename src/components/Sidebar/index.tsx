@@ -187,7 +187,7 @@ export default function ResponsiveDrawer(props: Props) {
       <Box className="siteLogo">
         <img src={LogoImg} alt="Description image" />
       </Box>
-      <Grid className="selectGrid" item xs={6}>
+      <Grid className="selectGrid sidebar_select" item xs={6}>
         <SelectDemo className="sidebar_select_input"
           title="Department"
           value={currentRole}

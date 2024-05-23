@@ -10,7 +10,7 @@ import moment from 'moment';
 import Status from "../../../utils/dumpData";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteIcon from "@mui/icons-material/EditNote";
-import { deleteProgram, getAllProgramsViaStatus, programUpdate } from "../../../services/programServices";
+import { deleteProgram, getAllProgramsViaStatus, getDepartments, programUpdate } from "../../../services/programServices";
 import { useFormik } from "formik";
 import DeleteModal from "../../../models/DeleteModal";
 
@@ -187,8 +187,8 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
       editable: false,
       flex: 1, 
       valueGetter: (params) => {
-        const toDate = moment(params.value).format("D-MMM-YYYY").toLowerCase(); // Format to_date
-        const updatedAt = moment(params.row.updated_at).format("D-MMM-YYYY").toLowerCase(); // Format updated_at
+        const toDate = moment(params.row?.from_date).format("D-MMM-YYYY").toLowerCase(); // Format to_date
+        const updatedAt = moment(params.row.to_date).format("D-MMM-YYYY").toLowerCase(); // Format updated_at
         return `${toDate} - ${updatedAt}`; // Concatenate
       }
     },
@@ -241,11 +241,11 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
     },
   ];
   const [settingData, setSettingData] = React.useState([])
+  const [departmentList, setDepartmentList] = React.useState([])
   const [selectedRow, setSelectedRow] = useState<any>(null);
   const [selectedRowdelete, setSelectedDelete] = useState<any>(null);
   const [deleteModalOpen, setDeleteModal] = useState<any>(false);
   const [editModalOpen, setEditModal] = useState(false);
-
 
   const formik = useFormik<any>({
     validateOnBlur: false,
@@ -270,11 +270,21 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
   });
   React.useEffect(() => { 
     fetchProgramList(Status.DRAFTED);
+    fetchDepartmentList()
   }, []);
   const fetchProgramList = async (status: string) => {
     try {
       const response = await getAllProgramsViaStatus(status, "");
       setSettingData(response?.data?.programs)
+    } catch (error) {
+      console.log(error)
+    }
+  };
+
+  const fetchDepartmentList = async () => {
+    try {
+      const response = await getDepartments();
+      setDepartmentList(response?.data?.departments)
     } catch (error) {
       console.log(error)
     }
@@ -318,7 +328,7 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
         />
       </StyledBox>
       <DeleteModal heading="Are you sure you want to delete?" open={deleteModalOpen} handleClose={()=>setDeleteModal(false)} handleOK={()=> handleDeleteConfirmation()}/>
-      <EditProgramModal open={editModalOpen} handleClose={()=> setEditModal(false)} formik={formik}/>
+      <EditProgramModal selectedRow={selectedRow} departmentList={departmentList} open={editModalOpen} handleClose={()=> setEditModal(false)} formik={formik}/>
     </StyledBox>
   );
 };

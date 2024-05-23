@@ -30,7 +30,7 @@ const StyledBox = styled(Box)(() => ({
     position: "relative",
 
     "& .MuiTabs-root": {
-      marginBottom: "66px",
+      marginBottom: "16px",
     },
   },
 
@@ -368,6 +368,7 @@ await fetchProgram(value)
           handleActionReieve={handleActionReieve}
           checkout={true} 
           receiveProgramSearch={receiveProgramSearch}
+          approveTabAcriveClass = {true}
         />
       </Box>
       </Box>

@@ -26,6 +26,10 @@ const departmentCount = async (id: string) => {
   return await HTTP_CLIENT.get(`department/program-count/${id}`);
 };
 
+const fetchEmployeeInDepartments = async (id: string) => {
+  return await HTTP_CLIENT.get(`department/employees/${id}`);
+};
+
 
 
 export {
@@ -34,5 +38,6 @@ export {
   getAllDepartments,
   createDepartment,
   updateDepartment,
-  deleteDepartment
+  deleteDepartment,
+  fetchEmployeeInDepartments
 };

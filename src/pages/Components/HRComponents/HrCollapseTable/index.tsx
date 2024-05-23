@@ -32,7 +32,7 @@ const HrCollapseableTable = styled(Box)(({ theme }) => ({
   },
 
   "&.dashboardTable": {
-    padding: "30px",
+    padding: "0",
 
     "& .MuiPaper-rounded": {
       borderRadius: "0",

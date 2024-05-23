@@ -239,14 +239,17 @@ const onCommunityEdit = (data: any) => {
     <>
       <StyledBox className="mainTableBlock">
         {/* <InputSearch placeholder="Search..." /> */}
-        <Buttons
-          variant="contained"
-          color="primary"
-          size="medium"
-          btntext="Add New Role"
-          startIcon={<AddIcon />}
-          onClick={handleClick}
-        /> 
+        <StyledBox className="Upper_Header_Holder">
+          <h3>Role</h3>
+          <Buttons
+            variant="contained"
+            color="primary"
+            size="medium"
+            btntext="Add New Role"
+            startIcon={<AddIcon />}
+            onClick={handleClick}
+          />
+        </StyledBox> 
         {center.length == 0 ? "" :
          <StyleDataGrid
         //  rows={center.length == 0 ? [] : center}

@@ -1,9 +1,12 @@
 import { salaryRates } from "../../utils/dumpData";
 import { styled } from "@mui/material/styles";
 import SelectDemo from "../Select";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import TextFields from "../Input/textfield";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import SelectDepartments from "../SelectDepartment";
+import { Try } from "@mui/icons-material";
+import { getAllBenefit } from "../../services/benefitServices";
 
 const EmployeeInfoArea = styled(Box)(({ theme }) => ({
  
@@ -195,7 +198,9 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
 }));
 
 
-export default function TabsNewHire() {
+export default function TabsNewHire({employee}: any) {
+
+  const [benefit, setBenefit] = useState([])
   const [formData, setFormData] = useState([
     {
       employee: "",
@@ -206,6 +211,7 @@ export default function TabsNewHire() {
       amount: "",
     },
   ]);
+
   const handleAddRecord = () => {
     setFormData([
       ...formData,
@@ -231,15 +237,48 @@ export default function TabsNewHire() {
     newFormData[index][name] = value;
     setFormData(newFormData);
   };
+
+  useEffect(() => {
+    fetchAllBenefit()
+  }, [])
+
+  const fetchAllBenefit = async () =>  {
+try {
+  const response = await getAllBenefit()
+  setBenefit(response?.data?.centers)
+} catch (error) {
+  
+}
+  }
   return (
-    <EmployeeInfoArea>
+    <EmployeeInfoArea className="tableInfoArea">
+      <Box className="table_text_header">
+        <Grid item xs={3} className="item-role-area">
+          <Typography variant="h4">Employee</Typography>
+        </Grid>
+        <Grid item xs={1.8} className="item-role-area">
+          <Typography variant="h4">Hourly Rate</Typography>
+        </Grid>
+        <Grid item xs={1.8} className="item-role-area">
+          <Typography variant="h4">Hour Per Week</Typography>
+        </Grid>
+        <Grid item xs={1.8} className="item-role-area">
+          <Typography variant="h4">Working Weeks</Typography>
+        </Grid>
+        <Grid item xs={1.8} className="item-role-area">
+          <Typography variant="h4">Benefit %</Typography>
+        </Grid> 
+        <Grid item xs={1.8} className="item-role-area">
+          <Typography variant="h4">Amount</Typography>
+        </Grid> 
+      </Box>
       {formData.map((record, index) => (
-        <Grid key={index} container spacing={2}>
-          <Grid item xs={3} className="item-role-area">
-            <SelectDemo
-              title="Benefit Percentage"
+        <Grid className="inputsRow" key={index} container spacing={2}>
+          <Grid item xs={3} className="item-role-area dropdown_Select">
+            <SelectDepartments
+              title=""
               value={record.employee}
-              list={salaryRates}
+              list={employee}
               receiveValue={(value: any) =>
                 handleInputChange(index, "employee", value)
               }
@@ -248,7 +287,7 @@ export default function TabsNewHire() {
           <Grid item xs={1.8} className="item-role-area">
             <TextFields
               variant="outlined"
-              label="Hourly Rate"
+              label=""
               name="hourlyRate"
               value={record.hourlyRate}
               onChange={(e: any) =>
@@ -259,7 +298,7 @@ export default function TabsNewHire() {
           <Grid item xs={1.8} className="item-role-area">
             <TextFields
               variant="outlined"
-              label="Hours per week"
+              label=""
               name="hoursPerWeek"
               value={record.hoursPerWeek}
               onChange={(e: any) =>
@@ -270,7 +309,7 @@ export default function TabsNewHire() {
           <Grid item xs={1.8} className="item-role-area">
             <TextFields
               variant="outlined"
-              label="Working weeks"
+              label=""
               name="workingWeeks"
               value={record.workingWeeks}
               onChange={(e: any) =>
@@ -278,32 +317,33 @@ export default function TabsNewHire() {
               }
             />
           </Grid>
-          <Grid item xs={1.8} className="item-role-area">
-            <TextFields
-              variant="outlined"
-              label="Benefit"
-              name="benefit"
+          <Grid item xs={1.8} className="item-role-area dropdown_Select">
+          <SelectDemo
+              title=""
               value={record.benefit}
-              onChange={(e: any) =>
-                handleInputChange(index, "benefit", e.target.value)
+              list={benefit}
+              receiveValue={(value: any) =>
+                handleInputChange(index, "benefit", value)
               }
             />
           </Grid>
           <Grid item xs={1.8} className="item-role-area">
             <TextFields
               variant="outlined"
-              label="Amount"
+              label=""
               name="amount"
               value={record.amount}
               onChange={(e: any) =>
                 handleInputChange(index, "amount", e.target.value)
               }
             />
-            <button onClick={() => handleDeleteRecord(index)}>Delete</button>
+            <button className="btnMinus" onClick={() => handleDeleteRecord(index)}>
+              -
+            </button>
           </Grid>
         </Grid>
       ))}
-      <button onClick={handleAddRecord}>+</button>
+      <button className="btnPlus" onClick={handleAddRecord}>+</button>
     </EmployeeInfoArea>
   );
 }

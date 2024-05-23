@@ -7,7 +7,7 @@ import Status from "../../../utils/dumpData";
 import React, { useEffect } from "react";
 import { getPrograms } from "../../../services/adminServices";
 import { getProgram } from "../../../services/programServices";
-import { AddIcCallOutlined } from "@mui/icons-material";
+import { UploadFileOutlined } from "@mui/icons-material";
 
 const StyledBox = styled(Box)(({ theme }) => ({
   ".MuiTypography-root": {
@@ -19,6 +19,10 @@ const StyledBox = styled(Box)(({ theme }) => ({
   },
   ".MuiButtonBase-root": {
     textTransform: "capitalize",
+  },
+  ".Mui-disabled": {
+    background: "#e0e0e0 !important",
+    color: "#8b8b8b !important",
   },
 }));
 
@@ -59,11 +63,11 @@ const ApprovedProgram = ({ tabstatus, count, totalCount, handleClick }: any) => 
           <Stack>
            
             <Button
-            disabled={count !== totalCount ? true : false}
+              disabled={count !== totalCount ? true : false}
               variant="contained"
               color="primary"
               size="medium"
-              startIcon={<AddIcCallOutlined />}
+              startIcon={<UploadFileOutlined />}
               onClick={handleClick}
             >
               Submit

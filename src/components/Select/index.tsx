@@ -8,7 +8,7 @@ import { styled } from "@mui/material/styles";
 const StyledFormControl = styled(FormControl)({
   width: "100%",
   margin: "0",
-  padding: "8px 19px",
+  padding: "0",
   borderBottom: "1px solid #0000006B",
 });
 
