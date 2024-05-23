@@ -3,7 +3,10 @@ import { styled } from "@mui/material/styles";
 import SelectDemo from "../Select";
 import { Box, Grid, Typography } from "@mui/material";
 import TextFields from "../Input/textfield";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import SelectDepartments from "../SelectDepartment";
+import { Try } from "@mui/icons-material";
+import { getAllBenefit } from "../../services/benefitServices";
 
 const EmployeeInfoArea = styled(Box)(({ theme }) => ({
  
@@ -195,7 +198,9 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
 }));
 
 
-export default function TabsNewHire() {
+export default function TabsNewHire({employee}: any) {
+
+  const [benefit, setBenefit] = useState([])
   const [formData, setFormData] = useState([
     {
       employee: "",
@@ -206,6 +211,7 @@ export default function TabsNewHire() {
       amount: "",
     },
   ]);
+
   const handleAddRecord = () => {
     setFormData([
       ...formData,
@@ -231,6 +237,19 @@ export default function TabsNewHire() {
     newFormData[index][name] = value;
     setFormData(newFormData);
   };
+
+  useEffect(() => {
+    fetchAllBenefit()
+  }, [])
+
+  const fetchAllBenefit = async () =>  {
+try {
+  const response = await getAllBenefit()
+  setBenefit(response?.data?.centers)
+} catch (error) {
+  
+}
+  }
   return (
     <EmployeeInfoArea>
       <Box>
@@ -244,10 +263,10 @@ export default function TabsNewHire() {
       {formData.map((record, index) => (
         <Grid key={index} container spacing={2}>
           <Grid item xs={3} className="item-role-area">
-            <SelectDemo
+            <SelectDepartments
               title=""
               value={record.employee}
-              list={salaryRates}
+              list={employee}
               receiveValue={(value: any) =>
                 handleInputChange(index, "employee", value)
               }
@@ -289,8 +308,8 @@ export default function TabsNewHire() {
           <Grid item xs={1.8} className="item-role-area">
           <SelectDemo
               title=""
-              value={record.employee}
-              list={salaryRates}
+              value={record.benefit}
+              list={benefit}
               receiveValue={(value: any) =>
                 handleInputChange(index, "benefit", value)
               }
