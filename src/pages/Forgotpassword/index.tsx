@@ -1,7 +1,6 @@
 import { TextField } from "@mui/material";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
-import Link from "@mui/material/Link";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import LogoImg from "../../assets/logo.png";
@@ -119,22 +118,20 @@ const validationSchema = yup.object().shape({
     .string()
     .email("enter a valid email")
     .required("Email is required!"),
-  password: yup.string().required("Password is required!"),
 });
 
-const Input = () => {
-  const { login, loginLoading } = useAuth();
+const ForgotPasswordScreen = () => {
+  const { handleForgotPassword, resetLoading} = useAuth();
 
-  const formik: FormikProps<LoginState> = useFormik<LoginState>({
+  const formik: any = useFormik<any>({
     validateOnBlur: false,
     validateOnChange: false,
     validationSchema,
     initialValues: {
       email: "",
-      password: "",
     },
     onSubmit: async (values) => {
-      login(values);
+      handleForgotPassword(values);
     },
   });
 
@@ -146,7 +143,7 @@ const Input = () => {
         <Box className="siteLogo">
           <img src={LogoImg} alt="Description image" />
         </Box>
-        <Typography variant="h5">Log In</Typography>
+        <Typography variant="h5">Please Enter Email To Reset Password</Typography>
         <form noValidate autoComplete="off" onSubmit={handleSubmit}>
           <FormControl className="loginFormItem">
             <TextField
@@ -160,21 +157,8 @@ const Input = () => {
               helperText={errors.email ? errors.email : touched.email}
             />
           </FormControl>
-          <FormControl className="loginFormItem">
-            <TextField
-              error={errors.password ? true : false}
-              value={values.password}
-              label="Password"
-              variant="outlined"
-              size="medium"
-              name="password"
-              type="password"
-              onChange={handleChange}
-              helperText={errors.password ? errors.password : touched.password}
-            />
-          </FormControl>
           <Buttons
-            loading={loginLoading}
+            loading={resetLoading}
             btntext="Action"
             variant="contained"
             size="large"
@@ -184,13 +168,11 @@ const Input = () => {
           />
         </form>
         <Box>
-          <Link className="textLink" href="/forgot-password" variant="subtitle2">
-            Forgot password?
-          </Link>
+        
         </Box>
       </Box>
     </LoginArea>
   );
 };
 
-export default Input;
+export default ForgotPasswordScreen;

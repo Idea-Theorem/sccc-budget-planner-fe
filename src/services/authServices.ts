@@ -5,6 +5,14 @@ const loggedIn = async (params: LoginState) => {
   return await HTTP_CLIENT.post("user/login", params);
 };
 
+const forgotPassword = async (params: LoginState) => {
+  return await HTTP_CLIENT.post("user/forgot-password", params);
+};
+
+const resetPassword = async (params: LoginState) => {
+  return await HTTP_CLIENT.post("user/reset-password", params);
+};
+
 const getUserRole = async () => {
   return await HTTP_CLIENT.get("/role");
 };
@@ -14,4 +22,6 @@ const getUserRole = async () => {
 export {
   loggedIn,
   getUserRole,
+  forgotPassword,
+  resetPassword
 };

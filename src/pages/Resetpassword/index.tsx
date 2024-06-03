@@ -1,15 +1,14 @@
 import { TextField } from "@mui/material";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
-import Link from "@mui/material/Link";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import LogoImg from "../../assets/logo.png";
 import Buttons from "../../components/Button";
 import { useAuth } from "../../contexts/AuthContext";
-import { FormikProps, useFormik } from "formik";
+import {  useFormik } from "formik";
 import * as yup from "yup";
-import LoginState from "../../interfaces/ITheme.interface";
+import { useLocation } from "react-router-dom";
 
 const LoginArea = styled(Box)(({ theme }) => ({
   "&.loginBlock": {
@@ -115,26 +114,30 @@ const LoginArea = styled(Box)(({ theme }) => ({
 }));
 
 const validationSchema = yup.object().shape({
-  email: yup
-    .string()
-    .email("enter a valid email")
-    .required("Email is required!"),
-  password: yup.string().required("Password is required!"),
+    newPassword: yup.string()
+    .required('New Password is required'),
+  confirmPassword: yup.string()
+    .oneOf([yup.ref('newPassword'), undefined], 'Passwords must match')
+    .required('Confirm Password is required'),
 });
 
-const Input = () => {
-  const { login, loginLoading } = useAuth();
+const ResetPasswordScreen = () => {
+  const { handleResetPassword, resetLoading} = useAuth();
+  const location = useLocation();
 
-  const formik: FormikProps<LoginState> = useFormik<LoginState>({
+  // Extract the token from the URL
+  const queryParams = new URLSearchParams(location.search);
+  const token = queryParams.get('token');
+  const formik: any = useFormik<any>({
     validateOnBlur: false,
     validateOnChange: false,
     validationSchema,
     initialValues: {
-      email: "",
-      password: "",
+      newPassword: "",
     },
     onSubmit: async (values) => {
-      login(values);
+      const data = {...values,resetToken:token}
+      handleResetPassword(data);
     },
   });
 
@@ -146,35 +149,35 @@ const Input = () => {
         <Box className="siteLogo">
           <img src={LogoImg} alt="Description image" />
         </Box>
-        <Typography variant="h5">Log In</Typography>
+        <Typography variant="h5">Please Enter Email To Reset Password</Typography>
         <form noValidate autoComplete="off" onSubmit={handleSubmit}>
           <FormControl className="loginFormItem">
             <TextField
-              error={errors.email ? true : false}
-              label="Email"
+              error={errors.newPassword ? true : false}
+              label="New Password"
               variant="outlined"
               size="medium"
-              value={values.email}
-              name="email"
+              value={values.newPassword}
+              name="newPassword"
               onChange={handleChange}
-              helperText={errors.email ? errors.email : touched.email}
+              helperText={errors.newPassword ? errors.newPassword : touched.newPassword}
             />
+           
           </FormControl>
           <FormControl className="loginFormItem">
-            <TextField
-              error={errors.password ? true : false}
-              value={values.password}
-              label="Password"
+          <TextField
+              error={errors.confirmPassword ? true : false}
+              label="Confirm Password"
               variant="outlined"
               size="medium"
-              name="password"
-              type="password"
+              value={values.confirmPassword}
+              name="confirmPassword"
               onChange={handleChange}
-              helperText={errors.password ? errors.password : touched.password}
+              helperText={errors.confirmPassword ? errors.confirmPassword : touched.confirmPassword}
             />
-          </FormControl>
+            </FormControl>
           <Buttons
-            loading={loginLoading}
+            loading={resetLoading}
             btntext="Action"
             variant="contained"
             size="large"
@@ -184,13 +187,15 @@ const Input = () => {
           />
         </form>
         <Box>
-          <Link className="textLink" href="/forgot-password" variant="subtitle2">
-            Forgot password?
-          </Link>
+        
         </Box>
       </Box>
     </LoginArea>
   );
 };
 
-export default Input;
+export default ResetPasswordScreen;
+
+
+
+
