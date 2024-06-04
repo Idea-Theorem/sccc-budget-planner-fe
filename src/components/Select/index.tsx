@@ -9,7 +9,22 @@ const StyledFormControl = styled(FormControl)({
   width: "100%",
   margin: "0",
   padding: "8px 19px",
-  borderBottom: "1px solid #0000006B",
+  borderBottom: "1px solid #fff",
+
+  ".input-wrap": {
+    position: "relative",
+  },
+
+  // ".MuiSelect-select": {
+  //   color: "#fff",
+  //   fontWeight: 600,
+  //   textTransform: "capitalize",
+  // },
+
+  // ".MuiSvgIcon-root": {
+  //   color: "#fff",
+  //   top: "calc(50% - 14px)",
+  // },
 });
 
 const StyledInputLabel = styled(InputLabel)(({ theme }) => ({

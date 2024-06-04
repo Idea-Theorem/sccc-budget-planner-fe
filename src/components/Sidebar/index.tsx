@@ -21,6 +21,19 @@ import SelectDemo from "../Select";
 const SideArea = styled(Box)(({ theme }) => ({
   background: theme.palette.primary.main,
 
+  ".full-width": {
+      ".MuiSelect-select": {
+        color: "#fff",
+        fontWeight: 600,
+        textTransform: "capitalize",
+      },
+
+    ".MuiSvgIcon-root": {
+      color: "#fff",
+      top: "calc(50% - 14px)",
+    },
+  },
+
   "& .MuiPaper-root": {
     background: `${theme.palette.primary.main} !important`,
     width: "208px",
@@ -83,7 +96,8 @@ const SideArea = styled(Box)(({ theme }) => ({
   },
 
   ".MuiButtonBase-root": {
-    color: "#303030",
+    // color: "#303030",
+    color: "#fff",
     padding: "8px 19px",
 
     "&:hover": {
@@ -123,7 +137,6 @@ const SideArea = styled(Box)(({ theme }) => ({
       fontWeight: "400",
       fontFamily: "Roboto, sans-serif",
       textAlign: "center",
-      
     },
   },
 }));
