@@ -12,6 +12,7 @@ interface AdminDataCardProps {
   total?: string;
   done?: string;
   showProgress?: boolean;
+  handleAddclick?: any
   color?: LinearProgressProps["color"]; // Ensure the color prop matches the type defined in LinearProgressProps
 }
 const StyledBox = styled(Box)(({ theme }) => ({
@@ -132,7 +133,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
 const AdminDataCard = (props: AdminDataCardProps) => {
   return (
     <StyledBox className="dashboardStatsCard">
-      <Box className="dashboardStatsCardHead">
+      <Box className="dashboardStatsCardHead" onClick={() => props?.handleAddclick()}>
         <Typography variant="h3">{props?.title}</Typography>
         {props?.edit && <Typography className="linkEdit">Edit</Typography>}
       </Box>

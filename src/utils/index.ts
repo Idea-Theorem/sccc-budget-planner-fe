@@ -34,3 +34,53 @@ export const addRandomColor = (data: any) => {
     return { ...item, color: getRandomColor() };
   });
 }
+
+export const attachCommentsToProgram = (program: any, comments: any) => {
+  const updatedProgram = JSON.parse(JSON.stringify(program));
+
+  comments.forEach((item: any) => {
+    if (item?.comment?.program_id === updatedProgram.id) {
+      updatedProgram.income = updatedProgram.income.map((incomeItem: any) => {
+        if (incomeItem.id === item?.comment?.field_id) {
+          if (!incomeItem.comments) {
+            incomeItem.comments = [];
+          }
+          incomeItem.comments.push(item);
+          return incomeItem;
+        }
+        return incomeItem;
+      });
+
+      updatedProgram.supply_expense = updatedProgram.supply_expense.map((expenseItem: any) => {
+        if (expenseItem.id === item?.comment?.field_id) {
+          if (!expenseItem.comments) {
+            expenseItem.comments = [];
+          }
+          expenseItem.comments.push(item);
+          return expenseItem;
+        }
+        return expenseItem;
+      });
+
+      updatedProgram.salary_expense = updatedProgram.salary_expense.map((salaryItem: any) => {
+        if (salaryItem.id === item?.comment?.field_id) {
+          if (!salaryItem.comments) {
+            salaryItem.comments = [];
+          }
+          salaryItem.comments.push(item);
+          return salaryItem;
+        }
+        return salaryItem;
+      });
+    }
+  });
+
+  return updatedProgram;
+}
+
+export const getCapitalizedFirstLetters = (str1: any, str2: any) => {
+  const firstLetter1 = str1.charAt(0).toUpperCase();
+  const firstLetter2 = str2.charAt(0).toUpperCase();
+
+  return firstLetter1 + firstLetter2;
+}

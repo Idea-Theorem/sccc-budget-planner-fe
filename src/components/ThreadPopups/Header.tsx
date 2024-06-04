@@ -41,10 +41,24 @@ interface Props {
   subtitle?: string;
   dropdown?: boolean;
   date?: string;
-  setDropdown?: () => void;
+  setDropdown?: any
   name?: string;
+  handleDelete?: any
+  commentEdit?: any
+  setcurrentComment?: any
+  item?: any
+  setcommentText?: any
 }
-const ThreadHeader = ({ title, subtitle, date, setDropdown, name, dropdown }: Props) => {
+const ThreadHeader = ({setcommentText,item,setcurrentComment,title, subtitle, date, setDropdown, name, dropdown,handleDelete }: Props) => {
+  const handleDropdown = () => {
+    setDropdown()
+    setcurrentComment(item)
+  };
+
+  const handleEditcomment = () => {
+    setcommentText()
+    setDropdown()
+  }
   return (
     <CommentModalArea>
       <Stack
@@ -62,14 +76,14 @@ const ThreadHeader = ({ title, subtitle, date, setDropdown, name, dropdown }: Pr
           <Typography className="name">{name}</Typography>
           <Typography className="title">{title}</Typography>
         </Stack>
-        <Box onClick={setDropdown}>
+        <Box onClick={handleDropdown}>
           <MoreVertIcon />
         </Box>
         {dropdown && (
           <Stack className="comment-box">
-            <Typography>Edit Comment</Typography>
-            <Typography>Resolve Thread</Typography>
-            <Typography>Delete Thread</Typography>
+            <Typography onClick={handleEditcomment} >Edit Comment</Typography>
+            <Typography >Resolve Thread</Typography>
+            <Typography onClick={() =>{ handleDelete(); setDropdown(false)}}>Delete Thread</Typography>
           </Stack>
         )}
       </Stack>

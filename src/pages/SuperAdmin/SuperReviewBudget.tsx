@@ -20,7 +20,6 @@ const SuperReviewBudget = () => {
   const [center, setCenters] = useState([])
   const [currenttitle, setCurrentTitle] = useState("")
   const [tabstatus, setTabstatus] = React.useState(Status.PENDING);
-  console.log(tabstatus)
 
   const [step, setStep] = useState(0)
   const tableColumnsTitleArray = [

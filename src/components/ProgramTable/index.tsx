@@ -19,6 +19,9 @@ import {
 } from "../../store/reducers/programSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import { addComments, deleteComment, updatecomment } from "../../services/programServices";
+import { attachCommentsToProgram } from "../../utils";
+import CommentIcon from '@mui/icons-material/Comment';
 
 const TabsProgramAreas = styled(Box)(({ theme }) => ({
   ".input-border": {
@@ -129,6 +132,9 @@ interface Props {
   handleSalaryExpenseReceived?: any;
   formik?: any;
   disabled?: any;
+  singleProgram?: any
+  allComments?: any
+  fetchComments?: any
 }
 export default function TabsProgramArea({
   handleReceived,
@@ -136,13 +142,19 @@ export default function TabsProgramArea({
   handleSalaryExpenseReceived,
   handleSupplyExpenseReceived,
   disabled,
+  // singleProgram,
+  allComments,
+  fetchComments
 }: Props) {
   const [isOpen, setIsOpen] = useState(false);
-
+  const [commentLoading, setCommentLoading] = useState(false);
+  const [deleteLoading, setdeleteLoading] = useState(false);
   const [entities, setEntities] = useState<any>([]);
-
+  const [commenttext, setcommentText] = useState<any>("");
+  const [currentExpense, setcurrentExpense] = useState<any>("");
+  const [currentComment, setcurrentComment] = useState<any>("");
   const dispatch = useAppDispatch();
-  const { incomeList, supplyList, salaryList } = useSelector(
+  const { incomeList, supplyList, salaryList , singleProgram} = useSelector(
     (state: RootState) => state.program
   );
 
@@ -161,6 +173,15 @@ export default function TabsProgramArea({
       dispatch(storeSalaryList(newSalaryArray));
     }
   };
+
+  useEffect(() => {
+    if(allComments?.length > 0 && singleProgram?.id) {
+      const res = attachCommentsToProgram(singleProgram, allComments)
+      dispatch(storeIncomeList(res?.income));
+      dispatch(storeSupplyList(res?.supply_expense));
+      dispatch(storeSalaryList(res?.salary_expense));
+    }
+  }, [allComments])
   useEffect(() => {
     if (title == "income") {
       handleReceived(incomeList);
@@ -209,6 +230,54 @@ export default function TabsProgramArea({
 
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
+
+  const handleAddcomment = async () => {
+const obj = {
+  program_id: singleProgram?.id,
+  field_id: currentExpense?.id,
+  text:commenttext
+}
+try {
+  setCommentLoading(true)
+  if(currentComment?.comment?.text){
+    await updatecomment(currentComment.comment_id, obj)
+  }else {
+    await addComments(obj)
+  }
+   await fetchComments()
+   setCommentLoading(false)
+   setcommentText("")
+   setcurrentComment("")
+  setIsOpen(false)
+} catch (error) {
+  setCommentLoading(false)
+}
+  }
+
+
+  const handleDelete = async (data: any) => {
+    try {
+      setdeleteLoading(true)
+      await deleteComment(data?.comment_id)
+      removeCommentById(data?.comment_id)
+      await fetchComments()
+      setcurrentComment("")
+      setdeleteLoading(false)
+    } catch (error) {
+      setdeleteLoading(false)
+      
+    }
+  
+  }
+ 
+  function removeCommentById(commentId: any) {
+    setcurrentExpense((prevArray: any) => {
+      const updatedComments = prevArray.comments.filter((comment: any) => comment.comment_id !== commentId);
+      return { ...prevArray, comments: updatedComments };
+    });
+  }
+
+
   return (
     <>
       <TabsProgramAreas>
@@ -225,10 +294,10 @@ export default function TabsProgramArea({
                 <TableRow
                   key={row.item}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  onClick={() => setIsOpen(false)}
                 >
-                  <TableCell component="th" scope="row">
-                    {row.name}
+                
+                  <TableCell component="th" scope="row" onClick={() => {setIsOpen(true);setcurrentExpense(row)}}>
+                    {row?.comments?.length > 0 ? <CommentIcon /> : ""}{ row.name}
                   </TableCell>
                   <TableCell align="right" className="input-border">
                     <TextFields className="amount_field"
@@ -265,7 +334,7 @@ export default function TabsProgramArea({
           </Table>
         </TableContainer>
       </TabsProgramAreas>
-      <DepartmentHeadModal open={isOpen} handleClose={closeModal} />
+      <DepartmentHeadModal currentComment={currentComment} setcurrentComment={setcurrentComment} deleteLoading={deleteLoading} handleDelete={handleDelete} commentLoading={commentLoading} currentExpense={currentExpense} handleAddcomment={handleAddcomment} commenttext={commenttext} setcommentText={setcommentText} open={isOpen} handleClose={closeModal} />
     </>
   );
 }

@@ -195,7 +195,6 @@ const RecreationAndCultureScreen = ({}: any) => {
   const { singleDepart } = useSelector((state: RootState) => state.program);
   const { singleDepartName } = useSelector((state: RootState) => state.program);
   const [tabstatus, setTabstatus] = React.useState(Status.PENDING); 
-  console.log(tabstatus)
   const [status, setStatus] = React.useState<string>("");
   const navigate = useNavigate();
   const goBack = () => {

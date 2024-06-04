@@ -13,6 +13,8 @@ import Status, { ProgramCode } from "../../utils/dumpData";
 import { useFormik } from "formik";
 import {
   createProgram,
+  fetchAllcomments,
+  getSingleProgramById,
   programUpdate,
   updateProgram,
 } from "../../services/programServices";
@@ -35,6 +37,7 @@ import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 const MainSection = ({ actions }: { actions: ActionsType[] }) => {
   const [departments, setDepartments] = useState<any>([]);
   const [employee, setEmployee] = useState<any>([]);
+  const [allComments, setAllComments] = useState<any>([]);
   const [activeDepartment, setActiveDepartment] = useState<any>(null);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -75,6 +78,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
       } catch (error) {}
     },
   });
+
   useEffect(() => {
     return () => {
       dispatch(storeIncomeList([]));
@@ -85,7 +89,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
   }, []);
 
   useEffect(() => {
-    if (singleProgram) {
+    if (singleProgram?.id) {
       dispatch(storeIncomeList(singleProgram?.income));
       dispatch(storeSupplyList(singleProgram?.salary_expense));
       dispatch(storeSalaryList(singleProgram?.supply_expense));
@@ -93,7 +97,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
       setActiveDepartment(singleProgram?.department?.name);
       setFieldValue("code", singleProgram?.code);
     }
-  }, []);
+  }, [singleProgram]);
 
   const { values, handleSubmit, setFieldValue, errors } = formik;
 
@@ -169,6 +173,33 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
     } catch (error) {}
   };
 
+  useEffect(() => {
+    if(singleProgram?.id){
+      fetchComments()
+      fetchProgrambyId(singleProgram?.id)
+    }
+  }, [singleProgram?.id])
+
+  const fetchComments = async () => {
+try {
+  const response = await fetchAllcomments()
+  setAllComments(response?.data?.comments)
+} catch (error) {
+  
+}
+  }
+  const fetchProgrambyId = async (id: any) => {
+try {
+  const response  = await getSingleProgramById(id)
+  dispatch(storeIncomeList(response?.data?.program?.income));
+  dispatch(storeSupplyList(response?.data?.program?.supply_expense));
+  dispatch(storeSalaryList(response?.data?.program?.salary_expense));
+} catch (error) {
+  
+}
+  }
+
+
 
   const handleChangeEvent = (e: any) => {
     const newName = e.target.value;
@@ -197,6 +228,8 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
       navigate("/department-head/review-budgets");
     }
   };
+
+ 
 
   const Save = async () => {};
   return (
@@ -334,12 +367,15 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
         </Grid>
         <Grid className="createFormTable" item xs={12}>
           <TabsProgramArea
+          singleProgram={singleProgram}
             disabled={disable}
             handleReceived={receiveIncome}
             handleSupplyExpenseReceived={receiveSupplyExpense}
             handleSalaryExpenseReceived={receiveSalaryExpense}
             formik={formik}
             employee={employee}
+            allComments={allComments}
+            fetchComments={fetchComments}
           />
         </Grid>
       </Grid>

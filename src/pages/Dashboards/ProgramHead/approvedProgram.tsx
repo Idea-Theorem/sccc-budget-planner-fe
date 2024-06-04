@@ -24,7 +24,6 @@ const StyledBox = styled(Box)(({ theme }) => ({
 
 const ApprovedProgram = ({ tabstatus, count, totalCount, handleClick }: any) => {
   const [programs, setPrograms] = React.useState<any>({});
-  console.log(programs)
   useEffect(() => {
     fetchProgram();
   }, []);

@@ -264,7 +264,6 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
         fetchProgramList(Status.DRAFTED)
         setEditModal(false)
       } catch (error) {
-        console.log(error)
       }
     },
   });
@@ -277,7 +276,6 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
       const response = await getAllProgramsViaStatus(status, "");
       setSettingData(response?.data?.programs)
     } catch (error) {
-      console.log(error)
     }
   };
 
@@ -286,7 +284,6 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
       const response = await getDepartments();
       setDepartmentList(response?.data?.departments)
     } catch (error) {
-      console.log(error)
     }
   };
   const handleDelete = (rowData: any)=>{

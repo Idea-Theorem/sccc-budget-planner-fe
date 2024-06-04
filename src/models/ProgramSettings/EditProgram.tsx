@@ -108,10 +108,10 @@ const EditProgramModal: React.FC<IHrAddEmployee> = ({
             <TextFields variant="standard" label="Program Code" name="code" value={formik?.values?.code}/>
           </Grid>
           <Grid item xs={6}> 
-            <ProgramDatePicker singleEmployeeData={selectedRow.from_date} receiveDate={receivedate}/>
+            <ProgramDatePicker singleEmployeeData={selectedRow?.from_date} receiveDate={receivedate}/>
           </Grid>
           <Grid item xs={6}>
-            <ProgramDatePicker singleEmployeeData={selectedRow.to_date} receiveDate={receiveToDate}/> 
+            <ProgramDatePicker singleEmployeeData={selectedRow?.to_date} receiveDate={receiveToDate}/> 
           </Grid>
           <Grid item xs={6}>
             {/* <TextFields variant="standard" label="Department" name="department" onChange={formik?.handleChange} value={formik?.values?.department_id}/> */}

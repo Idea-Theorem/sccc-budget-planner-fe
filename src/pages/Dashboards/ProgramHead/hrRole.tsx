@@ -139,7 +139,6 @@ const [singleCenter, setSingleCenter] = useState<any>(null);
 const [center, setCenter] = useState<any>([]);
 const [isCommunityOpen, setCommunityModal] = useState(false);
 const [centerHeading, setCenterHeading] = useState<string>("");
-console.log(loading)
 
 const fetchCenters = async () => {
   try {
