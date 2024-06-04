@@ -31,6 +31,7 @@ import TextFields from "../../components/Input/textfield";
 import StatusModal from "../../components/StatusModal";
 import SelectDepartments from "../../components/SelectDepartment";
 import { getAllBenefit } from "../../services/benefitServices";
+import { getAllRole } from "../../services/roleServices";
 
 const EmployeeInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
@@ -255,6 +256,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
   const [role, setRole] = useState<any>([]);
   const [benefit, setBenefit] = useState<any>([]);
   const [departments, setDepartments] = useState<any>([]);
+  const [titles, setTitles] = useState<any>([]);
   const [activeDepartment, setActiveDepartment] = useState<any>(null);
   console.log(activeDepartment)
   const [statusData, setStatusData] = useState<any>(null);
@@ -267,7 +269,6 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
       salaryRate: "",
     },
   ]);
-
   const formik = useFormik<any>({
     validateOnBlur: true,
     validateOnChange: false,
@@ -285,18 +286,10 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
       password: "",
       hire_date: "",
       roles: [],
-      // department_id: "",
-      // employment_type: singleEmployeeData?.employment_type
-      //   ? singleEmployeeData?.employment_type
-      //   : "",
-      // compensation_type: singleEmployeeData?.compensation_type
-      //   ? singleEmployeeData?.compensation_type
-      //   : "",
-      // salary_rate: singleEmployeeData?.salary_rate
-      //   ? singleEmployeeData?.salary_rate
-      //   : "",
+    
     },
     onSubmit: async (values) => {
+      debugger
       try {
         if (heading == "Edit Employee") {
           delete values.password;
@@ -365,6 +358,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
     fetchUserRole();
     fetchDepartments();
     fetchBenefits()
+    fetchTitle()
   }, []);
   useEffect(() => {
     if (singleEmployeeData) {
@@ -447,6 +441,13 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
     } catch (error) {}
   };
 
+  const fetchTitle = async () => {
+    try {
+      const response = await getAllRole();
+      setTitles(response?.data?.role);
+    } catch (error) {}
+  };
+
   // const receiveDepartments = (name: string) => {
   //   const filteredID = departments.find((item: any) => item?.name === name);
   //   setFieldValue("department_id", filteredID?.id);
@@ -498,6 +499,13 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
     newData[index].department_id = value;
     setData(newData);
   };
+
+  const handleTitleChange = (index: any, value: any) => {
+    const newData = [...data];
+    newData[index].title = value;
+    setData(newData);
+  };
+
 
   const handleInputChange = (index: any, event: any) => {
     const { name, value } = event.target;
@@ -698,13 +706,21 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                   />
                 </Grid>
                 <Grid className="item-role-area" item xs={3}>
-                  <TextFields
+                <SelectDepartments
+                    title="Title"
+                    value={item.title}
+                    list={titles}
+                    receiveValue={(value: any) =>
+                      handleTitleChange(index, value)
+                    }
+                  />
+                  {/* <TextFields
                     variant="standard"
                     label="Title"
                     value={item.title}
                     name="title"
                     onChange={(e: any) => handleInputChange(index, e)}
-                  />
+                  /> */}
                 </Grid>
                 <Grid className="item-role-area" item xs={3}>
                   <TextFields

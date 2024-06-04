@@ -175,7 +175,7 @@ const RoleModal: React.FC<IDepartmentInfo> = ({
             <Grid item xs={12}>
               <TextField
                 variant="standard"
-                label="Role Name"
+                label="Title Name"
                 value={values.name}
                 name="name"
                 onChange={handleChange}

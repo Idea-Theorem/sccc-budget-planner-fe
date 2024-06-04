@@ -24,6 +24,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import StatusModal from "../../../../components/StatusModal";
 import DeleteModal from "../../../../models/DeleteModal";
+import { getAllRole } from "../../../../services/roleServices";
 
 const HrCollapseableTable = styled(Box)(({ theme }) => ({
   ".MuiTableCell-root": {
@@ -135,12 +136,30 @@ function Row(props: {
   const [isOpen, setIsOpen] = React.useState<any>(false);
   const [loading, setLoading] = React.useState<any>(false);
   const [currentRow, setCurrentRow] = React.useState<any>("");
+  const [titles, setTitles] = React.useState<any>([]);
+
 
 
   const closeModel = () => {
     setIsOpen(false);
     setLoading(false)
   };
+
+  React.useEffect(() => {
+    fetchTitle()
+  }, [])
+
+  const fetchTitle = async () => {
+    try {
+      const response = await getAllRole();
+      setTitles(response?.data?.role);
+    } catch (error) {}
+  };
+
+  const fetchTitleName = (id: any) => {
+    const findtitle = titles.find((item: any) => item.id === id);
+    return findtitle?.name
+  }
   return (
     <React.Fragment>
       <TableRow>
@@ -217,7 +236,7 @@ function Row(props: {
                       {element?.department?.name.toLowerCase()}
                       </TableCell>
                       <TableCell style={{ textTransform: "capitalize" }}>
-                        {element?.title.toLowerCase()}
+                        {fetchTitleName(element?.title)}
                       </TableCell>
                       <TableCell style={{ textTransform: "capitalize" }}>
                         {element?.hourlyRate?.toLowerCase()}

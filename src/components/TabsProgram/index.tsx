@@ -103,7 +103,7 @@ const TabsProgram = ({
       <CustomTabPanel value={value} index={2}>
         {
           true ? 
-          <TabsNewHire employee={employee}/>
+          <TabsNewHire employee={employee} formik={formik}/>
           :   <ProgramTable
           disabled={disabled}
           handleSalaryExpenseReceived={handleSalaryExpenseReceived}

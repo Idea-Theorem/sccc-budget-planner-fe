@@ -198,7 +198,7 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
 }));
 
 
-export default function TabsNewHire({employee}: any) {
+export default function TabsNewHire({employee, formik}: any) {
 
   const [benefit, setBenefit] = useState([])
   const [formData, setFormData] = useState([
@@ -211,7 +211,6 @@ export default function TabsNewHire({employee}: any) {
       amount: "",
     },
   ]);
-
   const handleAddRecord = () => {
     setFormData([
       ...formData,
@@ -250,6 +249,13 @@ try {
   
 }
   }
+
+  useEffect(()=>{
+    if(!formData?.[0].employee){
+      return
+    }
+    formik.setFieldValue("employee", formData)
+  },[formData])
   return (
     <EmployeeInfoArea>
       <Box>

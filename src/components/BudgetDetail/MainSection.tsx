@@ -131,7 +131,12 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
     const modifyArray = response?.data?.departments?.map((user: any) => ({
       ...user,
       name: `${user.firstname} ${user.lastname}`
+      
   }));
+   modifyArray.unshift({
+    id:"New Hire",
+    name:"New Hire"
+   })
     setEmployee(modifyArray)
   };
 
