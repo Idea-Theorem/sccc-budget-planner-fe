@@ -23,6 +23,7 @@ import {
   editEmployeeSchema,
 } from "../../utils/yupSchema";
 import {
+  DeleteNewhire,
   createEmployee,
   updateEmployee,
 } from "../../services/employeeServices";
@@ -245,7 +246,7 @@ interface IHrAddEmployee {
   setSingleEmployeeData?: any;
 }
 
-const HrAddEmployee: React.FC<IHrAddEmployee> = ({
+const HrAddNewHire: React.FC<IHrAddEmployee> = ({
   heading,
   handleClose,
   open,
@@ -260,7 +261,6 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
   const [activeDepartment, setActiveDepartment] = useState<any>(null);
   console.log(activeDepartment)
   const [statusData, setStatusData] = useState<any>(null);
-
   const [data, setData] = useState([
     {
       department_id: "",
@@ -273,16 +273,14 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
     validateOnBlur: true,
     validateOnChange: false,
     validationSchema:
-      heading == "Edit Employee" ? editEmployeeSchema : createEmployeeSchema,
+      heading == "Modify New hire" ? createEmployeeSchema : "",
     enableReinitialize: true,
     initialValues: {
-      firstname: singleEmployeeData?.firstname
-        ? singleEmployeeData?.firstname
+      firstname: singleEmployeeData?.employee
+        ? singleEmployeeData?.employee
         : "",
-      lastname: singleEmployeeData?.lastname
-        ? singleEmployeeData?.lastname
-        : "",
-      email: singleEmployeeData?.email ? singleEmployeeData?.email : "",
+      lastname: "",
+      email: "",
       password: "",
       hire_date: "",
       roles: [],
@@ -290,25 +288,27 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
     },
     onSubmit: async (values) => {
       try {
-        if (heading == "Edit Employee") {
-          delete values.password;
+        // if (heading == "Edit Employee") {
+        //   delete values.password;
 
-          await updateEmployee(values, singleEmployeeData?.id);
-          setStatusData({
-            type: "success",
-            message: "Employee Update Successfully",
-          });
-        } else {
+        //   await updateEmployee(values, singleEmployeeData?.id);
+        //   setStatusData({
+        //     type: "success",
+        //     message: "Employee Update Successfully",
+        //   });
+        // } else {
           let obj = {
             ...values,
             employeDepartments: data,
           };
           await createEmployee(obj);
-          setStatusData({
-            type: "success",
-            message: "Employee Added Successfully",
-          });
-        }
+         
+        // }
+        handleMovedNewhire()
+        setStatusData({
+          type: "success",
+          message: "Employee Added Successfully",
+        });
         handleClose();
         setPersonName([]);
         setDepartments([]);
@@ -340,6 +340,13 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
     isSubmitting,
   } = formik;
 
+const handleMovedNewhire = () => {
+  try {
+    const res = DeleteNewhire(singleEmployeeData?.otherinfo?.program_id, singleEmployeeData?.emp_id)
+  } catch (error) {
+    
+  }
+}
 
   const handleClear = () => {
     setData([
@@ -359,41 +366,20 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
     fetchBenefits()
     fetchTitle()
   }, []);
+
   useEffect(() => {
     if (singleEmployeeData) {
       let modifyArray: any = []
-      setActiveDepartment(singleEmployeeData?.department?.name);
-      setFieldValue("department_id", singleEmployeeData?.department?.id);
-      setFieldValue("hire_date", singleEmployeeData?.hire_date);
-      singleEmployeeData?.employeDepartments.forEach((item: any) => {
         let obj = {
-          hourlyRate:item.hourlyRate,
-          department_id:item.department?.id,
-          salaryRate:item.salaryRate,
-          title:item.title,
+          hourlyRate:"",
+          department_id:singleEmployeeData?.otherinfo?.department?.id,
+          salaryRate:"",
+          title:"",
         }
         modifyArray.push(obj)
-      })
       setData(modifyArray)
-      let array: any = [];
-      singleEmployeeData?.roles.map((item: any) => {
-        array.push(item.name);
-      });
       fetchDepartments();
-      setPersonName(array);
-    } else {
-      setPersonName([]);
-      setDepartments([]);
-      setActiveDepartment(null);
-      setSingleEmployeeData(null);
-      fetchUserRole();
-      setData([{
-        department_id: "",
-        title: "",
-        hourlyRate: "",
-        salaryRate: "",
-      },])
-    }
+    } 
   }, [singleEmployeeData]);
 
   // const ITEM_HEIGHT = 48;
@@ -447,11 +433,6 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
     } catch (error) {}
   };
 
-  // const receiveDepartments = (name: string) => {
-  //   const filteredID = departments.find((item: any) => item?.name === name);
-  //   setFieldValue("department_id", filteredID?.id);
-  //   setActiveDepartment(filteredID?.name);
-  // };
 
   useEffect(() => {
     let roleIds: any = [];
@@ -473,18 +454,6 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
   const receiveDate = (date: any) => {
     setFieldValue("hire_date", date);
   };
-
-  // const receiveCompensationType = (compensationType: string) => {
-  //   setFieldValue("compensation_type", compensationType);
-  // };
-
-  // const EmployeementType = (employementType: string) => {
-  //   setFieldValue("employment_type", employementType);
-  // };
-
-  // const salartRate = (salaryRate: any) => {
-  //   setFieldValue("salary_rate", salaryRate);
-  // };
 
   const handleAddObject = () => {
     setData([
@@ -583,7 +552,6 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                 <TextFields
                   variant="standard"
                   label="Password"
-                  disabled={heading == "Edit Employee" ? true : false}
                   value={values.password}
                   name="password"
                   onChange={handleChange}
@@ -780,4 +748,4 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
   );
 };
 
-export default HrAddEmployee;
+export default HrAddNewHire;

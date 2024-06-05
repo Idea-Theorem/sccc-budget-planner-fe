@@ -17,7 +17,9 @@ import CommunityModal from "../../../../models/CommunityModal";
 import Buttons from "../../../../components/Button";
 import { getAllDepartments } from "../../../../services/departmentServices";
 import { getAllCenters } from "../../../../services/centersServices";
-import { getEmployee } from "../../../../services/employeeServices";
+import { getEmployee, getNewhires } from "../../../../services/employeeServices";
+import NewHiresCollapsibleTable from "../NewHiresCollapseTable";
+import AddNewHire from "../../../Dashboards/SuperAdmin/AddNewHire";
 
 const AppHuman = styled(Box)(({ theme }) => ({
   ".MuiTabs-flexContainer": {
@@ -48,21 +50,30 @@ interface TabProps {
 const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
   const [value, setValue] = React.useState(0);
   const [isOpen, setIsopen] = useState(false);
+  const [isNewhireOpen, setIsNewhireopen] = useState(false);
   const [isDepartOpen, setIsDepartopen] = useState(false);
   const [isCommunityOpen, setCommunityModal] = useState(false);
   const [heading, setHeading] = useState<string>("");
+  const [newHireheading, setNewHireheading] = useState<string>("");
   const [departHeading, setDepartHeading] = useState<string>("");
   const [centerHeading, setCenterHeading] = useState<string>("");
   const [departments, setDepartments] = useState<any>(null);
   const [employee, setEmployee] = useState<any>([]);
+  const [newHires, setNewHires] = useState<any>([]);
   const [center, setCenter] = useState<any>(null);
   const [singleDepartments, setDingleDepartments] = useState<any>(null);
   const [singleCenter, setSingleCenter] = useState<any>(null);
   const [singleEmployeeData, setSingleEmployeeData] = useState<any>(null);
+  const [singleNewHireData, setSingleNewHireData] = useState<any>(null);
   const handleChange = (_: ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
-
+  const handleCloseNewHireModal = () => {
+    const filteredhire = newHires.filter((item:any) => item?.emp_id != singleNewHireData?.emp_id )
+    setNewHires(filteredhire)
+    setSingleNewHireData(null);
+    setIsNewhireopen(false);
+  };
   const handleCloseModal = () => {
     fetchEmployee("");
     setSingleEmployeeData(null);
@@ -92,6 +103,12 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
     setSingleEmployeeData(data);
     setIsopen(true);
     setHeading("Edit Employee");
+  };
+
+  const handleEditNewhireClick = (data: any) => {
+    setSingleNewHireData(data);
+    setIsNewhireopen(true);
+    setNewHireheading("Modify New hire");
   };
   const onEdit = (data: any) => {
     setDingleDepartments(data?.row);
@@ -124,6 +141,12 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
     } catch (error) {}
   };
 
+  const fetchNewHires = async () => {
+    try {
+      const response = await getNewhires();
+      setNewHires(response?.data)
+    } catch (error) {}
+  };
   const handleSearchCenters = async (e: any) => {
     const {value} = e.target
   await fetchCenters(value)
@@ -143,6 +166,7 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
     fetchDepartments("");
     fetchCenters("");
     fetchEmployee("");
+    fetchNewHires()
   }, []);
 
 
@@ -174,17 +198,19 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
                   ? "Departments"
                   : tabNames[value] === "Employees"
                   ? "Employees"
+                  : tabNames[value] === "New Hires"
+                  ? "New Hires"
                   : null}
               </Typography>
-
-              <Buttons
+                {tabNames[value] === "New Hires" ?"" : 
+                <Buttons
                 variant="contained"
                 color="primary"
                 size="medium"
                 startIcon={<AddIcon />}
                 onClick={() => handleClick(tabNames[value])}
                 btntext={`Add New ${
-                  typeof tabNames == "undefined"
+                  typeof tabNames == "undefined" 
                     ? ""
                     : tabNames[value] === "Community Centres"
                     ? "Centre"
@@ -192,9 +218,11 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
                     ? "Department"
                     : tabNames[value] === "Employees"
                     ? "Employee"
-                    : null
+                    :  null
                 }`}
               />
+}
+              
             </Toolbar>
           </AppBar>
         </Grid>
@@ -221,6 +249,13 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
                   handleClick={handleEditClick}
                   employeeData={employee}
                   refresh={fetchEmployee}
+                  onChange={handleEmployeeCenters}
+                />
+                  : tabNames[value] === "New Hires"
+                  ? <NewHiresCollapsibleTable
+                  handleClick={handleEditNewhireClick}
+                  employeeData={newHires}
+                  refresh={fetchNewHires}
                   onChange={handleEmployeeCenters}
                 />
                   : null}
@@ -254,6 +289,13 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
         heading={heading}
         singleEmployeeData={singleEmployeeData}
         setSingleEmployeeData={setSingleEmployeeData}
+      />
+       <AddNewHire
+        open={isNewhireOpen}
+        handleClose={handleCloseNewHireModal}
+        heading={newHireheading}
+        singleEmployeeData={singleNewHireData}
+        setSingleEmployeeData={setSingleNewHireData}
       />
       <DepartmentInfo
         open={isDepartOpen}

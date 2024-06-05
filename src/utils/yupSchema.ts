@@ -88,7 +88,7 @@ export const createDepartmentSchema = yup.object().shape({
 })
 
 export const createCentresSchema = yup.object().shape({
-  name: yup
+  value: yup
     .string()
-    .required("Name is required!"),
+    .required("Amount is required!"),
 })

@@ -79,8 +79,8 @@ export const attachCommentsToProgram = (program: any, comments: any) => {
 }
 
 export const getCapitalizedFirstLetters = (str1: any, str2: any) => {
-  const firstLetter1 = str1.charAt(0).toUpperCase();
-  const firstLetter2 = str2.charAt(0).toUpperCase();
+  const firstLetter1 = str1?.charAt(0).toUpperCase();
+  const firstLetter2 = str2?.charAt(0).toUpperCase();
 
   return firstLetter1 + firstLetter2;
 }

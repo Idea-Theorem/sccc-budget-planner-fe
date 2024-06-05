@@ -16,6 +16,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { Button, Collapse, Grid } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import SelectDemo from "../Select";
+import { getCapitalizedFirstLetters } from "../../utils";
 // import SelectDemo from "../Select";
 
 const SideArea = styled(Box)(({ theme }) => ({
@@ -153,6 +154,7 @@ export default function ResponsiveDrawer(props: Props) {
   const navigate = useNavigate();
   const location = useLocation();
 
+
   const handleToggleHR = (path: string) => {
     setOpenHR(!openHR);
     navigate(path);
@@ -200,6 +202,8 @@ export default function ResponsiveDrawer(props: Props) {
       <Box className="siteLogo">
         <img src={LogoImg} alt="Description image" />
       </Box>
+      <Box>{getCapitalizedFirstLetters(user?.firstname, user?.lastname)}</Box>
+
       <Grid className="selectGrid" item xs={6}>
         <SelectDemo className="sidebar_select_input"
           title="Department"

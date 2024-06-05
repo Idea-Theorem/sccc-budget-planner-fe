@@ -11,6 +11,7 @@ import { createCentresSchema } from "../../utils/yupSchema";
 import { TextField } from "@mui/material";
 import { createCenters, updateCenter } from "../../services/centersServices";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
+import { addTotalbudget, updateTotalbudget } from "../../services/adminServices";
 
 const DepartmentInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
@@ -124,7 +125,9 @@ interface IDepartmentInfo {
   open?: any;
   singleCenter?: any;
   setSingleCenter?: any;
-  placeholder?: any
+  placeholder?: any;
+  totalBudget?: any
+  fetchTotalbudget?: any
 }
 
 const BudgetModal: React.FC<IDepartmentInfo> = ({
@@ -132,18 +135,29 @@ const BudgetModal: React.FC<IDepartmentInfo> = ({
   subheading,
   handleClose,
   open,
-  singleCenter,
-  placeholder
+  totalBudget,
+  placeholder,
+  fetchTotalbudget
 }) => {
   const formik = useFormik<any>({
     validateOnBlur: false,
     validationSchema: createCentresSchema,
     enableReinitialize: true,
     initialValues: {
-      name: singleCenter?.name ? singleCenter?.name : "",
+      value: totalBudget?.total_value ? totalBudget?.total_value : "",
     },
-    onSubmit: async () => {
-  
+    onSubmit: async (values) => {
+      if(totalBudget?.total_value){
+        await updateTotalbudget(values)
+      }
+      await addTotalbudget(values)
+      fetchTotalbudget()
+      handleClose()
+  try {
+    
+  } catch (error) {
+    
+  }
     },
   });
 
@@ -167,10 +181,10 @@ const BudgetModal: React.FC<IDepartmentInfo> = ({
               <TextField
                 variant="standard"
                 label={placeholder}
-                value={values.name}
-                name="name"
+                value={values.value}
+                name="value"
                 onChange={handleChange}
-                helperText={errors.name ? errors.name.toString() : ""}
+                helperText={errors.value ? errors.value.toString() : ""}
               />
             </Grid>
           </Grid>

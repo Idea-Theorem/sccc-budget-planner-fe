@@ -1,16 +1,16 @@
-import { salaryRates } from "../../utils/dumpData";
 import { styled } from "@mui/material/styles";
 import SelectDemo from "../Select";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import TextFields from "../Input/textfield";
 import { useEffect, useState } from "react";
 import SelectDepartments from "../SelectDepartment";
-import { Try } from "@mui/icons-material";
 import { getAllBenefit } from "../../services/benefitServices";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import { v4 as uuidv4 } from "uuid";
 
-const EmployeeInfoArea = styled(Box)(({ theme }) => ({
+
+const EmployeeInfoArea = styled(Box)(({  }) => ({
  
 
   // "& .MuiTypography-h6": {
@@ -337,8 +337,9 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
 export default function TabsNewHire({employee, formik}: any) {
 
   const [benefit, setBenefit] = useState([])
-  const [formData, setFormData] = useState([
+  const [formData, setFormData] = useState([ 
     {
+      emp_id: uuidv4(),
       employee: "",
       hourlyRate: "",
       hoursPerWeek: "",
@@ -351,6 +352,7 @@ export default function TabsNewHire({employee, formik}: any) {
     setFormData([
       ...formData,
       {
+        emp_id: uuidv4(),
         employee: "",
         hourlyRate: "",
         hoursPerWeek: "",
@@ -476,12 +478,15 @@ try {
                       handleInputChange(index, "amount", e.target.value)
                     }
                   />
+                  {index === formData.length - 1 ? (
                   <span onClick={handleAddRecord} className="add-item">
                     <AddCircleOutlineIcon />
                   </span>
-                  {/* <span onClick={() => handleDeleteRecord(index)} className="remove-item">
+                ) : (
+                  <span onClick={() => handleDeleteRecord(index)} className="remove-item">
                     <RemoveCircleOutlineIcon />
-                  </span> */}
+                  </span>
+                )}
                 </td>
               </tr>
               // <Grid container spacing={2}>

@@ -5,7 +5,7 @@ import MainHeaderComponent from "../../../components/MainHeader";
 import AdminDepartmentProgress from "../../../components/AdminDepartentProgress";
 import CollapsibleTable from "../../../components/CollapseTable";
 import React, { useEffect } from "react";
-import { getDepartment, getPrograms } from "../../../services/adminServices";
+import { getDepartment, getPrograms, getTotalbudget } from "../../../services/adminServices";
 import { useAuth } from "../../../contexts/AuthContext";
 import moment from "moment";
 import { addRandomColor } from "../../../utils";
@@ -22,11 +22,13 @@ const AdminScreen = () => {
   const [programs, setPrograms] = React.useState<any>({});
   const [department, setDepartment] = React.useState<any>([]);
   const [isOpen, setIsOpen] = React.useState<any>(false)
+  const [totalBudget, setTotalBudget] = React.useState<any>("")
   const { user } = useAuth();
 
   useEffect(() => {
     fetchProgram();
     fetchDepartment();
+    fetchTotalbudget()
   }, []);
 
   const fetchProgram = async () => {
@@ -41,6 +43,13 @@ const AdminScreen = () => {
       const response = await getDepartment();
       const coloredArray = addRandomColor(response?.data?.departments)
       setDepartment(coloredArray);
+    } catch (error) {}
+  };
+
+  const fetchTotalbudget = async () => {
+    try {
+      const response = await getTotalbudget();
+      setTotalBudget(response?.data)
     } catch (error) {}
   };
 const handleModalClose = () => {
@@ -63,7 +72,7 @@ const handleModalClose = () => {
           detail="*The total is calculated based on approved programs"
           title="Budget-to-date"
           edit={true}
-          total="$1,000.000.00"
+          total={totalBudget?.total_value}
           done="$500,000.00"
           showProgress={true}
           color="info"
@@ -81,7 +90,7 @@ const handleModalClose = () => {
           done={department.approvedCount}
         />
       </Box>
-      <BudgetModal placeholder="$ Emter amount" open={isOpen} handleClose={handleModalClose} heading="Add Budget" subheading="budegt total"/>
+      <BudgetModal fetchTotalbudget={fetchTotalbudget} totalBudget={totalBudget} placeholder="$ Emter amount" open={isOpen} handleClose={handleModalClose} heading="Add Budget" subheading="budegt total"/>
       <AdminDepartmentProgress department={department} from="admin"/>
       <CollapsibleTable />
     </StyledBox>

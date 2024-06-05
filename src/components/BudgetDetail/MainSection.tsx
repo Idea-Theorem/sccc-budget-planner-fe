@@ -61,6 +61,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
       supply_expense: [],
       salary_expense: [],
       status: "PENDING",
+      employee:[]
     },
     onSubmit: async (values) => {
       try {
