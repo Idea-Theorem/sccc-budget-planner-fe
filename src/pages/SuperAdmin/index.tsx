@@ -69,14 +69,16 @@ const SuperAdminScreen = () => {
           showProgress={true}
           color="info"
           handleAddclick={() => setIsOpen(true)}
+          showDollarSign={true}
         />
         <AdminDataCard
           title="Approved Prgs-to-date"
           total="45 forecast"
           done="24"
           edit={true}
+          showDollarSign={false}
         />
-        <AdminDataCard title="Completed Dept." total="8" done="4" />
+        <AdminDataCard showDollarSign={false} title="Completed Dept." total="8" done="4" />
       </Box>
       <SuperAdminBudgetModal open={isOpen} handleClose={handleModalClose} heading="Add Budget" subheading="budegt total" fetchTotalbudget={fetchTotalbudget} totalBudget={totalBudget} placeholder="$ Emter amount"/>
       <AdminDepartmentProgress from="super-admin" center={center}/>

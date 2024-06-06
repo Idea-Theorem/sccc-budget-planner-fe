@@ -348,6 +348,7 @@ export default function TabsNewHire({employee, formik}: any) {
       amount: "",
     },
   ]);
+
   const handleAddRecord = () => {
     setFormData([
       ...formData,
@@ -362,7 +363,12 @@ export default function TabsNewHire({employee, formik}: any) {
       },
     ]);
   };
-
+  function calculateTotalAmount(employees: any) {
+    return employees.reduce((total: any, employee: any) => {
+      const amount = parseFloat(employee.amount ? employee.amount.replace('$', '') : 0);
+      return total + (amount !== 0 ? amount : 0);
+    }, 0);
+  }
   const handleDeleteRecord = (index: any) => {
     const newFormData = [...formData];
     newFormData.splice(index, 1);
@@ -371,10 +377,14 @@ export default function TabsNewHire({employee, formik}: any) {
 
   const handleInputChange = (index: any, name: any, value: any) => {
     const newFormData: any = [...formData];
+    if (name === 'amount' || name === 'hourlyRate') {
+      if (!value.startsWith('$')) {
+        value = '$' + value;
+      }
+    }
     newFormData[index][name] = value;
     setFormData(newFormData);
   };
-
   useEffect(() => {
     fetchAllBenefit()
   }, [])
@@ -387,13 +397,22 @@ try {
   
 }
   }
+  const cleanFormDataForFormik = (data: any) => {
+    return data.map((item: any) => ({
+      ...item,
+      amount: item.amount.replace('$', ''),
+      hourlyRate: item.hourlyRate.replace('$', ''),
+    }));
+  };
+
 
   useEffect(()=>{
     if(!formData?.[0].employee){
       return
     }
-    formik.setFieldValue("employee", formData)
+    formik.setFieldValue('employee', cleanFormDataForFormik(formData));
   },[formData])
+
   return (
     <EmployeeInfoArea>
       <table className="salary-table">
@@ -508,7 +527,7 @@ try {
         <tfoot>
           <tr>
             <td colSpan={3}>Total Expense <br />(Salary & Benefits)</td>
-            <td colSpan={3}>$218.25</td>
+            <td colSpan={3}>${calculateTotalAmount(formData)}</td>
           </tr>
         </tfoot>
       </table>
