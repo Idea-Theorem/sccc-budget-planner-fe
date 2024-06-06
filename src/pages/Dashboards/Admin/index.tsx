@@ -75,6 +75,7 @@ const handleModalClose = () => {
           total={formatNumber(totalBudget?.total_value ? totalBudget?.total_value : "")}
           done="$500,000.00"
           showProgress={true}
+          showDollarSign={true}
           color="info"
            handleAddclick={() => setIsOpen(true)}
         />
@@ -83,11 +84,13 @@ const handleModalClose = () => {
           total={programs.programsCount}
           done={programs.approvedCount}
           edit={true}
+          showDollarSign={false}
         />
         <AdminDataCard
           title="Completed Dept."
           total={department.departmentsCount}
           done={department.approvedCount}
+          showDollarSign={false}
         />
       </Box>
       <BudgetModal fetchTotalbudget={fetchTotalbudget} totalBudget={totalBudget} placeholder="$ Emter amount" open={isOpen} handleClose={handleModalClose} heading="Add Budget" subheading="budegt total"/>
