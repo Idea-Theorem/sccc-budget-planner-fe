@@ -45,6 +45,10 @@ const TabsProgram = ({
   handleSalaryExpenseReceived,
   formik,
   disabled,
+  employee,
+  singleProgram,
+  allComments,
+  fetchComments
 }: any) => {
   const [value, setValue] = React.useState(0);
 
@@ -81,6 +85,9 @@ const TabsProgram = ({
           handleReceived={handleReceived}
           title="income"
           formik={formik}
+          singleProgram={singleProgram}
+          allComments={allComments}
+          fetchComments={fetchComments}
         />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
@@ -89,17 +96,21 @@ const TabsProgram = ({
           handleSupplyExpenseReceived={handleSupplyExpenseReceived}
           title="supply-expense"
           formik={formik}
+          allComments={allComments}
+          fetchComments={fetchComments}
         />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
         {
-          false ? 
-          <TabsNewHire />
+          true ? 
+          <TabsNewHire employee={employee} formik={formik}/>
           :   <ProgramTable
           disabled={disabled}
           handleSalaryExpenseReceived={handleSalaryExpenseReceived}
           title="salary-expense"
           formik={formik}
+          allComments={allComments}
+          fetchComments={fetchComments}
         />
         }
      
@@ -140,6 +151,10 @@ export default function TabsProgramArea({
   handleSalaryExpenseReceived,
   formik,
   disabled,
+  employee,
+  singleProgram,
+  allComments,
+  fetchComments
 }: any) {
   return (
     <TabsAreas>
@@ -149,6 +164,10 @@ export default function TabsProgramArea({
         handleSupplyExpenseReceived={handleSupplyExpenseReceived}
         handleSalaryExpenseReceived={handleSalaryExpenseReceived}
         formik={formik}
+        employee={employee}
+        singleProgram={singleProgram}
+        allComments={allComments}
+        fetchComments={fetchComments}
       />
     </TabsAreas>
   );

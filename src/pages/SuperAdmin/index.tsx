@@ -4,10 +4,12 @@ import MainHeaderComponent from "../../components/MainHeader";
 import AdminDataCard from "../../components/AdminDataCard";
 import AdminDepartmentProgress from "../../components/AdminDepartentProgress";
 import { getAllCenters } from "../../services/centersServices";
-import { useEffect, useState } from "react";
-import { addRandomColor } from "../../utils";
+import React, { useEffect, useState } from "react";
+import { addRandomColor, formatNumber } from "../../utils";
 import moment from "moment";
 import { useAuth } from "../../contexts/AuthContext";
+import SuperAdminBudgetModal from "../../models/SuperAdminBudgetModal";
+import { getSuperAdminTotalbudget } from "../../services/adminServices";
 const StyledBox = styled(Box)(() => ({
   "& .dashboardCards": {
     display: "flex",
@@ -18,11 +20,16 @@ const StyledBox = styled(Box)(() => ({
 const SuperAdminScreen = () => {
   const array = [{ text: "Export" }, { text: "Reset" }];
   const [center, setCenter] = useState([])
+  const [isOpen, setIsOpen] = React.useState<any>(false)
+  const [totalBudget, setTotalBudget] = React.useState<any>("")
+
+
   const { user } = useAuth();
 
 
   useEffect(() => {
     fetchCenter();
+    fetchTotalbudget()
   }, []);
 
   const fetchCenter = async () => {
@@ -32,9 +39,15 @@ const SuperAdminScreen = () => {
       setCenter(coloredArray)
     } catch (error) {}
   };
-
-  
-
+  const fetchTotalbudget = async () => {
+    try {
+      const response = await getSuperAdminTotalbudget();
+      setTotalBudget(response?.data)
+    } catch (error) {}
+  };
+  const handleModalClose = () => {
+    setIsOpen(false)
+  }
   return (
     <StyledBox className="appContainer">
       <MainHeaderComponent
@@ -51,10 +64,11 @@ const SuperAdminScreen = () => {
           detail="*The total is calculated based on approved programs"
           title="Budget-to-date"
           edit={true}
-          total="$1,000.000.00"
+          total={formatNumber(totalBudget?.total_value ? totalBudget?.total_value :"")}
           done="$500,000.00"
           showProgress={true}
           color="info"
+          handleAddclick={() => setIsOpen(true)}
         />
         <AdminDataCard
           title="Approved Prgs-to-date"
@@ -64,6 +78,7 @@ const SuperAdminScreen = () => {
         />
         <AdminDataCard title="Completed Dept." total="8" done="4" />
       </Box>
+      <SuperAdminBudgetModal open={isOpen} handleClose={handleModalClose} heading="Add Budget" subheading="budegt total" fetchTotalbudget={fetchTotalbudget} totalBudget={totalBudget} placeholder="$ Emter amount"/>
       <AdminDepartmentProgress from="super-admin" center={center}/>
     </StyledBox>
   );

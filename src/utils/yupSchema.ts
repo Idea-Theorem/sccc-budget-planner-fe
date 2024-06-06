@@ -52,18 +52,18 @@ export const editEmployeeSchema = yup.object().shape({
   roles: yup.array()
     .min(1, "At least one role is required!")
     .required("Roles is required!"),
-  department_id: yup
-    .string()
-    .required("Departments is required!"),
-  employment_type: yup
-    .string()
-    .required("Employement Type is required!"),
-  compensation_type: yup
-    .string()
-    .required("Compensation Type is required!"),
-  salary_rate: yup
-    .number()
-    .required("Salary Rates is required!"),
+  // department_id: yup
+  //   .string()
+  //   .required("Departments is required!"),
+  // employment_type: yup
+  //   .string()
+  //   .required("Employement Type is required!"),
+  // compensation_type: yup
+  //   .string()
+  //   .required("Compensation Type is required!"),
+  // salary_rate: yup
+  //   .number()
+  //   .required("Salary Rates is required!"),
 })
 export const programSchema = yup.object().shape({
   name: yup
@@ -88,7 +88,7 @@ export const createDepartmentSchema = yup.object().shape({
 })
 
 export const createCentresSchema = yup.object().shape({
-  name: yup
+  value: yup
     .string()
-    .required("Name is required!"),
+    .required("Amount is required!"),
 })

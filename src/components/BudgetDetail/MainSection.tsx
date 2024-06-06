@@ -7,12 +7,14 @@ import { Grid } from "../../pages/Components/MUIComponents/index";
 import TabsProgramArea from "../TabsProgram";
 import { ActionsType } from "../../types/common";
 import Buttons from "../Button";
-import { getAllDepartments } from "../../services/departmentServices";
+import { fetchEmployeeInDepartments, getAllDepartments } from "../../services/departmentServices";
 import { useEffect, useState } from "react";
 import Status, { ProgramCode } from "../../utils/dumpData";
 import { useFormik } from "formik";
 import {
   createProgram,
+  fetchAllcomments,
+  getSingleProgramById,
   programUpdate,
   updateProgram,
 } from "../../services/programServices";
@@ -31,13 +33,34 @@ import { programSchema } from "../../utils/yupSchema";
 import TextFields from "../Input/textfield";
 import { EditNote, UploadFile } from "@mui/icons-material";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
+import { v4 as uuidv4 } from "uuid";
+
+function createData(name?: string, amount?: number) {
+  return { name, amount, id: uuidv4() };
+}
+
+const benefits = [
+  createData("Courier & Postage", 0),
+  createData("printing", 0),
+  createData("Office & Computer Supplies", 0),
+  createData("Program Food", 0),
+  createData("Recreational Supplies", 0),
+  createData("recreational Equipment", 0),
+  createData("Furniture & Equipment", 0),
+  createData("Office Furniture & Equip", 0),
+  createData("Employee Development", 0),
+  createData("Program Travel", 0),
+  createData("Program Admission", 0),
+  createData("Telephone", 0),
+];
 
 const MainSection = ({ actions }: { actions: ActionsType[] }) => {
   const [departments, setDepartments] = useState<any>([]);
+  const [employee, setEmployee] = useState<any>([]);
+  const [allComments, setAllComments] = useState<any>([]);
   const [activeDepartment, setActiveDepartment] = useState<any>(null);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
   const [disable, setDisable] = useState(false);
   const { singleProgram, programFromStatus } = useSelector(
     (state: RootState) => state.program
@@ -57,13 +80,26 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
       supply_expense: [],
       salary_expense: [],
       status: "PENDING",
+      employee:[]
     },
     onSubmit: async (values) => {
+      let obj = {}
+      if(values?.supply_expense.length == 0){
+       obj = {
+          ...values,
+          status: Status.DRAFTED,
+          salary_expense: benefits
+        };
+      }else {
+        obj = {...values}
+      }
+    
       try {
         if (singleProgram?.id) {
-          await programUpdate(values, singleProgram?.id);
+          await programUpdate(obj, singleProgram?.id);
         } else {
-          await createProgram(values);
+          
+          await createProgram(obj);
         }
         formik.resetForm();
         dispatch(storeIncomeList([]));
@@ -74,6 +110,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
       } catch (error) {}
     },
   });
+
   useEffect(() => {
     return () => {
       dispatch(storeIncomeList([]));
@@ -84,7 +121,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
   }, []);
 
   useEffect(() => {
-    if (singleProgram) {
+    if (singleProgram?.id) {
       dispatch(storeIncomeList(singleProgram?.income));
       dispatch(storeSupplyList(singleProgram?.salary_expense));
       dispatch(storeSalaryList(singleProgram?.supply_expense));
@@ -92,7 +129,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
       setActiveDepartment(singleProgram?.department?.name);
       setFieldValue("code", singleProgram?.code);
     }
-  }, []);
+  }, [singleProgram]);
 
   const { values, handleSubmit, setFieldValue, errors } = formik;
 
@@ -116,10 +153,23 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
     setFieldValue("code", value);
   };
 
-  const receiveDepartment = (value: any) => {
+
+
+  const receiveDepartment = async (value: any) => {
     const filteredID = departments.find((item: any) => item?.name === value);
     setFieldValue("department_id", filteredID?.id);
     setActiveDepartment(filteredID?.name);
+    const response = await fetchEmployeeInDepartments(filteredID?.id)
+    const modifyArray = response?.data?.departments?.map((user: any) => ({
+      ...user,
+      name: `${user.firstname} ${user.lastname}`
+      
+  }));
+   modifyArray.unshift({
+    id:"New Hire",
+    name:"New Hire"
+   })
+    setEmployee(modifyArray)
   };
 
   const receiveFromDate = (value: any) => {
@@ -142,10 +192,20 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
 
   const handleSave = async () => {
     try {
-      let obj = {
-        ...values,
-        status: Status.DRAFTED,
-      };
+      let obj={}
+      if(values?.supply_expense.length == 0){
+         obj = {
+          ...values,
+          status: Status.DRAFTED,
+          salary_expense: benefits
+        };
+      }else {
+        obj = {
+          ...values,
+          status: Status.DRAFTED,
+      }
+    }
+  
       if (singleProgram?.id) {
         await programUpdate(obj, singleProgram?.id);
       } else {
@@ -159,6 +219,33 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
       navigate("/program-head/draft");
     } catch (error) {}
   };
+
+  useEffect(() => {
+    if(singleProgram?.id){
+      fetchComments()
+      fetchProgrambyId(singleProgram?.id)
+    }
+  }, [singleProgram?.id])
+
+  const fetchComments = async () => {
+try {
+  const response = await fetchAllcomments()
+  setAllComments(response?.data?.comments)
+} catch (error) {
+  
+}
+  }
+  const fetchProgrambyId = async (id: any) => {
+try {
+  const response  = await getSingleProgramById(id)
+  dispatch(storeIncomeList(response?.data?.program?.income));
+  dispatch(storeSupplyList(response?.data?.program?.supply_expense));
+  dispatch(storeSalaryList(response?.data?.program?.salary_expense));
+} catch (error) {
+  
+}
+  }
+
 
 
   const handleChangeEvent = (e: any) => {
@@ -189,13 +276,14 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
     }
   };
 
+ 
+
   const Save = async () => {};
   return (
     <Grid item xs={9}>
       <Grid className="createProgramContent" item xs={12}>
         <Grid item xs={12}>
           <Stack className="createProgramContentHead">
-            
               <TextFields
                 disabled={disable}
                 autoFocus
@@ -326,11 +414,15 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
         </Grid>
         <Grid className="createFormTable" item xs={12}>
           <TabsProgramArea
+          singleProgram={singleProgram}
             disabled={disable}
             handleReceived={receiveIncome}
             handleSupplyExpenseReceived={receiveSupplyExpense}
             handleSalaryExpenseReceived={receiveSalaryExpense}
             formik={formik}
+            employee={employee}
+            allComments={allComments}
+            fetchComments={fetchComments}
           />
         </Grid>
       </Grid>

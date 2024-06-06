@@ -7,7 +7,7 @@ import { LinearProgressProps } from "@mui/material";
 
 interface ProgramProgressProps {
   title?: string;
-  amount?: string;
+  amount?: string | any;
   value?: number;
   color?: LinearProgressProps["color"];
 }
@@ -70,7 +70,7 @@ const ProgramProgress = (props: ProgramProgressProps) => {
     <StyledBox className="progressStatusWidget">
       <Stack className="textInfo">
         <Typography>{props?.title}</Typography>
-        <Typography>{props?.amount}</Typography>
+        <Typography>${props?.amount}</Typography>
       </Stack>
       <Box className="progressStatusBar">
         <LinearWithValueLabel value={props?.value} color={props?.color} />

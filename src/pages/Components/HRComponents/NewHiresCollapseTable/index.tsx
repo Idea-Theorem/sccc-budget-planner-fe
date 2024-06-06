@@ -175,13 +175,13 @@ function Row(props: {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {row?.firstname + " " + row?.lastname}
+          {row?.employee}
         </TableCell>
-        <TableCell>{row?.roles[0]?.name?.replace(/_/g, " ")}</TableCell>
+        <TableCell>{row?.otherinfo.name?.replace(/_/g, " ")}</TableCell>
         <TableCell style={{ textTransform: "capitalize" }}>
-          {row?.department?.name}
+          {row?.otherinfo?.department?.name}
         </TableCell>
-        <TableCell>{row?.hire_date}</TableCell>
+        <TableCell>{row?.otherinfo?.hire_date}</TableCell>
         <TableCell>
           <Stack
             direction="row"
@@ -223,8 +223,7 @@ function Row(props: {
                 <TableHead>
                   <TableRow>
                   
-                    <TableCell style={{ paddingLeft: "62px" }}>Department</TableCell>
-                    <TableCell>Title</TableCell>
+                    <TableCell style={{ paddingLeft: "62px" }}>Email Address</TableCell>
                     <TableCell>Hourly Rate</TableCell>
                     <TableCell>Benefit %</TableCell>
                   </TableRow>
@@ -280,7 +279,7 @@ function Row(props: {
 //   ),
 // ];
 
-export default function HrCollapsibleTable({
+export default function NewHiresCollapsibleTable({
   handleClick,
   employeeData,
   refresh,
@@ -354,8 +353,8 @@ export default function HrCollapsibleTable({
               <TableRow>
                 <TableCell>&nbsp;</TableCell>
                 <TableCell>Employee Name</TableCell>
-                <TableCell>Title</TableCell>
-                <TableCell></TableCell>
+                <TableCell>Program Assigned</TableCell>
+                <TableCell>Department</TableCell>
                 <TableCell>Hire date</TableCell>
               </TableRow>
             </TableHead>

@@ -30,6 +30,8 @@ import SuperDepartmentDetail from "../pages/SuperAdmin/superDepartmentDetail";
 import HRRole from "../pages/Dashboards/ProgramHead/hrRole";
 import RecreationAndCultureScreen from "../pages/Dashboards/Admin/recreation-culture";
 import Benefit from "../pages/Dashboards/ProgramHead/benefit";
+import ForgotPasswordScreen from "../pages/Forgotpassword";
+import ResetPasswordScreen from "../pages/Resetpassword";
 
 const authRoutes: RouteObject = {
   path: "*",
@@ -37,6 +39,14 @@ const authRoutes: RouteObject = {
     {
       path: "login",
       element: <LoginScreen />,
+    },
+    {
+      path: "forgot-password",
+      element: <ForgotPasswordScreen />,
+    },
+    {
+      path: "reset-password",
+      element: <ResetPasswordScreen />,
     },
   ],
 };

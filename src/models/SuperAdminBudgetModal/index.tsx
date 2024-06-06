@@ -10,7 +10,7 @@ import { useFormik } from "formik";
 import { createCentresSchema } from "../../utils/yupSchema";
 import { TextField } from "@mui/material";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
-import { createRole, updateRole } from "../../services/roleServices";
+import { updateSuperAdminTotalbudget } from "../../services/adminServices";
 
 const DepartmentInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
@@ -124,35 +124,39 @@ interface IDepartmentInfo {
   open?: any;
   singleCenter?: any;
   setSingleCenter?: any;
+  placeholder?: any;
+  totalBudget?: any
+  fetchTotalbudget?: any
 }
 
-const RoleModal: React.FC<IDepartmentInfo> = ({
+const SuperAdminBudgetModal: React.FC<IDepartmentInfo> = ({
   heading,
   subheading,
   handleClose,
   open,
-  singleCenter,
-  setSingleCenter,
+  totalBudget,
+  placeholder,
+  fetchTotalbudget
 }) => {
-  console.log(heading);
   const formik = useFormik<any>({
     validateOnBlur: false,
     validationSchema: createCentresSchema,
     enableReinitialize: true,
     initialValues: {
-      name: singleCenter?.name ? singleCenter?.name : "",
+      value: totalBudget?.total_value ? totalBudget?.total_value : "",
     },
     onSubmit: async (values) => {
-      try {
-        if (heading == "Edit role") {
-          await updateRole(values, singleCenter?.id);
-        } else {
-          await createRole(values);
-        }
-        formik.resetForm();
-        setSingleCenter(null);
-        handleClose();
-      } catch (error) {}
+      if(totalBudget?.total_value){
+        await updateSuperAdminTotalbudget(values)
+      }
+      // await addSuperAdminTotalbudget(values)
+      fetchTotalbudget()
+      handleClose()
+  try {
+    
+  } catch (error) {
+    
+  }
     },
   });
 
@@ -175,11 +179,11 @@ const RoleModal: React.FC<IDepartmentInfo> = ({
             <Grid item xs={12}>
               <TextField
                 variant="standard"
-                label="Title Name"
-                value={values.name}
-                name="name"
+                label={placeholder}
+                value={values.value}
+                name="value"
                 onChange={handleChange}
-                helperText={errors.name ? errors.name.toString() : ""}
+                helperText={errors.value ? errors.value.toString() : ""}
               />
             </Grid>
           </Grid>
@@ -223,4 +227,4 @@ const RoleModal: React.FC<IDepartmentInfo> = ({
   );
 };
 
-export default RoleModal;
+export default SuperAdminBudgetModal;

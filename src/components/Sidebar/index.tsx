@@ -16,10 +16,24 @@ import { useAuth } from "../../contexts/AuthContext";
 import { Button, Collapse, Grid } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import SelectDemo from "../Select";
+import { getCapitalizedFirstLetters } from "../../utils";
 // import SelectDemo from "../Select";
 
 const SideArea = styled(Box)(({ theme }) => ({
   background: theme.palette.primary.main,
+
+  ".full-width": {
+      ".MuiSelect-select": {
+        color: "#fff",
+        fontWeight: 600,
+        textTransform: "capitalize",
+      },
+
+    ".MuiSvgIcon-root": {
+      color: "#fff",
+      top: "calc(50% - 14px)",
+    },
+  },
 
   "& .MuiPaper-root": {
     background: `${theme.palette.primary.main} !important`,
@@ -83,7 +97,8 @@ const SideArea = styled(Box)(({ theme }) => ({
   },
 
   ".MuiButtonBase-root": {
-    color: "#303030",
+    // color: "#303030",
+    color: "#fff",
     padding: "8px 19px",
 
     "&:hover": {
@@ -123,7 +138,6 @@ const SideArea = styled(Box)(({ theme }) => ({
       fontWeight: "400",
       fontFamily: "Roboto, sans-serif",
       textAlign: "center",
-      
     },
   },
 }));
@@ -139,6 +153,7 @@ export default function ResponsiveDrawer(props: Props) {
   const [openHR, setOpenHR] = React.useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+
 
   const handleToggleHR = (path: string) => {
     setOpenHR(!openHR);
@@ -187,6 +202,8 @@ export default function ResponsiveDrawer(props: Props) {
       <Box className="siteLogo">
         <img src={LogoImg} alt="Description image" />
       </Box>
+      <Box>{getCapitalizedFirstLetters(user?.firstname, user?.lastname)}</Box>
+
       <Grid className="selectGrid" item xs={6}>
         <SelectDemo className="sidebar_select_input"
           title="Department"

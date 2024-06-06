@@ -38,11 +38,8 @@ export const compensationType = [
 ]
 
 export const ProgramCode = [
-  { name: "001A" },
-  { name: "002B" },
-  { name: "003C" },
-  { name: "004D" },
-  { name: "005E" },
+  { name: "NEW" },
+
 ]
 function createData(item?: string, amount?: string) {
   return { item, amount, id: uuidv4() };

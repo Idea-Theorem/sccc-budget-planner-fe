@@ -66,7 +66,7 @@ const HREmployeees: React.FC<SuperAdminProps> = () => {
   const { currentRole } = useAuth();
   const handleTabsDynamically = () => {
     if (currentRole == "HR") {
-      return ["Employees"];
+      return ["Employees", 'New Hires'];
     } else if (currentRole == "Admin") {
       return ["Departments"];
     } else if (currentRole == "Super_Admin") {

@@ -194,7 +194,6 @@ const HRTableComponent: React.FC<HRTableProps> = ({  }) => {
         fetchProgramList(Status.DRAFTED)
         setEditModal(false)
       } catch (error) {
-        console.log(error)
       }
     },
   });
@@ -206,7 +205,6 @@ const HRTableComponent: React.FC<HRTableProps> = ({  }) => {
       const response = await getAllProgramsViaStatus(status, ""); 
       setCodeData(response?.data?.programs)
     } catch (error) {
-      console.log(error)
     }
   };
     const handleEditClick = (rowData: any) => {

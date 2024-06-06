@@ -19,7 +19,15 @@ const updateEmployee = async (data: any, id: string) => {
 const deleteEmployee = async (id: string) => {
   return await HTTP_CLIENT.delete(`/user/${id}`);
 }
+const getNewhires = async () => {
 
+  return await HTTP_CLIENT.get(`role/new-hire`);
+};
+
+const DeleteNewhire = async (id: any, empId: any) => {
+
+  return await HTTP_CLIENT.delete(`role/programs/${id}/employees/${empId}`);
+};
 
 
 
@@ -28,5 +36,7 @@ export {
   getEmployee,
   createEmployee,
   deleteEmployee,
-  updateEmployee
+  updateEmployee,
+  getNewhires,
+  DeleteNewhire
 };

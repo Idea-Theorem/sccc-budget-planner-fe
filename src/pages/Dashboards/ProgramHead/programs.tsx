@@ -8,8 +8,9 @@ import {
   storeSingleProgram,
 } from "../../../store/reducers/programSlice";
 import Status from "../../../utils/dumpData";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../store";
+import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { getAllProgramsByUsers } from "../../../services/programServices";
 const StyledBox = styled(Box)(() => ({
   "&.appContainer": {
     ".appHeader": {
@@ -20,7 +21,24 @@ const StyledBox = styled(Box)(() => ({
 const PHProgramsScreen = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { programList } = useSelector((state: RootState) => state.program); 
+  const [tabstatus, setTabstatus] = React.useState(Status.PENDING);
+  const [programListing, setprogramListing] = useState<any>([]);
+
+  useEffect(() => {
+    fetchProgramList(tabstatus, '') 
+  }, [tabstatus])
+
+  const fetchProgramList = async (status: string, Searchvalue: string) => {
+    try {
+      // setLoading(true);
+      const response = await getAllProgramsByUsers(status, Searchvalue);
+      setprogramListing(response?.data?.programs)
+      // dispatch(storeProgramList(response?.data?.programs));
+      // setLoading(false);
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
 
   const tableColumnsTitleArray = [
     [
@@ -264,8 +282,9 @@ const PHProgramsScreen = () => {
           { title: "Drafts" },
           { title: "History" },
         ]}
+        setTabstatus={setTabstatus}
         table={tableColumnsTitleArray}
-        row={programList}
+        row={programListing}
         checkout={false}
       />
     </StyledBox>

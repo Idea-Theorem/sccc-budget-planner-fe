@@ -135,11 +135,11 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
 // ];
 const HRRole = () => { 
 const [loading, setLoading] = useState<boolean>(false)
+console.log(loading)
 const [singleCenter, setSingleCenter] = useState<any>(null);
 const [center, setCenter] = useState<any>([]);
 const [isCommunityOpen, setCommunityModal] = useState(false);
 const [centerHeading, setCenterHeading] = useState<string>("");
-console.log(loading)
 
 const fetchCenters = async () => {
   try {
@@ -180,7 +180,7 @@ const onCommunityEdit = (data: any) => {
   const handleClick = () => {
    
       setCommunityModal(true);
-      setCenterHeading("Add New Role");
+      setCenterHeading("Add New Title");
     
   }
 
@@ -188,7 +188,7 @@ const onCommunityEdit = (data: any) => {
   const columns: GridColDef[] = [
     {
       field: "name",
-      headerName: "Role",
+      headerName: "Title",
       sortable: false,
       editable: false,
       flex: 1,
@@ -243,7 +243,7 @@ const onCommunityEdit = (data: any) => {
           variant="contained"
           color="primary"
           size="medium"
-          btntext="Add New Role"
+          btntext="Add New Title"
           startIcon={<AddIcon />}
           onClick={handleClick}
         /> 
@@ -272,7 +272,7 @@ const onCommunityEdit = (data: any) => {
         open={isCommunityOpen}
         handleClose={handleCloseCommunityModal}
         heading={centerHeading}
-        subheading="Role Information"
+        subheading="Title Information"
         singleCenter={singleCenter}
         setSingleCenter={setSingleCenter}
       />
