@@ -33,6 +33,26 @@ import { programSchema } from "../../utils/yupSchema";
 import TextFields from "../Input/textfield";
 import { EditNote, UploadFile } from "@mui/icons-material";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
+import { v4 as uuidv4 } from "uuid";
+
+function createData(name?: string, amount?: number) {
+  return { name, amount, id: uuidv4() };
+}
+
+const benefits = [
+  createData("Courier & Postage", 0),
+  createData("printing", 0),
+  createData("Office & Computer Supplies", 0),
+  createData("Program Food", 0),
+  createData("Recreational Supplies", 0),
+  createData("recreational Equipment", 0),
+  createData("Furniture & Equipment", 0),
+  createData("Office Furniture & Equip", 0),
+  createData("Employee Development", 0),
+  createData("Program Travel", 0),
+  createData("Program Admission", 0),
+  createData("Telephone", 0),
+];
 
 const MainSection = ({ actions }: { actions: ActionsType[] }) => {
   const [departments, setDepartments] = useState<any>([]);
@@ -41,7 +61,6 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
   const [activeDepartment, setActiveDepartment] = useState<any>(null);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
   const [disable, setDisable] = useState(false);
   const { singleProgram, programFromStatus } = useSelector(
     (state: RootState) => state.program
@@ -64,11 +83,23 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
       employee:[]
     },
     onSubmit: async (values) => {
+      let obj = {}
+      if(values?.supply_expense.length == 0){
+       obj = {
+          ...values,
+          status: Status.DRAFTED,
+          salary_expense: benefits
+        };
+      }else {
+        obj = {...values}
+      }
+    
       try {
         if (singleProgram?.id) {
-          await programUpdate(values, singleProgram?.id);
+          await programUpdate(obj, singleProgram?.id);
         } else {
-          await createProgram(values);
+          
+          await createProgram(obj);
         }
         formik.resetForm();
         dispatch(storeIncomeList([]));
@@ -161,10 +192,20 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
 
   const handleSave = async () => {
     try {
-      let obj = {
-        ...values,
-        status: Status.DRAFTED,
-      };
+      let obj={}
+      if(values?.supply_expense.length == 0){
+         obj = {
+          ...values,
+          status: Status.DRAFTED,
+          salary_expense: benefits
+        };
+      }else {
+        obj = {
+          ...values,
+          status: Status.DRAFTED,
+      }
+    }
+  
       if (singleProgram?.id) {
         await programUpdate(obj, singleProgram?.id);
       } else {

@@ -6,9 +6,8 @@ import Typography from "@mui/material/Typography";
 import LogoImg from "../../assets/logo.png";
 import Buttons from "../../components/Button";
 import { useAuth } from "../../contexts/AuthContext";
-import { FormikProps, useFormik } from "formik";
+import {  useFormik } from "formik";
 import * as yup from "yup";
-import LoginState from "../../interfaces/ITheme.interface";
 
 const LoginArea = styled(Box)(({ theme }) => ({
   "&.loginBlock": {

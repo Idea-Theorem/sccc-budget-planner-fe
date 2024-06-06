@@ -9,7 +9,7 @@ interface AdminDataCardProps {
   title?: string;
   edit?: boolean;
   detail?: string;
-  total?: string;
+  total?: string | number;
   done?: string;
   showProgress?: boolean;
   handleAddclick?: any
@@ -144,7 +144,7 @@ const AdminDataCard = (props: AdminDataCardProps) => {
       <Stack className="textRange">
         <Typography className="textFull">{props?.done}</Typography>
         <Typography className="divider">/</Typography>
-        <Typography className="textValue">{props?.total}</Typography>
+        <Typography className="textValue">${props?.total}</Typography>
       </Stack>
       {props?.showProgress && (
         <Box className="cardProgressBar">

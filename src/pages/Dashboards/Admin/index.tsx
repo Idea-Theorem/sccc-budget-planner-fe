@@ -8,7 +8,7 @@ import React, { useEffect } from "react";
 import { getDepartment, getPrograms, getTotalbudget } from "../../../services/adminServices";
 import { useAuth } from "../../../contexts/AuthContext";
 import moment from "moment";
-import { addRandomColor } from "../../../utils";
+import { addRandomColor, formatNumber } from "../../../utils";
 import BudgetModal from "../../../models/Budgetmodal";
 const StyledBox = styled(Box)(() => ({
   "& .dashboardCards": {
@@ -72,7 +72,7 @@ const handleModalClose = () => {
           detail="*The total is calculated based on approved programs"
           title="Budget-to-date"
           edit={true}
-          total={totalBudget?.total_value}
+          total={formatNumber(totalBudget?.total_value ? totalBudget?.total_value : "")}
           done="$500,000.00"
           showProgress={true}
           color="info"

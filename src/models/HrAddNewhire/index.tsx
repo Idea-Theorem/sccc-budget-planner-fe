@@ -20,12 +20,10 @@ import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import { useFormik } from "formik";
 import {
   createEmployeeSchema,
-  editEmployeeSchema,
 } from "../../utils/yupSchema";
 import {
   DeleteNewhire,
   createEmployee,
-  updateEmployee,
 } from "../../services/employeeServices";
 import { getAllDepartments } from "../../services/departmentServices";
 import TextFields from "../../components/Input/textfield";
@@ -342,7 +340,7 @@ const HrAddNewHire: React.FC<IHrAddEmployee> = ({
 
 const handleMovedNewhire = () => {
   try {
-    const res = DeleteNewhire(singleEmployeeData?.otherinfo?.program_id, singleEmployeeData?.emp_id)
+     DeleteNewhire(singleEmployeeData?.otherinfo?.program_id, singleEmployeeData?.emp_id)
   } catch (error) {
     
   }

@@ -10,7 +10,9 @@ const addComments = async (data: any) => {
 const getAllProgramsViaStatus = async (status: any, Searchvalue: string) => {
   return await HTTP_CLIENT.get(`/program/?status=${status}&name=${Searchvalue ? Searchvalue : ""}`);
 };
-
+const getAllProgramsByUsers = async (status: any, Searchvalue: string) => {
+  return await HTTP_CLIENT.get(`/program/fetchProgramByUser/?status=${status}&name=${Searchvalue ? Searchvalue : ""}`);
+};
 
 // const getEmployee = async () => {
 //     return await HTTP_CLIENT.get("/user");
@@ -64,6 +66,7 @@ export {
   fetchAllcomments,
   getSingleProgramById,
   deleteComment,
-  updatecomment
+  updatecomment,
+  getAllProgramsByUsers
 
 };

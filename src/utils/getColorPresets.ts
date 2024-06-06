@@ -18,6 +18,7 @@ export const lighttheme = appThemeModes[0];
 export const darktheme = appThemeModes[1];
 export const bluetheme = appThemeModes[2];
 export default function getThemeMode(presetsKey: string, routeModule?: string) {
+  console.log(routeModule)
   const colorIndex = appThemeModes.findIndex((p) => p.name === presetsKey);
   let themeModes = appThemeModes[0];
   if (colorIndex !== -1) {

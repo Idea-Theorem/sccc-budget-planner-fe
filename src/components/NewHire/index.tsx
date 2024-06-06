@@ -507,8 +507,8 @@ try {
         </tbody>
         <tfoot>
           <tr>
-            <td colSpan="3">Total Expense <br />(Salary & Benefits)</td>
-            <td colSpan="3">$218.25</td>
+            <td colSpan={3}>Total Expense <br />(Salary & Benefits)</td>
+            <td colSpan={3}>$218.25</td>
           </tr>
         </tfoot>
       </table>

@@ -18,12 +18,18 @@ const addTotalbudget = async (data: any) => {
 const getTotalbudget = async () => {
   return await HTTP_CLIENT.get("/dashboard/budget/1");
 };
-
+const getSuperAdminTotalbudget = async () => {
+  return await HTTP_CLIENT.get("/dashboard/budget-super-admin/1");
+};
 const updateTotalbudget = async (data: any) => {
   return await HTTP_CLIENT.put("/dashboard/budget/1", data);
 };
-
-
+const addSuperAdminTotalbudget = async (data: any) => {
+  return await HTTP_CLIENT.post("/dashboard/budget-super-admin", data);
+};
+const updateSuperAdminTotalbudget = async (data: any) => {
+  return await HTTP_CLIENT.put("dashboard/budget-super-admin/1", data);
+};
 
 export {
   getPrograms,
@@ -31,5 +37,8 @@ export {
   getDepartment,
   addTotalbudget,
   getTotalbudget,
-  updateTotalbudget
+  updateTotalbudget,
+  addSuperAdminTotalbudget,
+  getSuperAdminTotalbudget,
+  updateSuperAdminTotalbudget
 };

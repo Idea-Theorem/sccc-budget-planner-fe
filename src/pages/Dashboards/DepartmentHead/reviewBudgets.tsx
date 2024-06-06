@@ -356,14 +356,14 @@ await fetchProgram(value)
           />
         </Box> 
         <TabsArea
-          setTabstatus={setTabstatus}
           tabsTitleArray={[
             { title: "Pending" },
             { title: "Approved" },
             { title: "Rejected" },
           ]}
-          table={tableColumnsTitleArray}
+          setTabstatus={setTabstatus}
           row={programList}
+          table={tableColumnsTitleArray}
           currentStatus={status}
           handleActionReieve={handleActionReieve}
           checkout={true} 

@@ -10,7 +10,7 @@ import { useFormik } from "formik";
 import { createCentresSchema } from "../../utils/yupSchema";
 import { TextField } from "@mui/material";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
-import {  updateTotalbudget } from "../../services/adminServices";
+import { updateSuperAdminTotalbudget } from "../../services/adminServices";
 
 const DepartmentInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
@@ -129,7 +129,7 @@ interface IDepartmentInfo {
   fetchTotalbudget?: any
 }
 
-const BudgetModal: React.FC<IDepartmentInfo> = ({
+const SuperAdminBudgetModal: React.FC<IDepartmentInfo> = ({
   heading,
   subheading,
   handleClose,
@@ -147,9 +147,9 @@ const BudgetModal: React.FC<IDepartmentInfo> = ({
     },
     onSubmit: async (values) => {
       if(totalBudget?.total_value){
-        await updateTotalbudget(values)
+        await updateSuperAdminTotalbudget(values)
       }
-      // await addTotalbudget(values)
+      // await addSuperAdminTotalbudget(values)
       fetchTotalbudget()
       handleClose()
   try {
@@ -227,4 +227,4 @@ const BudgetModal: React.FC<IDepartmentInfo> = ({
   );
 };
 
-export default BudgetModal;
+export default SuperAdminBudgetModal;

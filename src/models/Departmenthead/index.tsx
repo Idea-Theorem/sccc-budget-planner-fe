@@ -4,7 +4,7 @@ import TextFieldWithButton from "../../components/ThreadPopups/TextFieldWithButt
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import moment from "moment";
 import { getCapitalizedFirstLetters } from "../../utils";
 import { CircularProgress } from "@mui/material";

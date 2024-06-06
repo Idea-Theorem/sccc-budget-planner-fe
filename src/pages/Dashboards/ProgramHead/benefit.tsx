@@ -134,6 +134,7 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
 // ];
 const Benefit = () => { 
 const [loading, setLoading] = useState<boolean>(false)
+console.log(loading)
 const [singleCenter, setSingleCenter] = useState<any>(null);
 const [center, setCenter] = useState<any>([]);
 const [isCommunityOpen, setCommunityModal] = useState(false);

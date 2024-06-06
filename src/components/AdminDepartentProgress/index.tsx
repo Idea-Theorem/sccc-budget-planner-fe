@@ -6,6 +6,7 @@ import ProgramProgress from "./programProgress";
 import DepartmentButton from "./departmentButton";
 import React, { useEffect } from "react";
 import { getDepartmentInCenters } from "../../services/centersServices";
+import { calculateTotalsProgramExpense } from "../../utils";
 
 const StyledBox = styled(Box)(() => ({
   "&.dashboardStatsCard": {
@@ -90,6 +91,7 @@ try {
   
 }
   }
+
   return (
     <StyledBox className="dashboardStatsCard">
       <Typography variant="h3">Department %</Typography>
@@ -140,7 +142,7 @@ try {
            <Box color={"#3B00ED"} className="progress-wrap">
              <ProgramProgress
                title={e?.name}
-               amount="$00.000"
+               amount={calculateTotalsProgramExpense(e)}
                value={52}
                color="inherit"
              />
