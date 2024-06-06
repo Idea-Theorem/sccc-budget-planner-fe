@@ -76,14 +76,14 @@ const ThreadHeader = ({setcommentText,item,setcurrentComment,title, subtitle, da
           <Typography className="name">{name}</Typography>
           <Typography className="title">{title}</Typography>
         </Stack>
-        <Box onClick={handleDropdown}>
+        <Box onClick={handleDropdown} className="cursor-pointer">
           <MoreVertIcon />
         </Box>
         {dropdown && (
           <Stack className="comment-box">
-            <Typography onClick={handleEditcomment} >Edit Comment</Typography>
-            <Typography >Resolve Thread</Typography>
-            <Typography onClick={() =>{ handleDelete(); setDropdown(false)}}>Delete Thread</Typography>
+            <Typography onClick={handleEditcomment}  className="cursor-pointer">Edit Comment</Typography>
+            <Typography  className="cursor-pointer">Resolve Thread</Typography>
+            <Typography onClick={() =>{ handleDelete(); setDropdown(false)}}  className="cursor-pointer">Delete Thread</Typography>
           </Stack>
         )}
       </Stack>

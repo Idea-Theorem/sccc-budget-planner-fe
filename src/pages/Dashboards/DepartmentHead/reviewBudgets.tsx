@@ -16,12 +16,13 @@ import StatusModal from "../../../components/StatusModal";
 const StyledBox = styled(Box)(() => ({
   "& .reviewBudgetHead": {
     marginBottom: "23px",
+    position: "relative",
   },
 
   "& .totalBudgetText": {
     fontSize: "20px",
     fontWeight: "400",
-    marginTop: "-10px",
+    marginTop: "5px",
     marginBottom: "8px",
   },
   // Color: theme.palette.secondary.light,
@@ -336,20 +337,22 @@ await fetchProgram(value)
       </Box>
       <SubHeader 
         handleUpdate={handleUpdate}
-        title="Recreation & Culture"
+        title=""
         onStatusChange={handleStatusChange}
       />
-      <Typography className="totalBudgetText">
-        Total Budget: $00,000.00
-      </Typography>
+      <Box className="block-selection">
+        <SelectDemo parentClass="departmentSelect"
+        title=""
+        receiveValue={receiveDepartment}
+        list={departments}
+        value={activeDepartment}
+        placeholder="Please Select"
+        />
+        <Typography className="totalBudgetText">
+          Total Budget: $00,000.00
+        </Typography>
+      </Box>
       <Box className="customSelect">
-      <SelectDemo parentClass="departmentSelect"
-      title="Department"
-      receiveValue={receiveDepartment}
-      list={departments}
-      value={activeDepartment}
-      placeholder="Please Select"
-      />
       <Box className="approvedTableBlock">
         <Box className="approvedProgramBlock">
           <ApprovedProgram tabstatus={tabstatus} count={count} totalCount={totalCount} handleClick={()=> handleSumbit()}

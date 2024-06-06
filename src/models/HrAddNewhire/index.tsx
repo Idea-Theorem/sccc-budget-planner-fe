@@ -2,9 +2,8 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
-import { Add, Clear } from "@mui/icons-material"; // Import Clear icon from Material-UI
+import { Add, Clear, RemoveCircleOutline } from "@mui/icons-material"; // Import Clear icon from Material-UI
 import Grid from "@mui/material/Grid"; // Import Grid component from MUI
-import SelectDemo from "../../components/Select";
 import BasicDatePicker from "../../components/DatePicker";
 import { Button } from "@mui/material";
 import Modal from "@mui/material/Modal";
@@ -185,16 +184,19 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
     cursor: "pointer",
 
     button: {
-      border: "1px solid #303030",
-      borderRadius: "100%",
-      background: "#fff",
-      fontSize: "22px",
+      // border: "1px solid #303030",
+      // borderRadius: "100%",
+      // background: "#fff",
+      // fontSize: "22px",
+      border: "none",
+      background: "none",
+      padding: "0",
       color: "#303030",
-      width: "16.67px",
-      height: "16.67px",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
+      // width: "16.67px",
+      // height: "16.67px",
+      // display: "flex",
+      // alignItems: "center",
+      // justifyContent: "center",
       cursor: "pointer",
     },
   },
@@ -212,9 +214,11 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
 
   ".item-role-area": {
     label: {
-      marginTop: "-23px",
+      marginTop: "0",
       fontSize: "12px",
       color: "rgba(0, 0, 0, 0.7)",
+      transform: "none",
+      top: "20px",
     },
 
     input: {
@@ -670,7 +674,7 @@ const handleMovedNewhire = () => {
                     }
                   />
                 </Grid>
-                <Grid className="item-role-area" item xs={3}>
+                <Grid className="selectGrid" item xs={3}>
                 <SelectDepartments
                     title="Title"
                     value={item.title}
@@ -697,7 +701,7 @@ const handleMovedNewhire = () => {
                   />
                 </Grid>
                 <Grid className="selectGrid" item xs={3}>
-                  <SelectDemo
+                <SelectDepartments
                     title="Benefit Percentage"
                     value={item.salaryRate}
                     list={benefit}
@@ -707,9 +711,19 @@ const handleMovedNewhire = () => {
                       })
                     }
                   />
+                  {/* <SelectDemo
+                    title="Benefit Percentage"
+                    value={item.salaryRate}
+                    list={benefit}
+                    receiveValue={(value: any) =>
+                      handleInputChange(index, {
+                        target: { name: "salaryRate", value },
+                      })
+                    }
+                  /> */}
                 </Grid>
                 <Grid item xs={3} className="delete-icon">
-                  <button onClick={() => handleDelete(index)}>-</button>
+                  <button onClick={() => handleDelete(index)}><RemoveCircleOutline /></button>
                 </Grid>
               </Grid>
             ))}

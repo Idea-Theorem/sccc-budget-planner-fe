@@ -2,6 +2,7 @@ import { styled } from "@mui/material/styles";
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import Typography from "@mui/material/Typography";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { Button, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -14,6 +15,17 @@ const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
     position: "relative",
+  },
+
+  ".page-subheader": {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+
+    "h4": {
+      fontSize: "20px",
+      lineHeight: "1.2",
+    },
   },
 
   "& .MuiDataGrid-toolbarContainer": {
@@ -238,15 +250,25 @@ const onCommunityEdit = (data: any) => {
   return (
     <>
       <StyledBox className="mainTableBlock">
+        
+        <Typography className="page-title" variant="h3">
+            HR (Human Resources)
+          </Typography>
+          <Box className="page-subheader">
+              <Typography className="page-title" variant="h4">
+                Title
+              </Typography>
+                <Buttons
+                  variant="contained"
+                  color="primary"
+                  size="medium"
+                  btntext="Add New Title"
+                  startIcon={<AddIcon />}
+                  onClick={handleClick}
+                  className="btn-add-title"
+                /> 
+            </Box>
         {/* <InputSearch placeholder="Search..." /> */}
-        <Buttons
-          variant="contained"
-          color="primary"
-          size="medium"
-          btntext="Add New Title"
-          startIcon={<AddIcon />}
-          onClick={handleClick}
-        /> 
         {center.length == 0 ? "" :
          <StyleDataGrid
         //  rows={center.length == 0 ? [] : center}
