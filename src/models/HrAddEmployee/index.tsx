@@ -4,7 +4,6 @@ import { styled } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
 import { Add, Clear } from "@mui/icons-material"; // Import Clear icon from Material-UI
 import Grid from "@mui/material/Grid"; // Import Grid component from MUI
-import SelectDemo from "../../components/Select";
 import BasicDatePicker from "../../components/DatePicker";
 import { Button } from "@mui/material";
 import Modal from "@mui/material/Modal";
@@ -32,6 +31,7 @@ import StatusModal from "../../components/StatusModal";
 import SelectDepartments from "../../components/SelectDepartment";
 import { getAllBenefit } from "../../services/benefitServices";
 import { getAllRole } from "../../services/roleServices";
+import { RemoveCircleOutline } from "@mui/icons-material"; 
 
 const EmployeeInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
@@ -186,16 +186,19 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
     cursor: "pointer",
 
     button: {
-      border: "1px solid #303030",
-      borderRadius: "100%",
-      background: "#fff",
-      fontSize: "22px",
+      // border: "1px solid #303030",
+      // borderRadius: "100%",
+      // background: "#fff",
+      // fontSize: "22px",
+      border: "none",
+      background: "none",
+      padding: "0",
       color: "#303030",
-      width: "16.67px",
-      height: "16.67px",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
+      // width: "16.67px",
+      // height: "16.67px",
+      // display: "flex",
+      // alignItems: "center",
+      // justifyContent: "center",
       cursor: "pointer",
     },
   },
@@ -216,6 +219,8 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
       marginTop: "-23px",
       fontSize: "12px",
       color: "rgba(0, 0, 0, 0.7)",
+      transform: "none",
+      top: "24px",
     },
 
     input: {
@@ -704,7 +709,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                     }
                   />
                 </Grid>
-                <Grid className="item-role-area" item xs={3}>
+                <Grid className="selectGrid" item xs={3}>
                 <SelectDepartments
                     title="Title"
                     value={item.title}
@@ -731,7 +736,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                   />
                 </Grid>
                 <Grid className="selectGrid" item xs={3}>
-                  <SelectDemo
+                <SelectDepartments
                     title="Benefit Percentage"
                     value={item.salaryRate}
                     list={benefit}
@@ -741,9 +746,19 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                       })
                     }
                   />
+                  {/* <SelectDemo
+                    title="Benefit Percentage"
+                    value={item.salaryRate}
+                    list={benefit}
+                    receiveValue={(value: any) =>
+                      handleInputChange(index, {
+                        target: { name: "salaryRate", value },
+                      })
+                    }
+                  /> */}
                 </Grid>
                 <Grid item xs={3} className="delete-icon">
-                  <button onClick={() => handleDelete(index)}>-</button>
+                  <button onClick={() => handleDelete(index)}><RemoveCircleOutline /></button>
                 </Grid>
               </Grid>
             ))}

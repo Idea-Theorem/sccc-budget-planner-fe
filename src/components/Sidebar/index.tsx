@@ -23,15 +23,43 @@ const SideArea = styled(Box)(({ theme }) => ({
   background: theme.palette.primary.main,
 
   ".full-width": {
-      ".MuiSelect-select": {
-        color: "#fff",
-        fontWeight: 600,
-        textTransform: "capitalize",
-      },
+    padding: "17px 19px",
+
+    ".MuiSelect-select": {
+      color: "#fff",
+      fontWeight: 600,
+      textTransform: "capitalize",
+      paddingLeft: "42px",
+    },
 
     ".MuiSvgIcon-root": {
       color: "#fff",
       top: "calc(50% - 14px)",
+    },
+
+    ".MuiFormLabel-root": {
+      display: "none",
+    },
+  },
+
+  ".selectGrid": {
+    position: "relative",
+
+    ".user-name": {
+      position: "absolute",
+      left: "19px",
+      top: "calc(50% - 1px)",
+      width: "33px",
+      height: "33px",
+      borderRadius: "100%",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      transform: "translate(0, -50%)",
+      background: "#fff",
+      fontSize: "14px",
+      lineHeight: "21px",
+      color: "#000",
     },
   },
 
@@ -129,6 +157,15 @@ const SideArea = styled(Box)(({ theme }) => ({
       "&.active": {
         color: "#fff",
         background: "#676779",
+
+        ".MuiButtonBase-root": {
+            color: "#fff !important",
+        },
+      },
+
+      
+      ".MuiButtonBase-root:not(:hover)": {
+        color: "#303030",
       },
     },
 
@@ -202,9 +239,9 @@ export default function ResponsiveDrawer(props: Props) {
       <Box className="siteLogo">
         <img src={LogoImg} alt="Description image" />
       </Box>
-      <Box>{getCapitalizedFirstLetters(user?.firstname, user?.lastname)}</Box>
 
       <Grid className="selectGrid" item xs={6}>
+        <Box className="user-name">{getCapitalizedFirstLetters(user?.firstname, user?.lastname)}</Box>
         <SelectDemo className="sidebar_select_input"
           title="Department"
           value={currentRole}

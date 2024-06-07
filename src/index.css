@@ -6,6 +6,10 @@
     display: none;
 }
 
+.sidebar_select_input .MuiInputBase-root:after {
+    display: none !important;
+}
+
 .btnLogout {
     bottom: 0;
     left: 0;
@@ -27,14 +31,36 @@
     position: relative;
 }
 
-.customSelect .departmentSelect {
-    top: 0;
-    right: 0;
+.block-selection {
+    position: relative;
+    margin: -35px 0 0;
+}
+.block-selection .departmentSelect  {
+    padding: 0;
+    max-width: 368px;
+    width: 100%;
+    border: none;
+}
+
+.block-selection .departmentSelect  .MuiInputBase-root {
+    width: 100%;
+    font-size: 20px;
+    line-height: 1.2;
+    color: #303030;
+    font-weight: 600;
+}
+
+.block-selection .departmentSelect  .MuiInputBase-root:before {
+}
+
+.departmentSelect {
+    /* top: 100%;
+    left: 0;
     position: absolute;
     border: none;
     width: auto;
     z-index: 5;
-    padding: 3px 0 0;
+    padding: 3px 0 0; */
 }
 
 .createProgramContentHead input {
@@ -57,4 +83,12 @@
 
 .amount_field {
     width: 90px;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.page-title {
+    margin: 0 0 25px;
 }

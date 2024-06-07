@@ -35,6 +35,10 @@ const HrCollapseableTable = styled(Box)(({ theme }) => ({
   "&.dashboardTable": {
     padding: "30px",
 
+    "&.pt-0": {
+      paddingTop: "0",
+    },
+
     "& .MuiPaper-rounded": {
       borderRadius: "0",
       boxShadow: "none",
@@ -325,7 +329,7 @@ export default function HrCollapsibleTable({
   };
   return (
     <>
-      <HrCollapseableTable className="dashboardTable">
+      <HrCollapseableTable className="dashboardTable pt-0">
         <Stack
           direction="row"
           alignItems="center"
@@ -354,7 +358,7 @@ export default function HrCollapsibleTable({
               <TableRow>
                 <TableCell>&nbsp;</TableCell>
                 <TableCell>Employee Name</TableCell>
-                <TableCell>Title</TableCell>
+                <TableCell>Roles</TableCell>
                 <TableCell></TableCell>
                 <TableCell>Hire date</TableCell>
               </TableRow>
