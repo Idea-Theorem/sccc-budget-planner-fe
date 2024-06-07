@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import DropdownButton from "../Button/dropDownButton";
+import zIndex from "@mui/material/styles/zIndex";
 interface SubHeaderProps {
   title?: string;
   onStatusChange?: any 
@@ -37,6 +38,8 @@ const StyledBox = styled(Box)(({ theme }) => ({
     textTransform: "capitalize",
     fontFamily: "Work Sans",
     letterSpacing: "0.4px", 
+    positon: "relative",
+    zIndex: 2,
 
     "&:hover": {
       // background: theme.palette.secondary.main,

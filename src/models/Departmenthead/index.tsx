@@ -23,6 +23,11 @@ const DepartmentModalArea = styled(Box)(({ theme }) => ({
     margin: "0 auto",
     overflow: "auto",
     position: "relative",
+
+    ".MuiCircularProgress-root": {
+      display: "block",
+      margin: "0 auto",
+    },
   },
 
   ".custom-label": {

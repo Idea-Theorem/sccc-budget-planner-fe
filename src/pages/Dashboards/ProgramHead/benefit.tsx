@@ -3,7 +3,7 @@ import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteIcon from "@mui/icons-material/EditNote";
-import { Button, Stack } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import Buttons from "../../../components/Button";
@@ -13,6 +13,17 @@ const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
     position: "relative",
+  },
+
+  ".page-subheader": {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+
+    "h4": {
+      fontSize: "20px",
+      lineHeight: "1.2",
+    },
   },
 
   "& .MuiDataGrid-toolbarContainer": {
@@ -241,15 +252,26 @@ const onCommunityEdit = (data: any) => {
   return (
     <>
       <StyledBox className="mainTableBlock">
+        
+        
+      <Typography className="page-title" variant="h3">
+          HR (Human Resources)
+        </Typography>
         {/* <InputSearch placeholder="Search..." /> */}
-        <Buttons
-          variant="contained"
-          color="primary"
-          size="medium"
-          btntext="Add New benefit"
-          startIcon={<AddIcon />}
-          onClick={handleClick}
-        /> 
+        <Box className="page-subheader">
+          <Typography className="page-title" variant="h4">
+            Benefit Percentage
+          </Typography>
+            <Buttons
+              variant="contained"
+              color="primary"
+              size="medium"
+              btntext="Add New benefit"
+              startIcon={<AddIcon />}
+              onClick={handleClick}
+              className="btn-add-title"
+            /> 
+        </Box>
         {center.length == 0 ? "" :
          <StyleDataGrid
          rows={center.length == 0 ? [] : center}

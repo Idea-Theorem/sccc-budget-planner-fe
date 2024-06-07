@@ -31,6 +31,27 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
       },
     },
   },
+
+  ".MuiTableContainer-root": {
+    margin: "0 0 0 -40px",
+    padding: "0 0 0 40px",
+
+    ".MuiTableCell-root": {
+      position: "relative",
+    },
+
+    ".comment-icon": {
+      position:"absolute",
+      left: "-30px",
+      top: "30px",
+      color: '#048071',
+      cursor: "pointer",
+
+      "svg": {
+        display: "block",
+      }
+    }
+  },
   ".MuiTabs-flexContainer": {
     borderBottom: "1px solid #BFBFBF",
     height: "100%",
@@ -282,7 +303,7 @@ try {
     <>
       <TabsProgramAreas>
         <TableContainer className="programsTableHolder" component={Paper}>
-          <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+          <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table" className="program-table">
             <TableHead>
               <TableRow>
                 <TableCell>Item</TableCell>
@@ -297,7 +318,7 @@ try {
                 >
                 
                   <TableCell component="th" scope="row" onClick={() => {setIsOpen(true);setcurrentExpense(row)}}>
-                    {row?.comments?.length > 0 ? <CommentIcon /> : ""}{ row.name}
+                    {row?.comments?.length > 0 ? <span className="comment-icon"><CommentIcon /></span> : ""}{ row.name}
                   </TableCell>
                   <TableCell align="right" className="input-border">
                     <TextFields className="amount_field"
