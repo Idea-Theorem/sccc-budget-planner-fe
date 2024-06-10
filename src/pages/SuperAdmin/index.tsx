@@ -9,7 +9,7 @@ import { addRandomColor, formatNumber } from "../../utils";
 import moment from "moment";
 import { useAuth } from "../../contexts/AuthContext";
 import SuperAdminBudgetModal from "../../models/SuperAdminBudgetModal";
-import { getSuperAdminTotalbudget } from "../../services/adminServices";
+import { getPrograms, getSuperAdminTotalbudget } from "../../services/adminServices";
 const StyledBox = styled(Box)(() => ({
   "& .dashboardCards": {
     display: "flex",
@@ -21,6 +21,8 @@ const SuperAdminScreen = () => {
   const array = [{ text: "Export" }, { text: "Reset" }];
   const [center, setCenter] = useState([])
   const [isOpen, setIsOpen] = React.useState<any>(false)
+  const [programs, setPrograms] = React.useState<any>({});
+
   const [totalBudget, setTotalBudget] = React.useState<any>("")
 
 
@@ -30,7 +32,16 @@ const SuperAdminScreen = () => {
   useEffect(() => {
     fetchCenter();
     fetchTotalbudget()
+    fetchProgram();
+
   }, []);
+
+  const fetchProgram = async () => {
+    try {
+      const response = await getPrograms();
+      setPrograms(response?.data);
+    } catch (error) {}
+  };
 
   const fetchCenter = async () => {
     try {
@@ -65,7 +76,7 @@ const SuperAdminScreen = () => {
           title="Budget-to-date"
           edit={true}
           total={formatNumber(totalBudget?.total_value ? totalBudget?.total_value :"")}
-          done="$500,000.00"
+          done={formatNumber(programs?.totalApprovedProgrambudget)}
           showProgress={true}
           color="info"
           handleAddclick={() => setIsOpen(true)}
@@ -73,12 +84,15 @@ const SuperAdminScreen = () => {
         />
         <AdminDataCard
           title="Approved Prgs-to-date"
-          total="45 forecast"
-          done="24"
-          edit={true}
+          total={programs.programsCount && programs.programsCount + ' ' + "forecast"}
+          done={programs.approvedCount }
+          edit={false}
           showDollarSign={false}
         />
-        <AdminDataCard showDollarSign={false} title="Completed Dept." total="8" done="4" />
+        <AdminDataCard showDollarSign={false}
+           total={programs.departmentCount}
+           done={programs.approvedDepartmentCount}
+        title="Completed Dept." />
       </Box>
       <SuperAdminBudgetModal open={isOpen} handleClose={handleModalClose} heading="Add Budget" subheading="budegt total" fetchTotalbudget={fetchTotalbudget} totalBudget={totalBudget} placeholder="$ Emter amount"/>
       <AdminDepartmentProgress from="super-admin" center={center}/>

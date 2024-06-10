@@ -73,7 +73,7 @@ const handleModalClose = () => {
           title="Budget-to-date"
           edit={true}
           total={formatNumber(totalBudget?.total_value ? totalBudget?.total_value : "")}
-          done="$500,000.00"
+          done={formatNumber(programs?.totalApprovedProgrambudget)}
           showProgress={true}
           showDollarSign={true}
           color="info"
@@ -81,15 +81,15 @@ const handleModalClose = () => {
         />
         <AdminDataCard
           title="Approved Prgs-to-date"
-          total={programs.programsCount}
+          total={programs.programsCount && programs.programsCount  + ' ' + "forecast"}
           done={programs.approvedCount}
-          edit={true}
+          edit={false}
           showDollarSign={false}
         />
         <AdminDataCard
           title="Completed Dept."
-          total={department.departmentsCount}
-          done={department.approvedCount}
+          total={programs.departmentCount}
+          done={programs.approvedDepartmentCount}
           showDollarSign={false}
         />
       </Box>
