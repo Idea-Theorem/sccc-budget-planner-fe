@@ -87,13 +87,17 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
       if(values?.supply_expense.length == 0){
        obj = {
           ...values,
-          status: Status.DRAFTED,
+          // status: Status.DRAFTED,
           salary_expense: benefits
         };
       }else {
         obj = {...values}
       }
-    
+      // if (singleProgram?.id) {
+      //   await programUpdate(values, singleProgram?.id);
+      // } else {
+      //   await createProgram(values);
+      // }
       try {
         if (singleProgram?.id) {
           await programUpdate(obj, singleProgram?.id);
@@ -260,7 +264,7 @@ try {
   const handleStatausSubmit = async (action: any) => {
     let data = {};
     if (action === "Reject") {
-      data = {
+      data = { 
         progamIds: [singleProgram?.id],
         status: "REJECTED",
       };
@@ -276,7 +280,6 @@ try {
     }
   };
 
- 
 
   const Save = async () => {};
   return (
