@@ -137,8 +137,9 @@ interface HRTableProps {
   row?: any;
   refresh?: any;
   onChange?: any
+  departmentsLoading?: any
 }
-const HRTableComponent: React.FC<HRTableProps> = ({ onEdit, row, refresh, onChange }) => {
+const HRTableComponent: React.FC<HRTableProps> = ({ onEdit, row, refresh, onChange, departmentsLoading }) => {
   const [deleteRow, setDeleteRow] = useState<any>(false);
   const [loading, setLoading] = useState<any>(false);
   const [statusData, setStatusData] = useState<any>(null);
@@ -232,6 +233,7 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit, row, refresh, onChan
       <StyledBox className="mainTableBlock">
         <InputSearch placeholder="Search..." onChange={onChange} />
         <StyleDataGrid
+         loading={departmentsLoading}
           rows={row || []}
           columns={columns}
           initialState={{

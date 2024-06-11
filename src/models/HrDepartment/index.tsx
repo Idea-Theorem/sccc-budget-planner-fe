@@ -161,7 +161,7 @@ const DepartmentInfo: React.FC<IDepartmentInfo> = ({
     enableReinitialize: true,
     initialValues: {
       name: singleDepartments?.name ? singleDepartments?.name : "",
-      center_id: "",
+      center_id: singleDepartments?.center_id ? singleDepartments?.center_id: "",
     },
     onSubmit: async (values) => {
       try {
@@ -180,6 +180,7 @@ const DepartmentInfo: React.FC<IDepartmentInfo> = ({
         }
         formik.resetForm();
         setDingleDepartments(null);
+        setActiveCenter(null)
         handleClose();
       } catch (error: any) {
         setStatusData({
@@ -213,6 +214,18 @@ const DepartmentInfo: React.FC<IDepartmentInfo> = ({
       setCenter(response?.data?.centers);
     } catch (error) {}
   };
+useEffect(() => {
+  if(singleDepartments?.center?.name){
+    setActiveCenter(singleDepartments?.center?.name)
+
+  }
+}, [singleDepartments])
+  const handleCloseModal = () => {
+    formik.resetForm();
+    setDingleDepartments(null);
+    setActiveCenter(null)
+    handleClose();
+  };
 
   return (
     <>
@@ -222,7 +235,7 @@ const DepartmentInfo: React.FC<IDepartmentInfo> = ({
       />
       <Modal
         open={open}
-        onClose={handleClose}
+        onClose={handleCloseModal}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >

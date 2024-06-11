@@ -58,6 +58,7 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
   const [departHeading, setDepartHeading] = useState<string>("");
   const [centerHeading, setCenterHeading] = useState<string>("");
   const [departments, setDepartments] = useState<any>(null);
+  const [departmentsLoading, setDepartmentsLoading] = useState<any>(false);
   const [employee, setEmployee] = useState<any>([]);
   const [newHires, setNewHires] = useState<any>([]);
   const [center, setCenter] = useState<any>(null);
@@ -122,9 +123,14 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
   };
   const fetchDepartments = async (value: string) => {
     try {
+      setDepartmentsLoading(true)
       const response = await getAllDepartments(value);
+      setDepartmentsLoading(false)
       setDepartments(response?.data?.departments);
-    } catch (error) {}
+    } catch (error) {
+      setDepartmentsLoading(false)
+
+    }
   };
 
   const fetchCenters = async (value: string) => {
@@ -243,6 +249,7 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
                   row={departments}
                   refresh={handleCloseDepartmentModal}
                   onChange={handleDepartmentCenters}
+                  departmentsLoading={departmentsLoading}
                 />
                   : tabNames[value] === "Employees"
                   ? <HrCollapsibleTable
