@@ -134,11 +134,13 @@ function Row(props: {
   handleClick: any;
   employeeData?: any;
   handleDelete?: any;
+  loading?: any
+  setIsOpen?: any
+  isOpen?: any
 }) {
-  const { row, handleClick, handleDelete } = props;
+  const { row, handleClick, handleDelete , loading, isOpen, setIsOpen} = props;
   const [open, setOpen] = React.useState(false);
-  const [isOpen, setIsOpen] = React.useState<any>(false);
-  const [loading, setLoading] = React.useState<any>(false);
+  // const [isOpen, setIsOpen] = React.useState<any>(false);
   const [currentRow, setCurrentRow] = React.useState<any>("");
   const [titles, setTitles] = React.useState<any>([]);
 
@@ -146,7 +148,7 @@ function Row(props: {
 
   const closeModel = () => {
     setIsOpen(false);
-    setLoading(false)
+
   };
 
   React.useEffect(() => {
@@ -260,7 +262,7 @@ function Row(props: {
       </TableRow>
       <DeleteModal
         open={isOpen}
-        handleOK={() => handleDelete(currentRow)}
+        handleOK={() => {handleDelete(currentRow)}}
         handleClose={closeModel}
         loading={loading}
         heading="Are you sure you want to delete?"
@@ -293,6 +295,8 @@ export default function HrCollapsibleTable({
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [statusData, setStatusData] = React.useState<any>(null);
+  const [loading, setLoading] = React.useState<any>(false);
+  const [isOpen, setIsOpen] = React.useState<any>(false);
 
   const handleChangePage = (_: unknown, newPage: number) => {
     setPage(newPage);
@@ -307,17 +311,22 @@ export default function HrCollapsibleTable({
 
   const handleDelete = async (data: any) => {
     try {
+      setLoading(true)
       await deleteEmployee(data?.id);
       setStatusData({
         type: "success",
         message: "Employee Deleted Successfully",
       });
       refresh();
+      setLoading(false)
+      setIsOpen(false)
     } catch (error: any) {
       setStatusData({
         type: "error",
         message: error.response.data.message,
       });
+      setLoading(false)
+
     }
   };
 
@@ -373,6 +382,9 @@ export default function HrCollapsibleTable({
                     handleClick={handleClick}
                     employeeData={employeeData}
                     handleDelete={handleDelete}
+                    loading={loading}
+                    setIsOpen={setIsOpen}
+                    isOpen={isOpen}
                   />
                 ))}
             </TableBody>

@@ -58,6 +58,19 @@ const DeleteModal: React.FC<IDeleteModal> = ({
   loading,
   handleOK
 }) => {
+  const handleCloseModal = async () => {
+    if (handleOK) {
+        await handleOK();
+    } else {
+        console.error("handleOK is not defined");
+    }
+
+    // if (handleClose) {
+    //     handleClose();
+    // } else {
+    //     console.error("handleClose is not defined");
+    // }
+};
   return (
     <Modal
       open={typeof open !== 'undefined' && open}
@@ -97,7 +110,7 @@ const DeleteModal: React.FC<IDeleteModal> = ({
               color="primary"
               size="medium"
               startIcon={<Check />}
-              onClick={() => handleOK()}
+              onClick={() => handleCloseModal()}
             >
              {loading ? "Deleting..." : "Yes"} 
             </Button>

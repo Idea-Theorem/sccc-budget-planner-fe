@@ -218,7 +218,7 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
       fontSize: "12px",
       color: "rgba(0, 0, 0, 0.7)",
       transform: "none",
-      top: "20px",
+      top: "0px",
     },
 
     input: {

@@ -249,6 +249,7 @@ const ReviewBudgetScreen = () => {
   const receiveProgramSearch = async (value: string) => {
      await fetchProgram(tabstatus, value)
   }
+
   return (
     <StyledBox className="appContainer">
       <MainHeaderComponent
@@ -265,8 +266,8 @@ const ReviewBudgetScreen = () => {
           { title: "Pending" },
           { title: "Approved" },
           { title: "Rejected" },
-          { title: "Drafts" },
-          { title: "History" },
+          // { title: "Drafts" },
+          // { title: "History" },
         ]}
         table={tableColumnsTitleArray}
         row={departmentList?.departments}

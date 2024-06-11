@@ -295,8 +295,8 @@ try {
           { title: "Pending" },
           { title: "Approved" },
           { title: "Rejected" },
-          { title: "Drafts" },
-          { title: "History" },
+          // { title: "Drafts" },
+          // { title: "History" },
         ]}
         table={tableColumnsTitleArray}
         row={center}

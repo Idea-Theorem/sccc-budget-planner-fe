@@ -280,7 +280,7 @@ const PHProgramsScreen = () => {
           { title: "Approved" },
           { title: "Rejected" },
           { title: "Drafts" },
-          { title: "History" },
+          // { title: "History" },
         ]}
         setTabstatus={setTabstatus}
         table={tableColumnsTitleArray}
