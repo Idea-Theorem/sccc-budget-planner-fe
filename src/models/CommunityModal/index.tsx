@@ -157,11 +157,16 @@ const CommunityModal: React.FC<IDepartmentInfo> = ({
   });
 
   const { values, handleChange, isSubmitting, errors, handleSubmit } = formik;
-
+const handlemodalclose = () => {
+  formik.resetForm();
+  setSingleCenter(null);
+  handleClose()
+  
+}
   return (
     <Modal
       open={open}
-      onClose={handleClose}
+      onClose={handlemodalclose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
@@ -174,7 +179,8 @@ const CommunityModal: React.FC<IDepartmentInfo> = ({
           <Grid container spacing={4}>
             <Grid item xs={12}>
               <TextField
-                variant="standard"
+               error={errors?.name ? true : false}
+                variant="standard" 
                 label="Center Name"
                 value={values.name}
                 name="name"
