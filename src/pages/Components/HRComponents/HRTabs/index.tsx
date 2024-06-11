@@ -50,6 +50,7 @@ interface TabProps {
 const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
   const [value, setValue] = React.useState(0);
   const [isOpen, setIsopen] = useState(false);
+
   const [isNewhireOpen, setIsNewhireopen] = useState(false);
   const [isDepartOpen, setIsDepartopen] = useState(false);
   const [isCommunityOpen, setCommunityModal] = useState(false);
@@ -150,7 +151,9 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
   const fetchNewHires = async () => {
     try {
       const response = await getNewhires();
-      setNewHires(response?.data)
+      const users = response?.data?.filter((item: any) => item?.emp_id)
+
+      setNewHires(users)
     } catch (error) {}
   };
   const handleSearchCenters = async (e: any) => {
@@ -174,6 +177,14 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
     fetchEmployee("");
     fetchNewHires()
   }, []);
+
+  useEffect(() => {
+    if(value == 0 || value == 1){
+      fetchEmployee("");
+      fetchNewHires()
+    }
+
+  },[value])
 
 
   return (

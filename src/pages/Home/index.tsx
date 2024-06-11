@@ -462,7 +462,7 @@ const HomeScreen = () => {
               { title: "Rejected" },
               { title: "Approved" },
               { title: "Drafts" },
-              { title: "History" },
+              // { title: "History" },
             ]}
             table={tableColumnsTitleArray}
           />

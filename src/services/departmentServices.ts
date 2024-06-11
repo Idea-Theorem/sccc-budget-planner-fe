@@ -7,6 +7,12 @@ const getAllDepartments = async (value: string) => {
   const modifyName = typeof value === "undefined" ? "" : value;
   return await HTTP_CLIENT.get(`/department?name=${modifyName}`);
 };
+
+const getAllDepartmentsByUser = async () => {
+  return await HTTP_CLIENT.get(`/department/by-user/department`);
+};
+
+
 const getSingleDepartments = async (id: any) => {
   return await HTTP_CLIENT.post("/department/update-status", id);
 };
@@ -34,6 +40,7 @@ const fetchEmployeeInDepartments = async (id: string) => {
 
 export {
   departmentCount,
+  getAllDepartmentsByUser,
   getSingleDepartments,
   getAllDepartments,
   createDepartment,

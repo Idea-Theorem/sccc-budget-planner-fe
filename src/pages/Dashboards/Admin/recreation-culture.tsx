@@ -20,7 +20,7 @@ const RecreationAndCultureScreen = ({}: any) => {
     [
       {
         field: "name",
-        headerName: "Department Name",
+        headerName: "Program Name",
         sortable: false,
         editable: false,
         flex: 1,
@@ -219,8 +219,8 @@ const RecreationAndCultureScreen = ({}: any) => {
           { title: "Pending" },
           { title: "Approved" },
           { title: "Rejected" },
-          { title: "Drafts" },
-          { title: "History" },
+          // { title: "Drafts" },
+          // { title: "History" },
         ]}
         table={tableColumnsTitleArray}
         row={singleDepart}

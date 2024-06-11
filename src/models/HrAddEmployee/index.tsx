@@ -721,7 +721,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                   {/* <TextFields
                     variant="standard"
                     label="Title"
-                    value={item.title}
+                    value={item.title} 
                     name="title"
                     onChange={(e: any) => handleInputChange(index, e)}
                   /> */}

@@ -7,7 +7,7 @@ import { Grid } from "../../pages/Components/MUIComponents/index";
 import TabsProgramArea from "../TabsProgram";
 import { ActionsType } from "../../types/common";
 import Buttons from "../Button";
-import { fetchEmployeeInDepartments, getAllDepartments } from "../../services/departmentServices";
+import { fetchEmployeeInDepartments, getAllDepartmentsByUser } from "../../services/departmentServices";
 import { useEffect, useState } from "react";
 import Status, { ProgramCode } from "../../utils/dumpData";
 import { useFormik } from "formik";
@@ -139,7 +139,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
 
   const fetchDepartments = async () => {
     try {
-      const response = await getAllDepartments("");
+      const response = await getAllDepartmentsByUser();
       setDepartments(response?.data?.departments);
     } catch (error) {}
   };

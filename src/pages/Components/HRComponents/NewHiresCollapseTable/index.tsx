@@ -17,7 +17,7 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
-import { deleteEmployee } from "../../../../services/employeeServices";
+import { DeleteNewhire } from "../../../../services/employeeServices";
 import { SaveAlt, Search } from "@mui/icons-material";
 import * as XLSX from "xlsx";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -134,11 +134,13 @@ function Row(props: {
   handleClick: any;
   employeeData?: any;
   handleDelete?: any;
+  setIsOpen?: any
+  isOpen?: any
+  loading?: any
 }) {
-  const { row, handleClick, handleDelete } = props;
+  const { row, handleClick, handleDelete, isOpen ,setIsOpen, loading} = props;
   const [open, setOpen] = React.useState(false);
-  const [isOpen, setIsOpen] = React.useState<any>(false);
-  const [loading, setLoading] = React.useState<any>(false);
+  // const [isOpen, setIsOpen] = React.useState<any>(false);
   const [currentRow, setCurrentRow] = React.useState<any>("");
   const [titles, setTitles] = React.useState<any>([]);
 
@@ -146,7 +148,6 @@ function Row(props: {
 
   const closeModel = () => {
     setIsOpen(false);
-    setLoading(false)
   };
 
   React.useEffect(() => {
@@ -292,6 +293,8 @@ export default function NewHiresCollapsibleTable({
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [statusData, setStatusData] = React.useState<any>(null);
+  const [isOpen, setIsOpen] = React.useState<any>(false);
+  const [loading, setLoading] = React.useState<any>(false);
 
   const handleChangePage = (_: unknown, newPage: number) => {
     setPage(newPage);
@@ -306,17 +309,22 @@ export default function NewHiresCollapsibleTable({
 
   const handleDelete = async (data: any) => {
     try {
-      await deleteEmployee(data?.id);
+      setLoading(true)
+     await DeleteNewhire(data?.otherinfo?.program_id, data?.emp_id)
+     
+     await refresh();
+      setLoading(false)
+      setIsOpen(false)
       setStatusData({
         type: "success",
-        message: "Employee Deleted Successfully",
+        message: "New hires Deleted Successfully",
       });
-      refresh();
     } catch (error: any) {
       setStatusData({
         type: "error",
         message: error.response.data.message,
       });
+      setLoading(false)
     }
   };
 
@@ -372,6 +380,9 @@ export default function NewHiresCollapsibleTable({
                     handleClick={handleClick}
                     employeeData={employeeData}
                     handleDelete={handleDelete}
+                    setIsOpen={setIsOpen}
+                    isOpen={isOpen}
+                    loading={loading}
                   />
                 ))}
             </TableBody>
