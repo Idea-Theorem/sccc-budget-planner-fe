@@ -8,6 +8,7 @@ import { getAllBenefit } from "../../services/benefitServices";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { v4 as uuidv4 } from "uuid";
+import { calculateAmount } from "../../utils";
 
 
 const EmployeeInfoArea = styled(Box)(({  }) => ({
@@ -336,7 +337,8 @@ const EmployeeInfoArea = styled(Box)(({  }) => ({
 
 export default function TabsNewHire({employee, formik}: any) {
 
-  const [benefit, setBenefit] = useState([])
+  const [benefit, setBenefit] = useState<any>([])
+  const [salary, setSalary] = useState<any>([])
   const [formData, setFormData] = useState([ 
     {
       emp_id: uuidv4(),
@@ -348,7 +350,6 @@ export default function TabsNewHire({employee, formik}: any) {
       amount: "",
     },
   ]);
-
   const handleAddRecord = () => {
     setFormData([
       ...formData,
@@ -363,6 +364,10 @@ export default function TabsNewHire({employee, formik}: any) {
       },
     ]);
   };
+  useEffect(() => {
+   const response =  calculateAmount(formData)
+   setSalary(response)
+  }, [formData])
   function calculateTotalAmount(employees: any) {
     return employees.reduce((total: any, employee: any) => {
       const amount = parseFloat(employee.amount ? employee.amount.replace('$', '') : 0);
@@ -377,11 +382,22 @@ export default function TabsNewHire({employee, formik}: any) {
 
   const handleInputChange = (index: any, name: any, value: any) => {
     const newFormData: any = [...formData];
-    if (name === 'amount' || name === 'hourlyRate') {
+    if ( name === 'hourlyRate') {
       if (!value.startsWith('$')) {
         value = '$' + value;
       }
+    } else if (name === 'hoursPerWeek') {
+      // Remove any existing 'h' and append 'h' correctly
+      value = value.replace(/h/g, '') + 'h';
+    } else if (name === 'workingWeeks') {
+      // Remove any existing 'w' and append 'w' correctly
+      value = value.replace(/w/g, '') + 'w';
     }
+    // if (name === 'amount' || name === 'hourlyRate') {
+    //   if (!value.startsWith('$')) {
+    //     value = '$' + value;
+    //   }
+    // }
     newFormData[index][name] = value;
     setFormData(newFormData);
   };
@@ -402,6 +418,8 @@ try {
       ...item,
       amount: item.amount.replace('$', ''),
       hourlyRate: item.hourlyRate.replace('$', ''),
+      hoursPerWeek: item.hoursPerWeek.replace('h', ''),
+      workingWeeks: item.workingWeeks.replace('w', ''),
     }));
   };
 
@@ -410,8 +428,8 @@ try {
     if(!formData?.[0].employee){
       return
     }
-    formik.setFieldValue('employee', cleanFormDataForFormik(formData));
-  },[formData])
+    formik.setFieldValue('employee', cleanFormDataForFormik(salary));
+  },[salary])
 
   return (
     <EmployeeInfoArea>
@@ -427,7 +445,7 @@ try {
           </tr>
         </thead>
         <tbody>
-            {formData.map((record, index) => (
+            {salary.map((record:any, index:any) => (
               <tr key={index}>
                 <td>
                   <Box className="select-holder large">
@@ -493,9 +511,9 @@ try {
                     name="amount"
                     size="small"
                     value={record.amount}
-                    onChange={(e: any) =>
-                      handleInputChange(index, "amount", e.target.value)
-                    }
+                    // onChange={(e: any) =>
+                    //   handleInputChange(index, "amount", e.target.value)
+                    // }
                   />
                   {index === formData.length - 1 ? (
                   <span onClick={handleAddRecord} className="add-item">
@@ -527,7 +545,7 @@ try {
         <tfoot>
           <tr>
             <td colSpan={3}>Total Expense <br />(Salary & Benefits)</td>
-            <td colSpan={3}>${calculateTotalAmount(formData)}</td>
+            <td colSpan={3}>${calculateTotalAmount(salary)?.toFixed(2)}</td>
           </tr>
         </tfoot>
       </table>

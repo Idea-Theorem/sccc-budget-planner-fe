@@ -6,7 +6,8 @@ import ProgramProgress from "./programProgress";
 import DepartmentButton from "./departmentButton";
 import React, { useEffect } from "react";
 import { getDepartmentInCenters } from "../../services/centersServices";
-import { calculateTotalsProgramExpense } from "../../utils";
+import { calculatePercentage, calculateTotalAmountForAdmin, calculateTotalsProgramExpense } from "../../utils";
+import { getProgramInDepartments } from "../../services/departmentServices";
 
 const StyledBox = styled(Box)(() => ({
   "&.dashboardStatsCard": {
@@ -71,9 +72,11 @@ const StyledBox = styled(Box)(() => ({
 const AdminDepartmentProgress = ({ department , from, center}: any) => {
   const [rowData, setRowData] = React.useState<any>([]);
   const [departmentInCenter, setDepartmentInCenter] = React.useState<any>([]);
+  const [totalPrograms, setTotalPrograms] = React.useState<any>('')
+  const [totalDepartment, setTotalDepartment] = React.useState<any>('')
   useEffect(() => {
     if (department?.length !== 0 && typeof department !== "undefined") {
-      setRowData(department[0]?.Program);
+      fetchProgramInDepartments(department?.[0].id)
     }
   }, [department]);
 
@@ -86,15 +89,27 @@ const AdminDepartmentProgress = ({ department , from, center}: any) => {
   const fetchDepartmentInCenters = async (id: any) => {
 try {
   const response = await getDepartmentInCenters(id)
-  setDepartmentInCenter(response?.data?.center)
+  setDepartmentInCenter(response?.data?.center?.department)
+  setTotalDepartment(response?.data?.center?.totalDepartmentBudget)
 } catch (error) {
   
 }
   }
 
+  const fetchProgramInDepartments = async (id: any) => {
+    try {
+      const response = await getProgramInDepartments(id)
+      setRowData(response?.data?.departments)
+      const res = calculateTotalAmountForAdmin(response?.data?.departments)
+         setTotalPrograms(Number(res))
+    } catch (error) {
+      
+    }
+  }
+
   return (
     <StyledBox className="dashboardStatsCard">
-      <Typography variant="h3">Department %</Typography>
+      <Typography variant="h3">{from == 'super-admin' ? 'Organizations' : 'Department %'} </Typography>
       {from == "super-admin" ?
         <Box className="tagsList">
         {center?.map((e: any, index: any) => (
@@ -113,37 +128,47 @@ try {
             key={index}
             text={e?.name}
             color={e?.color}
-            handleBtnClick={() => setRowData(e?.Program)}
+            handleBtnClick={() => fetchProgramInDepartments(e?.id)}
           />
         ))}
       </Box>
       }
     
       <Box className="dashboardGraphsBlock">
+      {from == "super-admin" ? 
         <Box className="dashboardGraphBox">
-          <BasicPie />
-        </Box>
+        <BasicPie  data={[]}/>
+      </Box>
+      : 
+      <Box className="dashboardGraphBox">
+      <BasicPie data={department} />
+    </Box>
+      }
+      
         {from == "super-admin" ?
          <Box className="dashboardGraphsList">
+          {totalDepartment}
          {departmentInCenter?.map((e: any) => (
-           <Box color={"#3B00ED"} className="progress-wrap">
+           <Box color={e.color} className="progress-wrap">
              <ProgramProgress
                title={e?.name}
-               amount="$00.000"
-               value={52}
+               amount={e?.totalAmount}
+               value={calculatePercentage(e?.totalAmount ,totalDepartment) }
                color="inherit"
+              
              />
            </Box>
          ))}
        </Box>
         :
          <Box className="dashboardGraphsList">
+          {totalPrograms}
          {rowData?.map((e: any) => (
-           <Box color={"#3B00ED"} className="progress-wrap">
+           <Box color={e?.color} className="progress-wrap">
              <ProgramProgress
                title={e?.name}
                amount={calculateTotalsProgramExpense(e)}
-               value={52}
+               value={calculatePercentage(calculateTotalsProgramExpense(e),totalPrograms) }
                color="inherit"
              />
            </Box>

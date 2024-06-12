@@ -8,7 +8,7 @@ import React, { useEffect } from "react";
 import { getDepartment, getPrograms, getTotalbudget } from "../../../services/adminServices";
 import { useAuth } from "../../../contexts/AuthContext";
 import moment from "moment";
-import { addRandomColor, formatNumber } from "../../../utils";
+import { formatNumber } from "../../../utils";
 import BudgetModal from "../../../models/Budgetmodal";
 const StyledBox = styled(Box)(() => ({
   "& .dashboardCards": {
@@ -41,8 +41,7 @@ const AdminScreen = () => {
   const fetchDepartment = async () => {
     try {
       const response = await getDepartment();
-      const coloredArray = addRandomColor(response?.data?.departments)
-      setDepartment(coloredArray);
+      setDepartment(response?.data?.departments);
     } catch (error) {}
   };
 

@@ -7,7 +7,7 @@ import { Clear } from "@mui/icons-material"; // Import Clear icon from Material-
 import Grid from "@mui/material/Grid"; // Import Grid component from MUI
 import Modal from "@mui/material/Modal";
 import { useFormik } from "formik";
-import { createCentresSchema } from "../../utils/yupSchema";
+import { createBudgetSchema } from "../../utils/yupSchema";
 import { TextField } from "@mui/material";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import {  updateTotalbudget } from "../../services/adminServices";
@@ -140,7 +140,7 @@ const BudgetModal: React.FC<IDepartmentInfo> = ({
 }) => {
   const formik = useFormik<any>({
     validateOnBlur: false,
-    validationSchema: createCentresSchema,
+    validationSchema: createBudgetSchema,
     enableReinitialize: true,
     initialValues: {
       value: totalBudget?.total_value ? totalBudget?.total_value : "",

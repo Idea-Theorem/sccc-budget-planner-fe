@@ -92,3 +92,9 @@ export const createCentresSchema = yup.object().shape({
     .string()
     .required("Center name is required!"),
 })
+
+export const createBudgetSchema = yup.object().shape({
+  value: yup
+    .string()
+    .required("Amount is required!"),
+})

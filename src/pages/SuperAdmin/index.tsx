@@ -5,7 +5,7 @@ import AdminDataCard from "../../components/AdminDataCard";
 import AdminDepartmentProgress from "../../components/AdminDepartentProgress";
 import { getAllCenters } from "../../services/centersServices";
 import React, { useEffect, useState } from "react";
-import { addRandomColor, formatNumber } from "../../utils";
+import { formatNumber } from "../../utils";
 import moment from "moment";
 import { useAuth } from "../../contexts/AuthContext";
 import SuperAdminBudgetModal from "../../models/SuperAdminBudgetModal";
@@ -46,8 +46,7 @@ const SuperAdminScreen = () => {
   const fetchCenter = async () => {
     try {
       const response = await getAllCenters("");
-      const coloredArray = addRandomColor(response?.data?.centers)
-      setCenter(coloredArray)
+      setCenter(response?.data?.centers)
     } catch (error) {}
   };
   const fetchTotalbudget = async () => {
@@ -90,9 +89,9 @@ const SuperAdminScreen = () => {
           showDollarSign={false}
         />
         <AdminDataCard showDollarSign={false}
-           total={programs.departmentCount}
-           done={programs.approvedDepartmentCount}
-        title="Completed Dept." />
+           total={programs.totalCenters}
+           done={programs.approvedcenters}
+        title="Completed Org." />
       </Box>
       <SuperAdminBudgetModal open={isOpen} handleClose={handleModalClose} heading="Add Budget" subheading="budegt total" fetchTotalbudget={fetchTotalbudget} totalBudget={totalBudget} placeholder="$ Emter amount"/>
       <AdminDepartmentProgress from="super-admin" center={center}/>
