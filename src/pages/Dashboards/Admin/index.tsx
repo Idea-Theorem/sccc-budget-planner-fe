@@ -21,6 +21,7 @@ const AdminScreen = () => {
   const array = [{ text: "Export" }, { text: "Reset" }];
   const [programs, setPrograms] = React.useState<any>({});
   const [department, setDepartment] = React.useState<any>([]);
+  const [departmentLoading, setDepartmentLoading] = React.useState<any>(false);
   const [isOpen, setIsOpen] = React.useState<any>(false)
   const [totalBudget, setTotalBudget] = React.useState<any>("")
   const { user } = useAuth();
@@ -40,9 +41,13 @@ const AdminScreen = () => {
 
   const fetchDepartment = async () => {
     try {
+      setDepartmentLoading(true)
       const response = await getDepartment();
       setDepartment(response?.data?.departments);
-    } catch (error) {}
+      setDepartmentLoading(false)
+    } catch (error) {
+      setDepartmentLoading(false)
+    }
   };
 
   const fetchTotalbudget = async () => {
@@ -93,7 +98,7 @@ const handleModalClose = () => {
         />
       </Box>
       <BudgetModal fetchTotalbudget={fetchTotalbudget} totalBudget={totalBudget} placeholder="$ Emter amount" open={isOpen} handleClose={handleModalClose} heading="Add Budget" subheading="budegt total"/>
-      <AdminDepartmentProgress department={department} from="admin"/>
+      <AdminDepartmentProgress department={department} loading={departmentLoading} from="admin"/>
       <CollapsibleTable />
     </StyledBox>
   );

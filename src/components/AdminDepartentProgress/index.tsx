@@ -8,6 +8,7 @@ import React, { useEffect } from "react";
 import { getDepartmentInCenters } from "../../services/centersServices";
 import { calculatePercentage, calculateTotalAmountForAdmin, calculateTotalsProgramExpense } from "../../utils";
 import { getProgramInDepartments } from "../../services/departmentServices";
+import { CircularProgress } from "@mui/material";
 
 const StyledBox = styled(Box)(() => ({
   "&.dashboardStatsCard": {
@@ -69,50 +70,61 @@ const StyledBox = styled(Box)(() => ({
   },
 }));
 
-const AdminDepartmentProgress = ({ department , from, center}: any) => {
+const AdminDepartmentProgress = ({ department ,loading, from, center}: any) => {
   const [rowData, setRowData] = React.useState<any>([]);
+  const [rowDataLoading, setRowDataLoading] = React.useState<any>(false);
   const [departmentInCenter, setDepartmentInCenter] = React.useState<any>([]);
+  const [departmentInCenterLoading, setDepartmentInCenterLoading] = React.useState<any>(false);
   const [totalPrograms, setTotalPrograms] = React.useState<any>('')
   const [totalDepartment, setTotalDepartment] = React.useState<any>('')
   useEffect(() => {
     if (department?.length !== 0 && typeof department !== "undefined") {
-      fetchProgramInDepartments(department?.[0].id)
+      if(department?.[0].id){
+        fetchProgramInDepartments(department?.[0].id)
+      }
     }
   }, [department]);
 
   useEffect(() => {
-    if (department?.length !== 0 && typeof center !== "undefined") {
-      fetchDepartmentInCenters(center[0]?.id)
+    if (center?.length !== 0 && typeof center !== "undefined") {
+      if(center[0]?.id){
+        fetchDepartmentInCenters(center[0]?.id)
+      }
     }
   }, [center]);
   
   const fetchDepartmentInCenters = async (id: any) => {
 try {
+  setDepartmentInCenterLoading(true)
   const response = await getDepartmentInCenters(id)
   setDepartmentInCenter(response?.data?.center?.department)
   setTotalDepartment(response?.data?.center?.totalDepartmentBudget)
+  setDepartmentInCenterLoading(false)
 } catch (error) {
+  setDepartmentInCenterLoading(false)
   
 }
   }
 
   const fetchProgramInDepartments = async (id: any) => {
     try {
+      setRowDataLoading(true)
       const response = await getProgramInDepartments(id)
       setRowData(response?.data?.departments)
       const res = calculateTotalAmountForAdmin(response?.data?.departments)
-         setTotalPrograms(Number(res))
+      setTotalPrograms(Number(res))
+      setRowDataLoading(false)
     } catch (error) {
-      
+      setRowDataLoading(false)
     }
   }
-
+console.log("departmentInCenterLoading:::::::", departmentInCenterLoading)
   return (
     <StyledBox className="dashboardStatsCard">
       <Typography variant="h3">{from == 'super-admin' ? 'Organizations' : 'Department %'} </Typography>
       {from == "super-admin" ?
         <Box className="tagsList">
-        {center?.map((e: any, index: any) => (
+        {loading  ? <CircularProgress/> : center?.map((e: any, index: any) => (
           <DepartmentButton
             key={index}
             text={e?.name}
@@ -123,7 +135,7 @@ try {
       </Box>
       : 
         <Box className="tagsList">
-        {department?.map((e: any, index: any) => (
+        {loading ?  <CircularProgress/> : department?.map((e: any, index: any) => (
           <DepartmentButton
             key={index}
             text={e?.name}
@@ -137,7 +149,7 @@ try {
       <Box className="dashboardGraphsBlock">
       {from == "super-admin" ? 
         <Box className="dashboardGraphBox">
-        <BasicPie  data={[]}/>
+        <BasicPie  data={center}/>
       </Box>
       : 
       <Box className="dashboardGraphBox">
@@ -148,7 +160,7 @@ try {
         {from == "super-admin" ?
          <Box className="dashboardGraphsList">
           {totalDepartment}
-         {departmentInCenter?.map((e: any) => (
+         {departmentInCenterLoading && departmentInCenter.length == 0 ? <CircularProgress/>  :  departmentInCenter?.map((e: any) => (
            <Box color={e.color} className="progress-wrap">
              <ProgramProgress
                title={e?.name}
@@ -163,7 +175,7 @@ try {
         :
          <Box className="dashboardGraphsList">
           {totalPrograms}
-         {rowData?.map((e: any) => (
+         {rowDataLoading && rowData?.length == 0 ? <CircularProgress/> :  rowData?.map((e: any) => (
            <Box color={e?.color} className="progress-wrap">
              <ProgramProgress
                title={e?.name}

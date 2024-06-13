@@ -20,6 +20,7 @@ const StyledBox = styled(Box)(() => ({
 const SuperAdminScreen = () => {
   const array = [{ text: "Export" }, { text: "Reset" }];
   const [center, setCenter] = useState([])
+  const [centerLoading, setCenterLoading] = useState<boolean>(false)
   const [isOpen, setIsOpen] = React.useState<any>(false)
   const [programs, setPrograms] = React.useState<any>({});
 
@@ -45,9 +46,13 @@ const SuperAdminScreen = () => {
 
   const fetchCenter = async () => {
     try {
+      setCenterLoading(true)
       const response = await getAllCenters("");
       setCenter(response?.data?.centers)
-    } catch (error) {}
+      setCenterLoading(false)
+    } catch (error) {
+      setCenterLoading(false)
+    }
   };
   const fetchTotalbudget = async () => {
     try {
@@ -94,7 +99,7 @@ const SuperAdminScreen = () => {
         title="Completed Org." />
       </Box>
       <SuperAdminBudgetModal open={isOpen} handleClose={handleModalClose} heading="Add Budget" subheading="budegt total" fetchTotalbudget={fetchTotalbudget} totalBudget={totalBudget} placeholder="$ Emter amount"/>
-      <AdminDepartmentProgress from="super-admin" center={center}/>
+      <AdminDepartmentProgress from="super-admin" center={center} loading={centerLoading}/>
     </StyledBox>
   );
 };
