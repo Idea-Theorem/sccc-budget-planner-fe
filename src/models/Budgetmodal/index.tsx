@@ -7,11 +7,10 @@ import { Clear } from "@mui/icons-material"; // Import Clear icon from Material-
 import Grid from "@mui/material/Grid"; // Import Grid component from MUI
 import Modal from "@mui/material/Modal";
 import { useFormik } from "formik";
-import { createBudgetSchema } from "../../utils/yupSchema";
+import * as yup from "yup"
 import { TextField } from "@mui/material";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import {  updateTotalbudget } from "../../services/adminServices";
-
 const DepartmentInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
   width: "100%",
@@ -127,6 +126,7 @@ interface IDepartmentInfo {
   placeholder?: any;
   totalBudget?: any
   fetchTotalbudget?: any
+  approvedBudget?: any
 }
 
 const BudgetModal: React.FC<IDepartmentInfo> = ({
@@ -136,8 +136,15 @@ const BudgetModal: React.FC<IDepartmentInfo> = ({
   open,
   totalBudget,
   placeholder,
-  fetchTotalbudget
+  fetchTotalbudget,
+  approvedBudget
 }) => {
+  const createBudgetSchema = yup.object().shape({
+    value: yup
+      .number()
+      .min(approvedBudget, `Value must be at least ${approvedBudget}`)
+      .required("Amount is required!"),
+  })
   const formik = useFormik<any>({
     validateOnBlur: false,
     validationSchema: createBudgetSchema,
@@ -178,6 +185,7 @@ const BudgetModal: React.FC<IDepartmentInfo> = ({
           <Grid container spacing={4}>
             <Grid item xs={12}>
               <TextField
+              
                 variant="standard"
                 label={placeholder}
                 value={values.value}
@@ -223,6 +231,7 @@ const BudgetModal: React.FC<IDepartmentInfo> = ({
           </Stack>
         </Stack>
       </DepartmentInfoArea>
+    
     </Modal>
   );
 };

@@ -97,7 +97,7 @@ const handleModalClose = () => {
           showDollarSign={false}
         />
       </Box>
-      <BudgetModal fetchTotalbudget={fetchTotalbudget} totalBudget={totalBudget} placeholder="$ Emter amount" open={isOpen} handleClose={handleModalClose} heading="Add Budget" subheading="budegt total"/>
+      <BudgetModal approvedBudget={programs?.totalApprovedProgrambudget} fetchTotalbudget={fetchTotalbudget} totalBudget={totalBudget} placeholder="$ Emter amount" open={isOpen} handleClose={handleModalClose} heading="Add Budget" subheading="budegt total"/>
       <AdminDepartmentProgress department={department} loading={departmentLoading} from="admin"/>
       <CollapsibleTable />
     </StyledBox>

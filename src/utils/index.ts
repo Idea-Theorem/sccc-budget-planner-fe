@@ -121,10 +121,12 @@ export const calculateAmount = (formData: any) => {
     // Apply the benefit percentage
     let benefitAmount = totalPay * (benefitPercentage / 100);
 
+    let total = Number(benefitAmount) + Number(totalPay)
+
     // Update the amount field with the calculated benefit amount
     return {
       ...employee,
-      amount: '$' + benefitAmount.toFixed(2), // rounding to 2 decimal places and adding dollar sign
+      amount: '$' + total.toFixed(2), // rounding to 2 decimal places and adding dollar sign
     };
   });
   return updatedFormData
