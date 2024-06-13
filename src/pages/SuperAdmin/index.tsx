@@ -98,7 +98,7 @@ const SuperAdminScreen = () => {
            done={programs.approvedcenters}
         title="Completed Org." />
       </Box>
-      <SuperAdminBudgetModal open={isOpen} handleClose={handleModalClose} heading="Add Budget" subheading="budegt total" fetchTotalbudget={fetchTotalbudget} totalBudget={totalBudget} placeholder="$ Emter amount"/>
+      <SuperAdminBudgetModal approvedBudget={programs?.totalApprovedProgrambudget}  open={isOpen} handleClose={handleModalClose} heading="Add Budget" subheading="budegt total" fetchTotalbudget={fetchTotalbudget} totalBudget={totalBudget} placeholder="$ Emter amount"/>
       <AdminDepartmentProgress from="super-admin" center={center} loading={centerLoading}/>
     </StyledBox>
   );

@@ -118,7 +118,6 @@ try {
       setRowDataLoading(false)
     }
   }
-console.log("departmentInCenterLoading:::::::", departmentInCenterLoading)
   return (
     <StyledBox className="dashboardStatsCard">
       <Typography variant="h3">{from == 'super-admin' ? 'Organizations' : 'Department %'} </Typography>
