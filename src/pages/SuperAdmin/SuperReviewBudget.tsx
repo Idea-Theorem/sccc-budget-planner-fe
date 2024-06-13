@@ -246,7 +246,7 @@ const SuperReviewBudget = () => {
     setCurrentTitle(row.name)
     try {
       const res = await getDepartmentInCenters(row?.id)
-      setCenters(res?.data?.center)
+      setCenters(res?.data?.center?.department)
       setStep(1)
     } catch (error) {
       

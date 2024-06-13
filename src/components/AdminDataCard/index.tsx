@@ -5,6 +5,7 @@ import { styled } from "@mui/material/styles";
 
 import LinearWithValueLabel from "../ProgressBar";
 import { LinearProgressProps } from "@mui/material";
+import { calculatePercentage } from "../../utils";
 interface AdminDataCardProps {
   title?: string;
   edit?: boolean;
@@ -149,7 +150,7 @@ const AdminDataCard = (props: AdminDataCardProps) => {
       </Stack>
       {props?.showProgress && (
         <Box className="cardProgressBar">
-          <LinearWithValueLabel value={50} color={props?.color} />
+          <LinearWithValueLabel value={calculatePercentage(props?.done ? props?.done : 0, props?.total ? props?.total : 0)} color={props?.color} />
         </Box>
       )}
     </StyledBox>

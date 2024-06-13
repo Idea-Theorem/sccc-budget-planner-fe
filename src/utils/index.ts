@@ -89,13 +89,10 @@ export const formatNumber = (input: any) => {
   if (!input) {
     return 0;
   }
-  // Parse the input string to a float
   let number = parseFloat(input);
 
-  // Ensure the number has two decimal places
   let formattedNumber = number.toFixed(2);
 
-  // Add commas as thousand separators
   formattedNumber = formattedNumber.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
   return formattedNumber;
@@ -108,14 +105,51 @@ export const calculateTotalsProgramExpense = (data: any) => {
   return incomeTotal + supplyExpenseTotal;
 };
 
-// function calculateTotal(data: any) {
-//   let totalIncome = data.reduce((acc: any, curr: any) => {
-//     return acc + curr.income.reduce((sum: any, item: any) => sum + item.amount, 0);
-//   }, 0);
+export const calculateAmount = (formData: any) => {
+  const updatedFormData = formData.map((employee: any) => {
+    // Convert hourlyRate from string to number and remove the dollar sign
+    let hourlyRate = parseFloat(employee.hourlyRate.replace('$', '')) || 0;
 
-//   let totalExpense = data.reduce((acc: any, curr: any) => {
-//     return acc + curr.supply_expense.reduce((sum: any, item: any) => sum + item.amount, 0);
-//   }, 0);
+    // Convert other fields to numbers, removing 'h' and 'w' and defaulting to 0 if NaN
+    let hoursPerWeek = parseFloat(employee.hoursPerWeek.replace('h', '')) || 0;
+    let workingWeeks = parseFloat(employee.workingWeeks.replace('w', '')) || 0;
+    let benefitPercentage = parseFloat(employee.benefit) || 0;
 
-//   return { totalIncome, totalExpense };
-// }
+    // Calculate the total pay
+    let totalPay = hourlyRate * hoursPerWeek * workingWeeks;
+
+    // Apply the benefit percentage
+    let benefitAmount = totalPay * (benefitPercentage / 100);
+
+    // Update the amount field with the calculated benefit amount
+    return {
+      ...employee,
+      amount: '$' + benefitAmount.toFixed(2), // rounding to 2 decimal places and adding dollar sign
+    };
+  });
+  return updatedFormData
+  // setFormData(updatedFormData);
+};
+
+export const calculatePercentage = (part: any, whole: any) => {
+
+  part = parseFloat(part.toString().replace(/[,\.]/g, ''));
+  whole = parseFloat(whole.toString().replace(/[,\.]/g, ''));
+
+  const a = (Number(part) / Number(whole)) * 100
+  return a
+}
+
+export const calculateTotalAmountForAdmin = (data: any) => {
+  let totalAmount = 0;
+
+  data.forEach((item: any) => {
+    totalAmount += item?.employee?.length == 0 ? 0 : item?.employee?.reduce((acc: any, curr: any) => Number(acc) + Number(curr.amount), 0);
+
+    totalAmount += item?.income?.length == 0 ? 0 : item?.income?.reduce((acc: any, curr: any) => Number(acc) + Number(curr.amount), 0);
+
+    totalAmount += item?.supply_expense?.length == 0 ? 0 : item?.supply_expense?.reduce((acc: any, curr: any) => Number(acc) + Number(curr.amount), 0);
+  });
+
+  return totalAmount;
+}

@@ -5,7 +5,7 @@ import AdminDataCard from "../../components/AdminDataCard";
 import AdminDepartmentProgress from "../../components/AdminDepartentProgress";
 import { getAllCenters } from "../../services/centersServices";
 import React, { useEffect, useState } from "react";
-import { addRandomColor, formatNumber } from "../../utils";
+import { formatNumber } from "../../utils";
 import moment from "moment";
 import { useAuth } from "../../contexts/AuthContext";
 import SuperAdminBudgetModal from "../../models/SuperAdminBudgetModal";
@@ -20,6 +20,7 @@ const StyledBox = styled(Box)(() => ({
 const SuperAdminScreen = () => {
   const array = [{ text: "Export" }, { text: "Reset" }];
   const [center, setCenter] = useState([])
+  const [centerLoading, setCenterLoading] = useState<boolean>(false)
   const [isOpen, setIsOpen] = React.useState<any>(false)
   const [programs, setPrograms] = React.useState<any>({});
 
@@ -45,10 +46,13 @@ const SuperAdminScreen = () => {
 
   const fetchCenter = async () => {
     try {
+      setCenterLoading(true)
       const response = await getAllCenters("");
-      const coloredArray = addRandomColor(response?.data?.centers)
-      setCenter(coloredArray)
-    } catch (error) {}
+      setCenter(response?.data?.centers)
+      setCenterLoading(false)
+    } catch (error) {
+      setCenterLoading(false)
+    }
   };
   const fetchTotalbudget = async () => {
     try {
@@ -90,12 +94,12 @@ const SuperAdminScreen = () => {
           showDollarSign={false}
         />
         <AdminDataCard showDollarSign={false}
-           total={programs.departmentCount}
-           done={programs.approvedDepartmentCount}
-        title="Completed Dept." />
+           total={programs.totalCenters}
+           done={programs.approvedcenters}
+        title="Completed Org." />
       </Box>
       <SuperAdminBudgetModal open={isOpen} handleClose={handleModalClose} heading="Add Budget" subheading="budegt total" fetchTotalbudget={fetchTotalbudget} totalBudget={totalBudget} placeholder="$ Emter amount"/>
-      <AdminDepartmentProgress from="super-admin" center={center}/>
+      <AdminDepartmentProgress from="super-admin" center={center} loading={centerLoading}/>
     </StyledBox>
   );
 };
