@@ -48,7 +48,7 @@ const TabsProgram = ({
   employee,
   singleProgram,
   allComments,
-  fetchComments
+  fetchComments,
 }: any) => {
   const [value, setValue] = React.useState(0);
 
@@ -101,19 +101,18 @@ const TabsProgram = ({
         />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        {
-          true ? 
-          <TabsNewHire employee={employee} formik={formik}/>
-          :   <ProgramTable
-          disabled={disabled}
-          handleSalaryExpenseReceived={handleSalaryExpenseReceived}
-          title="salary-expense"
-          formik={formik}
-          allComments={allComments}
-          fetchComments={fetchComments}
-        />
-        }
-     
+        {true ? (
+          <TabsNewHire employee={employee} formik={formik} />
+        ) : (
+          <ProgramTable
+            disabled={disabled}
+            handleSalaryExpenseReceived={handleSalaryExpenseReceived}
+            title="salary-expense"
+            formik={formik}
+            allComments={allComments}
+            fetchComments={fetchComments}
+          />
+        )}
       </CustomTabPanel>
     </Box>
   );
@@ -154,7 +153,7 @@ export default function TabsProgramArea({
   employee,
   singleProgram,
   allComments,
-  fetchComments
+  fetchComments,
 }: any) {
   return (
     <TabsAreas>

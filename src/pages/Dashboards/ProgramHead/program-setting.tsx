@@ -6,11 +6,16 @@ import { Button, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import EditProgramModal from "../../../models/ProgramSettings/EditProgram";
 import * as React from "react";
-import moment from 'moment';
+import moment from "moment";
 import Status from "../../../utils/dumpData";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteIcon from "@mui/icons-material/EditNote";
-import { deleteProgram, getAllProgramsViaStatus, getDepartments, programUpdate } from "../../../services/programServices";
+import {
+  deleteProgram,
+  getAllProgramsViaStatus,
+  getDepartments,
+  programUpdate,
+} from "../../../services/programServices";
 import { useFormik } from "formik";
 import DeleteModal from "../../../models/DeleteModal";
 
@@ -185,12 +190,16 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
       headerName: "Duration",
       sortable: false,
       editable: false,
-      flex: 1, 
+      flex: 1,
       valueGetter: (params) => {
-        const toDate = moment(params.row?.from_date).format("D-MMM-YYYY").toLowerCase(); // Format to_date
-        const updatedAt = moment(params.row.to_date).format("D-MMM-YYYY").toLowerCase(); // Format updated_at
+        const toDate = moment(params.row?.from_date)
+          .format("D-MMM-YYYY")
+          .toLowerCase(); // Format to_date
+        const updatedAt = moment(params.row.to_date)
+          .format("D-MMM-YYYY")
+          .toLowerCase(); // Format updated_at
         return `${toDate} - ${updatedAt}`; // Concatenate
-      }
+      },
     },
     {
       field: "department.name",
@@ -198,7 +207,7 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
       sortable: false,
       editable: false,
       flex: 1,
-      valueGetter: (params) => params.row.department.name
+      valueGetter: (params) => params.row.department.name,
     },
     {
       field: "buttonsColumn",
@@ -240,8 +249,8 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
       flex: 1,
     },
   ];
-  const [settingData, setSettingData] = React.useState([])
-  const [departmentList, setDepartmentList] = React.useState([])
+  const [settingData, setSettingData] = React.useState([]);
+  const [departmentList, setDepartmentList] = React.useState([]);
   const [selectedRow, setSelectedRow] = useState<any>(null);
   const [selectedRowdelete, setSelectedDelete] = useState<any>(null);
   const [deleteModalOpen, setDeleteModal] = useState<any>(false);
@@ -249,59 +258,56 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
 
   const formik = useFormik<any>({
     validateOnBlur: false,
-    // validationSchema: programSchema, 
+    // validationSchema: programSchema,
     enableReinitialize: true,
     initialValues: {
       name: selectedRow ? selectedRow?.name : "",
       code: selectedRow ? selectedRow?.code : "",
-      from_date: selectedRow ? selectedRow?.from_date: "",
-      to_date: selectedRow ? selectedRow?.to_date: "",
+      from_date: selectedRow ? selectedRow?.from_date : "",
+      to_date: selectedRow ? selectedRow?.to_date : "",
       department_id: selectedRow ? selectedRow?.department_id : "",
     },
     onSubmit: async (values: any) => {
       try {
-        await programUpdate(values , selectedRow?.id)
-        fetchProgramList(Status.DRAFTED)
-        setEditModal(false)
-      } catch (error) {
-      }
+        await programUpdate(values, selectedRow?.id);
+        fetchProgramList(Status.DRAFTED, "");
+        setEditModal(false);
+      } catch (error) {}
     },
   });
-  React.useEffect(() => { 
-    fetchProgramList(Status.DRAFTED);
-    fetchDepartmentList()
+  React.useEffect(() => {
+    fetchProgramList(Status.DRAFTED, "");
+    fetchDepartmentList();
   }, []);
-  const fetchProgramList = async (status: string) => {
+  const fetchProgramList = async (status: string, Searchvalue: string) => {
     try {
-      const response = await getAllProgramsViaStatus(status, "");
-      setSettingData(response?.data?.programs)
-    } catch (error) {
-    }
+      const response = await getAllProgramsViaStatus(status, Searchvalue);
+      setSettingData(response?.data?.programs);
+    } catch (error) {}
   };
 
   const fetchDepartmentList = async () => {
     try {
       const response = await getDepartments();
-      setDepartmentList(response?.data?.departments)
-    } catch (error) {
-    }
+      setDepartmentList(response?.data?.departments);
+    } catch (error) {}
   };
-  const handleDelete = (rowData: any)=>{
+  const handleDelete = (rowData: any) => {
     setSelectedDelete(rowData?.id);
     setDeleteModal(true);
-  }
+  };
   const handleEditClick = (rowData: any) => {
-    setSelectedRow(rowData); 
-    setEditModal(true)
+    setSelectedRow(rowData);
+    setEditModal(true);
   };
   const handleDeleteConfirmation = async () => {
-    if(selectedRowdelete){
+    if (selectedRowdelete) {
       try {
         await deleteProgram(selectedRowdelete);
-        fetchProgramList(Status.DRAFTED)
-        setDeleteModal(false) 
+        fetchProgramList(Status.DRAFTED, "");
+        setDeleteModal(false);
       } catch (error) {
-        console.error('Error deleting record:', error);
+        console.error("Error deleting record:", error);
       }
     }
   };
@@ -310,7 +316,12 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
       <Typography variant="h3">Programs</Typography>
       <Typography variant="h6">Settings</Typography>
       <StyledBox className="mainTableBlock">
-        <InputSearch placeholder="Search..." />
+        <InputSearch
+          placeholder="Search..."
+          onChange={(e: any) =>
+            fetchProgramList(Status.DRAFTED, e?.target?.value)
+          }
+        />
         <StyleDataGrid
           rows={settingData}
           columns={columns}
@@ -324,8 +335,20 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
           slots={{ toolbar: GridToolbar }}
         />
       </StyledBox>
-      <DeleteModal heading="Are you sure you want to delete?" open={deleteModalOpen} handleClose={()=>setDeleteModal(false)} handleOK={()=> handleDeleteConfirmation()}/>
-      <EditProgramModal selectedRow={selectedRow} departmentList={departmentList} open={editModalOpen} handleClose={()=> setEditModal(false)} formik={formik}/>
+      <DeleteModal
+        heading="Are you sure you want to delete?"
+        open={deleteModalOpen}
+        handleClose={() => setDeleteModal(false)}
+        handleOK={() => handleDeleteConfirmation()}
+      />
+      <EditProgramModal
+        disabled={true}
+        selectedRow={selectedRow}
+        departmentList={departmentList}
+        open={editModalOpen}
+        handleClose={() => setEditModal(false)}
+        formik={formik}
+      />
     </StyledBox>
   );
 };

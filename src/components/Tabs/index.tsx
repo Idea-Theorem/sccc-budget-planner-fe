@@ -34,8 +34,9 @@ interface BasicTabsProps {
   handleActionReieve?: any;
   setTabstatus?: any;
   checkout?: boolean;
-  receiveProgramSearch?: any
-  approveTabAcriveClass?: boolean
+  receiveProgramSearch?: any;
+  approveTabAcriveClass?: boolean;
+  fetchProgramList?: any;
 }
 
 const CustomTabPanel = (props: TabPanelProps) => {
@@ -93,12 +94,12 @@ const BasicTabs = (props: BasicTabsProps) => {
   };
   React.useEffect(() => {
     if (location?.pathname == "/program-head/draft") {
-        // setStatus(Status.DRAFTED);
-        fetchProgramList(Status.DRAFTED, "")
+      // setStatus(Status.DRAFTED);
+      fetchProgramList(Status.DRAFTED, "");
     }
   }, [location?.pathname]);
 
-  React.useEffect(() => { 
+  React.useEffect(() => {
     // if (location?.pathname == "/program-head/draft") {
     //   return
     // }
@@ -117,9 +118,9 @@ const BasicTabs = (props: BasicTabsProps) => {
   };
 
   const handleClick = (rowData: any) => {
-    if (props && props.onRowClick && typeof props.onRowClick === 'function') {
+    if (props && props.onRowClick && typeof props.onRowClick === "function") {
       props.onRowClick(rowData);
-  }
+    }
     if (
       location?.pathname == "/program-head/program" &&
       status == Status.REJECTED
@@ -149,10 +150,10 @@ const BasicTabs = (props: BasicTabsProps) => {
   };
 
   const handleProgramSearch = (value: string) => {
-    fetchProgramList(status, value)
-    props?.receiveProgramSearch(value)
-
-  }
+    fetchProgramList(status, value);
+    props?.fetchProgramList(status, value);
+    props?.receiveProgramSearch(value);
+  };
 
   return (
     <Box width="100%">
@@ -240,6 +241,7 @@ export default function TabsArea(props: BasicTabsProps) {
         checkout={props?.checkout}
         receiveProgramSearch={props?.receiveProgramSearch}
         approveTabAcriveClass={props?.approveTabAcriveClass}
+        fetchProgramList={props?.fetchProgramList}
       />
     </TabsAreas>
   );
