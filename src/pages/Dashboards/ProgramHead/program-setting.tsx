@@ -129,6 +129,20 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
       color: theme.palette.text.primary,
     },
   },
+
+  ".actions-btn-holder": {
+    ".MuiButton-textPrimary:not(:hover)": {
+      color: "rgba(48, 48, 48, 1)",
+    },
+    ".MuiButton-outlinedPrimary": {
+      color: "rgba(4, 128, 113, 1)",
+
+      "&:hover": {
+        background: "rgba(4, 128, 113, 1)",
+        color: "#fff",
+      },
+    },
+  },
 }));
 
 // const rows = [
@@ -212,17 +226,17 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
     {
       field: "buttonsColumn",
       headerName: "",
-      flex: 0.4,
+      flex: 1,
       renderCell: (params: any) => (
         <Stack
           direction="row"
           gap="10px"
           alignItems="center"
-          ml="auto                                       "
+          ml="auto"
+          className="actions-btn-holder"
         >
           <Button
             variant="text"
-            color="error"
             size="small"
             startIcon={<DeleteOutlineIcon />}
             onClick={() => handleDelete(params.row)}
@@ -231,7 +245,6 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
           </Button>
           <Button
             variant="outlined"
-            color="primary"
             size="small"
             startIcon={<EditNoteIcon />}
             onClick={() => handleEditClick(params.row)}
@@ -241,13 +254,13 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
         </Stack>
       ),
     },
-    {
-      field: "",
-      headerName: "",
-      sortable: false,
-      editable: false,
-      flex: 1,
-    },
+    // {
+    //   field: "",
+    //   headerName: "",
+    //   sortable: false,
+    //   editable: false,
+    //   flex: 1,
+    // },
   ];
   const [settingData, setSettingData] = React.useState([]);
   const [departmentList, setDepartmentList] = React.useState([]);

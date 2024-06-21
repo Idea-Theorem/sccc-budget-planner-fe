@@ -12,7 +12,7 @@ import {
   calculateTotalsProgramExpense,
 } from "../../utils";
 import { getProgramInDepartments } from "../../services/departmentServices";
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, Stack } from "@mui/material";
 
 const StyledBox = styled(Box)(() => ({
   "&.dashboardStatsCard": {
@@ -49,7 +49,19 @@ const StyledBox = styled(Box)(() => ({
     "& .dashboardGraphBox": {
       width: "303px",
       flexShrink: "0",
-      padding: "6px 15px",
+      padding: "28px 15px 0",
+
+      ">div": {
+        width: "auto",
+        height: "auto",
+        marginLeft: "-60px",
+
+        ">svg": {
+          width: "491px",
+          height:"auto",
+          margin: "0 auto",
+        },
+      },
     },
 
     "& .dashboardGraphsList": {
@@ -57,6 +69,7 @@ const StyledBox = styled(Box)(() => ({
       height: "250px",
       overflowY: "auto",
       minWidth: "0",
+      paddingRight: "10px",
     },
 
     "& .MuiLinearProgress-root ": {
@@ -173,7 +186,6 @@ const AdminDepartmentProgress = ({
           )}
         </Box>
       )}
-      <Box>{from == "super-admin" ? "Departments" : "Programs"}</Box>
       <Box className="dashboardGraphsBlock">
         {from == "super-admin" ? (
           <Box className="dashboardGraphBox">
@@ -186,26 +198,36 @@ const AdminDepartmentProgress = ({
         )}
 
         {from == "super-admin" ? (
-          <Box className="dashboardGraphsList">
-            {totalDepartment}
-            {departmentInCenterLoading && departmentInCenter.length == 0 ? (
-              <CircularProgress />
-            ) : (
-              departmentInCenter?.map((e: any) => (
-                <Box color={currentDepartment?.color} className="progress-wrap">
-                  <ProgramProgress
-                    title={e?.name}
-                    amount={e?.totalAmount}
-                    value={calculatePercentage(e?.totalAmount, totalDepartment)}
-                    color="inherit"
-                  />
-                </Box>
-              ))
-            )}
-          </Box>
+          <>
+            <Box className="dashboardGraphsList">
+              <Stack direction={"row"} justifyContent="space-between" mb={2}>
+                <Box><strong>Departments</strong></Box>
+                <strong>{totalDepartment}</strong>
+              </Stack>
+              
+              {departmentInCenterLoading && departmentInCenter.length == 0 ? (
+                <CircularProgress />
+              ) : (
+                departmentInCenter?.map((e: any) => (
+                  <Box color={currentDepartment?.color} className="progress-wrap">
+                    <ProgramProgress
+                      title={e?.name}
+                      amount={e?.totalAmount}
+                      value={calculatePercentage(e?.totalAmount, totalDepartment)}
+                      color="inherit"
+                    />
+                  </Box>
+                ))
+              )}
+            </Box>
+          </>
         ) : (
+          <>
           <Box className="dashboardGraphsList">
-            {totalPrograms}
+            <Stack direction={"row"} justifyContent="space-between" mb={2}>
+              <Box><strong>Programs</strong></Box>
+              <strong>{totalPrograms}</strong>
+            </Stack>
             {rowDataLoading && rowData?.length == 0 ? (
               <CircularProgress />
             ) : (
@@ -224,6 +246,7 @@ const AdminDepartmentProgress = ({
               ))
             )}
           </Box>
+          </>
         )}
       </Box>
     </StyledBox>

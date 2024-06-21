@@ -92,3 +92,8 @@
 .page-title {
     margin: 0 0 25px;
 }
+
+.MuiButtonBase-root:disabled {
+    background: rgba(0, 0, 0, 0.12) !important;
+    color: rgba(0, 0, 0, 0.38);
+}

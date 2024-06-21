@@ -97,7 +97,7 @@ const EditProgramModal: React.FC<IHrAddEmployee> = ({
           <Typography variant="h6">Edit Program</Typography>
         </Box>
         <Box>
-          <Grid container spacing={4}>
+          <Grid container spacing={4} alignItems={"flex-end"}>
             <Grid item xs={6}>
               <TextFields
                 variant="standard"
@@ -116,9 +116,8 @@ const EditProgramModal: React.FC<IHrAddEmployee> = ({
                 value={formik?.values?.code}
               />
             </Grid>
-            <Typography>Durations</Typography>
-
             <Grid item xs={6}>
+              <Typography>Durations</Typography>
               <ProgramDatePicker
                 disabled={disabled}
                 singleEmployeeData={selectedRow?.from_date}
