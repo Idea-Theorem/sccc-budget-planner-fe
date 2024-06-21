@@ -6,9 +6,13 @@ import ProgramProgress from "./programProgress";
 import DepartmentButton from "./departmentButton";
 import React, { useEffect } from "react";
 import { getDepartmentInCenters } from "../../services/centersServices";
-import { calculatePercentage, calculateTotalAmountForAdmin, calculateTotalsProgramExpense } from "../../utils";
+import {
+  calculatePercentage,
+  calculateTotalAmountForAdmin,
+  calculateTotalsProgramExpense,
+} from "../../utils";
 import { getProgramInDepartments } from "../../services/departmentServices";
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, Stack } from "@mui/material";
 
 const StyledBox = styled(Box)(() => ({
   "&.dashboardStatsCard": {
@@ -45,14 +49,27 @@ const StyledBox = styled(Box)(() => ({
     "& .dashboardGraphBox": {
       width: "303px",
       flexShrink: "0",
-      padding: "6px 15px",
+      padding: "28px 15px 0",
+
+      ">div": {
+        width: "auto",
+        height: "auto",
+        marginLeft: "-60px",
+
+        ">svg": {
+          width: "491px",
+          height:"auto",
+          margin: "0 auto",
+        },
+      },
     },
 
     "& .dashboardGraphsList": {
       flexGrow: "1",
-      height:'250px',
-      overflowY:'auto',
+      height: "250px",
+      overflowY: "auto",
       minWidth: "0",
+      paddingRight: "10px",
     },
 
     "& .MuiLinearProgress-root ": {
@@ -70,123 +87,167 @@ const StyledBox = styled(Box)(() => ({
   },
 }));
 
-const AdminDepartmentProgress = ({ department ,loading, from, center}: any) => {
+const AdminDepartmentProgress = ({
+  department,
+  loading,
+  from,
+  center,
+}: any) => {
   const [rowData, setRowData] = React.useState<any>([]);
   const [rowDataLoading, setRowDataLoading] = React.useState<any>(false);
   const [departmentInCenter, setDepartmentInCenter] = React.useState<any>([]);
-  const [departmentInCenterLoading, setDepartmentInCenterLoading] = React.useState<any>(false);
-  const [totalPrograms, setTotalPrograms] = React.useState<any>('')
-  const [totalDepartment, setTotalDepartment] = React.useState<any>('')
+  const [departmentInCenterLoading, setDepartmentInCenterLoading] =
+    React.useState<any>(false);
+  const [totalPrograms, setTotalPrograms] = React.useState<any>("");
+  const [totalDepartment, setTotalDepartment] = React.useState<any>("");
+  const [currentDepartment, setCurrentDepartment] = React.useState<any>("");
+  const [currentProgram, setCurrentProgram] = React.useState<any>("");
   useEffect(() => {
     if (department?.length !== 0 && typeof department !== "undefined") {
-      if(department?.[0].id){
-        fetchProgramInDepartments(department?.[0].id)
+      if (department?.[0].id) {
+        fetchProgramInDepartments(department?.[0].id);
+        setCurrentProgram(department?.[0]);
       }
     }
   }, [department]);
 
   useEffect(() => {
     if (center?.length !== 0 && typeof center !== "undefined") {
-      if(center[0]?.id){
-        fetchDepartmentInCenters(center[0]?.id)
+      if (center[0]?.id) {
+        fetchDepartmentInCenters(center[0]?.id);
+        setCurrentDepartment(center?.[0]);
       }
     }
   }, [center]);
-  
+
   const fetchDepartmentInCenters = async (id: any) => {
-try {
-  setDepartmentInCenterLoading(true)
-  const response = await getDepartmentInCenters(id)
-  setDepartmentInCenter(response?.data?.center?.department)
-  setTotalDepartment(response?.data?.center?.totalDepartmentBudget)
-  setDepartmentInCenterLoading(false)
-} catch (error) {
-  setDepartmentInCenterLoading(false)
-  
-}
-  }
+    try {
+      setDepartmentInCenterLoading(true);
+      const response = await getDepartmentInCenters(id);
+      setDepartmentInCenter(response?.data?.center?.department);
+      setTotalDepartment(response?.data?.center?.totalDepartmentBudget);
+      setDepartmentInCenterLoading(false);
+    } catch (error) {
+      setDepartmentInCenterLoading(false);
+    }
+  };
 
   const fetchProgramInDepartments = async (id: any) => {
     try {
-      setRowDataLoading(true)
-      const response = await getProgramInDepartments(id)
-      setRowData(response?.data?.departments)
-      const res = calculateTotalAmountForAdmin(response?.data?.departments)
-      setTotalPrograms(Number(res))
-      setRowDataLoading(false)
+      setRowDataLoading(true);
+      const response = await getProgramInDepartments(id);
+      setRowData(response?.data?.departments);
+      const res = calculateTotalAmountForAdmin(response?.data?.departments);
+      setTotalPrograms(Number(res));
+      setRowDataLoading(false);
     } catch (error) {
-      setRowDataLoading(false)
+      setRowDataLoading(false);
     }
-  }
+  };
   return (
     <StyledBox className="dashboardStatsCard">
-      <Typography variant="h3">{from == 'super-admin' ? 'Organizations' : 'Department %'} </Typography>
-      {from == "super-admin" ?
+      <Typography variant="h3">
+        {from == "super-admin" ? "Organizations" : "Department %"}{" "}
+      </Typography>
+      {from == "super-admin" ? (
         <Box className="tagsList">
-        {loading  ? <CircularProgress/> : center?.map((e: any, index: any) => (
-          <DepartmentButton
-            key={index}
-            text={e?.name}
-            color={e?.color}
-            handleBtnClick={() => fetchDepartmentInCenters(e?.id)}
-          />
-        ))}
-      </Box>
-      : 
+          {loading ? (
+            <CircularProgress />
+          ) : (
+            center?.map((e: any, index: any) => (
+              <DepartmentButton
+                key={index}
+                text={e?.name}
+                color={e?.color}
+                handleBtnClick={() => {
+                  fetchDepartmentInCenters(e?.id);
+                  setCurrentDepartment(e);
+                }}
+              />
+            ))
+          )}
+        </Box>
+      ) : (
         <Box className="tagsList">
-        {loading ?  <CircularProgress/> : department?.map((e: any, index: any) => (
-          <DepartmentButton
-            key={index}
-            text={e?.name}
-            color={e?.color}
-            handleBtnClick={() => fetchProgramInDepartments(e?.id)}
-          />
-        ))}
-      </Box>
-      }
-    
+          {loading ? (
+            <CircularProgress />
+          ) : (
+            department?.map((e: any, index: any) => (
+              <DepartmentButton
+                key={index}
+                text={e?.name}
+                color={e?.color}
+                handleBtnClick={() => {
+                  fetchProgramInDepartments(e?.id);
+                  setCurrentProgram(e);
+                }}
+              />
+            ))
+          )}
+        </Box>
+      )}
       <Box className="dashboardGraphsBlock">
-      {from == "super-admin" ? 
-        <Box className="dashboardGraphBox">
-        <BasicPie  data={center}/>
-      </Box>
-      : 
-      <Box className="dashboardGraphBox">
-      <BasicPie data={department} />
-    </Box>
-      }
-      
-        {from == "super-admin" ?
-         <Box className="dashboardGraphsList">
-          {totalDepartment}
-         {departmentInCenterLoading && departmentInCenter.length == 0 ? <CircularProgress/>  :  departmentInCenter?.map((e: any) => (
-           <Box color={e.color} className="progress-wrap">
-             <ProgramProgress
-               title={e?.name}
-               amount={e?.totalAmount}
-               value={calculatePercentage(e?.totalAmount ,totalDepartment) }
-               color="inherit"
+        {from == "super-admin" ? (
+          <Box className="dashboardGraphBox">
+            <BasicPie data={center} />
+          </Box>
+        ) : (
+          <Box className="dashboardGraphBox">
+            <BasicPie data={department} />
+          </Box>
+        )}
+
+        {from == "super-admin" ? (
+          <>
+            <Box className="dashboardGraphsList">
+              <Stack direction={"row"} justifyContent="space-between" mb={2}>
+                <Box><strong>Departments</strong></Box>
+                <strong>{totalDepartment}</strong>
+              </Stack>
               
-             />
-           </Box>
-         ))}
-       </Box>
-        :
-         <Box className="dashboardGraphsList">
-          {totalPrograms}
-         {rowDataLoading && rowData?.length == 0 ? <CircularProgress/> :  rowData?.map((e: any) => (
-           <Box color={e?.color} className="progress-wrap">
-             <ProgramProgress
-               title={e?.name}
-               amount={calculateTotalsProgramExpense(e)}
-               value={calculatePercentage(calculateTotalsProgramExpense(e),totalPrograms) }
-               color="inherit"
-             />
-           </Box>
-         ))}
-       </Box>
-        }
-       
+              {departmentInCenterLoading && departmentInCenter.length == 0 ? (
+                <CircularProgress />
+              ) : (
+                departmentInCenter?.map((e: any) => (
+                  <Box color={currentDepartment?.color} className="progress-wrap">
+                    <ProgramProgress
+                      title={e?.name}
+                      amount={e?.totalAmount}
+                      value={calculatePercentage(e?.totalAmount, totalDepartment)}
+                      color="inherit"
+                    />
+                  </Box>
+                ))
+              )}
+            </Box>
+          </>
+        ) : (
+          <>
+          <Box className="dashboardGraphsList">
+            <Stack direction={"row"} justifyContent="space-between" mb={2}>
+              <Box><strong>Programs</strong></Box>
+              <strong>{totalPrograms}</strong>
+            </Stack>
+            {rowDataLoading && rowData?.length == 0 ? (
+              <CircularProgress />
+            ) : (
+              rowData?.map((e: any) => (
+                <Box color={currentProgram?.color} className="progress-wrap">
+                  <ProgramProgress
+                    title={e?.name}
+                    amount={calculateTotalsProgramExpense(e)}
+                    value={calculatePercentage(
+                      calculateTotalsProgramExpense(e),
+                      totalPrograms
+                    )}
+                    color="inherit"
+                  />
+                </Box>
+              ))
+            )}
+          </Box>
+          </>
+        )}
       </Box>
     </StyledBox>
   );

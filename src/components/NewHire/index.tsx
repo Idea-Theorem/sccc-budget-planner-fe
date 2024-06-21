@@ -5,15 +5,12 @@ import TextFields from "../Input/textfield";
 import { useEffect, useState } from "react";
 import SelectDepartments from "../SelectDepartment";
 import { getAllBenefit } from "../../services/benefitServices";
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { v4 as uuidv4 } from "uuid";
 import { calculateAmount } from "../../utils";
 
-
-const EmployeeInfoArea = styled(Box)(({  }) => ({
- 
-
+const EmployeeInfoArea = styled(Box)(({}) => ({
   // "& .MuiTypography-h6": {
   //   color: "#000",
   //   fontFamily: "Work Sans",
@@ -203,7 +200,7 @@ const EmployeeInfoArea = styled(Box)(({  }) => ({
     width: "100%",
     borderCollapse: "collapse",
 
-    "th": {
+    th: {
       fontSize: "14px",
       lineHeight: "18px",
       fontWeight: "600",
@@ -217,41 +214,41 @@ const EmployeeInfoArea = styled(Box)(({  }) => ({
       },
     },
 
-    "tbody": {
-      "tr": {
+    tbody: {
+      tr: {
         "&:only-child": {
-          "td": {
+          td: {
             paddingBottom: "16px",
-          }
+          },
         },
 
         "&:first-child": {
-          "td": {
+          td: {
             paddingTop: "16px",
           },
         },
 
         "&:last-child": {
-          "td": {
+          td: {
             paddingBottom: "16px",
           },
         },
 
-        "td": {
+        td: {
           paddingTop: "8px",
           paddingBottom: "8px",
         },
       },
     },
 
-    "tfoot": {
+    tfoot: {
       fontSize: "14px",
       lineHeight: "18px",
       color: "#303030",
       fontWeight: "600",
 
-      "td": {
-        paddingTop:"7px",
+      td: {
+        paddingTop: "7px",
         borderTop: "1px solid #303030",
       },
     },
@@ -268,7 +265,7 @@ const EmployeeInfoArea = styled(Box)(({  }) => ({
         paddingRight: "60px",
         position: "relative",
         textAlign: "right",
-      }
+      },
     },
 
     ".MuiFormControl-root ": {
@@ -290,7 +287,7 @@ const EmployeeInfoArea = styled(Box)(({  }) => ({
         padding: "0",
 
         ".input-wrap": {
-          height:"100%",
+          height: "100%",
         },
 
         ".MuiInputBase-input": {
@@ -303,7 +300,7 @@ const EmployeeInfoArea = styled(Box)(({  }) => ({
 
       ".MuiInputBase-root": {
         margin: "0",
-        width:"100%",
+        width: "100%",
         height: "100%",
 
         "&:before, &:after": {
@@ -321,7 +318,7 @@ const EmployeeInfoArea = styled(Box)(({  }) => ({
       cursor: "pointer",
       width: "24px",
 
-      "svg": {
+      svg: {
         width: "100%",
         height: "auto",
         display: "block",
@@ -334,12 +331,10 @@ const EmployeeInfoArea = styled(Box)(({  }) => ({
   },
 }));
 
-
-export default function TabsNewHire({employee, formik}: any) {
-
-  const [benefit, setBenefit] = useState<any>([])
-  const [salary, setSalary] = useState<any>([])
-  const [formData, setFormData] = useState([ 
+export default function TabsNewHire({ employee, formik }: any) {
+  const [benefit, setBenefit] = useState<any>([]);
+  const [salary, setSalary] = useState<any>([]);
+  const [formData, setFormData] = useState([
     {
       emp_id: uuidv4(),
       employee: "",
@@ -365,12 +360,14 @@ export default function TabsNewHire({employee, formik}: any) {
     ]);
   };
   useEffect(() => {
-   const response =  calculateAmount(formData)
-   setSalary(response)
-  }, [formData])
+    const response = calculateAmount(formData);
+    setSalary(response);
+  }, [formData]);
   function calculateTotalAmount(employees: any) {
     return employees.reduce((total: any, employee: any) => {
-      const amount = parseFloat(employee.amount ? employee.amount.replace('$', '') : 0);
+      const amount = parseFloat(
+        employee.amount ? employee.amount.replace("$", "") : 0
+      );
       return total + (amount !== 0 ? amount : 0);
     }, 0);
   }
@@ -382,16 +379,16 @@ export default function TabsNewHire({employee, formik}: any) {
 
   const handleInputChange = (index: any, name: any, value: any) => {
     const newFormData: any = [...formData];
-    if ( name === 'hourlyRate') {
-      if (!value.startsWith('$')) {
-        value = '$' + value;
+    if (name === "hourlyRate") {
+      if (!value.startsWith("$")) {
+        value = "$" + value;
       }
-    } else if (name === 'hoursPerWeek') {
+    } else if (name === "hoursPerWeek") {
       // Remove any existing 'h' and append 'h' correctly
-      value = value.replace(/h/g, '') + 'h';
-    } else if (name === 'workingWeeks') {
+      value = value.replace(/h/g, "") + "h";
+    } else if (name === "workingWeeks") {
       // Remove any existing 'w' and append 'w' correctly
-      value = value.replace(/w/g, '') + 'w';
+      value = value.replace(/w/g, "") + "w";
     }
     // if (name === 'amount' || name === 'hourlyRate') {
     //   if (!value.startsWith('$')) {
@@ -402,34 +399,31 @@ export default function TabsNewHire({employee, formik}: any) {
     setFormData(newFormData);
   };
   useEffect(() => {
-    fetchAllBenefit()
-  }, [])
+    fetchAllBenefit();
+  }, []);
 
-  const fetchAllBenefit = async () =>  {
-try {
-  const response = await getAllBenefit()
-  setBenefit(response?.data?.centers)
-} catch (error) {
-  
-}
-  }
+  const fetchAllBenefit = async () => {
+    try {
+      const response = await getAllBenefit();
+      setBenefit(response?.data?.centers);
+    } catch (error) {}
+  };
   const cleanFormDataForFormik = (data: any) => {
     return data.map((item: any) => ({
       ...item,
-      amount: item.amount.replace('$', ''),
-      hourlyRate: item.hourlyRate.replace('$', ''),
-      hoursPerWeek: item.hoursPerWeek.replace('h', ''),
-      workingWeeks: item.workingWeeks.replace('w', ''),
+      amount: item.amount.replace("$", ""),
+      hourlyRate: item.hourlyRate.replace("$", ""),
+      hoursPerWeek: item.hoursPerWeek.replace("h", ""),
+      workingWeeks: item.workingWeeks.replace("w", ""),
     }));
   };
 
-
-  useEffect(()=>{
-    if(!formData?.[0].employee){
-      return
+  useEffect(() => {
+    if (!formData?.[0].employee) {
+      return;
     }
-    formik.setFieldValue('employee', cleanFormDataForFormik(salary));
-  },[salary])
+    formik.setFieldValue("employee", cleanFormDataForFormik(salary));
+  }, [salary]);
 
   return (
     <EmployeeInfoArea>
@@ -437,119 +431,136 @@ try {
         <thead>
           <tr>
             <th>Employee</th>
-            <th>Hourly <br />Rate</th>
-            <th>Hour Per <br />Week</th>
-            <th>Working <br />Weeks</th>
-            <th>Benefit <br />%</th> 
+            <th>
+              Hourly <br />
+              Rate
+            </th>
+            <th>
+              Hour Per <br />
+              Week
+            </th>
+            <th>
+              Working <br />
+              Weeks
+            </th>
+            <th>
+              Benefit <br />%
+            </th>
             <th>Amount</th>
           </tr>
         </thead>
         <tbody>
-            {salary.map((record:any, index:any) => (
-              <tr key={index}>
-                <td>
-                  <Box className="select-holder large">
-                    <SelectDepartments
-                      variant="outlined"
-                      size="small"
-                      value={record.employee}
-                      list={employee}
-                      receiveValue={(value: any) =>
-                        handleInputChange(index, "employee", value)
-                      }
-                    />
-                  </Box>
-                </td>
-                <td>
-                  <TextFields
+          {salary.map((record: any, index: any) => (
+            <tr key={index}>
+              <td>
+                <Box className="select-holder large">
+                  <SelectDepartments
                     variant="outlined"
                     size="small"
-                    name="hourlyRate"
-                    value={record.hourlyRate}
-                    onChange={(e: any) =>
-                      handleInputChange(index, "hourlyRate", e.target.value)
+                    value={record.employee}
+                    list={employee}
+                    receiveValue={(value: any) =>
+                      handleInputChange(index, "employee", value)
                     }
                   />
-                </td>
-                <td>
-                  <TextFields
-                    variant="outlined"
-                    name="hoursPerWeek"
-                    size="small"
-                    value={record.hoursPerWeek}
-                    onChange={(e: any) =>
-                      handleInputChange(index, "hoursPerWeek", e.target.value)
+                </Box>
+              </td>
+              <td>
+                <TextFields
+                  variant="outlined"
+                  size="small"
+                  name="hourlyRate"
+                  value={record.hourlyRate}
+                  onChange={(e: any) =>
+                    handleInputChange(index, "hourlyRate", e.target.value)
+                  }
+                />
+              </td>
+              <td>
+                <TextFields
+                  variant="outlined"
+                  name="hoursPerWeek"
+                  size="small"
+                  value={record.hoursPerWeek}
+                  onChange={(e: any) =>
+                    handleInputChange(index, "hoursPerWeek", e.target.value)
+                  }
+                />
+              </td>
+              <td>
+                <TextFields
+                  variant="outlined"
+                  name="workingWeeks"
+                  size="small"
+                  value={record.workingWeeks}
+                  onChange={(e: any) =>
+                    handleInputChange(index, "workingWeeks", e.target.value)
+                  }
+                />
+              </td>
+              <td>
+                <Box className="select-holder">
+                  <SelectDemo
+                    value={record.benefit}
+                    list={benefit}
+                    receiveValue={(value: any) =>
+                      handleInputChange(index, "benefit", value)
                     }
                   />
-                </td>
-                <td>
-                  <TextFields
-                    variant="outlined"
-                    name="workingWeeks"
-                    size="small"
-                    value={record.workingWeeks}
-                    onChange={(e: any) =>
-                      handleInputChange(index, "workingWeeks", e.target.value)
-                    }
-                  />
-                </td>
-                <td>
-                  <Box className="select-holder">
-                    <SelectDemo
-                      value={record.benefit}
-                      list={benefit}
-                      receiveValue={(value: any) =>
-                        handleInputChange(index, "benefit", value)
-                      }
-                    />
-                  </Box>
-                </td>
-                <td>
-                  <TextFields
-                    variant="outlined"
-                    className="field-amount"
-                    name="amount"
-                    size="small"
-                    value={record.amount}
-                    // onChange={(e: any) =>
-                    //   handleInputChange(index, "amount", e.target.value)
-                    // }
-                  />
-                  {index === formData.length - 1 ? (
+                </Box>
+              </td>
+              <td>
+                <TextFields
+                  variant="outlined"
+                  className="field-amount"
+                  name="amount"
+                  size="small"
+                  value={record.amount}
+                  // onChange={(e: any) =>
+                  //   handleInputChange(index, "amount", e.target.value)
+                  // }
+                />
+                {index === formData.length - 1 ? (
                   <span onClick={handleAddRecord} className="add-item">
                     <AddCircleOutlineIcon />
                   </span>
                 ) : (
-                  <span onClick={() => handleDeleteRecord(index)} className="remove-item">
+                  <span
+                    onClick={() => handleDeleteRecord(index)}
+                    className="remove-item"
+                  >
                     <RemoveCircleOutlineIcon />
                   </span>
                 )}
-                </td>
-              </tr>
-              // <Grid container spacing={2}>
-              //   <Grid item xs={3} className="item-role-area">
-              //   </Grid>
-              //   <Grid item xs={1.8} className="item-role-area">
-              //   </Grid>
-              //   <Grid item xs={1.8} className="item-role-area">
-              //   </Grid>
-              //   <Grid item xs={1.8} className="item-role-area">
-              //   </Grid>
-              //   <Grid item xs={1.8} className="item-role-area">
-              //   </Grid>
-              //   <Grid item xs={1.8} className="item-role-area">
-              //   </Grid>
-              // </Grid>
-            ))}
+              </td>
+            </tr>
+            // <Grid container spacing={2}>
+            //   <Grid item xs={3} className="item-role-area">
+            //   </Grid>
+            //   <Grid item xs={1.8} className="item-role-area">
+            //   </Grid>
+            //   <Grid item xs={1.8} className="item-role-area">
+            //   </Grid>
+            //   <Grid item xs={1.8} className="item-role-area">
+            //   </Grid>
+            //   <Grid item xs={1.8} className="item-role-area">
+            //   </Grid>
+            //   <Grid item xs={1.8} className="item-role-area">
+            //   </Grid>
+            // </Grid>
+          ))}
         </tbody>
         <tfoot>
           <tr>
-            <td colSpan={3}>Total Expense <br />(Salary & Benefits)</td>
+            <td colSpan={3}>
+              Total Expense <br />
+              (Salary & Benefits)
+            </td>
             <td colSpan={3}>${calculateTotalAmount(salary)?.toFixed(2)}</td>
           </tr>
         </tfoot>
       </table>
-        {/* <button onClick={handleAddRecord}>+</button> */}
+      {/* <button onClick={handleAddRecord}>+</button> */}
     </EmployeeInfoArea>
   );
 }

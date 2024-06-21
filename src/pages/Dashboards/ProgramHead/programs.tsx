@@ -25,14 +25,14 @@ const PHProgramsScreen = () => {
   const [programListing, setprogramListing] = useState<any>([]);
 
   useEffect(() => {
-    fetchProgramList(tabstatus, '') 
-  }, [tabstatus])
+    fetchProgramList(tabstatus, "");
+  }, [tabstatus]);
 
   const fetchProgramList = async (status: string, Searchvalue: string) => {
     try {
       // setLoading(true);
       const response = await getAllProgramsByUsers(status, Searchvalue);
-      setprogramListing(response?.data?.programs)
+      setprogramListing(response?.data?.programs);
       // dispatch(storeProgramList(response?.data?.programs));
       // setLoading(false);
     } catch (error) {
@@ -262,7 +262,7 @@ const PHProgramsScreen = () => {
       },
     ],
   ];
-  
+
   return (
     <StyledBox className="appContainer">
       <MainHeaderComponent
@@ -286,6 +286,7 @@ const PHProgramsScreen = () => {
         table={tableColumnsTitleArray}
         row={programListing}
         checkout={false}
+        fetchProgramList={fetchProgramList}
       />
     </StyledBox>
   );

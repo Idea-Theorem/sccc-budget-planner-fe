@@ -128,7 +128,6 @@ const StyledBox = styled(Box)(({ theme }) => ({
       border: "0",
 
       "&.full-width": {
-        
         ".MuiStack-root ": {
           width: "100%",
         },
@@ -243,7 +242,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
     },
   },
 }));
-
+// .
 const BudgetDetail: FC<BudgetDetailProps> = ({ actions, clickBack }) => {
   return (
     <StyledBox className="appContainer bgGray">
