@@ -71,6 +71,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
 
   const formik = useFormik<any>({
     validateOnBlur: false,
+    validateOnChange: false,
     validationSchema: programSchema,
     enableReinitialize: true,
     initialValues: {
@@ -84,19 +85,23 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
       salary_expense: [],
       status: "PENDING",
       employee: [],
-      formData: [
-        {
-          emp_id: uuidv4(),
-          employee: "",
-          hourlyRate: "",
-          hoursPerWeek: "",
-          workingWeeks: "",
-          benefit: "",
-          amount: "",
-        },
-      ],
+      // formData: [
+      //   {
+      //     emp_id: uuidv4(),
+      //     employee: "",
+      //     hourlyRate: "",
+      //     hoursPerWeek: "",
+      //     workingWeeks: "",
+      //     benefit: "",
+      //     amount: "",
+      //   },
+      // ],
     },
     onSubmit: async (values) => {
+      if (programFromStatus == Status.CREATED) {
+        handleSave();
+        return;
+      }
       let obj = {};
       if (values?.supply_expense.length == 0) {
         obj = {
@@ -127,7 +132,6 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
       } catch (error) {}
     },
   });
-
   useEffect(() => {
     return () => {
       dispatch(storeIncomeList([]));
@@ -309,7 +313,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
                   <Buttons
                     key={0}
                     btntext="Save"
-                    onClick={handleSave}
+                    onClick={handleSubmit}
                     variant="outlined"
                     color="primary"
                     size="medium"

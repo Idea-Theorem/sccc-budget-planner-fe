@@ -101,18 +101,7 @@ const TabsProgram = ({
         />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        {true ? (
-          <TabsNewHire employee={employee} formik={formik} />
-        ) : (
-          <ProgramTable
-            disabled={disabled}
-            handleSalaryExpenseReceived={handleSalaryExpenseReceived}
-            title="salary-expense"
-            formik={formik}
-            allComments={allComments}
-            fetchComments={fetchComments}
-          />
-        )}
+        <TabsNewHire employee={employee} formik={formik} />
       </CustomTabPanel>
     </Box>
   );
