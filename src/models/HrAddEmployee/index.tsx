@@ -31,7 +31,7 @@ import StatusModal from "../../components/StatusModal";
 import SelectDepartments from "../../components/SelectDepartment";
 import { getAllBenefit } from "../../services/benefitServices";
 import { getAllRole } from "../../services/roleServices";
-import { RemoveCircleOutline } from "@mui/icons-material"; 
+import { RemoveCircleOutline } from "@mui/icons-material";
 
 const EmployeeInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
@@ -263,7 +263,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
   const [departments, setDepartments] = useState<any>([]);
   const [titles, setTitles] = useState<any>([]);
   const [activeDepartment, setActiveDepartment] = useState<any>(null);
-  console.log(activeDepartment)
+  console.log(activeDepartment);
   const [statusData, setStatusData] = useState<any>(null);
 
   const [data, setData] = useState([
@@ -291,13 +291,12 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
       password: "",
       hire_date: "",
       roles: [],
-    
     },
     onSubmit: async (values) => {
       try {
         if (heading == "Edit Employee") {
           delete values.password;
-
+          values.employeDepartments = data;
           await updateEmployee(values, singleEmployeeData?.id);
           setStatusData({
             type: "success",
@@ -326,7 +325,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
             hourlyRate: "",
             salaryRate: "",
           },
-        ])
+        ]);
         formik.resetForm();
       } catch (error: any) {
         setStatusData({
@@ -345,7 +344,6 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
     isSubmitting,
   } = formik;
 
-
   const handleClear = () => {
     setData([
       {
@@ -354,32 +352,32 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
         hourlyRate: "",
         salaryRate: "",
       },
-    ])
-    handleClose()
-  }
+    ]);
+    handleClose();
+  };
 
   useEffect(() => {
     fetchUserRole();
     fetchDepartments();
-    fetchBenefits()
-    fetchTitle()
+    fetchBenefits();
+    fetchTitle();
   }, []);
   useEffect(() => {
     if (singleEmployeeData) {
-      let modifyArray: any = []
+      let modifyArray: any = [];
       setActiveDepartment(singleEmployeeData?.department?.name);
       setFieldValue("department_id", singleEmployeeData?.department?.id);
       setFieldValue("hire_date", singleEmployeeData?.hire_date);
       singleEmployeeData?.employeDepartments.forEach((item: any) => {
         let obj = {
-          hourlyRate:item.hourlyRate,
-          department_id:item.department?.id,
-          salaryRate:item.salaryRate,
-          title:item.title,
-        }
-        modifyArray.push(obj)
-      })
-      setData(modifyArray)
+          hourlyRate: item.hourlyRate,
+          department_id: item.department?.id,
+          salaryRate: item.salaryRate,
+          title: item.title,
+        };
+        modifyArray.push(obj);
+      });
+      setData(modifyArray);
       let array: any = [];
       singleEmployeeData?.roles.map((item: any) => {
         array.push(item.name);
@@ -392,12 +390,14 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
       setActiveDepartment(null);
       setSingleEmployeeData(null);
       fetchUserRole();
-      setData([{
-        department_id: "",
-        title: "",
-        hourlyRate: "",
-        salaryRate: "",
-      },])
+      setData([
+        {
+          department_id: "",
+          title: "",
+          hourlyRate: "",
+          salaryRate: "",
+        },
+      ]);
     }
   }, [singleEmployeeData]);
 
@@ -434,7 +434,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
   const fetchBenefits = async () => {
     try {
       const response = await getAllBenefit();
-     setBenefit(response?.data?.centers)
+      setBenefit(response?.data?.centers);
     } catch (error) {}
   };
 
@@ -451,12 +451,6 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
       setTitles(response?.data?.role);
     } catch (error) {}
   };
-
-  // const receiveDepartments = (name: string) => {
-  //   const filteredID = departments.find((item: any) => item?.name === name);
-  //   setFieldValue("department_id", filteredID?.id);
-  //   setActiveDepartment(filteredID?.name);
-  // };
 
   useEffect(() => {
     let roleIds: any = [];
@@ -479,18 +473,6 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
     setFieldValue("hire_date", date);
   };
 
-  // const receiveCompensationType = (compensationType: string) => {
-  //   setFieldValue("compensation_type", compensationType);
-  // };
-
-  // const EmployeementType = (employementType: string) => {
-  //   setFieldValue("employment_type", employementType);
-  // };
-
-  // const salartRate = (salaryRate: any) => {
-  //   setFieldValue("salary_rate", salaryRate);
-  // };
-
   const handleAddObject = () => {
     setData([
       ...data,
@@ -509,7 +491,6 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
     newData[index].title = value;
     setData(newData);
   };
-
 
   const handleInputChange = (index: any, event: any) => {
     const { name, value } = event.target;
@@ -685,10 +666,13 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
             >
               Department Works For
             </Typography>
-            <Button onClick={() => handleAddObject()} variant="outlined" startIcon={<Add />}>
-             Add
+            <Button
+              onClick={() => handleAddObject()}
+              variant="outlined"
+              startIcon={<Add />}
+            >
+              Add
             </Button>
-           
           </Box>
 
           <Grid container spacing={4}>
@@ -710,7 +694,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                   />
                 </Grid>
                 <Grid className="selectGrid" item xs={3}>
-                <SelectDepartments
+                  <SelectDepartments
                     title="Title"
                     value={item.title}
                     list={titles}
@@ -736,7 +720,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                   />
                 </Grid>
                 <Grid className="selectGrid" item xs={3}>
-                <SelectDepartments
+                  <SelectDepartments
                     title="Benefit Percentage"
                     value={item.salaryRate}
                     list={benefit}
@@ -758,7 +742,9 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                   /> */}
                 </Grid>
                 <Grid item xs={3} className="delete-icon">
-                  <button onClick={() => handleDelete(index)}><RemoveCircleOutline /></button>
+                  <button onClick={() => handleDelete(index)}>
+                    <RemoveCircleOutline />
+                  </button>
                 </Grid>
               </Grid>
             ))}
