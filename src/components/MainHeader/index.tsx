@@ -82,7 +82,7 @@ interface MainHeaderProps {
   title?: string;
   btnTitle?: string;
   subHeader?: boolean;
-  subTitle?: string;
+  subTitle?: string | any;
   date?: string;
   array?: any;
   onStatusChange?: any;
@@ -90,7 +90,7 @@ interface MainHeaderProps {
   action?: boolean;
   subdes?: string;
   classname?: string;
-  onClick?:  any;
+  onClick?: any;
 }
 
 const MainHeaderComponent = (props: MainHeaderProps) => {
@@ -102,25 +102,31 @@ const MainHeaderComponent = (props: MainHeaderProps) => {
     <AppHeader className={`${classname} appHeader`}>
       <Stack className="appHeaderHolder">
         <Box>
-          <Typography variant="h3" onClick={() => onClick(props.title)}>{props.title}</Typography>
+          <Typography variant="h3" onClick={() => onClick(props.title)}>
+            {props.title}
+          </Typography>
           <Typography variant="h6">{props.subdes}</Typography>
         </Box>
         {props?.action ? (
-          <DropdownButton title="Actions" array={props?.array} onSelect={handleOptionSelect} handleUpdate={props?.handleUpdate}/> 
+          <DropdownButton
+            title="Actions"
+            array={props?.array}
+            onSelect={handleOptionSelect}
+            handleUpdate={props?.handleUpdate}
+          />
+        ) : (
           // <Buttons
           //   startIcon={<IosShareIcon />}
           //   btntext="Export"
           //   variant="contained"
           // />
-        ) : (
           <Buttons
             startIcon={<AddIcon />}
             onClick={props?.onClick}
             btntext={props?.btnTitle}
             variant="contained"
           />
-        )
-        }
+        )}
       </Stack>
       {props?.subHeader && (
         <Box className="appSubHead">

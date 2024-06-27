@@ -37,6 +37,7 @@ import TextFields from "../Input/textfield";
 import { EditNote, UploadFile } from "@mui/icons-material";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import { v4 as uuidv4 } from "uuid";
+import AttentionModal from "../../models/AttentionModal";
 
 function createData(name?: string, amount?: number) {
   return { name, amount, id: uuidv4() };
@@ -62,6 +63,9 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
   const [employee, setEmployee] = useState<any>([]);
   const [allComments, setAllComments] = useState<any>([]);
   const [activeDepartment, setActiveDepartment] = useState<any>(null);
+  const [attentionModal, setAttentionModal] = useState<any>(false);
+  const [actionStatus, setactionStatus] = useState<any>("");
+  const [revicedStatus, setRevicedStatus] = useState<any>("");
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [disable, setDisable] = useState(false);
@@ -97,47 +101,46 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
       //   },
       // ],
     },
-    onSubmit: async (values) => {
-      if (programFromStatus == Status.CREATED) {
-        handleSave();
-        return;
-      }
-      let obj = {};
-      if (values?.supply_expense.length == 0) {
-        obj = {
-          ...values,
-          // status: Status.DRAFTED,
-          salary_expense: benefits,
-        };
-      } else {
-        obj = { ...values };
-      }
-      // if (singleProgram?.id) {
-      //   await programUpdate(values, singleProgram?.id);
-      // } else {
-      //   await createProgram(values);
-      // }
-      try {
-        if (singleProgram?.id) {
-          await programUpdate(obj, singleProgram?.id);
-        } else {
-          await createProgram(obj);
-        }
-        formik.resetForm();
-        dispatch(storeIncomeList([]));
-        dispatch(storeSupplyList([]));
-        dispatch(storeSalaryList([]));
-        dispatch(storeSingleProgram(null));
-        navigate("/program-head/program");
-      } catch (error) {}
+    onSubmit: async () => {
+      setAttentionModal(true);
+      return;
     },
   });
+
+  const formikSubmit = async () => {
+    if (programFromStatus == Status.CREATED) {
+      handleSave();
+      return;
+    }
+    let obj = {};
+    if (values?.supply_expense.length == 0) {
+      obj = {
+        ...values,
+        // status: Status.DRAFTED,
+        salary_expense: benefits,
+      };
+    } else {
+      obj = { ...values };
+    }
+    try {
+      if (singleProgram?.id) {
+        await programUpdate(obj, singleProgram?.id);
+      } else {
+        await createProgram(obj);
+      }
+      formik.resetForm();
+      dispatch(storeIncomeList([]));
+      dispatch(storeSupplyList([]));
+      dispatch(storeSalaryList([]));
+      dispatch(storeSingleProgram(null));
+      navigate("/program-head/program");
+    } catch (error) {}
+  };
   useEffect(() => {
     return () => {
       dispatch(storeIncomeList([]));
       dispatch(storeSupplyList([]));
       dispatch(storeSalaryList([]));
-      // dispatch(storeSingleProgram(null));
     };
   }, []);
 
@@ -152,7 +155,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
     }
   }, [singleProgram]);
 
-  const { values, handleSubmit, setFieldValue, errors } = formik;
+  const { values, handleSubmit, setFieldValue, errors, isSubmitting } = formik;
 
   const fetchDepartments = async () => {
     try {
@@ -287,7 +290,21 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
       navigate("/department-head/review-budgets");
     }
   };
+  const handleOK = async () => {
+    if (programFromStatus == Status.REVISED && revicedStatus == "save") {
+      await handleSave();
+    } else if (programFromStatus == Status.PENDING) {
+      await handleStatausSubmit(actionStatus);
+    } else {
+      await formikSubmit();
+    }
+    setAttentionModal(false);
+  };
 
+  const handleApproveReject = (data: string) => {
+    setactionStatus(data);
+    setAttentionModal(true);
+  };
   const Save = async () => {};
   return (
     <Grid item xs={9}>
@@ -326,7 +343,10 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
                   <Buttons
                     key={0}
                     btntext="Save"
-                    onClick={handleSave}
+                    onClick={() => {
+                      setAttentionModal(true);
+                      setRevicedStatus("save");
+                    }}
                     variant="outlined"
                     color="primary"
                     size="medium"
@@ -366,7 +386,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
                     btntext={action?.title}
                     onClick={
                       action.title == "Reject" || action.title == "Approve"
-                        ? () => handleStatausSubmit(action.title)
+                        ? () => handleApproveReject(action.title)
                         : Save
                     }
                     variant={action.variant}
@@ -435,6 +455,14 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
             fetchComments={fetchComments}
           />
         </Grid>
+        <AttentionModal
+          open={attentionModal}
+          handleClose={() => setAttentionModal(false)}
+          handleOK={handleOK}
+          loading={isSubmitting}
+          heading="Attention"
+          text="You are changing the status of the program"
+        />
       </Grid>
     </Grid>
   );

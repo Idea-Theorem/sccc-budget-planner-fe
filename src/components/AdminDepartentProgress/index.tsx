@@ -6,11 +6,7 @@ import ProgramProgress from "./programProgress";
 import DepartmentButton from "./departmentButton";
 import React, { useEffect } from "react";
 import { getDepartmentInCenters } from "../../services/centersServices";
-import {
-  calculatePercentage,
-  calculateTotalAmountForAdmin,
-  calculateTotalsProgramExpense,
-} from "../../utils";
+import { calculatePercentage, calculateTotalAmountForAdmin } from "../../utils";
 import { getProgramInDepartments } from "../../services/departmentServices";
 import { CircularProgress, Stack } from "@mui/material";
 
@@ -58,7 +54,7 @@ const StyledBox = styled(Box)(() => ({
 
         ">svg": {
           width: "491px",
-          height:"auto",
+          height: "auto",
           margin: "0 auto",
         },
       },
@@ -136,8 +132,8 @@ const AdminDepartmentProgress = ({
     try {
       setRowDataLoading(true);
       const response = await getProgramInDepartments(id);
-      setRowData(response?.data?.departments);
-      const res = calculateTotalAmountForAdmin(response?.data?.departments);
+      setRowData(response?.data?.programs);
+      const res = calculateTotalAmountForAdmin(response?.data?.programs);
       setTotalPrograms(Number(res));
       setRowDataLoading(false);
     } catch (error) {
@@ -201,19 +197,27 @@ const AdminDepartmentProgress = ({
           <>
             <Box className="dashboardGraphsList">
               <Stack direction={"row"} justifyContent="space-between" mb={2}>
-                <Box><strong>Departments</strong></Box>
+                <Box>
+                  <strong>Departments</strong>
+                </Box>
                 <strong>{totalDepartment}</strong>
               </Stack>
-              
-              {departmentInCenterLoading && departmentInCenter.length == 0 ? (
+
+              {departmentInCenterLoading && departmentInCenter?.length == 0 ? (
                 <CircularProgress />
               ) : (
                 departmentInCenter?.map((e: any) => (
-                  <Box color={currentDepartment?.color} className="progress-wrap">
+                  <Box
+                    color={currentDepartment?.color}
+                    className="progress-wrap"
+                  >
                     <ProgramProgress
                       title={e?.name}
                       amount={e?.totalAmount}
-                      value={calculatePercentage(e?.totalAmount, totalDepartment)}
+                      value={calculatePercentage(
+                        e?.totalAmount,
+                        totalDepartment
+                      )}
                       color="inherit"
                     />
                   </Box>
@@ -223,29 +227,31 @@ const AdminDepartmentProgress = ({
           </>
         ) : (
           <>
-          <Box className="dashboardGraphsList">
-            <Stack direction={"row"} justifyContent="space-between" mb={2}>
-              <Box><strong>Programs</strong></Box>
-              <strong>{totalPrograms}</strong>
-            </Stack>
-            {rowDataLoading && rowData?.length == 0 ? (
-              <CircularProgress />
-            ) : (
-              rowData?.map((e: any) => (
-                <Box color={currentProgram?.color} className="progress-wrap">
-                  <ProgramProgress
-                    title={e?.name}
-                    amount={calculateTotalsProgramExpense(e)}
-                    value={calculatePercentage(
-                      calculateTotalsProgramExpense(e),
-                      totalPrograms
-                    )}
-                    color="inherit"
-                  />
+            <Box className="dashboardGraphsList">
+              <Stack direction={"row"} justifyContent="space-between" mb={2}>
+                <Box>
+                  <strong>Programs</strong>
                 </Box>
-              ))
-            )}
-          </Box>
+                <strong>{totalPrograms}</strong>
+              </Stack>
+              {rowDataLoading && rowData?.length == 0 ? (
+                <CircularProgress />
+              ) : (
+                rowData?.map((e: any) => (
+                  <Box color={currentProgram?.color} className="progress-wrap">
+                    <ProgramProgress
+                      title={e?.name}
+                      amount={e?.programBudget}
+                      value={calculatePercentage(
+                        e?.programBudget,
+                        totalPrograms
+                      )}
+                      color="inherit"
+                    />
+                  </Box>
+                ))
+              )}
+            </Box>
           </>
         )}
       </Box>

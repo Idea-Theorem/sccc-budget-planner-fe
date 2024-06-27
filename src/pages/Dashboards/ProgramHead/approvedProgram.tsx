@@ -4,10 +4,11 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Status from "../../../utils/dumpData";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { getPrograms } from "../../../services/adminServices";
 import { getProgram } from "../../../services/programServices";
 import { AddIcCallOutlined } from "@mui/icons-material";
+import AttentionModal from "../../../models/AttentionModal";
 
 const StyledBox = styled(Box)(({ theme }) => ({
   ".MuiTypography-root": {
@@ -22,9 +23,16 @@ const StyledBox = styled(Box)(({ theme }) => ({
   },
 }));
 
-const ApprovedProgram = ({ tabstatus, count, totalCount, handleClick }: any) => {
+const ApprovedProgram = ({
+  tabstatus,
+  count,
+  totalCount,
+  handleClick,
+}: any) => {
   const [programs, setPrograms] = React.useState<any>({});
-  console.log(programs)
+  const [attentionModal, setAttentionModal] = useState<any>(false);
+
+  console.log(programs);
   useEffect(() => {
     fetchProgram();
   }, []);
@@ -35,6 +43,12 @@ const ApprovedProgram = ({ tabstatus, count, totalCount, handleClick }: any) => 
       setPrograms(response?.data);
     } catch (error) {}
   };
+
+  const handleOK = async () => {
+    await handleClick();
+    setAttentionModal(false);
+  };
+
   return (
     <StyledBox>
       <Stack direction="row" alignItems="center" justifyContent="space-between">
@@ -45,9 +59,7 @@ const ApprovedProgram = ({ tabstatus, count, totalCount, handleClick }: any) => 
             alignItems="center"
             gap="2px"
           >
-            <Typography className="textFull">
-              {count}
-            </Typography>
+            <Typography className="textFull">{count}</Typography>
             <Typography className="divider">/</Typography>
             <Typography className="textValue">
               {" "}
@@ -57,21 +69,26 @@ const ApprovedProgram = ({ tabstatus, count, totalCount, handleClick }: any) => 
         )}
         {tabstatus == Status.APPROVED && (
           <Stack>
-           
             <Button
-            disabled={count !== totalCount ? true : false}
+              disabled={count !== totalCount ? true : false}
               variant="contained"
               color="primary"
               size="medium"
               startIcon={<AddIcCallOutlined />}
-              onClick={handleClick}
+              onClick={() => setAttentionModal(true)}
             >
               Submit
             </Button>
-            
           </Stack>
         )}
       </Stack>
+      <AttentionModal
+        open={attentionModal}
+        handleClose={() => setAttentionModal(false)}
+        handleOK={handleOK}
+        heading="Attention"
+        text="You are changing the status of the program"
+      />
     </StyledBox>
   );
 };
