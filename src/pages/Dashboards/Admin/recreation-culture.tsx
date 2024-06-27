@@ -5,8 +5,9 @@ import Status from "../../../utils/dumpData";
 import { Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { RootState } from "../../../store";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { formatNumber } from "../../../utils";
 const StyledBox = styled(Box)(() => ({
   "& .dashboardCards": {
     display: "flex",
@@ -193,28 +194,32 @@ const RecreationAndCultureScreen = ({}: any) => {
     ],
   ];
   const { singleDepart } = useSelector((state: RootState) => state.program);
-  const { singleDepartName } = useSelector((state: RootState) => state.program);
+  const { singleDepartName, programBudgetInDepartment } = useSelector(
+    (state: RootState) => state.program
+  );
+
   const [tabstatus, setTabstatus] = React.useState(Status.PENDING);
-  console.log(tabstatus) 
+  console.log(tabstatus);
   const [status, setStatus] = React.useState<string>("");
   const navigate = useNavigate();
   const goBack = () => {
-    navigate("/admin/review-budget")
-    
+    navigate("/admin/review-budget");
   };
 
   useEffect(() => {
-    if(false){
-      setStatus("")
+    if (false) {
+      setStatus("");
     }
-  }, [])
+  }, []);
   return (
     <StyledBox className="appContainer">
-        <Typography onClick={()=> goBack()}>Back</Typography>
-        <Typography>{singleDepartName?.name}</Typography>
-        <Typography>Total Budget: $00,000,00</Typography>
+      <Typography onClick={() => goBack()}>Back</Typography>
+      <Typography>{singleDepartName?.name}</Typography>
+      <Typography>
+        Total Budget: ${formatNumber(programBudgetInDepartment)}
+      </Typography>
       <TabsArea
-      setTabstatus={setTabstatus}
+        setTabstatus={setTabstatus}
         tabsTitleArray={[
           { title: "Pending" },
           { title: "Approved" },
@@ -226,7 +231,7 @@ const RecreationAndCultureScreen = ({}: any) => {
         row={singleDepart}
         currentStatus={status}
       />
-    </StyledBox> 
+    </StyledBox>
   );
 };
 

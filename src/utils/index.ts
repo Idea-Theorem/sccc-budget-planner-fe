@@ -99,11 +99,13 @@ export const formatNumber = (input: any) => {
 }
 
 
-export const calculateTotalsProgramExpense = (data: any) => {
-  const incomeTotal = data.income.reduce((acc: any, item: any) => acc + item.amount, 0);
-  const supplyExpenseTotal = data.supply_expense.length === 0 ? 0 : data.supply_expense.reduce((acc: any, item: any) => acc + item.amount, 0);
-  return incomeTotal + supplyExpenseTotal;
-};
+// export const calculateTotalsProgramExpense = (data: any) => {
+//   console.log("data:::::", data)
+//   const incomeTotal = data?.reduce((sum: any, item: any) => sum + item.programBudget, 0);
+
+//   // const supplyExpenseTotal = data.supply_expense.length === 0 ? 0 : data.supply_expense.reduce((acc: any, item: any) => acc + item.amount, 0);
+//   return incomeTotal ;
+// };
 
 export const calculateAmount = (formData: any) => {
   const updatedFormData = formData.map((employee: any) => {
@@ -143,15 +145,18 @@ export const calculatePercentage = (part: any, whole: any) => {
 }
 
 export const calculateTotalAmountForAdmin = (data: any) => {
-  let totalAmount = 0;
+  // console.log("data::::::", data.slice(0,2))
+  // let totalAmount = 0;
 
-  data.forEach((item: any) => {
-    totalAmount += item?.employee?.length == 0 ? 0 : item?.employee?.reduce((acc: any, curr: any) => Number(acc) + Number(curr.amount), 0);
+  // data.forEach((item: any) => {
+    // totalAmount += item?.employee?.length == 0 ? 0 : item?.employee?.reduce((acc: any, curr: any) => Number(acc) + Number(curr.amount), 0);
 
-    totalAmount += item?.income?.length == 0 ? 0 : item?.income?.reduce((acc: any, curr: any) => Number(acc) + Number(curr.amount), 0);
+    // totalAmount += item?.income?.length == 0 ? 0 : item?.income?.reduce((acc: any, curr: any) => Number(acc) + Number(curr.amount), 0);
+    const totalAmount = data.reduce((sum: any, item: any) => sum + item.programBudget, 0);
 
-    totalAmount += item?.supply_expense?.length == 0 ? 0 : item?.supply_expense?.reduce((acc: any, curr: any) => Number(acc) + Number(curr.amount), 0);
-  });
+
+    // totalAmount += item?.supply_expense?.length == 0 ? 0 : item?.supply_expense?.reduce((acc: any, curr: any) => Number(acc) + Number(curr.amount), 0);
+  // });
 
   return totalAmount;
 }

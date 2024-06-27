@@ -2,9 +2,15 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MainHeaderComponent from "../../components/MainHeader";
 import TabsArea from "../../components/Tabs";
-import { getAllCenters, getDepartmentInCenters, getProgramInDepartment } from "../../services/centersServices";
+import {
+  getAllCenters,
+  getDepartmentInCenters,
+  getProgramInDepartment,
+} from "../../services/centersServices";
 import React, { useEffect, useState } from "react";
 import Status from "../../utils/dumpData";
+import { getPrograms } from "../../services/adminServices";
+import { formatNumber } from "../../utils";
 const StyledBox = styled(Box)(() => ({
   "& .dashboardCards": {
     display: "flex",
@@ -16,18 +22,23 @@ const StyledBox = styled(Box)(() => ({
   },
 }));
 const SuperReviewBudget = () => {
-
-  const [center, setCenters] = useState([])
-  const [currenttitle, setCurrentTitle] = useState("")
+  const [center, setCenters] = useState([]);
+  const [currenttitle, setCurrentTitle] = useState("");
+  const [totalBudget, settotalBudget] = useState("");
   const [tabstatus, setTabstatus] = React.useState(Status.PENDING);
-  console.log(tabstatus)
+  console.log(tabstatus);
 
-  const [step, setStep] = useState(0)
+  const [step, setStep] = useState(0);
   const tableColumnsTitleArray = [
     [
       {
         field: "name",
-        headerName: step == 0 ? "Center Name" : step == 1 ? "Department Name" : "Program Name",
+        headerName:
+          step == 0
+            ? "Center Name"
+            : step == 1
+            ? "Department Name"
+            : "Program Name",
         sortable: false,
         editable: false,
         flex: 1,
@@ -220,77 +231,82 @@ const SuperReviewBudget = () => {
       },
     ],
   ];
-  const array = [
-    {text: "Approve"},
-    {text: "Reject"},
-  ]
+  const array = [{ text: "Approve" }, { text: "Reject" }];
 
   const fetchCenter = async (value: string) => {
     try {
-      const response = await getAllCenters(value)
-      setCenters(response?.data?.centers)
-    } catch (error) {
-      
-    }
-  }
+      const response = await getAllCenters(value);
+      const res = await getPrograms();
+      settotalBudget(res?.data?.totalApprovedProgrambudget);
+      setCenters(response?.data?.centers);
+    } catch (error) {}
+  };
   const handleSingleRow = async (row: any) => {
-    if(step == 2){
-      return
+    if (step == 2) {
+      return;
     }
-    if(step == 1){
-      fetchProgramInDepartment(row.id)
-      setCurrentTitle(row.name)
-      setStep(2)
-      return
+    if (step == 1) {
+      fetchProgramInDepartment(row.id);
+      setCurrentTitle(row.name);
+      setStep(2);
+      return;
     }
-    setCurrentTitle(row.name)
+    setCurrentTitle(row.name);
     try {
-      const res = await getDepartmentInCenters(row?.id)
-      setCenters(res?.data?.center?.department)
-      setStep(1)
-    } catch (error) {
-      
-    }
-  }
+      const res = await getDepartmentInCenters(row?.id);
+      setCenters(res?.data?.center?.department);
+      settotalBudget(res?.data?.center?.totalDepartmentBudget);
+      setStep(1);
+    } catch (error) {}
+  };
 
   const fetchProgramInDepartment = async (id: string) => {
-try {
-  const res = await getProgramInDepartment(id)
-  setCenters(res?.data?.departments
-  )
-} catch (error) {
-  
-}
-  }
+    try {
+      const res = await getProgramInDepartment(id);
+      setCenters(res?.data?.programs);
+      // const totalProgramBudget = calculateTotalAmountForAdmin(
+      //   res?.data?.programs
+      // );
+      settotalBudget(res?.data?.totalBudget);
+    } catch (error) {}
+  };
   useEffect(() => {
-    fetchCenter("")
-  }, [])
+    fetchCenter("");
+  }, []);
 
   const handleBackFunctionality = () => {
-    fetchCenter("")
-    setStep(0)
-  }
+    setCurrentTitle("");
+    fetchCenter("");
+    setStep(0);
+  };
 
   const receiveProgramSearch = async (value: string) => {
-    if(step === 0) {
-       await fetchCenter(value)
-
+    if (step === 0) {
+      await fetchCenter(value);
     }
-  }
+  };
   return (
     <StyledBox className="appContainer">
       <MainHeaderComponent
         array={array}
-        action={true} 
-        title={step == 0 ? "Review Budgets Center" : step == 1 ? "Review Budgets Center  >  Departments" : step == 2 ? "Review Budgets Center  >  Departments > Program":""}
+        action={true}
+        title={
+          step == 0
+            ? "Review Budgets Center"
+            : step == 1
+            ? "Review Budgets Center  >  Departments"
+            : step == 2
+            ? "Review Budgets Center  >  Departments > Program"
+            : ""
+        }
         subdes={currenttitle}
         btnTitle="Actions"
         subHeader={true}
-        subTitle="Total Budget: $00,000.00"
+        subTitle={`Total Budget: ${formatNumber(totalBudget)}`}
         onClick={handleBackFunctionality}
       />
       <TabsArea
-      setTabstatus={setTabstatus}
+        setTabstatus={setTabstatus}
         tabsTitleArray={[
           { title: "Pending" },
           { title: "Approved" },
@@ -303,7 +319,7 @@ try {
         onRowClick={handleSingleRow}
         receiveProgramSearch={receiveProgramSearch}
       />
-    </StyledBox> 
+    </StyledBox>
   );
 };
 

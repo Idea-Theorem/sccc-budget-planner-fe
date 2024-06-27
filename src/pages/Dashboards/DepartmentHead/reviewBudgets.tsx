@@ -4,15 +4,25 @@ import TabsArea from "../../../components/Tabs";
 import Typography from "@mui/material/Typography";
 import SubHeader from "../../../components/SubHeader";
 import ApprovedProgram from "../ProgramHead/approvedProgram";
-import { getAllProgramsViaStatus, updateProgram } from "../../../services/programServices";
+import {
+  getAllProgramsViaStatus,
+  updateProgram,
+} from "../../../services/programServices";
 import React, { useEffect, useState } from "react";
 import Status from "../../../utils/dumpData";
 import { useDispatch, useSelector } from "react-redux";
 import { storeProgramList } from "../../../store/reducers/programSlice";
 import { RootState } from "../../../store";
 import SelectDemo from "../../../components/Select";
-import { departmentCount, getAllDepartments, getSingleDepartments } from "../../../services/departmentServices";
+import {
+  departmentCount,
+  getAllDepartments,
+  getSingleDepartments,
+} from "../../../services/departmentServices";
 import StatusModal from "../../../components/StatusModal";
+import AttentionModal from "../../../models/AttentionModal";
+import { getProgramInDepartment } from "../../../services/centersServices";
+import { formatNumber } from "../../../utils";
 const StyledBox = styled(Box)(() => ({
   "& .reviewBudgetHead": {
     marginBottom: "23px",
@@ -233,88 +243,94 @@ const DHReviewBudgets = () => {
   const [count, setCount] = useState<any>(null);
   const [departmentId, setDepartmentID] = useState<any>(null);
   const [totalCount, setTotalCount] = useState<any>(null);
-  const [programListing, setprogramListing] = useState<any>([]);
+  // const [programListing, setprogramListing] = useState<any>([]);
+  // console.log(programListing);
   const [filteredProgramListing, setFilteredProgramListing] = useState<any>([]);
-  dispatch(storeProgramList(filteredProgramListing)); 
+  const [attentionModal, setAttentionModal] = useState<any>(false);
+  dispatch(storeProgramList(filteredProgramListing));
   const [activeDepartment, setActiveDepartment] = useState<any>("");
   const [statusData, setStatusData] = useState<any>(null);
+  const [totalBudget, settotalBudget] = useState("");
 
-  useEffect(()=>{
-    fetchDepartments()
-  },[])
+  useEffect(() => {
+    fetchDepartments();
+  }, []);
   const fetchDepartments = async () => {
     try {
       const response = await getAllDepartments("");
-       response?.data?.departments.find((item: any) => item?.name === activeDepartment);
-      setDepartmentID(response?.data?.departments[0]?.id)
-      setActiveDepartment(response?.data?.departments[0]?.name)
+      response?.data?.departments.find(
+        (item: any) => item?.name === activeDepartment
+      );
+      setDepartmentID(response?.data?.departments[0]?.id);
+      setActiveDepartment(response?.data?.departments[0]?.name);
       setDepartments(response?.data?.departments);
     } catch (error) {}
   };
-  useEffect(()=>{
-    if(departmentId){
-      getDepartmentCount(departmentId)
+  useEffect(() => {
+    if (departmentId) {
+      getDepartmentCount(departmentId);
     }
-
-  },[tabstatus])
-  const receiveDepartment = (value: any) => {
+  }, [tabstatus]);
+  const receiveDepartment = async (value: any) => {
     const filteredID = departments.find((item: any) => item?.name === value);
     setActiveDepartment(filteredID?.name);
-    setDepartmentID(filteredID?.id)
-    const filteredProgramList = programListing?.filter((item: any)=> item?.department_id === filteredID?.id)
-    dispatch(storeProgramList(filteredProgramList)); 
-    getDepartmentCount(filteredID?.id)
+    setDepartmentID(filteredID?.id);
+    const res = await getProgramInDepartment(filteredID?.id);
+    settotalBudget(res?.data?.totalBudget);
+    dispatch(storeProgramList(res?.data?.programs));
+    getDepartmentCount(filteredID?.id);
   };
-  const getDepartmentCount = async (id: any)=>{
+  const getDepartmentCount = async (id: any) => {
     try {
-      const response = await departmentCount(id)
-      setCount(response?.data?.approvedCount)
-      setTotalCount(response?.data?.approvedCount + response?.data?.pendingCount)
-    } catch (error) {
-      
-    }
-  }
-  
+      const response = await departmentCount(id);
+      setCount(response?.data?.approvedCount);
+      setTotalCount(
+        response?.data?.approvedCount + response?.data?.pendingCount
+      );
+    } catch (error) {}
+  };
+
   useEffect(() => {
     fetchProgram("");
-    
   }, [updateprogram, activeDepartment, tabstatus]);
   const fetchProgram = async (value: string) => {
     try {
       const response = await getAllProgramsViaStatus(tabstatus, value);
-      const newArray = response?.data?.programs?.filter((item: any)=> item?.department?.id === departmentId)
-      setFilteredProgramListing(newArray)
-      
-      setprogramListing(response?.data?.programs)
+      const newArray = response?.data?.programs?.filter(
+        (item: any) => item?.department?.id === departmentId
+      );
+      setFilteredProgramListing(newArray);
+
+      // setprogramListing(response?.data?.programs);
     } catch (error) {}
   };
   const handleStatusChange = (selectedStatus: any) => {
-    if (selectedStatus === "Approve") {
+    if (selectedStatus === "Approved") {
       setStatus("APPROVED");
     } else if (selectedStatus === "Rejected") {
       setStatus("REJECTED");
     }
+    setAttentionModal(true);
   };
   const handleActionReieve = (data: any) => {
     setSelectedRows(data);
   };
-  const handleUpdate = async (selectedOption: any) => { 
+  const handleUpdate = async () => {
     const data = {
       progamIds: selectedRows,
-      status: selectedOption,
+      status: status,
     };
     const response = await updateProgram(data);
     setUpdateprogram(response?.data);
   };
 
-  const handleSumbit = async ()=>{
+  const handleSumbit = async () => {
     let obj = {
       departmentIds: [departmentId],
-      status: Status.PENDING
-    }
+      status: Status.PENDING,
+    };
     try {
-
-      await getSingleDepartments(obj)
+      await getSingleDepartments(obj);
       setStatusData({
         type: "success",
         message: "Department Status Updated Successfully",
@@ -325,60 +341,78 @@ const DHReviewBudgets = () => {
         message: error.response.data.message,
       });
     }
-  }
+  };
 
   const receiveProgramSearch = async (value: string) => {
-await fetchProgram(value)
-  }
+    await fetchProgram(value);
+  };
+  const handleOK = async () => {
+    await handleUpdate();
+    setAttentionModal(false);
+  };
+
   return (
     <StyledBox className="appContainer">
       <Box className="reviewBudgetHead">
         <Typography variant="h3">Review Budgets</Typography>
       </Box>
-      <SubHeader 
-        handleUpdate={handleUpdate}
+      <SubHeader
+        // handleUpdate={handleUpdate}
         title=""
         onStatusChange={handleStatusChange}
       />
       <Box className="block-selection">
-        <SelectDemo parentClass="departmentSelect"
-        title=""
-        receiveValue={receiveDepartment}
-        list={departments}
-        value={activeDepartment}
-        placeholder="Please Select"
+        <SelectDemo
+          parentClass="departmentSelect"
+          title=""
+          receiveValue={receiveDepartment}
+          list={departments}
+          value={activeDepartment}
+          placeholder="Please Select"
         />
         <Typography className="totalBudgetText">
-          Total Budget: $00,000.00
+          Total Budget: ${formatNumber(totalBudget)}
         </Typography>
       </Box>
       <Box className="customSelect">
-      <Box className="approvedTableBlock">
-        <Box className="approvedProgramBlock">
-          <ApprovedProgram tabstatus={tabstatus} count={count} totalCount={totalCount} handleClick={()=> handleSumbit()}
+        <Box className="approvedTableBlock">
+          <Box className="approvedProgramBlock">
+            <ApprovedProgram
+              tabstatus={tabstatus}
+              count={count}
+              totalCount={totalCount}
+              handleClick={() => handleSumbit()}
+            />
+          </Box>
+          <TabsArea
+            tabsTitleArray={[
+              { title: "Pending" },
+              { title: "Approved" },
+              { title: "Rejected" },
+            ]}
+            setTabstatus={setTabstatus}
+            row={programList}
+            table={tableColumnsTitleArray}
+            currentStatus={status}
+            handleActionReieve={handleActionReieve}
+            checkout={true}
+            receiveProgramSearch={receiveProgramSearch}
+            approveTabAcriveClass={true}
           />
-        </Box> 
-        <TabsArea
-          tabsTitleArray={[
-            { title: "Pending" },
-            { title: "Approved" },
-            { title: "Rejected" },
-          ]}
-          setTabstatus={setTabstatus}
-          row={programList}
-          table={tableColumnsTitleArray}
-          currentStatus={status}
-          handleActionReieve={handleActionReieve}
-          checkout={true} 
-          receiveProgramSearch={receiveProgramSearch}
-          approveTabAcriveClass = {true}
-        />
+        </Box>
       </Box>
-      </Box>
-      
+
       <StatusModal
         statusData={statusData}
         onClose={() => setStatusData(null)}
+      />
+      <AttentionModal
+        open={attentionModal}
+        handleClose={() => setAttentionModal(false)}
+        handleOK={handleOK}
+        // loading={isSubmitting}
+        heading="Attention"
+        text="You are changing the status of the program"
       />
     </StyledBox>
   );

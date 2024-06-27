@@ -5,7 +5,11 @@ import MainHeaderComponent from "../../../components/MainHeader";
 import AdminDepartmentProgress from "../../../components/AdminDepartentProgress";
 import CollapsibleTable from "../../../components/CollapseTable";
 import React, { useEffect } from "react";
-import { getDepartment, getPrograms, getTotalbudget } from "../../../services/adminServices";
+import {
+  getDepartment,
+  getPrograms,
+  getTotalbudget,
+} from "../../../services/adminServices";
 import { useAuth } from "../../../contexts/AuthContext";
 import moment from "moment";
 import { formatNumber } from "../../../utils";
@@ -22,14 +26,14 @@ const AdminScreen = () => {
   const [programs, setPrograms] = React.useState<any>({});
   const [department, setDepartment] = React.useState<any>([]);
   const [departmentLoading, setDepartmentLoading] = React.useState<any>(false);
-  const [isOpen, setIsOpen] = React.useState<any>(false)
-  const [totalBudget, setTotalBudget] = React.useState<any>("")
+  const [isOpen, setIsOpen] = React.useState<any>(false);
+  const [totalBudget, setTotalBudget] = React.useState<any>("");
   const { user } = useAuth();
 
   useEffect(() => {
     fetchProgram();
     fetchDepartment();
-    fetchTotalbudget()
+    fetchTotalbudget();
   }, []);
 
   const fetchProgram = async () => {
@@ -41,29 +45,29 @@ const AdminScreen = () => {
 
   const fetchDepartment = async () => {
     try {
-      setDepartmentLoading(true)
+      setDepartmentLoading(true);
       const response = await getDepartment();
       setDepartment(response?.data?.departments);
-      setDepartmentLoading(false)
+      setDepartmentLoading(false);
     } catch (error) {
-      setDepartmentLoading(false)
+      setDepartmentLoading(false);
     }
   };
 
   const fetchTotalbudget = async () => {
     try {
       const response = await getTotalbudget();
-      setTotalBudget(response?.data)
+      setTotalBudget(response?.data);
     } catch (error) {}
   };
-const handleModalClose = () => {
-  setIsOpen(false)
-}
-  
+  const handleModalClose = () => {
+    setIsOpen(false);
+  };
+
   return (
     <StyledBox className="appContainer">
       <MainHeaderComponent
-        array={array} 
+        array={array}
         title="Dashboard"
         btnTitle="Actions"
         subTitle={"Welcome" + " " + user?.firstname + " " + user?.lastname}
@@ -72,20 +76,24 @@ const handleModalClose = () => {
         action={true}
       />
       <Box className="dashboardCards">
-        <AdminDataCard 
+        <AdminDataCard
           detail="*The total is calculated based on approved programs"
           title="Budget-to-date"
           edit={true}
-          total={formatNumber(totalBudget?.total_value ? totalBudget?.total_value : "")}
+          total={formatNumber(
+            totalBudget?.total_value ? totalBudget?.total_value : ""
+          )}
           done={formatNumber(programs?.totalApprovedProgrambudget)}
           showProgress={true}
           showDollarSign={true}
           color="info"
-           handleAddclick={() => setIsOpen(true)}
+          handleAddclick={() => setIsOpen(true)}
         />
         <AdminDataCard
           title="Approved Prgs-to-date"
-          total={programs.programsCount && programs.programsCount  + ' ' + "forecast"}
+          total={
+            programs.programsCount && programs.programsCount + " " + "forecast"
+          }
           done={programs.approvedCount}
           edit={false}
           showDollarSign={false}
@@ -97,8 +105,21 @@ const handleModalClose = () => {
           showDollarSign={false}
         />
       </Box>
-      <BudgetModal approvedBudget={programs?.totalApprovedProgrambudget} fetchTotalbudget={fetchTotalbudget} totalBudget={totalBudget} placeholder="$ Emter amount" open={isOpen} handleClose={handleModalClose} heading="Add Budget" subheading="budegt total"/>
-      <AdminDepartmentProgress department={department} loading={departmentLoading} from="admin"/>
+      <BudgetModal
+        approvedBudget={programs?.totalApprovedProgrambudget}
+        fetchTotalbudget={fetchTotalbudget}
+        totalBudget={totalBudget}
+        placeholder="$ Emter amount"
+        open={isOpen}
+        handleClose={handleModalClose}
+        heading="Add Budget"
+        subheading="budegt total"
+      />
+      <AdminDepartmentProgress
+        department={department}
+        loading={departmentLoading}
+        from="admin"
+      />
       <CollapsibleTable />
     </StyledBox>
   );
