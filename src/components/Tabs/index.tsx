@@ -90,6 +90,9 @@ const BasicTabs = (props: BasicTabsProps) => {
     } else if (newValue == 3) {
       setStatus(Status.DRAFTED);
       props?.setTabstatus(Status.DRAFTED);
+    } else if (newValue == 4) {
+      setStatus(Status.EXPIRED);
+      props?.setTabstatus(Status.EXPIRED);
     }
   };
   React.useEffect(() => {
@@ -105,6 +108,7 @@ const BasicTabs = (props: BasicTabsProps) => {
     // }
     fetchProgramList(status, "");
   }, [status]);
+
   const fetchProgramList = async (status: string, Searchvalue: string) => {
     try {
       setLoading(true);
@@ -139,6 +143,13 @@ const BasicTabs = (props: BasicTabsProps) => {
       dispatch(storeSingleProgram(rowData));
       dispatch(storeProgramFromStatus(Status.DRAFTED));
       navigate("/program-head/create");
+    } else if (
+      location?.pathname == "/program-head/program" &&
+      status == Status.EXPIRED
+    ) {
+      dispatch(storeSingleProgram(rowData));
+      dispatch(storeProgramFromStatus(Status.CREATED));
+      navigate("/program-head/expire");
     } else if (
       location?.pathname == "/department-head/review-budgets" &&
       status == Status.PENDING

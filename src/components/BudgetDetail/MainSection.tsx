@@ -58,7 +58,10 @@ const benefits = [
   createData("Telephone", 0),
 ];
 
-const MainSection = ({ actions }: { actions: ActionsType[] }) => {
+const MainSection = ({
+  actions,
+  fromParentDisabled = false,
+}: any | { actions: ActionsType[] }) => {
   const [departments, setDepartments] = useState<any>([]);
   const [employee, setEmployee] = useState<any>([]);
   const [allComments, setAllComments] = useState<any>([]);
@@ -312,7 +315,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
         <Grid item xs={12}>
           <Stack className="createProgramContentHead">
             <TextFields
-              disabled={disable}
+              disabled={disable || fromParentDisabled}
               autoFocus
               type="text"
               placeholder="Enter Program Name"
@@ -408,7 +411,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
               receiveValue={receiveCode}
               list={ProgramCode}
               value={values.code}
-              disabled={disable}
+              disabled={disable || fromParentDisabled}
               placeholder="Please Select"
               error={errors.code ? true : false}
               errorMessage={errors.code}

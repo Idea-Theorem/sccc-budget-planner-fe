@@ -5,8 +5,10 @@ const getPrograms = async () => {
 };
 
 const getPendingPrograms = async (status: any, value: string) => {
-  const modifyValue = typeof value == "undefined" ? "" : value
-  return await HTTP_CLIENT.get(`/department/status/${status}?name=${modifyValue}`);
+  const modifyValue = typeof value == "undefined" ? "" : value;
+  return await HTTP_CLIENT.get(
+    `/department/status/${status}?name=${modifyValue}`
+  );
 };
 const getDepartment = async () => {
   return await HTTP_CLIENT.get("/department");
@@ -31,6 +33,10 @@ const updateSuperAdminTotalbudget = async (data: any) => {
   return await HTTP_CLIENT.put("dashboard/budget-super-admin/1", data);
 };
 
+const fetchAllRecord = async () => {
+  return await HTTP_CLIENT.get("/dashboard/record");
+};
+
 export {
   getPrograms,
   getPendingPrograms,
@@ -40,5 +46,6 @@ export {
   updateTotalbudget,
   addSuperAdminTotalbudget,
   getSuperAdminTotalbudget,
-  updateSuperAdminTotalbudget
+  updateSuperAdminTotalbudget,
+  fetchAllRecord,
 };

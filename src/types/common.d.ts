@@ -24,4 +24,5 @@ interface ActionsType {
 interface BudgetDetailProps {
   actions: ActionsType[];
   clickBack: () => void;
+  fromParentDisabled?: any
 }

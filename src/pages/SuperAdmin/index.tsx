@@ -9,7 +9,11 @@ import { formatNumber } from "../../utils";
 import moment from "moment";
 import { useAuth } from "../../contexts/AuthContext";
 import SuperAdminBudgetModal from "../../models/SuperAdminBudgetModal";
-import { getPrograms, getSuperAdminTotalbudget } from "../../services/adminServices";
+import {
+  getPrograms,
+  getSuperAdminTotalbudget,
+  getTotalbudget,
+} from "../../services/adminServices";
 const StyledBox = styled(Box)(() => ({
   "& .dashboardCards": {
     display: "flex",
@@ -19,22 +23,19 @@ const StyledBox = styled(Box)(() => ({
 }));
 const SuperAdminScreen = () => {
   const array = [{ text: "Export" }, { text: "Reset" }];
-  const [center, setCenter] = useState([])
-  const [centerLoading, setCenterLoading] = useState<boolean>(false)
-  const [isOpen, setIsOpen] = React.useState<any>(false)
+  const [center, setCenter] = useState([]);
+  const [centerLoading, setCenterLoading] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = React.useState<any>(false);
   const [programs, setPrograms] = React.useState<any>({});
 
-  const [totalBudget, setTotalBudget] = React.useState<any>("")
-
+  const [totalBudget, setTotalBudget] = React.useState<any>("");
 
   const { user } = useAuth();
 
-
   useEffect(() => {
     fetchCenter();
-    fetchTotalbudget()
+    fetchTotalbudget();
     fetchProgram();
-
   }, []);
 
   const fetchProgram = async () => {
@@ -46,23 +47,25 @@ const SuperAdminScreen = () => {
 
   const fetchCenter = async () => {
     try {
-      setCenterLoading(true)
+      setCenterLoading(true);
       const response = await getAllCenters("");
-      setCenter(response?.data?.centers)
-      setCenterLoading(false)
+      setCenter(response?.data?.centers);
+      setCenterLoading(false);
     } catch (error) {
-      setCenterLoading(false)
+      setCenterLoading(false);
     }
   };
   const fetchTotalbudget = async () => {
     try {
-      const response = await getSuperAdminTotalbudget();
-      setTotalBudget(response?.data)
+      // const response = await getSuperAdminTotalbudget();
+      const response = await getTotalbudget();
+
+      setTotalBudget(response?.data);
     } catch (error) {}
   };
   const handleModalClose = () => {
-    setIsOpen(false)
-  }
+    setIsOpen(false);
+  };
   return (
     <StyledBox className="appContainer">
       <MainHeaderComponent
@@ -79,7 +82,9 @@ const SuperAdminScreen = () => {
           detail="*The total is calculated based on approved programs"
           title="Budget-to-date"
           edit={true}
-          total={formatNumber(totalBudget?.total_value ? totalBudget?.total_value :"")}
+          total={formatNumber(
+            totalBudget?.total_value ? totalBudget?.total_value : ""
+          )}
           done={formatNumber(programs?.totalApprovedProgrambudget)}
           showProgress={true}
           color="info"
@@ -88,18 +93,35 @@ const SuperAdminScreen = () => {
         />
         <AdminDataCard
           title="Approved Prgs-to-date"
-          total={programs.programsCount && programs.programsCount + ' ' + "forecast"}
-          done={programs.approvedCount }
+          total={
+            programs.programsCount && programs.programsCount + " " + "forecast"
+          }
+          done={programs.approvedCount}
           edit={false}
           showDollarSign={false}
         />
-        <AdminDataCard showDollarSign={false}
-           total={programs.totalCenters}
-           done={programs.approvedcenters}
-        title="Completed Org." />
+        <AdminDataCard
+          showDollarSign={false}
+          total={programs.totalCenters}
+          done={programs.approvedcenters}
+          title="Completed Org."
+        />
       </Box>
-      <SuperAdminBudgetModal approvedBudget={programs?.totalApprovedProgrambudget}  open={isOpen} handleClose={handleModalClose} heading="Add Budget" subheading="budegt total" fetchTotalbudget={fetchTotalbudget} totalBudget={totalBudget} placeholder="$ Emter amount"/>
-      <AdminDepartmentProgress from="super-admin" center={center} loading={centerLoading}/>
+      <SuperAdminBudgetModal
+        approvedBudget={programs?.totalApprovedProgrambudget}
+        open={isOpen}
+        handleClose={handleModalClose}
+        heading="Add Budget"
+        subheading="budegt total"
+        fetchTotalbudget={fetchTotalbudget}
+        totalBudget={totalBudget}
+        placeholder="$ Emter amount"
+      />
+      <AdminDepartmentProgress
+        from="super-admin"
+        center={center}
+        loading={centerLoading}
+      />
     </StyledBox>
   );
 };

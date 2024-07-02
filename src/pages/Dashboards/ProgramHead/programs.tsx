@@ -219,7 +219,7 @@ const PHProgramsScreen = () => {
     ],
     [
       {
-        field: "departmentName",
+        field: "name",
         headerName: "Program Name",
         sortable: false,
         editable: false,
@@ -280,7 +280,7 @@ const PHProgramsScreen = () => {
           { title: "Approved" },
           { title: "Rejected" },
           { title: "Drafts" },
-          // { title: "History" },
+          { title: "History" },
         ]}
         setTabstatus={setTabstatus}
         table={tableColumnsTitleArray}
