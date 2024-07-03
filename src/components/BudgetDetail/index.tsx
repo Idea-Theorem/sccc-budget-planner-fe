@@ -243,13 +243,20 @@ const StyledBox = styled(Box)(({ theme }) => ({
   },
 }));
 // .
-const BudgetDetail: FC<BudgetDetailProps> = ({ actions, clickBack }) => {
+const BudgetDetail: FC<BudgetDetailProps> = ({
+  actions,
+  clickBack,
+  fromParentDisabled,
+}) => {
   return (
     <StyledBox className="appContainer bgGray">
       <Grid container spacing={2}>
         <Back onClick={clickBack} />
         <LeftSection />
-        <MainSection actions={actions} />
+        <MainSection
+          actions={actions}
+          fromParentDisabled={fromParentDisabled}
+        />
       </Grid>
     </StyledBox>
   );

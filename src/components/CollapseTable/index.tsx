@@ -12,6 +12,12 @@ import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { styled } from "@mui/system";
+import { fetchAllRecord } from "../../services/adminServices";
+import {
+  calculateBudgetDetailAmount,
+  calculateBudgetDetailAmountMidyear,
+  formatNumber,
+} from "../../utils";
 
 // Define StyledInputSearch using styled component
 const CollapseableTable = styled(Box)(({ theme }) => ({
@@ -214,9 +220,19 @@ function Row(props: { row: ReturnType<typeof createData> }) {
         <TableCell component="th" scope="row">
           {row.name}
         </TableCell>
-        <TableCell>{row.calories}</TableCell>
-        <TableCell>{row.fat}</TableCell>
-        <TableCell>{row.carbs}</TableCell>
+        <TableCell>
+          ${formatNumber(calculateBudgetDetailAmount(row.history))}
+        </TableCell>
+        <TableCell>
+          ${formatNumber(calculateBudgetDetailAmountMidyear(row.history))}
+        </TableCell>
+        <TableCell>
+          $
+          {formatNumber(
+            Number(calculateBudgetDetailAmount(row.history)) +
+              Number(calculateBudgetDetailAmountMidyear(row.history))
+          )}
+        </TableCell>
         {/* <TableCell>{row.protein}</TableCell> */}
       </TableRow>
       <TableRow>
@@ -225,15 +241,18 @@ function Row(props: { row: ReturnType<typeof createData> }) {
             <Box sx={{ margin: 1 }}>
               <Table size="small" aria-label="purchases">
                 <TableBody>
-                  {row.history.map((historyRow) => (
+                  {row?.history?.map((historyRow: any) => (
                     <TableRow key={historyRow.date}>
                       <TableCell>&nbsp;</TableCell>
                       <TableCell component="th" scope="row">
-                        {historyRow.date}
+                        {historyRow.name}
                       </TableCell>
-                      <TableCell>{historyRow.customerId}</TableCell>
-                      <TableCell>{historyRow.amount}</TableCell>
-                      <TableCell>{historyRow.yearend}</TableCell>
+                      <TableCell>{historyRow.value}</TableCell>
+                      <TableCell>{historyRow?.value_second}</TableCell>
+                      <TableCell>
+                        {Number(historyRow.value) +
+                          Number(historyRow?.value_second)}
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -246,18 +265,29 @@ function Row(props: { row: ReturnType<typeof createData> }) {
   );
 }
 
-const rows = [
-  createData("Income", "$00,000.00", "$00,000.00", "$00,000.00"),
-  createData(
-    "Expense (Supplies & Services)",
-    "$00,000.00",
-    "$00,000.00",
-    "$00,000.00"
-  ),
-  createData("Expense (Salaries)", "$00,000.00", "$00,000.00", "$00,000.00"),
-];
+// const rows = [
+//   createData("Income", "$00,000.00", "$00,000.00", "$00,000.00"),
+//   createData(
+//     "Expense (Supplies & Services)",
+//     "$00,000.00",
+//     "$00,000.00",
+//     "$00,000.00"
+//   ),
+//   createData("Expense (Salaries)", "$00,000.00", "$00,000.00", "$00,000.00"),
+// ];
 
 export default function CollapsibleTable() {
+  const [record, setAllRecord] = React.useState<any>([]);
+  React.useEffect(() => {
+    getAllRecord();
+  }, []);
+
+  const getAllRecord = async () => {
+    try {
+      const response = await fetchAllRecord();
+      setAllRecord(response?.data);
+    } catch (error) {}
+  };
   return (
     <CollapseableTable className="dashboardTable">
       <TableContainer component={Paper}>
@@ -276,7 +306,7 @@ export default function CollapsibleTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {record?.firstHalf?.map((row: any) => (
               <Row key={row.name} row={row} />
             ))}
             <TableRow className="totalRow">

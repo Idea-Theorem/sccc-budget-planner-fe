@@ -8,7 +8,7 @@ import { getAllBenefit } from "../../services/benefitServices";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { v4 as uuidv4 } from "uuid";
-import { calculateAmount } from "../../utils";
+import { calculateAmount, calculateTotalAmount } from "../../utils";
 
 const EmployeeInfoArea = styled(Box)(({}) => ({
   // "& .MuiTypography-h6": {
@@ -363,14 +363,16 @@ export default function TabsNewHire({ employee, formik }: any) {
     const response = calculateAmount(formData);
     setSalary(response);
   }, [formData]);
-  function calculateTotalAmount(employees: any) {
-    return employees.reduce((total: any, employee: any) => {
-      const amount = parseFloat(
-        employee.amount ? employee.amount.replace("$", "") : 0
-      );
-      return total + (amount !== 0 ? amount : 0);
-    }, 0);
-  }
+
+  // function calculateTotalAmount(employees: any) {
+  //   return employees.reduce((total: any, employee: any) => {
+  //     const amount = parseFloat(
+  //       employee.amount ? employee.amount.replace("$", "") : 0
+  //     );
+  //     return total + (amount !== 0 ? amount : 0);
+  //   }, 0);
+  // }
+
   const handleDeleteRecord = (index: any) => {
     const newFormData = [...formData];
     newFormData.splice(index, 1);
@@ -560,7 +562,6 @@ export default function TabsNewHire({ employee, formik }: any) {
           </tr>
         </tfoot>
       </table>
-      {/* <button onClick={handleAddRecord}>+</button> */}
     </EmployeeInfoArea>
   );
 }

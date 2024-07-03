@@ -91,6 +91,7 @@ enum Status {
   DRAFTED = 'DRAFTED',
   CREATED = 'CREATED',
   REVISED = 'REVISED',
+  EXPIRED = 'EXPIRED',
 }
 
 export default Status;

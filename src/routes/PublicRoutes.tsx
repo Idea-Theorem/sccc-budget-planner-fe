@@ -32,6 +32,7 @@ import RecreationAndCultureScreen from "../pages/Dashboards/Admin/recreation-cul
 import Benefit from "../pages/Dashboards/ProgramHead/benefit";
 import ForgotPasswordScreen from "../pages/Forgotpassword";
 import ResetPasswordScreen from "../pages/Resetpassword";
+import ExpiredProgram from "../pages/Dashboards/ProgramHead/expireProgram";
 
 const authRoutes: RouteObject = {
   path: "*",
@@ -129,6 +130,7 @@ const programHeadRoute: RouteObject = {
         { index: true, element: <ProgramHeadScreen /> },
         { path: "program", element: <PHProgramsScreen /> },
         { path: "create", element: <CreateProgramScreen /> },
+        { path: "expire", element: <ExpiredProgram /> },
         { path: "program-settings", element: <ProgramSetting /> },
         { path: "program-codes", element: <ProgramCodes /> },
         { path: "draft", element: <ProgramsDraftScreen /> },
