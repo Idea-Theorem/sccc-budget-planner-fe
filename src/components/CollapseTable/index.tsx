@@ -204,8 +204,6 @@ function Row(props: { row: ReturnType<typeof createData> }) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
 
-  console.log("row:::::::::", row);
-
   return (
     <React.Fragment>
       <TableRow>

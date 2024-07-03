@@ -11,6 +11,7 @@ import Status from "../../../utils/dumpData";
 import { useDispatch } from "react-redux";
 import React, { useEffect, useState } from "react";
 import { getAllProgramsByUsers } from "../../../services/programServices";
+import { io } from "socket.io-client";
 const StyledBox = styled(Box)(() => ({
   "&.appContainer": {
     ".appHeader": {
@@ -23,14 +24,57 @@ const PHProgramsScreen = () => {
   const dispatch = useDispatch();
   const [tabstatus, setTabstatus] = React.useState(Status.PENDING);
   const [programListing, setprogramListing] = useState<any>([]);
-
+  const [tabsTitleArray, setTabsTitleArray] = React.useState([
+    { title: "Pending" },
+    { title: "Approved" },
+    { title: "Rejected" },
+    { title: "Drafts" },
+    { title: "History" },
+  ]);
   useEffect(() => {
+    removeDot(tabstatus);
     fetchProgramList(tabstatus, "");
   }, [tabstatus]);
+
+  const updateTabTitle = (tabstatus: string) => {
+    setTabsTitleArray((prevTabs) =>
+      prevTabs.map((tab) => {
+        switch (tab.title) {
+          case "Pending":
+            return tabstatus === "PENDING"
+              ? { ...tab, title: "● Pending" }
+              : { ...tab, title: "Pending" };
+          case "Approved":
+            return tabstatus === "APPROVED"
+              ? { ...tab, title: "● Approved" }
+              : { ...tab, title: "Approved" };
+          case "Rejected":
+            return tabstatus === "REJECTED"
+              ? { ...tab, title: "● Rejected" }
+              : { ...tab, title: "Rejected" };
+          case "Drafts":
+            return tabstatus === "DRAFTED"
+              ? { ...tab, title: "● Drafts" }
+              : { ...tab, title: "Drafts" };
+          default:
+            return tab;
+        }
+      })
+    );
+  };
+
+  const removeDot = (status: string) => {
+    setTabsTitleArray((prevTabs) =>
+      prevTabs.map((item) =>
+        item.title.startsWith("●") ? { ...item, title: status } : item
+      )
+    );
+  };
 
   const fetchProgramList = async (status: string, Searchvalue: string) => {
     try {
       // setLoading(true);
+
       const response = await getAllProgramsByUsers(status, Searchvalue);
       setprogramListing(response?.data?.programs);
       // dispatch(storeProgramList(response?.data?.programs));
@@ -263,6 +307,17 @@ const PHProgramsScreen = () => {
     ],
   ];
 
+  React.useEffect(() => {
+    const socket = io("http://localhost:5000"); // Replace with your server URL
+    socket.on("programStatusUpdated", ({ programId, newStatus }: any) => {
+      updateTabTitle(newStatus);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
   return (
     <StyledBox className="appContainer">
       <MainHeaderComponent
@@ -275,13 +330,7 @@ const PHProgramsScreen = () => {
         }}
       />
       <TabsArea
-        tabsTitleArray={[
-          { title: "Pending" },
-          { title: "Approved" },
-          { title: "Rejected" },
-          { title: "Drafts" },
-          { title: "History" },
-        ]}
+        tabsTitleArray={tabsTitleArray}
         setTabstatus={setTabstatus}
         table={tableColumnsTitleArray}
         row={programListing}
