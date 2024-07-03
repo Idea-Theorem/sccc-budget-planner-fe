@@ -13,6 +13,11 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { styled } from "@mui/system";
 import { fetchAllRecord } from "../../services/adminServices";
+import {
+  calculateBudgetDetailAmount,
+  calculateBudgetDetailAmountMidyear,
+  formatNumber,
+} from "../../utils";
 
 // Define StyledInputSearch using styled component
 const CollapseableTable = styled(Box)(({ theme }) => ({
@@ -199,6 +204,8 @@ function Row(props: { row: ReturnType<typeof createData> }) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
 
+  console.log("row:::::::::", row);
+
   return (
     <React.Fragment>
       <TableRow>
@@ -215,9 +222,19 @@ function Row(props: { row: ReturnType<typeof createData> }) {
         <TableCell component="th" scope="row">
           {row.name}
         </TableCell>
-        <TableCell>$1</TableCell>
-        <TableCell>$2</TableCell>
-        <TableCell>$3</TableCell>
+        <TableCell>
+          ${formatNumber(calculateBudgetDetailAmount(row.history))}
+        </TableCell>
+        <TableCell>
+          ${formatNumber(calculateBudgetDetailAmountMidyear(row.history))}
+        </TableCell>
+        <TableCell>
+          $
+          {formatNumber(
+            Number(calculateBudgetDetailAmount(row.history)) +
+              Number(calculateBudgetDetailAmountMidyear(row.history))
+          )}
+        </TableCell>
         {/* <TableCell>{row.protein}</TableCell> */}
       </TableRow>
       <TableRow>
