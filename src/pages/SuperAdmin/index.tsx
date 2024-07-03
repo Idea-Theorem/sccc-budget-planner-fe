@@ -9,11 +9,7 @@ import { formatNumber } from "../../utils";
 import moment from "moment";
 import { useAuth } from "../../contexts/AuthContext";
 import SuperAdminBudgetModal from "../../models/SuperAdminBudgetModal";
-import {
-  getPrograms,
-  getSuperAdminTotalbudget,
-  getTotalbudget,
-} from "../../services/adminServices";
+import { getPrograms, getTotalbudget } from "../../services/adminServices";
 const StyledBox = styled(Box)(() => ({
   "& .dashboardCards": {
     display: "flex",

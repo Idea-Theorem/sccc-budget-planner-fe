@@ -10,10 +10,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { TextField } from "@mui/material";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
-import {
-  updateSuperAdminTotalbudget,
-  updateTotalbudget,
-} from "../../services/adminServices";
+import { updateTotalbudget } from "../../services/adminServices";
 
 const DepartmentInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,

@@ -265,16 +265,16 @@ function Row(props: { row: ReturnType<typeof createData> }) {
   );
 }
 
-const rows = [
-  createData("Income", "$00,000.00", "$00,000.00", "$00,000.00"),
-  createData(
-    "Expense (Supplies & Services)",
-    "$00,000.00",
-    "$00,000.00",
-    "$00,000.00"
-  ),
-  createData("Expense (Salaries)", "$00,000.00", "$00,000.00", "$00,000.00"),
-];
+// const rows = [
+//   createData("Income", "$00,000.00", "$00,000.00", "$00,000.00"),
+//   createData(
+//     "Expense (Supplies & Services)",
+//     "$00,000.00",
+//     "$00,000.00",
+//     "$00,000.00"
+//   ),
+//   createData("Expense (Salaries)", "$00,000.00", "$00,000.00", "$00,000.00"),
+// ];
 
 export default function CollapsibleTable() {
   const [record, setAllRecord] = React.useState<any>([]);

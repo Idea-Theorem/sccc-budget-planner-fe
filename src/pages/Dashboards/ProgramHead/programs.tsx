@@ -310,6 +310,7 @@ const PHProgramsScreen = () => {
   React.useEffect(() => {
     const socket = io("http://localhost:5000"); // Replace with your server URL
     socket.on("programStatusUpdated", ({ programId, newStatus }: any) => {
+      console.log(programId);
       updateTabTitle(newStatus);
     });
 
