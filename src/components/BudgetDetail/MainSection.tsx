@@ -11,7 +11,7 @@ import {
   fetchEmployeeInDepartments,
   getAllDepartmentsByUser,
 } from "../../services/departmentServices";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Status, { ProgramCode } from "../../utils/dumpData";
 import { useFormik } from "formik";
 import {
@@ -76,12 +76,8 @@ const MainSection = ({
     (state: RootState) => state.program
   );
 
-  const formik = useFormik<any>({
-    validateOnBlur: false,
-    validateOnChange: false,
-    validationSchema: programSchema,
-    enableReinitialize: true,
-    initialValues: {
+  const initialValues = useMemo(
+    () => ({
       name: singleProgram ? singleProgram?.name : "",
       code: "",
       department_id: "",
@@ -91,31 +87,39 @@ const MainSection = ({
       supply_expense: [],
       salary_expense: [],
       status: "PENDING",
-      employee: [],
-      // formData: [
-      //   {
-      //     emp_id: uuidv4(),
-      //     employee: "",
-      //     hourlyRate: "",
-      //     hoursPerWeek: "",
-      //     workingWeeks: "",
-      //     benefit: "",
-      //     amount: "",
-      //   },
-      // ],
-    },
+      employee: singleProgram?.employee
+        ? singleProgram?.employee
+        : [
+            {
+              emp_id: uuidv4(),
+              employee: "",
+              hourlyRate: "",
+              hoursPerWeek: "",
+              workingWeeks: "",
+              benefit: "",
+              amount: "",
+            },
+          ],
+    }),
+    [singleProgram]
+  );
+  const formik = useFormik<any>({
+    validateOnBlur: false,
+    validateOnChange: false,
+    validationSchema: programSchema,
+    enableReinitialize: true,
+    initialValues,
     onSubmit: async () => {
       setAttentionModal(true);
       return;
     },
   });
-
   const formikSubmit = async () => {
     if (programFromStatus == Status.CREATED) {
       handleSave();
       return;
     }
-    let obj = {};
+    let obj: any = {};
     if (values?.supply_expense.length == 0) {
       obj = {
         ...values,
@@ -125,6 +129,7 @@ const MainSection = ({
     } else {
       obj = { ...values };
     }
+    obj.employee = cleanFormDataForFormik(obj.employee);
     try {
       if (singleProgram?.id) {
         await programUpdate(obj, singleProgram?.id);
@@ -155,6 +160,7 @@ const MainSection = ({
       setFieldValue("department_id", singleProgram?.department?.id);
       setActiveDepartment(singleProgram?.department?.name);
       setFieldValue("code", singleProgram?.code);
+      fetchEmployeeInDepartment(singleProgram?.department?.id);
     }
   }, [singleProgram]);
 
@@ -196,6 +202,19 @@ const MainSection = ({
     setEmployee(modifyArray);
   };
 
+  const fetchEmployeeInDepartment = async (id: string) => {
+    const response = await fetchEmployeeInDepartments(id);
+    const modifyArray = response?.data?.departments?.map((user: any) => ({
+      ...user,
+      name: `${user.firstname} ${user.lastname}`,
+    }));
+    modifyArray.unshift({
+      id: "New Hire",
+      name: "New Hire",
+    });
+    setEmployee(modifyArray);
+  };
+
   const receiveFromDate = (value: any) => {
     setFieldValue("from_date", value);
   };
@@ -214,9 +233,19 @@ const MainSection = ({
     setFieldValue("salary_expense", value);
   };
 
+  const cleanFormDataForFormik = (data: any) => {
+    return data.map((item: any) => ({
+      ...item,
+      amount: item.amount.replace("$", ""),
+      hourlyRate: item.hourlyRate.replace("$", ""),
+      hoursPerWeek: item.hoursPerWeek.replace("h", ""),
+      workingWeeks: item.workingWeeks.replace("w", ""),
+    }));
+  };
+
   const handleSave = async () => {
     try {
-      let obj = {};
+      let obj: any = {};
       if (values?.supply_expense.length == 0) {
         obj = {
           ...values,
@@ -229,7 +258,7 @@ const MainSection = ({
           status: Status.DRAFTED,
         };
       }
-
+      obj.employee = cleanFormDataForFormik(obj.employee);
       if (singleProgram?.id) {
         await programUpdate(obj, singleProgram?.id);
       } else {
