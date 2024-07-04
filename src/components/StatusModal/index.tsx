@@ -7,6 +7,7 @@ const StatusModal = ({ statusData, onClose }: any) => {
       autoHideDuration={6000}
       onClose={onClose}
       className="toast"
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
     >
       <Alert severity={statusData?.type == "error" ? "error" : "success"}>
         {statusData?.message}
