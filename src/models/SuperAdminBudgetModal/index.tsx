@@ -11,7 +11,7 @@ import * as yup from "yup";
 import { TextField } from "@mui/material";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import {
-  addTotalbudget,
+  // addTotalbudget,
   updateTotalbudget,
 } from "../../services/adminServices";
 
