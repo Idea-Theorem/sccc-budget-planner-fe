@@ -10,7 +10,7 @@ import DropdownButton from "../Button/dropDownButton";
 const AppHeader = styled(Box)(({ theme }) => ({
   "&.appHeader": {
     width: "100%",
-    paddingBottom: "40px",
+    // paddingBottom: "40px",
     "& .appHeaderHolder": {
       display: "flex",
       alignItems: "center",

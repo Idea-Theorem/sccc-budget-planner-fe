@@ -24,6 +24,7 @@ const ProgramHeadScreen = () => {
 
   React.useEffect(() => {
     fetchProgramList();
+    fetchDrafteProgram();
   }, []);
 
   const fetchProgramList = async () => {
@@ -32,6 +33,22 @@ const ProgramHeadScreen = () => {
       const response = await getAllProgramsViaStatus(Status.PENDING, "");
       if (response?.data?.programs.length > 0) {
         dispatch(storeProgramList(response?.data?.programs));
+        navigate("/program-head/program");
+      } else {
+        navigate("/program-head");
+      }
+    } catch (error) {
+      // Handle error
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchDrafteProgram = async () => {
+    try {
+      setLoading(true);
+      const response = await getAllProgramsViaStatus(Status.DRAFTED, "");
+      if (response?.data?.programs.length > 0) {
         navigate("/program-head/program");
       } else {
         navigate("/program-head");
