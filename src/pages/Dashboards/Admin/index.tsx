@@ -113,7 +113,7 @@ const AdminScreen = () => {
         open={isOpen}
         handleClose={handleModalClose}
         heading="Add Budget"
-        subheading="budegt total"
+        subheading="Budget Total"
       />
       <AdminDepartmentProgress
         department={department}

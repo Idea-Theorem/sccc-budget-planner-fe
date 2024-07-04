@@ -10,7 +10,10 @@ import {
 import { useDispatch } from "react-redux";
 import Status from "../../../utils/dumpData";
 import React, { useState } from "react";
-import { getAllProgramsViaStatus } from "../../../services/programServices";
+import {
+  getAllProgramsByUser,
+  getAllProgramsViaStatus,
+} from "../../../services/programServices";
 import { CircularProgress } from "@mui/material";
 
 const StyledBox = styled("div")(() => ({
@@ -24,31 +27,15 @@ const ProgramHeadScreen = () => {
 
   React.useEffect(() => {
     fetchProgramList();
-    fetchDrafteProgram();
   }, []);
 
   const fetchProgramList = async () => {
     try {
       setLoading(true);
+      const res = await getAllProgramsByUser();
       const response = await getAllProgramsViaStatus(Status.PENDING, "");
-      if (response?.data?.programs.length > 0) {
-        dispatch(storeProgramList(response?.data?.programs));
-        navigate("/program-head/program");
-      } else {
-        navigate("/program-head");
-      }
-    } catch (error) {
-      // Handle error
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchDrafteProgram = async () => {
-    try {
-      setLoading(true);
-      const response = await getAllProgramsViaStatus(Status.DRAFTED, "");
-      if (response?.data?.programs.length > 0) {
+      dispatch(storeProgramList(response?.data?.programs));
+      if (res?.data?.programs.length > 0) {
         navigate("/program-head/program");
       } else {
         navigate("/program-head");
