@@ -134,26 +134,31 @@ function Row(props: {
   handleClick: any;
   employeeData?: any;
   handleDelete?: any;
-  loading?: any
-  setIsOpen?: any
-  isOpen?: any
+  loading?: any;
+  setIsOpen?: any;
+  isOpen?: any;
+  setCurrentRow?: any;
 }) {
-  const { row, handleClick, handleDelete , loading, isOpen, setIsOpen} = props;
+  const {
+    row,
+    handleClick,
+    handleDelete,
+    setCurrentRow,
+    loading,
+    isOpen,
+    setIsOpen,
+  } = props;
   const [open, setOpen] = React.useState(false);
   // const [isOpen, setIsOpen] = React.useState<any>(false);
-  const [currentRow, setCurrentRow] = React.useState<any>("");
   const [titles, setTitles] = React.useState<any>([]);
-
-
 
   const closeModel = () => {
     setIsOpen(false);
-
   };
 
   React.useEffect(() => {
-    fetchTitle()
-  }, [])
+    fetchTitle();
+  }, []);
 
   const fetchTitle = async () => {
     try {
@@ -164,8 +169,8 @@ function Row(props: {
 
   const fetchTitleName = (id: any) => {
     const findtitle = titles.find((item: any) => item.id === id);
-    return findtitle?.name
-  }
+    return findtitle?.name;
+  };
   return (
     <React.Fragment>
       <TableRow>
@@ -173,9 +178,7 @@ function Row(props: {
           <IconButton
             aria-label="expand row"
             size="small"
-            onClick={() => setOpen(!open)
-              
-            }
+            onClick={() => setOpen(!open)}
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
@@ -201,10 +204,9 @@ function Row(props: {
               color="error"
               size="small"
               startIcon={<DeleteOutlineIcon />}
-              onClick={() =>{ 
-                setCurrentRow(row)
+              onClick={() => {
+                setCurrentRow(row);
                 setIsOpen(true);
-
               }}
             >
               Delete
@@ -228,8 +230,9 @@ function Row(props: {
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                  
-                    <TableCell style={{ paddingLeft: "62px" }}>Department</TableCell>
+                    <TableCell style={{ paddingLeft: "62px" }}>
+                      Department
+                    </TableCell>
                     <TableCell>Title</TableCell>
                     <TableCell>Hourly Rate</TableCell>
                     <TableCell>Benefit %</TableCell>
@@ -239,7 +242,7 @@ function Row(props: {
                   {row?.employeDepartments?.map((element: any) => (
                     <TableRow key={row.id}>
                       <TableCell style={{ paddingLeft: "62px" }}>
-                      {element?.department?.name.toLowerCase()}
+                        {element?.department?.name.toLowerCase()}
                       </TableCell>
                       <TableCell style={{ textTransform: "capitalize" }}>
                         {fetchTitleName(element?.title)}
@@ -248,9 +251,7 @@ function Row(props: {
                         {element?.hourlyRate?.toLowerCase()}
                       </TableCell>
                       <TableCell style={{ textTransform: "capitalize" }}>
-                        {element?.salaryRate
-                          ?.toLowerCase()
-                          ?.replace(/_/g, " ")}
+                        {element?.salaryRate?.toLowerCase()?.replace(/_/g, " ")}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -262,7 +263,7 @@ function Row(props: {
       </TableRow>
       <DeleteModal
         open={isOpen}
-        handleOK={() => {handleDelete(currentRow)}}
+        handleOK={() => handleDelete()}
         handleClose={closeModel}
         loading={loading}
         heading="Are you sure you want to delete?"
@@ -290,13 +291,14 @@ export default function HrCollapsibleTable({
   handleClick,
   employeeData,
   refresh,
-  onChange
+  onChange,
 }: any) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [statusData, setStatusData] = React.useState<any>(null);
   const [loading, setLoading] = React.useState<any>(false);
   const [isOpen, setIsOpen] = React.useState<any>(false);
+  const [currentRow, setCurrentRow] = React.useState<any>("");
 
   const handleChangePage = (_: unknown, newPage: number) => {
     setPage(newPage);
@@ -309,24 +311,23 @@ export default function HrCollapsibleTable({
     setPage(0);
   };
 
-  const handleDelete = async (data: any) => {
+  const handleDelete = async () => {
     try {
-      setLoading(true)
-      await deleteEmployee(data?.id);
+      setLoading(true);
+      await deleteEmployee(currentRow?.id);
       setStatusData({
         type: "success",
         message: "Employee Deleted Successfully",
       });
       refresh();
-      setLoading(false)
-      setIsOpen(false)
+      setLoading(false);
+      setIsOpen(false);
     } catch (error: any) {
       setStatusData({
         type: "error",
         message: error.response.data.message,
       });
-      setLoading(false)
-
+      setLoading(false);
     }
   };
 
@@ -348,7 +349,7 @@ export default function HrCollapsibleTable({
             <SaveAlt />
           </IconButton>
           <TextField
-            id="input-with-icon-textfield" 
+            id="input-with-icon-textfield"
             placeholder="Search..."
             InputProps={{
               startAdornment: (
@@ -385,6 +386,7 @@ export default function HrCollapsibleTable({
                     loading={loading}
                     setIsOpen={setIsOpen}
                     isOpen={isOpen}
+                    setCurrentRow={setCurrentRow}
                   />
                 ))}
             </TableBody>

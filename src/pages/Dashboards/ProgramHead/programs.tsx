@@ -366,7 +366,7 @@ const PHProgramsScreen = () => {
               variant="outlined"
               size="small"
               startIcon={<EditNoteIcon />}
-              // onClick={() => handleEditClick(params.row)}
+              onClick={() => handleEdithistoryRecord(params.row)}
             >
               Edit
             </Button>
@@ -388,7 +388,7 @@ const PHProgramsScreen = () => {
     };
   }, []);
 
-  const onRowClick = (data: any) => {
+  const handleEdithistoryRecord = (data: any) => {
     dispatch(storeSingleProgram(data));
     dispatch(storeProgramFromStatus(Status.CREATED));
     navigate("/program-head/expire");
@@ -412,7 +412,7 @@ const PHProgramsScreen = () => {
         row={programListing}
         checkout={false}
         fetchProgramList={fetchProgramList}
-        onRowClick={onRowClick}
+        // onRowClick={onRowClick}
       />
       <DeleteModal
         heading="Are you sure you want to delete?"
