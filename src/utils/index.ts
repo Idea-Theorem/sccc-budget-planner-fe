@@ -172,3 +172,24 @@ export const calculateTotalAmount = (employees: any) => {
     return total + (amount !== 0 ? amount : 0);
   }, 0);
 };
+
+export const liveUrl = "http://20.151.79.66";
+
+export const transformString = (input: string) => {
+  let result = "";
+  if (input == "Drafts") {
+    // Remove 's' from the end of the string
+    result = input.endsWith("s") ? input.slice(0, -1) : input;
+    if (result == "Draft") {
+      result = "drafted";
+    }
+
+    // Convert the resulting string to lowercase
+    result = result.toLowerCase();
+
+    return result;
+  } else {
+    result = input.toLowerCase();
+    return result;
+  }
+};

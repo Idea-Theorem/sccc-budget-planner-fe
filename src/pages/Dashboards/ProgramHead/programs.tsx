@@ -10,8 +10,17 @@ import {
 import Status from "../../../utils/dumpData";
 import { useDispatch } from "react-redux";
 import React, { useEffect, useState } from "react";
-import { getAllProgramsByUsers } from "../../../services/programServices";
+import {
+  deleteProgram,
+  getAllProgramsByUsers,
+} from "../../../services/programServices";
 import { io } from "socket.io-client";
+import { Button, Stack } from "@mui/material";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import EditNoteIcon from "@mui/icons-material/EditNote";
+import DeleteModal from "../../../models/DeleteModal";
+import { liveUrl, transformString } from "../../../utils";
+
 const StyledBox = styled(Box)(() => ({
   "&.appContainer": {
     ".appHeader": {
@@ -24,6 +33,8 @@ const PHProgramsScreen = () => {
   const dispatch = useDispatch();
   const [tabstatus, setTabstatus] = React.useState(Status.PENDING);
   const [programListing, setprogramListing] = useState<any>([]);
+  const [selectedRowdelete, setSelectedDelete] = useState<any>(null);
+  const [deleteModalOpen, setDeleteModal] = useState<any>(false);
   const [tabsTitleArray, setTabsTitleArray] = React.useState([
     { title: "Pending" },
     { title: "Approved" },
@@ -62,12 +73,29 @@ const PHProgramsScreen = () => {
       })
     );
   };
-
   const removeDot = (status: string) => {
     setTabsTitleArray((prevTabs) =>
-      prevTabs.map((item) =>
-        item.title.startsWith("●") ? { ...item, title: status } : item
-      )
+      prevTabs.map((item) => {
+        const titleWithoutDot = item.title.startsWith("●")
+          ? item.title.slice(2)
+          : item.title;
+        if (transformString(titleWithoutDot) === status.toLowerCase()) {
+          return {
+            ...item,
+            title:
+              status == "PENDING"
+                ? "Pending"
+                : status == "APPROVED"
+                ? "Approved"
+                : status == "REJECTED"
+                ? "Rejected"
+                : status == "DRAFTED"
+                ? "Drafts"
+                : "",
+          };
+        }
+        return item;
+      })
     );
   };
 
@@ -81,6 +109,23 @@ const PHProgramsScreen = () => {
       // setLoading(false);
     } catch (error) {
       // setLoading(false);
+    }
+  };
+
+  const handleDelete = (rowData: any) => {
+    setSelectedDelete(rowData?.id);
+    setDeleteModal(true);
+  };
+
+  const handleDeleteConfirmation = async () => {
+    if (selectedRowdelete) {
+      try {
+        await deleteProgram(selectedRowdelete);
+        fetchProgramList(Status.EXPIRED, "");
+        setDeleteModal(false);
+      } catch (error) {
+        console.error("Error deleting record:", error);
+      }
     }
   };
 
@@ -298,17 +343,41 @@ const PHProgramsScreen = () => {
         flex: 1,
       },
       {
-        field: "comments",
-        headerName: "Comments",
-        sortable: false,
-        editable: false,
+        field: "buttonsColumn",
+        headerName: "",
         flex: 1,
+        renderCell: (params: any) => (
+          <Stack
+            direction="row"
+            gap="10px"
+            alignItems="center"
+            ml="auto"
+            className="actions-btn-holder"
+          >
+            <Button
+              variant="text"
+              size="small"
+              startIcon={<DeleteOutlineIcon />}
+              onClick={() => handleDelete(params.row)}
+            >
+              Delete
+            </Button>
+            <Button
+              variant="outlined"
+              size="small"
+              startIcon={<EditNoteIcon />}
+              // onClick={() => handleEditClick(params.row)}
+            >
+              Edit
+            </Button>
+          </Stack>
+        ),
       },
     ],
   ];
 
   React.useEffect(() => {
-    const socket = io("http://localhost:5000"); // Replace with your server URL
+    const socket = io(liveUrl); // Replace with your server URL
     socket.on("programStatusUpdated", ({ programId, newStatus }: any) => {
       console.log(programId);
       updateTabTitle(newStatus);
@@ -318,6 +387,12 @@ const PHProgramsScreen = () => {
       socket.disconnect();
     };
   }, []);
+
+  const onRowClick = (data: any) => {
+    dispatch(storeSingleProgram(data));
+    dispatch(storeProgramFromStatus(Status.CREATED));
+    navigate("/program-head/expire");
+  };
 
   return (
     <StyledBox className="appContainer">
@@ -337,6 +412,13 @@ const PHProgramsScreen = () => {
         row={programListing}
         checkout={false}
         fetchProgramList={fetchProgramList}
+        onRowClick={onRowClick}
+      />
+      <DeleteModal
+        heading="Are you sure you want to delete?"
+        open={deleteModalOpen}
+        handleClose={() => setDeleteModal(false)}
+        handleOK={() => handleDeleteConfirmation()}
       />
     </StyledBox>
   );
