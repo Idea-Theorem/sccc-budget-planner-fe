@@ -108,7 +108,7 @@ const SuperAdminScreen = () => {
         open={isOpen}
         handleClose={handleModalClose}
         heading="Add Budget"
-        subheading="budegt total"
+        subheading="Budget Total"
         fetchTotalbudget={fetchTotalbudget}
         totalBudget={totalBudget}
         placeholder="$ Emter amount"

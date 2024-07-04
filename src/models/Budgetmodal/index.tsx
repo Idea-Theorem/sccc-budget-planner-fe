@@ -7,10 +7,13 @@ import { Clear } from "@mui/icons-material"; // Import Clear icon from Material-
 import Grid from "@mui/material/Grid"; // Import Grid component from MUI
 import Modal from "@mui/material/Modal";
 import { useFormik } from "formik";
-import * as yup from "yup"
+import * as yup from "yup";
 import { TextField } from "@mui/material";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
-import {  updateTotalbudget } from "../../services/adminServices";
+import {
+  addTotalbudget,
+  updateTotalbudget,
+} from "../../services/adminServices";
 const DepartmentInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
   width: "100%",
@@ -124,9 +127,9 @@ interface IDepartmentInfo {
   singleCenter?: any;
   setSingleCenter?: any;
   placeholder?: any;
-  totalBudget?: any
-  fetchTotalbudget?: any
-  approvedBudget?: any
+  totalBudget?: any;
+  fetchTotalbudget?: any;
+  approvedBudget?: any;
 }
 
 const BudgetModal: React.FC<IDepartmentInfo> = ({
@@ -137,14 +140,14 @@ const BudgetModal: React.FC<IDepartmentInfo> = ({
   totalBudget,
   placeholder,
   fetchTotalbudget,
-  approvedBudget
+  approvedBudget,
 }) => {
   const createBudgetSchema = yup.object().shape({
     value: yup
       .number()
       .min(approvedBudget, `Value must be at least ${approvedBudget}`)
       .required("Amount is required!"),
-  })
+  });
   const formik = useFormik<any>({
     validateOnBlur: false,
     validationSchema: createBudgetSchema,
@@ -153,17 +156,14 @@ const BudgetModal: React.FC<IDepartmentInfo> = ({
       value: totalBudget?.total_value ? totalBudget?.total_value : "",
     },
     onSubmit: async (values) => {
-      if(totalBudget?.total_value){
-        await updateTotalbudget(values)
+      if (totalBudget?.total_value) {
+        await updateTotalbudget(values);
       }
-      // await addTotalbudget(values)
-      fetchTotalbudget()
-      handleClose()
-  try {
-    
-  } catch (error) {
-    
-  }
+      // await addTotalbudget(values);
+      fetchTotalbudget();
+      handleClose();
+      try {
+      } catch (error) {}
     },
   });
 
@@ -185,7 +185,6 @@ const BudgetModal: React.FC<IDepartmentInfo> = ({
           <Grid container spacing={4}>
             <Grid item xs={12}>
               <TextField
-              
                 variant="standard"
                 label={placeholder}
                 value={values.value}
@@ -231,7 +230,6 @@ const BudgetModal: React.FC<IDepartmentInfo> = ({
           </Stack>
         </Stack>
       </DepartmentInfoArea>
-    
     </Modal>
   );
 };
