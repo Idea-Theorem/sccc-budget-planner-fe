@@ -144,13 +144,6 @@ const BasicTabs = (props: BasicTabsProps) => {
       dispatch(storeProgramFromStatus(Status.DRAFTED));
       navigate("/program-head/create");
     } else if (
-      location?.pathname == "/program-head/program" &&
-      status == Status.EXPIRED
-    ) {
-      dispatch(storeSingleProgram(rowData));
-      dispatch(storeProgramFromStatus(Status.CREATED));
-      navigate("/program-head/expire");
-    } else if (
       location?.pathname == "/department-head/review-budgets" &&
       status == Status.PENDING
     ) {
