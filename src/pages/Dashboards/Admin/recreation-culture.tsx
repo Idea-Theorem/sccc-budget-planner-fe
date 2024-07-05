@@ -22,11 +22,30 @@ const StyledBox = styled(Box)(() => ({
     fontSize: "15px",
     lineHeight: "26px",
     color: "#303030",
+    fontWeight: "500",
+    gap: "10px",
   },
 
   "& .right-arrow": {
     width: "15px",
     height: "15px",
+  },
+
+  "& .name": {
+    fontSize: "20px",
+    lineHeight: "24.7px",
+    color: "#000000DE",
+    margin: "0 0 10px",
+    fontWeight: "600",
+    padding: "20px 0 0",
+  },
+
+  "& .amount-text": {
+    fontSize: "18px",
+    lineHeight: "22.23px",
+    color: "#000000DE",
+    margin: "0 0 10px",
+    fontWeight: "400",
   },
 }));
 const RecreationAndCultureScreen = ({}: any) => {
@@ -230,8 +249,8 @@ const RecreationAndCultureScreen = ({}: any) => {
         <ArrowBackIosIcon className="right-arrow" />
         <Typography onClick={() => goBack()}>Back</Typography>
       </Box>
-      <Typography>{singleDepartName?.name}</Typography>
-      <Typography>
+      <Typography className="name">{singleDepartName?.name}</Typography>
+      <Typography className="amount-text">
         Total Budget: ${formatNumber(programBudgetInDepartment)}
       </Typography>
       <TabsArea
