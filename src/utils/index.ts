@@ -150,7 +150,10 @@ export const calculateTotalAmountForAdmin = (data: any) => {
 };
 
 export const calculateBudgetDetailAmount = (data: any) => {
-  const totalAmount = data.reduce((sum: any, item: any) => sum + item.value, 0);
+  const totalAmount = data.reduce(
+    (sum: any, item: any) => (sum + item?.value ? item?.value : 0),
+    0
+  );
 
   return totalAmount;
 };
@@ -192,4 +195,24 @@ export const transformString = (input: string) => {
     result = input.toLowerCase();
     return result;
   }
+};
+
+export const validateArray = (arr: any) => {
+  if (!Array.isArray(arr) || arr.length === 0) {
+    return false; // Array is either not an array or is empty
+  }
+
+  for (let obj of arr) {
+    if (typeof obj !== "object" || obj === null) {
+      return false; // Not an object or null
+    }
+
+    for (let key in obj) {
+      if (obj[key] === "" || obj[key] === undefined || obj[key] === null) {
+        return false; // Empty, undefined, or null value found
+      }
+    }
+  }
+
+  return true; // All checks passed
 };

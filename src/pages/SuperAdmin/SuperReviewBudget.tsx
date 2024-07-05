@@ -292,17 +292,17 @@ const SuperReviewBudget = () => {
         action={true}
         title={
           step == 0
-            ? "Review Budgets Center"
+            ? "Review Budgets"
             : step == 1
-            ? "Review Budgets Center  >  Departments"
+            ? "Review Budgets: Center  >  Departments"
             : step == 2
-            ? "Review Budgets Center  >  Departments > Program"
+            ? "Review Budgets: Center  >  Departments > Program"
             : ""
         }
         subdes={currenttitle}
         btnTitle="Actions"
         subHeader={true}
-        subTitle={`Total Budget: ${formatNumber(totalBudget)}`}
+        subTitle={`Total Budget: $${formatNumber(totalBudget)}`}
         onClick={handleBackFunctionality}
       />
       <TabsArea

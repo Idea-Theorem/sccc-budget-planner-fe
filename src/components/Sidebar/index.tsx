@@ -159,11 +159,10 @@ const SideArea = styled(Box)(({ theme }) => ({
         background: "#676779",
 
         ".MuiButtonBase-root": {
-            color: "#fff !important",
+          color: "#fff !important",
         },
       },
 
-      
       ".MuiButtonBase-root:not(:hover)": {
         color: "#303030",
       },
@@ -190,7 +189,6 @@ export default function ResponsiveDrawer(props: Props) {
   const [openHR, setOpenHR] = React.useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-
 
   const handleToggleHR = (path: string) => {
     setOpenHR(!openHR);
@@ -222,17 +220,17 @@ export default function ResponsiveDrawer(props: Props) {
         navigate("/department-head/review-budgets");
         break;
       default:
-        navigate("/hr/employees");
+        navigate("/hr");
     }
   }, [currentRole]);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("currentRole");
-    localStorage.clear()
+    localStorage.clear();
     setCurrentRole("");
     navigate("/");
-  }
+  };
 
   const drawer = (
     <Box>
@@ -241,8 +239,11 @@ export default function ResponsiveDrawer(props: Props) {
       </Box>
 
       <Grid className="selectGrid" item xs={6}>
-        <Box className="user-name">{getCapitalizedFirstLetters(user?.firstname, user?.lastname)}</Box>
-        <SelectDemo className="sidebar_select_input"
+        <Box className="user-name">
+          {getCapitalizedFirstLetters(user?.firstname, user?.lastname)}
+        </Box>
+        <SelectDemo
+          className="sidebar_select_input"
           title="Department"
           value={currentRole}
           list={user?.roles}
@@ -293,11 +294,15 @@ export default function ResponsiveDrawer(props: Props) {
             )}
           </React.Fragment>
         ))}
-    
       </List>
-      <Button className="btnLogout" variant="outlined" color="error" onClick={handleLogout}>
-  Logout
-</Button>
+      <Button
+        className="btnLogout"
+        variant="outlined"
+        color="error"
+        onClick={handleLogout}
+      >
+        Logout
+      </Button>
     </Box>
   );
 

@@ -8,7 +8,7 @@ import React, { useEffect } from "react";
 import { getDepartmentInCenters } from "../../services/centersServices";
 import { calculatePercentage, calculateTotalAmountForAdmin } from "../../utils";
 import { getProgramInDepartments } from "../../services/departmentServices";
-import { CircularProgress, Stack } from "@mui/material";
+import { CircularProgress, LinearProgress, Stack } from "@mui/material";
 
 const StyledBox = styled(Box)(() => ({
   "&.dashboardStatsCard": {
@@ -81,6 +81,12 @@ const StyledBox = styled(Box)(() => ({
       marginBottom: "10px",
     },
   },
+  ".loaderContainer": {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100%",
+  },
 }));
 
 const AdminDepartmentProgress = ({
@@ -148,7 +154,9 @@ const AdminDepartmentProgress = ({
       {from == "super-admin" ? (
         <Box className="tagsList">
           {loading ? (
-            <CircularProgress />
+            <Box sx={{ width: "100%" }}>
+              <LinearProgress />
+            </Box>
           ) : (
             center?.map((e: any, index: any) => (
               <DepartmentButton
@@ -166,7 +174,9 @@ const AdminDepartmentProgress = ({
       ) : (
         <Box className="tagsList">
           {loading ? (
-            <CircularProgress />
+            <Box sx={{ width: "100%" }}>
+              <LinearProgress />
+            </Box>
           ) : (
             department?.map((e: any, index: any) => (
               <DepartmentButton
@@ -204,7 +214,9 @@ const AdminDepartmentProgress = ({
               </Stack>
 
               {departmentInCenterLoading && departmentInCenter?.length == 0 ? (
-                <CircularProgress />
+                <Box className="loaderContainer">
+                  <CircularProgress />
+                </Box>
               ) : (
                 departmentInCenter?.map((e: any) => (
                   <Box
@@ -235,7 +247,9 @@ const AdminDepartmentProgress = ({
                 <strong>{totalPrograms}</strong>
               </Stack>
               {rowDataLoading && rowData?.length == 0 ? (
-                <CircularProgress />
+                <Box className="loaderContainer">
+                  <CircularProgress />
+                </Box>
               ) : (
                 rowData?.map((e: any) => (
                   <Box color={currentProgram?.color} className="progress-wrap">

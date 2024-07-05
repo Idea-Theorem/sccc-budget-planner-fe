@@ -115,6 +115,7 @@ const MainSection = ({
     },
   });
   const formikSubmit = async () => {
+    debugger;
     if (programFromStatus == Status.CREATED) {
       handleSave();
       return;
@@ -123,8 +124,9 @@ const MainSection = ({
     if (values?.supply_expense.length == 0) {
       obj = {
         ...values,
-        // status: Status.DRAFTED,
-        salary_expense: benefits,
+        supply_expense: singleProgram?.supply_expense
+          ? singleProgram?.supply_expense
+          : benefits,
       };
     } else {
       obj = { ...values };
@@ -244,13 +246,16 @@ const MainSection = ({
   };
 
   const handleSave = async () => {
+    debugger;
     try {
       let obj: any = {};
       if (values?.supply_expense.length == 0) {
         obj = {
           ...values,
           status: Status.DRAFTED,
-          salary_expense: benefits,
+          supply_expense: singleProgram?.supply_expense
+            ? singleProgram?.supply_expense
+            : benefits,
         };
       } else {
         obj = {
