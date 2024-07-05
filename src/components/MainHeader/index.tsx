@@ -75,6 +75,13 @@ const AppHeader = styled(Box)(({ theme }) => ({
       fontFamily: "Work Sans",
       letterSpacing: "0.4px",
     },
+    "& .title": {
+      fontWeight: "400",
+      fontSize: "19px",
+    },
+    "& .sub": {
+      fontWeight: "600",
+    },
   },
 }));
 
@@ -91,6 +98,7 @@ interface MainHeaderProps {
   subdes?: string;
   classname?: string;
   onClick?: any;
+  step?: any;
 }
 
 const MainHeaderComponent = (props: MainHeaderProps) => {
@@ -102,10 +110,16 @@ const MainHeaderComponent = (props: MainHeaderProps) => {
     <AppHeader className={`${classname} appHeader`}>
       <Stack className="appHeaderHolder">
         <Box>
-          <Typography variant="h3" onClick={() => onClick(props.title)}>
+          <Typography
+            className={props.step == "0" ? "" : "title"}
+            variant="h3"
+            onClick={() => onClick(props.title)}
+          >
             {props.title}
           </Typography>
-          <Typography variant="h6">{props.subdes}</Typography>
+          <Typography className="sub" variant="h6">
+            {props.subdes}
+          </Typography>
         </Box>
         {props?.action ? (
           <DropdownButton

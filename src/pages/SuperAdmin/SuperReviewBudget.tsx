@@ -304,6 +304,7 @@ const SuperReviewBudget = () => {
         subHeader={true}
         subTitle={`Total Budget: $${formatNumber(totalBudget)}`}
         onClick={handleBackFunctionality}
+        step={step}
       />
       <TabsArea
         setTabstatus={setTabstatus}
