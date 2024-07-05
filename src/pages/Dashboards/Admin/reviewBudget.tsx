@@ -268,7 +268,7 @@ const ReviewBudgetScreen = () => {
         action={true}
         title="Review Budgets"
         btnTitle="Actions"
-        subTitle={`Total Budget: ${formatNumber(totalBudget)}`}
+        subTitle={`Total Budget: $${formatNumber(totalBudget)}`}
         // subTitle={`Total Budget: 0`}
         onStatusChange={handleStatusChange}
         subHeader={true}

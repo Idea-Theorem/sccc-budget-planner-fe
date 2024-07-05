@@ -32,6 +32,7 @@ import SelectDepartments from "../../components/SelectDepartment";
 import { getAllBenefit } from "../../services/benefitServices";
 import { getAllRole } from "../../services/roleServices";
 import { RemoveCircleOutline } from "@mui/icons-material";
+import { validateArray } from "../../utils";
 
 const EmployeeInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
@@ -303,6 +304,15 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
             message: "Employee Update Successfully",
           });
         } else {
+          const response = validateArray(data);
+          if (!response) {
+            setStatusData({
+              type: "error",
+              message: "All fields must be filled",
+            });
+            return;
+          }
+
           let obj = {
             ...values,
             employeDepartments: data,
@@ -315,8 +325,8 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
         }
         handleClose();
         setPersonName([]);
-        setDepartments([]);
-        setActiveDepartment(null);
+        // setDepartments([]);
+        // setActiveDepartment(null);
         setSingleEmployeeData(null);
         setData([
           {
@@ -353,6 +363,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
         salaryRate: "",
       },
     ]);
+    formik.resetForm();
     handleClose();
   };
 
@@ -386,8 +397,8 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
       setPersonName(array);
     } else {
       setPersonName([]);
-      setDepartments([]);
-      setActiveDepartment(null);
+      // setDepartments([]);
+      // setActiveDepartment(null);
       setSingleEmployeeData(null);
       fetchUserRole();
       setData([
@@ -505,6 +516,11 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
     setData(newData);
   };
 
+  const handleModalClose = () => {
+    formik.resetForm();
+    handleClose();
+  };
+
   return (
     <>
       <StatusModal
@@ -513,7 +529,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
       />
       <Modal
         open={open}
-        onClose={handleClose}
+        onClose={handleModalClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >

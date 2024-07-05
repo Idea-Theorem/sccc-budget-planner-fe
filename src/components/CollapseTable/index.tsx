@@ -245,13 +245,17 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                     <TableRow key={historyRow.date}>
                       <TableCell>&nbsp;</TableCell>
                       <TableCell component="th" scope="row">
-                        {historyRow.name}
+                        {historyRow.name || historyRow?.name_second}
                       </TableCell>
-                      <TableCell>{historyRow.value}</TableCell>
-                      <TableCell>{historyRow?.value_second}</TableCell>
+                      <TableCell>{formatNumber(historyRow.value)}</TableCell>
                       <TableCell>
-                        {Number(historyRow.value) +
-                          Number(historyRow?.value_second)}
+                        {formatNumber(historyRow?.value_second)}
+                      </TableCell>
+                      <TableCell>
+                        {formatNumber(
+                          Number(historyRow.value) +
+                            Number(historyRow?.value_second)
+                        )}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -265,17 +269,6 @@ function Row(props: { row: ReturnType<typeof createData> }) {
   );
 }
 
-// const rows = [
-//   createData("Income", "$00,000.00", "$00,000.00", "$00,000.00"),
-//   createData(
-//     "Expense (Supplies & Services)",
-//     "$00,000.00",
-//     "$00,000.00",
-//     "$00,000.00"
-//   ),
-//   createData("Expense (Salaries)", "$00,000.00", "$00,000.00", "$00,000.00"),
-// ];
-
 export default function CollapsibleTable() {
   const [record, setAllRecord] = React.useState<any>([]);
   React.useEffect(() => {
@@ -288,6 +281,7 @@ export default function CollapsibleTable() {
       setAllRecord(response?.data);
     } catch (error) {}
   };
+
   return (
     <CollapseableTable className="dashboardTable">
       <TableContainer component={Paper}>

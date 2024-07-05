@@ -154,7 +154,7 @@ const hrRoute: RouteObject = {
       // element: <AdminScreen />,
       children: [
         // { index: true, element: <SuperAdminMain name="raoof" /> },
-        { index: true, element: <Navigate to="/hr/employees" /> },
+        { index: true, element: <HREmployees name="HR-Employees" /> },
         { path: "employees", element: <HREmployees name="HR-Employees" /> },
         { path: "addemployees", element: <AddEmployee /> },
         { path: "adddepartment", element: <AddDepartment /> },

@@ -23,6 +23,8 @@ import StatusModal from "../../../components/StatusModal";
 import AttentionModal from "../../../models/AttentionModal";
 import { getProgramInDepartment } from "../../../services/centersServices";
 import { formatNumber } from "../../../utils";
+import { CircularProgress } from "@mui/material";
+import { useLocation } from "react-router-dom";
 const StyledBox = styled(Box)(() => ({
   "& .reviewBudgetHead": {
     marginBottom: "23px",
@@ -55,6 +57,18 @@ const StyledBox = styled(Box)(() => ({
       margin: "0 4px",
     },
   },
+}));
+const LoadingContainer = styled(Box)(() => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  position: "fixed",
+  top: 0,
+  left: 0,
+  width: "100%",
+  height: "100%",
+  backgroundColor: "rgba(255, 255, 255, 0.7)",
+  zIndex: 9999,
 }));
 const DHReviewBudgets = () => {
   const tableColumnsTitleArray = [
@@ -251,7 +265,8 @@ const DHReviewBudgets = () => {
   const [activeDepartment, setActiveDepartment] = useState<any>("");
   const [statusData, setStatusData] = useState<any>(null);
   const [totalBudget, settotalBudget] = useState("");
-
+  const [loading, setLoading] = useState(false);
+  const location = useLocation();
   useEffect(() => {
     fetchDepartments();
   }, []);
@@ -271,14 +286,21 @@ const DHReviewBudgets = () => {
       getDepartmentCount(departmentId);
     }
   }, [tabstatus]);
+
   const receiveDepartment = async (value: any) => {
-    const filteredID = departments.find((item: any) => item?.name === value);
-    setActiveDepartment(filteredID?.name);
-    setDepartmentID(filteredID?.id);
-    const res = await getProgramInDepartment(filteredID?.id);
-    settotalBudget(res?.data?.totalBudget);
-    dispatch(storeProgramList(res?.data?.programs));
-    getDepartmentCount(filteredID?.id);
+    try {
+      setLoading(true);
+      const filteredID = departments.find((item: any) => item?.name === value);
+      setActiveDepartment(filteredID?.name);
+      setDepartmentID(filteredID?.id);
+      const res = await getProgramInDepartment(filteredID?.id);
+      settotalBudget(res?.data?.totalBudget);
+      dispatch(storeProgramList(res?.data?.programs));
+      getDepartmentCount(filteredID?.id);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
   };
   const getDepartmentCount = async (id: any) => {
     try {
@@ -351,6 +373,13 @@ const DHReviewBudgets = () => {
     setAttentionModal(false);
   };
 
+  if (loading) {
+    return (
+      <LoadingContainer>
+        <CircularProgress />
+      </LoadingContainer>
+    );
+  }
   return (
     <StyledBox className="appContainer">
       <Box className="reviewBudgetHead">
@@ -375,15 +404,24 @@ const DHReviewBudgets = () => {
         </Typography>
       </Box>
       <Box className="customSelect">
-        <Box className="approvedTableBlock">
-          <Box className="approvedProgramBlock">
-            <ApprovedProgram
-              tabstatus={tabstatus}
-              count={count}
-              totalCount={totalCount}
-              handleClick={() => handleSumbit()}
-            />
-          </Box>
+        <Box
+          className={`${
+            tabstatus == Status.APPROVED &&
+            location.pathname == "/department-head/review-budgets"
+              ? "approvedTableBlock"
+              : ""
+          } `}
+        >
+          {tabstatus == Status.APPROVED && (
+            <Box className="approvedProgramBlock">
+              <ApprovedProgram
+                tabstatus={tabstatus}
+                count={count}
+                totalCount={totalCount}
+                handleClick={() => handleSumbit()}
+              />
+            </Box>
+          )}
           <TabsArea
             tabsTitleArray={[
               { title: "Pending" },

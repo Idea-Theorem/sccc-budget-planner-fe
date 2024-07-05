@@ -14,10 +14,22 @@ import {
   getAllProgramsByUser,
   getAllProgramsViaStatus,
 } from "../../../services/programServices";
-import { CircularProgress } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 
 const StyledBox = styled("div")(() => ({
   paddingLeft: "3px",
+}));
+const LoadingContainer = styled(Box)(() => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  position: "fixed",
+  top: 0,
+  left: 0,
+  width: "100%",
+  height: "100%",
+  backgroundColor: "rgba(255, 255, 255, 0.7)",
+  zIndex: 9999,
 }));
 
 const ProgramHeadScreen = () => {
@@ -48,7 +60,11 @@ const ProgramHeadScreen = () => {
   };
 
   if (loading) {
-    return <CircularProgress />;
+    return (
+      <LoadingContainer>
+        <CircularProgress />
+      </LoadingContainer>
+    );
   }
 
   return (

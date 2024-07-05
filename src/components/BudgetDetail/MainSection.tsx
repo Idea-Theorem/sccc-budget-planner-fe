@@ -38,6 +38,7 @@ import { EditNote, UploadFile } from "@mui/icons-material";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import { v4 as uuidv4 } from "uuid";
 import AttentionModal from "../../models/AttentionModal";
+import StatusModal from "../StatusModal";
 
 function createData(name?: string, amount?: number) {
   return { name, amount, id: uuidv4() };
@@ -72,6 +73,8 @@ const MainSection = ({
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [disable, setDisable] = useState(false);
+  const [statusData, setStatusData] = useState<any>(null);
+
   const { singleProgram, programFromStatus } = useSelector(
     (state: RootState) => state.program
   );
@@ -123,8 +126,9 @@ const MainSection = ({
     if (values?.supply_expense.length == 0) {
       obj = {
         ...values,
-        // status: Status.DRAFTED,
-        salary_expense: benefits,
+        supply_expense: singleProgram?.supply_expense
+          ? singleProgram?.supply_expense
+          : benefits,
       };
     } else {
       obj = { ...values };
@@ -142,7 +146,12 @@ const MainSection = ({
       dispatch(storeSalaryList([]));
       dispatch(storeSingleProgram(null));
       navigate("/program-head/program");
-    } catch (error) {}
+    } catch (error: any) {
+      setStatusData({
+        type: "error",
+        message: error.response.data.message,
+      });
+    }
   };
   useEffect(() => {
     return () => {
@@ -250,7 +259,9 @@ const MainSection = ({
         obj = {
           ...values,
           status: Status.DRAFTED,
-          salary_expense: benefits,
+          supply_expense: singleProgram?.supply_expense
+            ? singleProgram?.supply_expense
+            : benefits,
         };
       } else {
         obj = {
@@ -270,7 +281,12 @@ const MainSection = ({
       dispatch(storeSalaryList([]));
       dispatch(storeSingleProgram(null));
       navigate("/program-head/draft");
-    } catch (error) {}
+    } catch (error: any) {
+      setStatusData({
+        type: "error",
+        message: error.response.data.message,
+      });
+    }
   };
 
   useEffect(() => {
@@ -496,6 +512,10 @@ const MainSection = ({
           text="You are changing the status of the program"
         />
       </Grid>
+      <StatusModal
+        statusData={statusData}
+        onClose={() => setStatusData(null)}
+      />
     </Grid>
   );
 };
