@@ -27,7 +27,7 @@ import { CircularProgress } from "@mui/material";
 import { useLocation } from "react-router-dom";
 const StyledBox = styled(Box)(() => ({
   "& .reviewBudgetHead": {
-    marginBottom: "23px",
+    marginBottom: "0",
     position: "relative",
   },
 
