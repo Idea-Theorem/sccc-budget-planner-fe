@@ -8,6 +8,7 @@ import { RootState } from "../../../store";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { formatNumber } from "../../../utils";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 const StyledBox = styled(Box)(() => ({
   "& .dashboardCards": {
     display: "flex",
@@ -15,6 +16,18 @@ const StyledBox = styled(Box)(() => ({
     margin: "0 -12px",
   },
   // Color: theme.palette.secondary.light,
+  "& .back": {
+    display: "flex",
+    alignItems: "center",
+    fontSize: "15px",
+    lineHeight: "26px",
+    color: "#303030",
+  },
+
+  "& .right-arrow": {
+    width: "15px",
+    height: "15px",
+  },
 }));
 const RecreationAndCultureScreen = ({}: any) => {
   const tableColumnsTitleArray = [
@@ -213,7 +226,10 @@ const RecreationAndCultureScreen = ({}: any) => {
   }, []);
   return (
     <StyledBox className="appContainer">
-      <Typography onClick={() => goBack()}>Back</Typography>
+      <Box className="back">
+        <ArrowBackIosIcon className="right-arrow" />
+        <Typography onClick={() => goBack()}>Back</Typography>
+      </Box>
       <Typography>{singleDepartName?.name}</Typography>
       <Typography>
         Total Budget: ${formatNumber(programBudgetInDepartment)}
