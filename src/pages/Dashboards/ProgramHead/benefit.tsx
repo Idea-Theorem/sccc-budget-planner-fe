@@ -8,7 +8,10 @@ import { useEffect, useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import Buttons from "../../../components/Button";
 import BenefitModal from "../../../models/BenefitModal";
-import { deleteBenefit, getAllBenefit } from "../../../services/benefitServices";
+import {
+  deleteBenefit,
+  getAllBenefit,
+} from "../../../services/benefitServices";
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
@@ -20,7 +23,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
     alignItems: "center",
     justifyContent: "space-between",
 
-    "h4": {
+    h4: {
       fontSize: "20px",
       lineHeight: "1.2",
     },
@@ -125,79 +128,61 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
   ".MuiStack-root": {
     "&.MuiButtonBase-root": {
       color: theme.palette.text.primary,
-    }
-  }
+    },
+  },
 }));
 
-// const rows = [
-//   {
-//     id: 1,
-//     departmentName: "SCCC",
-//     status: "25",
-//     lYearBudget: "02-Mar-2024",
-//   },
-//   {
-//     id: 2, 
-//     departmentName: "ACCC",
-//     status: "20",
-//     lYearBudget: "02-Mar-2024",
-//   },
-// ];
-const Benefit = () => { 
-const [loading, setLoading] = useState<boolean>(false)
-console.log(loading)
-const [singleCenter, setSingleCenter] = useState<any>(null);
-const [center, setCenter] = useState<any>([]);
-const [isCommunityOpen, setCommunityModal] = useState(false);
-const [centerHeading, setCenterHeading] = useState<string>("");
+const Benefit = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+  console.log(loading);
+  const [singleCenter, setSingleCenter] = useState<any>(null);
+  const [center, setCenter] = useState<any>([]);
+  const [isCommunityOpen, setCommunityModal] = useState(false);
+  const [centerHeading, setCenterHeading] = useState<string>("");
 
+  const fetchCenters = async () => {
+    try {
+      const response = await getAllBenefit();
+      const newData = response?.data?.centers.map((item: any) => {
+        return {
+          ...item,
+          name: item.name + " " + "%",
+        };
+      });
+      setCenter(newData);
+    } catch (error) {}
+  };
 
-const fetchCenters = async () => {
-  try {
-    const response = await getAllBenefit();
-    const newData =  response?.data?.centers.map((item: any) => {
-      return {
-        ...item,
-        name: item.name + " " +"%", 
-        
-      };
-    });
-    setCenter(newData);
-  } catch (error) {}
-};
+  useEffect(() => {
+    fetchCenters();
+  }, []);
 
-useEffect(()=> {
-  fetchCenters();
-},[])
+  const handleCloseCommunityModal = () => {
+    fetchCenters();
+    setCommunityModal(false);
+  };
 
-const handleCloseCommunityModal = () => {
-  fetchCenters();
-  setCommunityModal(false);
-};
-
-const onCommunityEdit = (data: any) => {
-  setSingleCenter(data.row);
-  setCommunityModal(true);
-  setCenterHeading("Edit benefit");
-};
+  const onCommunityEdit = (data: any) => {
+    setSingleCenter(data.row);
+    setCommunityModal(true);
+    setCenterHeading("Edit benefit");
+  };
 
   const handleDelete = async (data: any) => {
     try {
-      setLoading(true)
-      await deleteBenefit(data?.id)
-      fetchCenters()
-      setLoading(false)
+      setLoading(true);
+      await deleteBenefit(data?.id);
+      fetchCenters();
+      setLoading(false);
     } catch (error) {
-      setLoading(false)
-
+      setLoading(false);
     }
-  }
+  };
 
   const handleClick = () => {
-      setCommunityModal(true);
-      setCenterHeading("Add New benefit");
-  }
-
+    setCommunityModal(true);
+    setCenterHeading("Add New benefit");
+  };
 
   const columns: GridColDef[] = [
     {
@@ -207,26 +192,19 @@ const onCommunityEdit = (data: any) => {
       editable: false,
       flex: 1,
     },
-    // {
-    //   field: "status",
-    //   headerName: "Employee Count",
-    //   sortable: false,
-    //   editable: false,
-    //   flex: 1,
-    // },
-    // {
-    //   field: "created_at",
-    //   headerName: "Date Created",
-    //   sortable: false,
-    //   editable: false,
-    //   flex: 1,
-    // },
+
     {
       field: "buttonsColumn",
       headerName: "",
       flex: 0.5,
-      renderCell: (data: any ) => (
-        <Stack direction="row" gap="10px" alignItems="center" justifyContent="flex-end" width="100%">
+      renderCell: (data: any) => (
+        <Stack
+          direction="row"
+          gap="10px"
+          alignItems="center"
+          justifyContent="flex-end"
+          width="100%"
+        >
           <Button
             variant="text"
             color="error"
@@ -252,41 +230,39 @@ const onCommunityEdit = (data: any) => {
   return (
     <>
       <StyledBox className="mainTableBlock">
-        
-        
-      <Typography className="page-title" variant="h3">
+        <Typography className="page-title" variant="h3">
           HR (Human Resources)
         </Typography>
-        {/* <InputSearch placeholder="Search..." /> */}
         <Box className="page-subheader">
           <Typography className="page-title" variant="h4">
             Benefit Percentage
           </Typography>
-            <Buttons
-              variant="contained"
-              color="primary"
-              size="medium"
-              btntext="Add New benefit"
-              startIcon={<AddIcon />}
-              onClick={handleClick}
-              className="btn-add-title"
-            /> 
+          <Buttons
+            variant="contained"
+            color="primary"
+            size="medium"
+            btntext="Add New benefit"
+            startIcon={<AddIcon />}
+            onClick={handleClick}
+            className="btn-add-title"
+          />
         </Box>
-        {center.length == 0 ? "" :
-         <StyleDataGrid
-         rows={center.length == 0 ? [] : center}
-         columns={columns}
-         initialState={{
-           pagination: {
-             paginationModel: { page: 0, pageSize: 5 },
-           },
-         }}
-         pageSizeOptions={[5, 10, 15]}
-         disableRowSelectionOnClick
-         slots={{ toolbar: GridToolbar }}
-       />
-        }
-       
+        {center.length == 0 ? (
+          ""
+        ) : (
+          <StyleDataGrid
+            rows={center.length == 0 ? [] : center}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 5 },
+              },
+            }}
+            pageSizeOptions={[5, 10, 15]}
+            disableRowSelectionOnClick
+            slots={{ toolbar: GridToolbar }}
+          />
+        )}
       </StyledBox>
       <BenefitModal
         open={isCommunityOpen}

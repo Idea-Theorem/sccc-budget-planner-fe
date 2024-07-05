@@ -25,6 +25,7 @@ import TextField from "@mui/material/TextField";
 import StatusModal from "../../../../components/StatusModal";
 import DeleteModal from "../../../../models/DeleteModal";
 import { getAllRole } from "../../../../services/roleServices";
+import { roleSort } from "../../../../utils";
 
 const HrCollapseableTable = styled(Box)(({ theme }) => ({
   ".MuiTableCell-root": {
@@ -138,6 +139,7 @@ function Row(props: {
   setIsOpen?: any;
   isOpen?: any;
   setCurrentRow?: any;
+  benefit?: any;
 }) {
   const {
     row,
@@ -147,6 +149,7 @@ function Row(props: {
     loading,
     isOpen,
     setIsOpen,
+    benefit,
   } = props;
   const [open, setOpen] = React.useState(false);
   // const [isOpen, setIsOpen] = React.useState<any>(false);
@@ -171,6 +174,11 @@ function Row(props: {
     const findtitle = titles.find((item: any) => item.id === id);
     return findtitle?.name;
   };
+
+  const findBenefitName = (id: any) => {
+    const findBenefit = benefit?.find((item: any) => item.id === id);
+    return findBenefit?.name?.toLowerCase()?.replace(/_/g, " ");
+  };
   return (
     <React.Fragment>
       <TableRow>
@@ -186,7 +194,9 @@ function Row(props: {
         <TableCell component="th" scope="row">
           {row?.firstname + " " + row?.lastname}
         </TableCell>
-        <TableCell>{row?.roles[0]?.name?.replace(/_/g, " ")}</TableCell>
+        <TableCell>
+          {roleSort(row?.roles)?.[0]?.name?.replace(/_/g, " ")}
+        </TableCell>
         <TableCell style={{ textTransform: "capitalize" }}>
           {row?.department?.name}
         </TableCell>
@@ -251,7 +261,7 @@ function Row(props: {
                         {element?.hourlyRate?.toLowerCase()}
                       </TableCell>
                       <TableCell style={{ textTransform: "capitalize" }}>
-                        {element?.salaryRate?.toLowerCase()?.replace(/_/g, " ")}
+                        {findBenefitName(element?.salaryRate)}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -292,6 +302,7 @@ export default function HrCollapsibleTable({
   employeeData,
   refresh,
   onChange,
+  benefit,
 }: any) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -337,6 +348,7 @@ export default function HrCollapsibleTable({
     XLSX.utils.book_append_sheet(workbook, worksheet, "Data");
     XLSX.writeFile(workbook, "data.xlsx");
   };
+
   return (
     <>
       <HrCollapseableTable className="dashboardTable pt-0">
@@ -387,6 +399,7 @@ export default function HrCollapsibleTable({
                     setIsOpen={setIsOpen}
                     isOpen={isOpen}
                     setCurrentRow={setCurrentRow}
+                    benefit={benefit}
                   />
                 ))}
             </TableBody>

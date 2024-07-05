@@ -143,9 +143,9 @@ const BenefitModal: React.FC<IDepartmentInfo> = ({
       name: singleCenter?.name ? singleCenter?.name : "",
     },
     onSubmit: async (values) => {
-      let obj ={
-        name: String(values.name)
-      }
+      let obj = {
+        name: String(values.name),
+      };
       try {
         if (heading == "Edit benefit") {
           await updateBenefit(obj, singleCenter?.id);
@@ -177,7 +177,7 @@ const BenefitModal: React.FC<IDepartmentInfo> = ({
           <Grid container spacing={4}>
             <Grid item xs={12}>
               <TextField
-                type="number"
+                type="string"
                 variant="standard"
                 label="Benefits"
                 value={values.name}

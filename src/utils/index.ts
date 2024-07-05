@@ -216,3 +216,12 @@ export const validateArray = (arr: any) => {
 
   return true; // All checks passed
 };
+
+const roleOrder = ["Super_Admin", "Admin", "Department_Head", "Program_Head"];
+
+export const roleSort = (roles: any) => {
+  roles.sort((a: any, b: any) => {
+    return roleOrder.indexOf(a.name) - roleOrder.indexOf(b.name);
+  });
+  return roles;
+};

@@ -146,6 +146,7 @@ const AdminDepartmentProgress = ({
       setRowDataLoading(false);
     }
   };
+
   return (
     <StyledBox className="dashboardStatsCard">
       <Typography variant="h3">

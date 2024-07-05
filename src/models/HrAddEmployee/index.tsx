@@ -325,8 +325,8 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
         }
         handleClose();
         setPersonName([]);
-        setDepartments([]);
-        setActiveDepartment(null);
+        // setDepartments([]);
+        // setActiveDepartment(null);
         setSingleEmployeeData(null);
         setData([
           {
@@ -397,8 +397,8 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
       setPersonName(array);
     } else {
       setPersonName([]);
-      setDepartments([]);
-      setActiveDepartment(null);
+      // setDepartments([]);
+      // setActiveDepartment(null);
       setSingleEmployeeData(null);
       fetchUserRole();
       setData([
