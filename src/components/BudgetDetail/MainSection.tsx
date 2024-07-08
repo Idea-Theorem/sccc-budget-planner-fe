@@ -295,7 +295,7 @@ const MainSection = ({
       fetchProgrambyId(singleProgram?.id);
     }
   }, [singleProgram?.id]);
-
+  console.log("singleProgram:::::::", singleProgram);
   const fetchComments = async () => {
     try {
       const response = await fetchAllcomments();
