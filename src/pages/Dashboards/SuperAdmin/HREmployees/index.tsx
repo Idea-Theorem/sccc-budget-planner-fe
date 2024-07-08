@@ -4,6 +4,7 @@ import { styled } from "@mui/material/styles";
 import TabsComponent from "../../../Components/HRComponents/HRTabs";
 import { Typography } from "@mui/material";
 import { useAuth } from "../../../../contexts/AuthContext";
+import { handleRole } from "../../../../utils";
 
 const StyledBox = styled(Box)(() => ({
   "& .dashboardCards": {
@@ -65,11 +66,11 @@ interface SuperAdminProps {
 const HREmployeees: React.FC<SuperAdminProps> = () => {
   const { currentRole } = useAuth();
   const handleTabsDynamically = () => {
-    if (currentRole == "HR") {
-      return ["Employees", 'New Hires'];
-    } else if (currentRole == "Admin") {
+    if (handleRole(currentRole) == "HR") {
+      return ["Employees", "New Hires"];
+    } else if (handleRole(currentRole) == "Admin") {
       return ["Departments"];
-    } else if (currentRole == "Super_Admin") {
+    } else if (handleRole(currentRole) == "Super_Admin") {
       return ["Community Centres"];
     } else {
       return [];

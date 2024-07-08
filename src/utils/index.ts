@@ -1,5 +1,7 @@
 import moment from "moment";
-
+import { store } from "../store";
+const state = store.getState();
+const { sidebarCheck } = state.program;
 export const getLocalStorage = (name: string, parse = true) => {
   try {
     if (parse) {
@@ -224,4 +226,24 @@ export const roleSort = (roles: any) => {
     return roleOrder.indexOf(a.name) - roleOrder.indexOf(b.name);
   });
   return roles;
+};
+
+export const handleRole = (data: any) => {
+  const issideCheck = localStorage.getItem("sidebarCheck");
+
+  if (
+    data == "/super-admin/review-budgets" ||
+    data == "/super-admin" ||
+    (data == "/hr" && issideCheck == "superAdmin")
+  ) {
+    return "Super_Admin";
+  } else if (
+    data == "/admin" ||
+    data == "/admin/review-budget" ||
+    (data == "/hr" && issideCheck == "admin")
+  ) {
+    return "Admin";
+  } else {
+    return data;
+  }
 };
