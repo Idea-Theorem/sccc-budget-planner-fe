@@ -65,7 +65,10 @@ export default function TabsNewHire({ employee, formik }: any) {
       value = value.replace(/w/g, "") + "w";
     }
 
-    const newFormData = [...formik.values.employee];
+    const newFormData = formik.values.employee.map((employee: any) => ({
+      ...employee,
+    }));
+
     newFormData[index][name] = value;
     const response = calculateAmount(newFormData);
     formik.setFieldValue("employee", response);
