@@ -1,4 +1,4 @@
-  import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 export type tokenState = {
   incomeList: any[];
@@ -6,10 +6,11 @@ export type tokenState = {
   salaryList: any[];
   singleDepart: any[];
   programList: any[];
- programBudgetInDepartment: any
-  singleProgram: any; 
-  singleDepartName: any; 
-  programFromStatus: any; 
+  programBudgetInDepartment: any;
+  singleProgram: any;
+  singleDepartName: any;
+  programFromStatus: any;
+  sidebarCheck: any;
 };
 
 const initialState: tokenState = {
@@ -21,13 +22,14 @@ const initialState: tokenState = {
   singleProgram: null,
   singleDepartName: null,
   programFromStatus: null,
-  programBudgetInDepartment: ''
+  programBudgetInDepartment: "",
+  sidebarCheck: "",
 };
 
 export const programSlice = createSlice({
   name: "program",
   initialState,
-  reducers: {  
+  reducers: {
     storeSingleProgram: (state, action) => {
       state.singleProgram = action.payload;
     },
@@ -55,11 +57,23 @@ export const programSlice = createSlice({
     storeProgramBudgetInDepartment: (state, action) => {
       state.programBudgetInDepartment = action.payload;
     },
+    storeSideBarCheck: (state, action) => {
+      state.sidebarCheck = action.payload;
+    },
   },
 });
 
 export const {
-  storeIncomeList,storeSupplyList,storeProgramBudgetInDepartment, storeSalaryList, storeProgramList,storeSingleProgram, storeProgramFromStatus, storeSingleDepart, storeSingleDepartName
+  storeIncomeList,
+  storeSideBarCheck,
+  storeSupplyList,
+  storeProgramBudgetInDepartment,
+  storeSalaryList,
+  storeProgramList,
+  storeSingleProgram,
+  storeProgramFromStatus,
+  storeSingleDepart,
+  storeSingleDepartName,
 } = programSlice.actions;
 
 export default programSlice.reducer;

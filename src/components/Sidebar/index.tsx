@@ -16,7 +16,9 @@ import { useAuth } from "../../contexts/AuthContext";
 import { Button, Collapse, Grid } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import SelectDemo from "../Select";
-import { getCapitalizedFirstLetters } from "../../utils";
+import { getCapitalizedFirstLetters, handleRole } from "../../utils";
+import { useDispatch } from "react-redux";
+import { storeSideBarCheck } from "../../store/reducers/programSlice";
 // import SelectDemo from "../Select";
 
 const SideArea = styled(Box)(({ theme }) => ({
@@ -195,16 +197,23 @@ export default function ResponsiveDrawer(props: Props) {
     navigate(path);
   };
   const { withMore } = filterSidebarActionsWithMore(SIDEBARACTIONS);
-
+  const dispatch = useDispatch();
   const handleDrawerClose = () => {
     setMobileOpen(false);
   };
 
   const handleReceive = (item: any) => {
+    if (item == "Super_Admin") {
+      dispatch(storeSideBarCheck("superAdmin"));
+      localStorage.setItem("sidebarCheck", "superAdmin");
+    } else if (item == "Admin") {
+      dispatch(storeSideBarCheck("admin"));
+      localStorage.setItem("sidebarCheck", "admin");
+    }
+
     localStorage.setItem("currentRole", item);
     setCurrentRole(item);
   };
-
   React.useEffect(() => {
     switch (currentRole) {
       case "Program_Head":
@@ -219,8 +228,29 @@ export default function ResponsiveDrawer(props: Props) {
       case "Department_Head":
         navigate("/department-head/review-budgets");
         break;
-      default:
+      case "/super-admin/review-budgets":
+        navigate("/super-admin/review-budgets");
+        break;
+      case "/super-admin":
+        navigate("/super-admin");
+        break;
+      case "/admin/review-budget":
+        navigate("/admin/review-budget");
+        break;
+      case "/admin":
+        navigate("/admin");
+        break;
+      case "/hr":
         navigate("/hr");
+        break;
+      case "/hr":
+        navigate("/hr");
+        break;
+      case "HR":
+        navigate("/hr/employees");
+        break;
+      default:
+      // navigate("/hr");
     }
   }, [currentRole]);
 
@@ -253,7 +283,7 @@ export default function ResponsiveDrawer(props: Props) {
       <List>
         {withMore?.map((item: any, index: any) => (
           <React.Fragment key={index}>
-            {item.role === currentRole && item.more ? (
+            {item.role === handleRole(currentRole) && item.more ? (
               <>
                 <ListItem
                   disablePadding
@@ -268,7 +298,10 @@ export default function ResponsiveDrawer(props: Props) {
                     <ListItem
                       key={nestedIndex}
                       disablePadding
-                      onClick={() => navigate(nestedItem.path ?? "")}
+                      onClick={() => {
+                        // handleReceive(nestedItem);
+                        navigate(nestedItem.path ?? "");
+                      }}
                       className={
                         location.pathname === nestedItem.path ? "active" : ""
                       }
@@ -284,7 +317,10 @@ export default function ResponsiveDrawer(props: Props) {
               <ListItem
                 disablePadding
                 button
-                onClick={() => navigate(item.path ?? "")}
+                onClick={() => {
+                  handleReceive(item?.path);
+                  navigate(item.path ?? "");
+                }}
                 className={location.pathname === item.path ? "active" : ""}
               >
                 <ListItemButton>
