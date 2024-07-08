@@ -243,9 +243,7 @@ export default function ResponsiveDrawer(props: Props) {
       case "/hr":
         navigate("/hr");
         break;
-      case "/hr":
-        navigate("/hr");
-        break;
+
       case "HR":
         navigate("/hr/employees");
         break;
