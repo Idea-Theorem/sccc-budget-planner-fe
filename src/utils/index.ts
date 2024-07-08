@@ -1,7 +1,4 @@
 import moment from "moment";
-import { store } from "../store";
-const state = store.getState();
-const { sidebarCheck } = state.program;
 export const getLocalStorage = (name: string, parse = true) => {
   try {
     if (parse) {
