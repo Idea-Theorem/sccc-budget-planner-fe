@@ -1,5 +1,4 @@
 import moment from "moment";
-import { store } from "../store";
 export const getLocalStorage = (name: string, parse = true) => {
   try {
     if (parse) {
