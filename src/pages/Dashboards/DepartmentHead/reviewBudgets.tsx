@@ -278,6 +278,8 @@ const DHReviewBudgets = () => {
       );
       setDepartmentID(response?.data?.departments[0]?.id);
       setActiveDepartment(response?.data?.departments[0]?.name);
+      settotalBudget(response?.data?.departments[0]?.value);
+
       setDepartments(response?.data?.departments);
     } catch (error) {}
   };

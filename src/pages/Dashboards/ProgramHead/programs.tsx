@@ -137,6 +137,19 @@ const PHProgramsScreen = () => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack
+              direction="row"
+              gap="10px"
+              alignItems="center"
+              ml="auto"
+              className="actions-btn-holder"
+            >
+              <Box>{params?.row?.code + "-" + params?.row?.name}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "status",

@@ -211,7 +211,6 @@ export default function ResponsiveDrawer(props: Props) {
       dispatch(storeSideBarCheck("admin"));
       localStorage.setItem("sidebarCheck", "admin");
     }
-
     localStorage.setItem("currentRole", item);
     setCurrentRole(item);
   };
@@ -244,6 +243,9 @@ export default function ResponsiveDrawer(props: Props) {
       case "/hr":
         navigate("/hr");
         break;
+      case "/hr/role":
+        navigate("/hr/role");
+        break;
 
       case "HR":
         navigate("/hr/employees");
@@ -252,7 +254,6 @@ export default function ResponsiveDrawer(props: Props) {
       // navigate("/hr");
     }
   }, [currentRole]);
-
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("currentRole");

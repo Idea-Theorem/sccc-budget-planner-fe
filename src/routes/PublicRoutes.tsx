@@ -33,6 +33,8 @@ import Benefit from "../pages/Dashboards/ProgramHead/benefit";
 import ForgotPasswordScreen from "../pages/Forgotpassword";
 import ResetPasswordScreen from "../pages/Resetpassword";
 import ExpiredProgram from "../pages/Dashboards/ProgramHead/expireProgram";
+import HRDepartment from "../pages/Dashboards/SuperAdmin/HRDepartment";
+import HRCenters from "../pages/Dashboards/SuperAdmin/HRCenters";
 
 const authRoutes: RouteObject = {
   path: "*",
@@ -154,14 +156,19 @@ const hrRoute: RouteObject = {
       // element: <AdminScreen />,
       children: [
         // { index: true, element: <SuperAdminMain name="raoof" /> },
-        { index: true, element: <HREmployees name="HR-Employees" /> },
-        { path: "employees", element: <HREmployees name="HR-Employees" /> },
+        { index: true, element: <HREmployees name="HR (Human Resources)" /> },
+        {
+          path: "employees",
+          element: <HREmployees name="HR (Human Resources)" />,
+        },
         { path: "addemployees", element: <AddEmployee /> },
         { path: "adddepartment", element: <AddDepartment /> },
         { path: "addcenter", element: <AddCenter /> },
         { path: "settings", element: <HRSettings /> },
         { path: "role", element: <HRRole /> },
         { path: "benefits", element: <Benefit /> },
+        { path: "departments", element: <HRDepartment name="Departments" /> },
+        { path: "centers", element: <HRCenters name="Centers" /> },
       ],
     },
   ],
