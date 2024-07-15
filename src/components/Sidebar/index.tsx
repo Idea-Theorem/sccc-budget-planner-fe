@@ -15,7 +15,6 @@ import LogoImg from "../../assets/logo.png";
 import { useAuth } from "../../contexts/AuthContext";
 import { Button, Collapse, Grid } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
-import SelectDemo from "../Select";
 import { getCapitalizedFirstLetters, handleRole } from "../../utils";
 import { useDispatch } from "react-redux";
 import { storeSideBarCheck } from "../../store/reducers/programSlice";

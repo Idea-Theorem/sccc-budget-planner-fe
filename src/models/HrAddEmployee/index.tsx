@@ -2,7 +2,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
-import { Add, Clear } from "@mui/icons-material"; // Import Clear icon from Material-UI
+import { Clear } from "@mui/icons-material"; // Import Clear icon from Material-UI
 import Grid from "@mui/material/Grid"; // Import Grid component from MUI
 import BasicDatePicker from "../../components/DatePicker";
 import { Button } from "@mui/material";

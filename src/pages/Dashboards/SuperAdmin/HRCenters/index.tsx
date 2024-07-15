@@ -3,8 +3,6 @@ import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import TabsComponent from "../../../Components/HRComponents/HRTabs";
 import { Typography } from "@mui/material";
-import { useAuth } from "../../../../contexts/AuthContext";
-import { handleRole } from "../../../../utils";
 
 const StyledBox = styled(Box)(() => ({
   "& .dashboardCards": {
