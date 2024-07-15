@@ -19,7 +19,13 @@ import { Button, Stack } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import DeleteModal from "../../../models/DeleteModal";
-import { liveUrl, transformString } from "../../../utils";
+import {
+  capitalizeFirstLetter,
+  formatNumber,
+  liveUrl,
+  transformString,
+} from "../../../utils";
+import moment from "moment";
 
 const StyledBox = styled(Box)(() => ({
   "&.appContainer": {
@@ -139,13 +145,7 @@ const PHProgramsScreen = () => {
         flex: 1,
         renderCell: (params: any) => {
           return (
-            <Stack
-              direction="row"
-              gap="10px"
-              alignItems="center"
-              ml="auto"
-              className="actions-btn-holder"
-            >
+            <Stack>
               <Box>{params?.row?.code + "-" + params?.row?.name}</Box>
             </Stack>
           );
@@ -157,13 +157,27 @@ const PHProgramsScreen = () => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{capitalizeFirstLetter(params?.row?.status)}</Box>
+            </Stack>
+          );
+        },
       },
       {
-        field: "budget",
+        field: "programBudget",
         headerName: "Budget",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "lYearBudget",
@@ -178,13 +192,28 @@ const PHProgramsScreen = () => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{moment(params?.row?.created_at).format("D-MMM YYYY")}</Box>
+            </Stack>
+          );
+        },
       },
+
       {
         field: "comments",
         headerName: "Comments",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{params?.row?._count?.Comment}</Box>
+            </Stack>
+          );
+        },
       },
     ],
     [
@@ -194,6 +223,13 @@ const PHProgramsScreen = () => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{params?.row?.code + "-" + params?.row?.name}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "status",
@@ -201,13 +237,27 @@ const PHProgramsScreen = () => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{capitalizeFirstLetter(params?.row?.status)}</Box>
+            </Stack>
+          );
+        },
       },
       {
-        field: "budget",
+        field: "programBudget",
         headerName: "Budget",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "lYearBudget",
@@ -217,11 +267,18 @@ const PHProgramsScreen = () => {
         flex: 1,
       },
       {
-        field: "sDate",
+        field: "created_at",
         headerName: "Submission Date",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{moment(params?.row?.created_at).format("D-MMM YYYY")}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "comments",
@@ -229,6 +286,13 @@ const PHProgramsScreen = () => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{params?.row?._count?.Comment}</Box>
+            </Stack>
+          );
+        },
       },
     ],
     [
@@ -238,6 +302,13 @@ const PHProgramsScreen = () => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{params?.row?.code + "-" + params?.row?.name}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "status",
@@ -245,13 +316,27 @@ const PHProgramsScreen = () => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{capitalizeFirstLetter(params?.row?.status)}</Box>
+            </Stack>
+          );
+        },
       },
       {
-        field: "  ",
+        field: "programBudget",
         headerName: "Budget",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "lYearBudget",
@@ -261,11 +346,18 @@ const PHProgramsScreen = () => {
         flex: 1,
       },
       {
-        field: "sDate",
+        field: "created_at",
         headerName: "Submission Date",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{moment(params?.row?.created_at).format("D-MMM YYYY")}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "comments",
@@ -273,6 +365,13 @@ const PHProgramsScreen = () => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{params?.row?._count?.Comment}</Box>
+            </Stack>
+          );
+        },
       },
     ],
     [
@@ -282,6 +381,13 @@ const PHProgramsScreen = () => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{params?.row?.code + "-" + params?.row?.name}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "status",
@@ -289,13 +395,27 @@ const PHProgramsScreen = () => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{capitalizeFirstLetter(params?.row?.status)}</Box>
+            </Stack>
+          );
+        },
       },
       {
-        field: "  ",
+        field: "programBudget",
         headerName: "Budget",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "lYearBudget",
@@ -305,11 +425,18 @@ const PHProgramsScreen = () => {
         flex: 1,
       },
       {
-        field: "sDate",
+        field: "created_at",
         headerName: "Submission Date",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{moment(params?.row?.created_at).format("D-MMM YYYY")}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "comments",
@@ -317,6 +444,13 @@ const PHProgramsScreen = () => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{params?.row?._count?.Comment}</Box>
+            </Stack>
+          );
+        },
       },
     ],
     [
@@ -326,6 +460,13 @@ const PHProgramsScreen = () => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{params?.row?.code + "-" + params?.row?.name}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "status",
@@ -333,13 +474,27 @@ const PHProgramsScreen = () => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{capitalizeFirstLetter(params?.row?.status)}</Box>
+            </Stack>
+          );
+        },
       },
       {
-        field: "  ",
+        field: "programBudget",
         headerName: "Budget",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "lYearBudget",
@@ -349,11 +504,18 @@ const PHProgramsScreen = () => {
         flex: 1,
       },
       {
-        field: "sDate",
+        field: "created_at",
         headerName: "Submission Date",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{moment(params?.row?.created_at).format("D-MMM YYYY")}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "buttonsColumn",

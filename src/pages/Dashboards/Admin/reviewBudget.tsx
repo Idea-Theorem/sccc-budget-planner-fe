@@ -15,7 +15,9 @@ import {
 import { useDispatch } from "react-redux";
 import { getSingleDepartments } from "../../../services/departmentServices";
 import AttentionModal from "../../../models/AttentionModal";
-import { formatNumber } from "../../../utils";
+import { capitalizeFirstLetter, formatNumber } from "../../../utils";
+import { Stack } from "@mui/material";
+import moment from "moment";
 const StyledBox = styled(Box)(() => ({
   "& .dashboardCards": {
     display: "flex",
@@ -40,6 +42,13 @@ const ReviewBudgetScreen = () => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{capitalizeFirstLetter(params?.row?.status)}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "lYearBudget",
@@ -70,11 +79,18 @@ const ReviewBudgetScreen = () => {
         flex: 1,
       },
       {
-        field: "sDate",
+        field: "created_at",
         headerName: "Submission Date",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{moment(params?.row?.created_at).format("D-MMM YYYY")}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "comments",
@@ -98,6 +114,13 @@ const ReviewBudgetScreen = () => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{capitalizeFirstLetter(params?.row?.status)}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "lYearBudget",
@@ -128,11 +151,18 @@ const ReviewBudgetScreen = () => {
         flex: 1,
       },
       {
-        field: "sDate",
+        field: "created_at",
         headerName: "Submission Date",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{moment(params?.row?.created_at).format("D-MMM YYYY")}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "comments",
@@ -156,6 +186,13 @@ const ReviewBudgetScreen = () => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{capitalizeFirstLetter(params?.row?.status)}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "lYearBudget",
@@ -186,11 +223,18 @@ const ReviewBudgetScreen = () => {
         flex: 1,
       },
       {
-        field: "sDate",
+        field: "created_at",
         headerName: "Submission Date",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{moment(params?.row?.created_at).format("D-MMM YYYY")}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "comments",

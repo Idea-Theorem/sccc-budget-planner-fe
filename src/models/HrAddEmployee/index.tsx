@@ -16,6 +16,7 @@ import Checkbox from "@mui/material/Checkbox";
 import { useEffect, useState } from "react";
 import { getUserRole } from "../../services/authServices";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { useFormik } from "formik";
 import {
   createEmployeeSchema,
@@ -682,13 +683,13 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
             >
               Department Works For
             </Typography>
-            <Button
+            {/* <Button
               onClick={() => handleAddObject()}
               variant="outlined"
               startIcon={<Add />}
             >
               Add
-            </Button>
+            </Button> */}
           </Box>
 
           <Grid container spacing={4}>
@@ -746,21 +747,20 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                       })
                     }
                   />
-                  {/* <SelectDemo
-                    title="Benefit Percentage"
-                    value={item.salaryRate}
-                    list={benefit}
-                    receiveValue={(value: any) =>
-                      handleInputChange(index, {
-                        target: { name: "salaryRate", value },
-                      })
-                    }
-                  /> */}
                 </Grid>
                 <Grid item xs={3} className="delete-icon">
-                  <button onClick={() => handleDelete(index)}>
-                    <RemoveCircleOutline />
-                  </button>
+                  {index === data.length - 1 ? (
+                    <span onClick={handleAddObject} className="add-item">
+                      <AddCircleOutlineIcon />
+                    </span>
+                  ) : (
+                    <span
+                      onClick={() => handleDelete(index)}
+                      className="remove-item"
+                    >
+                      <RemoveCircleOutline />
+                    </span>
+                  )}
                 </Grid>
               </Grid>
             ))}

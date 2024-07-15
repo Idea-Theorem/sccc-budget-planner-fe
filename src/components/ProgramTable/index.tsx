@@ -16,12 +16,17 @@ import {
   storeIncomeList,
   storeSalaryList,
   storeSupplyList,
-} from "../../store/reducers/programSlice"; 
+} from "../../store/reducers/programSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { addComments, deleteComment, updatecomment } from "../../services/programServices";
+import {
+  addComments,
+  deleteComment,
+  updatecomment,
+} from "../../services/programServices";
 import { attachCommentsToProgram } from "../../utils";
-import CommentIcon from '@mui/icons-material/Comment';
+import CommentIcon from "@mui/icons-material/Comment";
+import Status from "../../utils/dumpData";
 
 const TabsProgramAreas = styled(Box)(({ theme }) => ({
   ".input-border": {
@@ -41,16 +46,16 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
     },
 
     ".comment-icon": {
-      position:"absolute",
+      position: "absolute",
       left: "-30px",
       top: "30px",
-      color: '#048071',
+      color: "#048071",
       cursor: "pointer",
 
-      "svg": {
+      svg: {
         display: "block",
-      }
-    }
+      },
+    },
   },
   ".MuiTabs-flexContainer": {
     borderBottom: "1px solid #BFBFBF",
@@ -153,9 +158,9 @@ interface Props {
   handleSalaryExpenseReceived?: any;
   formik?: any;
   disabled?: any;
-  singleProgram?: any
-  allComments?: any
-  fetchComments?: any
+  singleProgram?: any;
+  allComments?: any;
+  fetchComments?: any;
 }
 export default function TabsProgramArea({
   handleReceived,
@@ -165,7 +170,7 @@ export default function TabsProgramArea({
   disabled,
   // singleProgram,
   allComments,
-  fetchComments
+  fetchComments,
 }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [commentLoading, setCommentLoading] = useState(false);
@@ -175,9 +180,14 @@ export default function TabsProgramArea({
   const [currentExpense, setcurrentExpense] = useState<any>("");
   const [currentComment, setcurrentComment] = useState<any>("");
   const dispatch = useAppDispatch();
-  const { incomeList, supplyList, salaryList , singleProgram} = useSelector(
-    (state: RootState) => state.program
-  );
+
+  const {
+    incomeList,
+    supplyList,
+    salaryList,
+    singleProgram,
+    programFromStatus,
+  } = useSelector((state: RootState) => state.program);
 
   const handleInputChange = (key: string, value: number) => {
     if (title == "income") {
@@ -196,13 +206,13 @@ export default function TabsProgramArea({
   };
 
   useEffect(() => {
-    if(allComments?.length > 0 && singleProgram?.id) {
-      const res = attachCommentsToProgram(singleProgram, allComments)
+    if (allComments?.length > 0 && singleProgram?.id) {
+      const res = attachCommentsToProgram(singleProgram, allComments);
       dispatch(storeIncomeList(res?.income));
       dispatch(storeSupplyList(res?.supply_expense));
       dispatch(storeSalaryList(res?.salary_expense));
     }
-  }, [allComments])
+  }, [allComments]);
   useEffect(() => {
     if (title == "income") {
       handleReceived(incomeList);
@@ -253,57 +263,72 @@ export default function TabsProgramArea({
   }
 
   const handleAddcomment = async () => {
-const obj = {
-  program_id: singleProgram?.id,
-  field_id: currentExpense?.id,
-  text:commenttext
-}
-try {
-  setCommentLoading(true)
-  if(currentComment?.comment?.text){
-    await updatecomment(currentComment.comment_id, obj)
-  }else {
-    await addComments(obj)
-  }
-   await fetchComments()
-   setCommentLoading(false)
-   setcommentText("")
-   setcurrentComment("")
-  setIsOpen(false)
-} catch (error) {
-  setCommentLoading(false)
-}
-  }
-
+    const obj = {
+      program_id: singleProgram?.id,
+      field_id: currentExpense?.id,
+      text: commenttext,
+    };
+    try {
+      setCommentLoading(true);
+      if (currentComment?.comment?.text) {
+        await updatecomment(currentComment.comment_id, obj);
+      } else {
+        await addComments(obj);
+      }
+      await fetchComments();
+      setCommentLoading(false);
+      setcommentText("");
+      setcurrentComment("");
+      setIsOpen(false);
+    } catch (error) {
+      setCommentLoading(false);
+    }
+  };
 
   const handleDelete = async (data: any) => {
     try {
-      setdeleteLoading(true)
-      await deleteComment(data?.comment_id)
-      removeCommentById(data?.comment_id)
-      await fetchComments()
-      setcurrentComment("")
-      setdeleteLoading(false)
+      setdeleteLoading(true);
+      await deleteComment(data?.comment_id);
+      removeCommentById(data?.comment_id);
+      await fetchComments();
+      setcurrentComment("");
+      setdeleteLoading(false);
     } catch (error) {
-      setdeleteLoading(false)
-      
+      setdeleteLoading(false);
     }
-  
-  }
- 
+  };
+
   function removeCommentById(commentId: any) {
     setcurrentExpense((prevArray: any) => {
-      const updatedComments = prevArray.comments.filter((comment: any) => comment.comment_id !== commentId);
+      const updatedComments = prevArray.comments.filter(
+        (comment: any) => comment.comment_id !== commentId
+      );
       return { ...prevArray, comments: updatedComments };
     });
   }
-
+  const handleCommentclick = (data: any) => {
+    if (
+      programFromStatus == Status.CREATED ||
+      programFromStatus == Status.DRAFTED ||
+      programFromStatus == Status.REJECTED ||
+      programFromStatus == Status.REVISED
+    ) {
+      return;
+    }
+    setIsOpen(true);
+    setcurrentExpense(data);
+  };
 
   return (
     <>
       <TabsProgramAreas>
         <TableContainer className="programsTableHolder" component={Paper}>
-          <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table" className="program-table">
+          <Table
+            sx={{ minWidth: 650 }}
+            size="small"
+            aria-label="a dense table"
+            className="program-table"
+          >
             <TableHead>
               <TableRow>
                 <TableCell>Item</TableCell>
@@ -316,12 +341,23 @@ try {
                   key={row.item}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                
-                  <TableCell component="th" scope="row" onClick={() => {setIsOpen(true);setcurrentExpense(row)}}>
-                    {row?.comments?.length > 0 ? <span className="comment-icon"><CommentIcon /></span> : ""}{ row.name}
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    onClick={() => handleCommentclick(row)}
+                  >
+                    {row?.comments?.length > 0 ? (
+                      <span className="comment-icon">
+                        <CommentIcon />
+                      </span>
+                    ) : (
+                      ""
+                    )}
+                    {row.name}
                   </TableCell>
                   <TableCell align="right" className="input-border">
-                    <TextFields className="amount_field"
+                    <TextFields
+                      className="amount_field"
                       autoFocus={false}
                       disabled={disabled}
                       variant="standard"
@@ -344,7 +380,9 @@ try {
                   Total {capitalizeFirstLetter(title)}
                 </TableCell>
                 <TableCell align="right">
-                  <TextFields className="amount_field"
+                  <TextFields
+                    className="amount_field"
+                    disabled={true}
                     type="text"
                     placeholder="$00,000.00"
                     value={getTotalAmount()}
@@ -355,7 +393,19 @@ try {
           </Table>
         </TableContainer>
       </TabsProgramAreas>
-      <DepartmentHeadModal currentComment={currentComment} setcurrentComment={setcurrentComment} deleteLoading={deleteLoading} handleDelete={handleDelete} commentLoading={commentLoading} currentExpense={currentExpense} handleAddcomment={handleAddcomment} commenttext={commenttext} setcommentText={setcommentText} open={isOpen} handleClose={closeModal} />
+      <DepartmentHeadModal
+        currentComment={currentComment}
+        setcurrentComment={setcurrentComment}
+        deleteLoading={deleteLoading}
+        handleDelete={handleDelete}
+        commentLoading={commentLoading}
+        currentExpense={currentExpense}
+        handleAddcomment={handleAddcomment}
+        commenttext={commenttext}
+        setcommentText={setcommentText}
+        open={isOpen}
+        handleClose={closeModal}
+      />
     </>
   );
 }

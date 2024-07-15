@@ -22,9 +22,10 @@ import {
 import StatusModal from "../../../components/StatusModal";
 import AttentionModal from "../../../models/AttentionModal";
 import { getProgramInDepartment } from "../../../services/centersServices";
-import { formatNumber } from "../../../utils";
-import { CircularProgress } from "@mui/material";
+import { capitalizeFirstLetter, formatNumber } from "../../../utils";
+import { CircularProgress, Stack } from "@mui/material";
 import { useLocation } from "react-router-dom";
+import moment from "moment";
 const StyledBox = styled(Box)(() => ({
   "& .reviewBudgetHead": {
     marginBottom: "23px",
@@ -79,6 +80,13 @@ const DHReviewBudgets = () => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{params?.row?.code + "-" + params?.row?.name}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "status",
@@ -86,13 +94,27 @@ const DHReviewBudgets = () => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{capitalizeFirstLetter(params?.row?.status)}</Box>
+            </Stack>
+          );
+        },
       },
       {
-        field: "budget",
+        field: "programBudget",
         headerName: "Budget",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "lYearBudget",
@@ -121,6 +143,13 @@ const DHReviewBudgets = () => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{moment(params?.row?.created_at).format("D-MMM YYYY")}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "comments",
@@ -137,6 +166,13 @@ const DHReviewBudgets = () => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{params?.row?.code + "-" + params?.row?.name}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "status",
@@ -144,6 +180,13 @@ const DHReviewBudgets = () => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{capitalizeFirstLetter(params?.row?.status)}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "lYearBudget",
@@ -153,11 +196,18 @@ const DHReviewBudgets = () => {
         flex: 1,
       },
       {
-        field: "budget",
+        field: "programBudget",
         headerName: "Budget",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "profit",
@@ -174,11 +224,18 @@ const DHReviewBudgets = () => {
         flex: 1,
       },
       {
-        field: "sDate",
+        field: "created_at",
         headerName: "Submission Date",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{moment(params?.row?.created_at).format("D-MMM YYYY")}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "comments",
@@ -195,6 +252,13 @@ const DHReviewBudgets = () => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{params?.row?.code + "-" + params?.row?.name}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "status",
@@ -202,6 +266,13 @@ const DHReviewBudgets = () => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{capitalizeFirstLetter(params?.row?.status)}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "lYearBudget",
@@ -211,11 +282,18 @@ const DHReviewBudgets = () => {
         flex: 1,
       },
       {
-        field: "budget",
+        field: "programBudget",
         headerName: "Budget",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "profit",
@@ -232,11 +310,18 @@ const DHReviewBudgets = () => {
         flex: 1,
       },
       {
-        field: "sDate",
+        field: "created_at",
         headerName: "Submission Date",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{moment(params?.row?.created_at).format("D-MMM YYYY")}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "comments",
@@ -329,9 +414,9 @@ const DHReviewBudgets = () => {
     } catch (error) {}
   };
   const handleStatusChange = (selectedStatus: any) => {
-    if (selectedStatus === "Approved") {
+    if (selectedStatus === "Approve") {
       setStatus("APPROVED");
-    } else if (selectedStatus === "Rejected") {
+    } else if (selectedStatus === "Reject") {
       setStatus("REJECTED");
     }
     setAttentionModal(true);

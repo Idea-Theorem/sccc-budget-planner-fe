@@ -5,12 +5,13 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import Typography from "@mui/material/Typography";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { Button, Stack } from "@mui/material";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import Buttons from "../../../components/Button";
 import { deleteRole, getAllRole } from "../../../services/roleServices";
 import RoleModal from "../../../models/RoleModal";
 import moment from "moment";
+import DeleteModal from "../../../models/DeleteModal";
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
@@ -22,7 +23,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
     alignItems: "center",
     justifyContent: "space-between",
 
-    "h4": {
+    h4: {
       fontSize: "20px",
       lineHeight: "1.2",
     },
@@ -127,8 +128,8 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
   ".MuiStack-root": {
     "&.MuiButtonBase-root": {
       color: theme.palette.text.primary,
-    }
-  }
+    },
+  },
 }));
 
 // const rows = [
@@ -139,63 +140,64 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
 //     lYearBudget: "02-Mar-2024",
 //   },
 //   {
-//     id: 2, 
+//     id: 2,
 //     departmentName: "ACCC",
 //     status: "20",
 //     lYearBudget: "02-Mar-2024",
 //   },
 // ];
-const HRRole = () => { 
-const [loading, setLoading] = useState<boolean>(false)
-console.log(loading)
-const [singleCenter, setSingleCenter] = useState<any>(null);
-const [center, setCenter] = useState<any>([]);
-const [isCommunityOpen, setCommunityModal] = useState(false);
-const [centerHeading, setCenterHeading] = useState<string>("");
+const HRRole = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+  console.log(loading);
+  const [singleCenter, setSingleCenter] = useState<any>(null);
+  const [center, setCenter] = useState<any>([]);
+  const [isCommunityOpen, setCommunityModal] = useState(false);
+  const [centerHeading, setCenterHeading] = useState<string>("");
+  const [open, setOpen] = React.useState(false);
+  const [rowData, setRowData] = React.useState<any>(null);
 
-const fetchCenters = async () => {
-  try {
-    const response = await getAllRole();
-    setCenter(response?.data.role);
-
-  } catch (error) {}
-};
-
-useEffect(()=> {
-  fetchCenters();
-},[])
-
-const handleCloseCommunityModal = () => {
-  fetchCenters();
-  setCommunityModal(false);
-};
-
-const onCommunityEdit = (data: any) => {
-  setSingleCenter(data.row);
-  setCommunityModal(true);
-  setCenterHeading("Edit role");
-};
-
-  const handleDelete = async (data: any) => {
+  const fetchCenters = async () => {
     try {
-      setLoading(true)
-      await deleteRole(data?.id)
-      fetchCenters()
-      setLoading(false)
+      const response = await getAllRole();
+      setCenter(response?.data.role);
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    fetchCenters();
+  }, []);
+
+  const handleCloseCommunityModal = () => {
+    fetchCenters();
+    setCommunityModal(false);
+  };
+
+  const onCommunityEdit = (data: any) => {
+    setSingleCenter(data.row);
+    setCommunityModal(true);
+    setCenterHeading("Edit Title");
+  };
+
+  const handleDelete = async () => {
+    try {
+      setLoading(true);
+      await deleteRole(rowData?.id);
+      closeModel();
+      fetchCenters();
+      setLoading(false);
     } catch (error) {
-      setLoading(false)
-
+      setLoading(false);
     }
-  }
-
+  };
 
   const handleClick = () => {
-   
-      setCommunityModal(true);
-      setCenterHeading("Add New Title");
-    
-  }
+    setCommunityModal(true);
+    setCenterHeading("Add New Title");
+  };
 
+  const closeModel = () => {
+    setOpen(false);
+  };
 
   const columns: GridColDef[] = [
     {
@@ -205,13 +207,6 @@ const onCommunityEdit = (data: any) => {
       editable: false,
       flex: 1,
     },
-    // {
-    //   field: "status",
-    //   headerName: "Employee Count",
-    //   sortable: false,
-    //   editable: false,
-    //   flex: 1,
-    // },
     {
       field: "created_at",
       headerName: "Date Created",
@@ -223,14 +218,23 @@ const onCommunityEdit = (data: any) => {
       field: "buttonsColumn",
       headerName: "",
       flex: 0.5,
-      renderCell: (data: any ) => (
-        <Stack direction="row" gap="10px" alignItems="center" justifyContent="flex-end" width="100%">
+      renderCell: (data: any) => (
+        <Stack
+          direction="row"
+          gap="10px"
+          alignItems="center"
+          justifyContent="flex-end"
+          width="100%"
+        >
           <Button
             variant="text"
             color="error"
             size="small"
             startIcon={<DeleteOutlineIcon />}
-            onClick={() => handleDelete(data)}
+            onClick={() => {
+              setOpen(true);
+              setRowData(data);
+            }}
           >
             Delete
           </Button>
@@ -250,45 +254,48 @@ const onCommunityEdit = (data: any) => {
   return (
     <>
       <StyledBox className="mainTableBlock">
-        
         <Typography className="page-title" variant="h3">
-            HR (Human Resources)
+          HR (Human Resources)
+        </Typography>
+        <Box className="page-subheader">
+          <Typography className="page-title" variant="h4">
+            Title
           </Typography>
-          <Box className="page-subheader">
-              <Typography className="page-title" variant="h4">
-                Title
-              </Typography>
-                <Buttons
-                  variant="contained"
-                  color="primary"
-                  size="medium"
-                  btntext="Add New Title"
-                  startIcon={<AddIcon />}
-                  onClick={handleClick}
-                  className="btn-add-title"
-                /> 
-            </Box>
+          <Buttons
+            variant="contained"
+            color="primary"
+            size="medium"
+            btntext="Add New Title"
+            startIcon={<AddIcon />}
+            onClick={handleClick}
+            className="btn-add-title"
+          />
+        </Box>
         {/* <InputSearch placeholder="Search..." /> */}
-        {center.length == 0 ? "" :
-         <StyleDataGrid
-        //  rows={center.length == 0 ? [] : center}
-         rows={center.length === 0 ? [] : center.map((row: any) => ({
-          ...row,
-          created_at: moment(row.created_at).format('D-MMMM-YYYY')
-        }))}
-        
-         columns={columns}
-         initialState={{
-           pagination: {
-             paginationModel: { page: 0, pageSize: 5 },
-           },
-         }}
-         pageSizeOptions={[5, 10, 15]}
-         disableRowSelectionOnClick
-         slots={{ toolbar: GridToolbar }}
-       />
-        }
-       
+        {center.length == 0 ? (
+          ""
+        ) : (
+          <StyleDataGrid
+            //  rows={center.length == 0 ? [] : center}
+            rows={
+              center.length === 0
+                ? []
+                : center.map((row: any) => ({
+                    ...row,
+                    created_at: moment(row.created_at).format("D-MMMM-YYYY"),
+                  }))
+            }
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 5 },
+              },
+            }}
+            pageSizeOptions={[5, 10, 15]}
+            disableRowSelectionOnClick
+            slots={{ toolbar: GridToolbar }}
+          />
+        )}
       </StyledBox>
       <RoleModal
         open={isCommunityOpen}
@@ -297,6 +304,13 @@ const onCommunityEdit = (data: any) => {
         subheading="Title Information"
         singleCenter={singleCenter}
         setSingleCenter={setSingleCenter}
+      />
+      <DeleteModal
+        open={open}
+        handleOK={() => handleDelete()}
+        handleClose={closeModel}
+        loading={loading}
+        heading="Are you sure you want to delete?"
       />
     </>
   );

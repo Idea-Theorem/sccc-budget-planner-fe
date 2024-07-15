@@ -11,6 +11,14 @@ import React, { useEffect, useState } from "react";
 import Status from "../../utils/dumpData";
 import { getPrograms } from "../../services/adminServices";
 import { formatNumber } from "../../utils";
+import { Stack } from "@mui/material";
+import moment from "moment";
+import {
+  storeProgramFromStatus,
+  storeSingleProgram,
+} from "../../store/reducers/programSlice";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 const StyledBox = styled(Box)(() => ({
   "& .dashboardCards": {
     display: "flex",
@@ -26,6 +34,9 @@ const SuperReviewBudget = () => {
   const [currenttitle, setCurrentTitle] = useState("");
   const [totalBudget, settotalBudget] = useState("");
   const [tabstatus, setTabstatus] = React.useState(Status.PENDING);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   console.log(tabstatus);
 
   const [step, setStep] = useState(0);
@@ -50,13 +61,7 @@ const SuperReviewBudget = () => {
       //   editable: false,
       //   flex: 1,
       // },
-      {
-        field: "created_at",
-        headerName: "Created At",
-        sortable: false,
-        editable: false,
-        flex: 1,
-      },
+
       {
         field: "lYearBudget",
         headerName: "Last Year Budget",
@@ -80,17 +85,25 @@ const SuperReviewBudget = () => {
       },
       {
         field: "nPrograms",
-        headerName: "No. Programs",
+        headerName:
+          step == 0 ? "No. Dept" : step == 1 ? "No. Programs" : "Review Date",
         sortable: false,
         editable: false,
         flex: 1,
       },
       {
-        field: "sDate",
+        field: "created_at",
         headerName: "Submission Date",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{moment(params?.row?.created_at).format("D-MMM YYYY")}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "comments",
@@ -115,13 +128,7 @@ const SuperReviewBudget = () => {
       //   editable: false,
       //   flex: 1,
       // },
-      {
-        field: "created_at",
-        headerName: "Created At",
-        sortable: false,
-        editable: false,
-        flex: 1,
-      },
+
       {
         field: "lYearBudget",
         headerName: "Last Year Budget",
@@ -151,11 +158,18 @@ const SuperReviewBudget = () => {
         flex: 1,
       },
       {
-        field: "sDate",
+        field: "created_at",
         headerName: "Submission Date",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{moment(params?.row?.created_at).format("D-MMM YYYY")}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "comments",
@@ -180,13 +194,7 @@ const SuperReviewBudget = () => {
       //   editable: false,
       //   flex: 1,
       // },
-      {
-        field: "created_at",
-        headerName: "Created At",
-        sortable: false,
-        editable: false,
-        flex: 1,
-      },
+
       {
         field: "lYearBudget",
         headerName: "Last Year Budget",
@@ -216,11 +224,18 @@ const SuperReviewBudget = () => {
         flex: 1,
       },
       {
-        field: "sDate",
+        field: "created_at",
         headerName: "Submission Date",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{moment(params?.row?.created_at).format("D-MMM YYYY")}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "comments",
@@ -243,6 +258,11 @@ const SuperReviewBudget = () => {
   };
   const handleSingleRow = async (row: any) => {
     if (step == 2) {
+      if (row?.status == Status.PENDING) {
+        dispatch(storeSingleProgram(row));
+        dispatch(storeProgramFromStatus(Status.DEFAULT));
+        navigate("/program-head/create");
+      }
       return;
     }
     if (step == 1) {
@@ -264,9 +284,6 @@ const SuperReviewBudget = () => {
     try {
       const res = await getProgramInDepartment(id);
       setCenters(res?.data?.programs);
-      // const totalProgramBudget = calculateTotalAmountForAdmin(
-      //   res?.data?.programs
-      // );
       settotalBudget(res?.data?.totalBudget);
     } catch (error) {}
   };
@@ -285,6 +302,7 @@ const SuperReviewBudget = () => {
       await fetchCenter(value);
     }
   };
+
   return (
     <StyledBox className="appContainer">
       <MainHeaderComponent

@@ -39,6 +39,7 @@ import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import { v4 as uuidv4 } from "uuid";
 import AttentionModal from "../../models/AttentionModal";
 import StatusModal from "../StatusModal";
+import { updateEmployeeData } from "../../utils";
 
 function createData(name?: string, amount?: number) {
   return { name, amount, id: uuidv4() };
@@ -123,10 +124,6 @@ const MainSection = ({
     },
   });
   const formikSubmit = async () => {
-    // if (programFromStatus == Status.CREATED) {
-    //   handleSave();
-    //   return;
-    // }
     let obj: any = {};
     if (values?.supply_expense.length == 0) {
       obj = {
@@ -175,6 +172,8 @@ const MainSection = ({
       setActiveDepartment(singleProgram?.department?.name);
       setFieldValue("code", singleProgram?.code);
       fetchEmployeeInDepartment(singleProgram?.department?.id);
+      const res = updateEmployeeData(singleProgram?.employee);
+      setFieldValue("employee", res);
     }
   }, [singleProgram]);
 
@@ -359,7 +358,11 @@ const MainSection = ({
     setAttentionModal(true);
   };
 
-  const handleCustomeSubmit = async () => {
+  const handleCustomeSubmit = async (event: any) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      return;
+    }
     const errors: any = await formik.validateForm();
     const employeeErrors = errors.employee?.some(
       (employeeError: any) => Object.keys(employeeError).length > 0
@@ -416,7 +419,7 @@ const MainSection = ({
                   <Buttons
                     key={0}
                     btntext="submit"
-                    onClick={handleCustomeSubmit}
+                    onClick={(e: any) => handleCustomeSubmit(e)}
                     variant="outlined"
                     color="primary"
                     size="medium"

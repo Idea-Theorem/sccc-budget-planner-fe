@@ -53,30 +53,27 @@ export const editEmployeeSchema = yup.object().shape({
   //   .required("Salary Rates is required!"),
 });
 export const programSchema = yup.object().shape({
-  name: yup.string().required("Program Name is required!"),
-  code: yup.string().required("Program Code is required!"),
-  department_id: yup.string().required("Departments is required!"),
+  name: yup.string().required("Program Name is required"),
+  code: yup.string().required("Program Code is required"),
+  department_id: yup.string().required("Departments is required"),
   employee: yup
     .array()
     .of(
       yup.object().shape({
-        emp_id: yup.string().required("Employee ID is required!"),
-        employee: yup.string().required("Employee name is required!"),
-        hourlyRate: yup.string().required("Hourly rate is required!"),
+        emp_id: yup.string().required("required"),
+        employee: yup.string().required("required"),
+        hourlyRate: yup.string().required("required"),
         // .positive("Hourly rate must be a positive number"),
         hoursPerWeek: yup
           .string()
-          .required("Hours per week is required!")
-          .min(0, "Hours per week cannot be negative"),
+          .required("required")
+          .min(0, "cannot be negative"),
         workingWeeks: yup
           .string()
-          .required("Working weeks is required!")
-          .min(0, "Working weeks cannot be negative"),
-        benefit: yup.string().required("Benefit is required!"),
-        amount: yup
-          .string()
-          .required("Amount is required!")
-          .min(0, "Amount cannot be negative"),
+          .required("required")
+          .min(0, "cannot be negative"),
+        benefit: yup.string().required("required"),
+        amount: yup.string().required("required").min(0, "cannot be negative"),
       })
     )
     .test(

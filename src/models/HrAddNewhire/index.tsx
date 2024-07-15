@@ -2,7 +2,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
-import { Add, Clear, RemoveCircleOutline } from "@mui/icons-material"; // Import Clear icon from Material-UI
+import { Clear, RemoveCircleOutline } from "@mui/icons-material"; // Import Clear icon from Material-UI
 import Grid from "@mui/material/Grid"; // Import Grid component from MUI
 import BasicDatePicker from "../../components/DatePicker";
 import { Button } from "@mui/material";
@@ -16,14 +16,11 @@ import Checkbox from "@mui/material/Checkbox";
 import { useEffect, useState } from "react";
 import { getUserRole } from "../../services/authServices";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+
 import { useFormik } from "formik";
-import {
-  createEmployeeSchema,
-} from "../../utils/yupSchema";
-import {
-  DeleteNewhire,
-  createEmployee,
-} from "../../services/employeeServices";
+import { createEmployeeSchema } from "../../utils/yupSchema";
+import { DeleteNewhire, createEmployee } from "../../services/employeeServices";
 import { getAllDepartments } from "../../services/departmentServices";
 import TextFields from "../../components/Input/textfield";
 import StatusModal from "../../components/StatusModal";
@@ -261,7 +258,7 @@ const HrAddNewHire: React.FC<IHrAddEmployee> = ({
   const [departments, setDepartments] = useState<any>([]);
   const [titles, setTitles] = useState<any>([]);
   const [activeDepartment, setActiveDepartment] = useState<any>(null);
-  console.log(activeDepartment)
+  console.log(activeDepartment);
   const [statusData, setStatusData] = useState<any>(null);
   const [data, setData] = useState([
     {
@@ -274,8 +271,7 @@ const HrAddNewHire: React.FC<IHrAddEmployee> = ({
   const formik = useFormik<any>({
     validateOnBlur: true,
     validateOnChange: false,
-    validationSchema:
-      heading == "Modify New hire" ? createEmployeeSchema : "",
+    validationSchema: heading == "Modify New hire" ? createEmployeeSchema : "",
     enableReinitialize: true,
     initialValues: {
       firstname: singleEmployeeData?.employee
@@ -286,7 +282,6 @@ const HrAddNewHire: React.FC<IHrAddEmployee> = ({
       password: "",
       hire_date: "",
       roles: [],
-    
     },
     onSubmit: async (values) => {
       try {
@@ -299,14 +294,14 @@ const HrAddNewHire: React.FC<IHrAddEmployee> = ({
         //     message: "Employee Update Successfully",
         //   });
         // } else {
-          let obj = {
-            ...values,
-            employeDepartments: data,
-          };
-          await createEmployee(obj);
-         
+        let obj = {
+          ...values,
+          employeDepartments: data,
+        };
+        await createEmployee(obj);
+
         // }
-        handleMovedNewhire()
+        handleMovedNewhire();
         setStatusData({
           type: "success",
           message: "Employee Added Successfully",
@@ -323,7 +318,7 @@ const HrAddNewHire: React.FC<IHrAddEmployee> = ({
             hourlyRate: "",
             salaryRate: "",
           },
-        ])
+        ]);
         formik.resetForm();
       } catch (error: any) {
         setStatusData({
@@ -342,13 +337,14 @@ const HrAddNewHire: React.FC<IHrAddEmployee> = ({
     isSubmitting,
   } = formik;
 
-const handleMovedNewhire = () => {
-  try {
-     DeleteNewhire(singleEmployeeData?.otherinfo?.program_id, singleEmployeeData?.emp_id)
-  } catch (error) {
-    
-  }
-}
+  const handleMovedNewhire = () => {
+    try {
+      DeleteNewhire(
+        singleEmployeeData?.otherinfo?.program_id,
+        singleEmployeeData?.emp_id
+      );
+    } catch (error) {}
+  };
 
   const handleClear = () => {
     setData([
@@ -358,30 +354,30 @@ const handleMovedNewhire = () => {
         hourlyRate: "",
         salaryRate: "",
       },
-    ])
-    handleClose()
-  }
+    ]);
+    handleClose();
+  };
 
   useEffect(() => {
     fetchUserRole();
     fetchDepartments();
-    fetchBenefits()
-    fetchTitle()
+    fetchBenefits();
+    fetchTitle();
   }, []);
 
   useEffect(() => {
     if (singleEmployeeData) {
-      let modifyArray: any = []
-        let obj = {
-          hourlyRate:"",
-          department_id:singleEmployeeData?.otherinfo?.department?.id,
-          salaryRate:"",
-          title:"",
-        }
-        modifyArray.push(obj)
-      setData(modifyArray)
+      let modifyArray: any = [];
+      let obj = {
+        hourlyRate: "",
+        department_id: singleEmployeeData?.otherinfo?.department?.id,
+        salaryRate: "",
+        title: "",
+      };
+      modifyArray.push(obj);
+      setData(modifyArray);
       fetchDepartments();
-    } 
+    }
   }, [singleEmployeeData]);
 
   // const ITEM_HEIGHT = 48;
@@ -417,7 +413,7 @@ const handleMovedNewhire = () => {
   const fetchBenefits = async () => {
     try {
       const response = await getAllBenefit();
-     setBenefit(response?.data?.centers)
+      setBenefit(response?.data?.centers);
     } catch (error) {}
   };
 
@@ -434,7 +430,6 @@ const handleMovedNewhire = () => {
       setTitles(response?.data?.role);
     } catch (error) {}
   };
-
 
   useEffect(() => {
     let roleIds: any = [];
@@ -475,7 +470,6 @@ const handleMovedNewhire = () => {
     newData[index].title = value;
     setData(newData);
   };
-
 
   const handleInputChange = (index: any, event: any) => {
     const { name, value } = event.target;
@@ -650,10 +644,9 @@ const handleMovedNewhire = () => {
             >
               Department Works For
             </Typography>
-            <Button onClick={() => handleAddObject()} variant="outlined" startIcon={<Add />}>
+            {/* <Button onClick={() => handleAddObject()} variant="outlined" startIcon={<Add />}>
              Add
-            </Button>
-           
+            </Button> */}
           </Box>
 
           <Grid container spacing={4}>
@@ -675,7 +668,7 @@ const handleMovedNewhire = () => {
                   />
                 </Grid>
                 <Grid className="selectGrid" item xs={3}>
-                <SelectDepartments
+                  <SelectDepartments
                     title="Title"
                     value={item.title}
                     list={titles}
@@ -683,13 +676,6 @@ const handleMovedNewhire = () => {
                       handleTitleChange(index, value)
                     }
                   />
-                  {/* <TextFields
-                    variant="standard"
-                    label="Title"
-                    value={item.title}
-                    name="title"
-                    onChange={(e: any) => handleInputChange(index, e)}
-                  /> */}
                 </Grid>
                 <Grid className="item-role-area" item xs={3}>
                   <TextFields
@@ -701,7 +687,7 @@ const handleMovedNewhire = () => {
                   />
                 </Grid>
                 <Grid className="selectGrid" item xs={3}>
-                <SelectDepartments
+                  <SelectDepartments
                     title="Benefit Percentage"
                     value={item.salaryRate}
                     list={benefit}
@@ -711,19 +697,20 @@ const handleMovedNewhire = () => {
                       })
                     }
                   />
-                  {/* <SelectDemo
-                    title="Benefit Percentage"
-                    value={item.salaryRate}
-                    list={benefit}
-                    receiveValue={(value: any) =>
-                      handleInputChange(index, {
-                        target: { name: "salaryRate", value },
-                      })
-                    }
-                  /> */}
                 </Grid>
                 <Grid item xs={3} className="delete-icon">
-                  <button onClick={() => handleDelete(index)}><RemoveCircleOutline /></button>
+                  {index === data.length - 1 ? (
+                    <span onClick={handleAddObject} className="add-item">
+                      <AddCircleOutlineIcon />
+                    </span>
+                  ) : (
+                    <span
+                      onClick={() => handleDelete(index)}
+                      className="remove-item"
+                    >
+                      <RemoveCircleOutline />
+                    </span>
+                  )}
                 </Grid>
               </Grid>
             ))}

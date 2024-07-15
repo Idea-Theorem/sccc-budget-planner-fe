@@ -1,50 +1,45 @@
-
 import { v4 as uuidv4 } from "uuid";
 
 export const salaryRates = [
   {
-    name: "15 %"
+    name: "15 %",
   },
   {
-    name: "20 %"
+    name: "20 %",
   },
   {
-    name: "25 %"
+    name: "25 %",
   },
   {
-    name: "30 %"
+    name: "30 %",
   },
   {
-    name: "32 %"
+    name: "32 %",
   },
-]
+];
 
 export const employeementType = [
   {
-    name: "FULL_TIME"
+    name: "FULL_TIME",
   },
   {
-    name: "PART_TIME"
-  }
-]
+    name: "PART_TIME",
+  },
+];
 
 export const compensationType = [
   {
-    name: "HOURLY"
+    name: "HOURLY",
+  },
+  {
+    name: "SALARY",
+  },
+];
 
-  }, {
-    name: "SALARY"
-  }
-]
-
-export const ProgramCode = [
-  { name: "NEW" },
-
-]
+export const ProgramCode = [{ name: "NEW" }];
 function createData(item?: string, amount?: string) {
   return { item, amount, id: uuidv4() };
 }
-
 
 export const rows = () => {
   return [
@@ -64,8 +59,7 @@ export const rows = () => {
     createData("To Reserve Fund", ""),
     createData("Deferred To Following Year", ""),
   ];
-}
-
+};
 
 export const benefits = [
   createData("Courier & Postage", ""),
@@ -83,17 +77,15 @@ export const benefits = [
 ];
 export const expense = [createData("Salaries", ""), createData("Benefits", "")];
 
-
 enum Status {
-  PENDING = 'PENDING',
-  REJECTED = 'REJECTED',
-  APPROVED = 'APPROVED',
-  DRAFTED = 'DRAFTED',
-  CREATED = 'CREATED',
-  REVISED = 'REVISED',
-  EXPIRED = 'EXPIRED',
+  PENDING = "PENDING",
+  REJECTED = "REJECTED",
+  APPROVED = "APPROVED",
+  DRAFTED = "DRAFTED",
+  CREATED = "CREATED",
+  REVISED = "REVISED",
+  EXPIRED = "EXPIRED",
+  DEFAULT = "DEFAULT",
 }
 
 export default Status;
-
-

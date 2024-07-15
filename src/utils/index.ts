@@ -244,3 +244,18 @@ export const handleRole = (data: any) => {
     return data;
   }
 };
+
+export const capitalizeFirstLetter = (str: string) => {
+  if (!str) return str;
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+};
+
+export const updateEmployeeData = (receivedArray: any) => {
+  return receivedArray.map((employee: any) => ({
+    ...employee,
+    amount: `$${employee.amount}`,
+    hourlyRate: `$${employee.hourlyRate}`,
+    hoursPerWeek: `${employee.hoursPerWeek}h`,
+    workingWeeks: `${employee.workingWeeks}w`,
+  }));
+};
