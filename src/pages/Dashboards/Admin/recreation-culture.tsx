@@ -2,13 +2,18 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import TabsArea from "../../../components/Tabs";
 import Status from "../../../utils/dumpData";
-import { Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { RootState } from "../../../store";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { formatNumber } from "../../../utils";
+import { useDispatch, useSelector } from "react-redux";
+import { capitalizeFirstLetter, formatNumber } from "../../../utils";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import moment from "moment";
+import {
+  storeProgramFromStatus,
+  storeSingleProgram,
+} from "../../../store/reducers/programSlice";
 const StyledBox = styled(Box)(() => ({
   "& .dashboardCards": {
     display: "flex",
@@ -57,6 +62,13 @@ const RecreationAndCultureScreen = ({}: any) => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{params?.row?.code + "-" + params?.row?.name}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "status",
@@ -64,6 +76,13 @@ const RecreationAndCultureScreen = ({}: any) => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{capitalizeFirstLetter(params?.row?.status)}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "lYearBudget",
@@ -73,11 +92,18 @@ const RecreationAndCultureScreen = ({}: any) => {
         flex: 1,
       },
       {
-        field: "budget",
+        field: "programBudget",
         headerName: "Budget",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "profit",
@@ -94,11 +120,18 @@ const RecreationAndCultureScreen = ({}: any) => {
         flex: 1,
       },
       {
-        field: "sDate",
+        field: "created_at",
         headerName: "Submission Date",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{moment(params?.row?.created_at).format("D-MMM YYYY")}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "comments",
@@ -111,10 +144,17 @@ const RecreationAndCultureScreen = ({}: any) => {
     [
       {
         field: "name",
-        headerName: "Department Name",
+        headerName: "Program Name",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{params?.row?.code + "-" + params?.row?.name}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "status",
@@ -122,6 +162,13 @@ const RecreationAndCultureScreen = ({}: any) => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{capitalizeFirstLetter(params?.row?.status)}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "lYearBudget",
@@ -131,11 +178,18 @@ const RecreationAndCultureScreen = ({}: any) => {
         flex: 1,
       },
       {
-        field: "budget",
+        field: "programBudget",
         headerName: "Budget",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "profit",
@@ -152,11 +206,18 @@ const RecreationAndCultureScreen = ({}: any) => {
         flex: 1,
       },
       {
-        field: "sDate",
+        field: "created_at",
         headerName: "Submission Date",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{moment(params?.row?.created_at).format("D-MMM YYYY")}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "comments",
@@ -169,10 +230,17 @@ const RecreationAndCultureScreen = ({}: any) => {
     [
       {
         field: "name",
-        headerName: "Department Name",
+        headerName: "Program Name",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{params?.row?.code + "-" + params?.row?.name}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "status",
@@ -180,6 +248,13 @@ const RecreationAndCultureScreen = ({}: any) => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{capitalizeFirstLetter(params?.row?.status)}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "lYearBudget",
@@ -189,11 +264,18 @@ const RecreationAndCultureScreen = ({}: any) => {
         flex: 1,
       },
       {
-        field: "budget",
+        field: "programBudget",
         headerName: "Budget",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "profit",
@@ -210,11 +292,18 @@ const RecreationAndCultureScreen = ({}: any) => {
         flex: 1,
       },
       {
-        field: "sDate",
+        field: "created_at",
         headerName: "Submission Date",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{moment(params?.row?.created_at).format("D-MMM YYYY")}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "comments",
@@ -229,8 +318,9 @@ const RecreationAndCultureScreen = ({}: any) => {
   const { singleDepartName, programBudgetInDepartment } = useSelector(
     (state: RootState) => state.program
   );
-
   const [tabstatus, setTabstatus] = React.useState(Status.PENDING);
+  const [programInDepartment, setProgramInDepartment] = React.useState<any>([]);
+  const dispatch = useDispatch();
   console.log(tabstatus);
   const [status, setStatus] = React.useState<string>("");
   const navigate = useNavigate();
@@ -239,10 +329,22 @@ const RecreationAndCultureScreen = ({}: any) => {
   };
 
   useEffect(() => {
+    const filteredArray = singleDepart.filter(
+      (item) => item?.status?.toLowerCase() == tabstatus?.toLowerCase()
+    );
+    setProgramInDepartment(filteredArray);
     if (false) {
       setStatus("");
     }
-  }, []);
+  }, [tabstatus]);
+
+  const onRowClick = (data: any) => {
+    if (data?.status == Status.PENDING) {
+      dispatch(storeSingleProgram(data));
+      dispatch(storeProgramFromStatus(Status.DEFAULT));
+      navigate("/program-head/create");
+    }
+  };
   return (
     <StyledBox className="appContainer">
       <Box className="back">
@@ -263,8 +365,9 @@ const RecreationAndCultureScreen = ({}: any) => {
           // { title: "History" },
         ]}
         table={tableColumnsTitleArray}
-        row={singleDepart}
+        row={programInDepartment}
         currentStatus={status}
+        onRowClick={onRowClick}
       />
     </StyledBox>
   );

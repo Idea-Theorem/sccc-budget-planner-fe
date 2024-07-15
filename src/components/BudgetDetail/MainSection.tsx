@@ -39,6 +39,7 @@ import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import { v4 as uuidv4 } from "uuid";
 import AttentionModal from "../../models/AttentionModal";
 import StatusModal from "../StatusModal";
+import { updateEmployeeData } from "../../utils";
 
 function createData(name?: string, amount?: number) {
   return { name, amount, id: uuidv4() };
@@ -69,7 +70,7 @@ const MainSection = ({
   const [activeDepartment, setActiveDepartment] = useState<any>(null);
   const [attentionModal, setAttentionModal] = useState<any>(false);
   const [actionStatus, setactionStatus] = useState<any>("");
-  const [revicedStatus, setRevicedStatus] = useState<any>("");
+  const [revicedStatus] = useState<any>("");
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [disable, setDisable] = useState(false);
@@ -112,16 +113,17 @@ const MainSection = ({
     validationSchema: programSchema,
     enableReinitialize: true,
     initialValues,
-    onSubmit: async () => {
-      setAttentionModal(true);
-      return;
+    onSubmit: async (values: any) => {
+      if (values.status === Status.DRAFTED) {
+        handleSave();
+        return;
+      } else {
+        setAttentionModal(true);
+        return;
+      }
     },
   });
   const formikSubmit = async () => {
-    if (programFromStatus == Status.CREATED) {
-      handleSave();
-      return;
-    }
     let obj: any = {};
     if (values?.supply_expense.length == 0) {
       obj = {
@@ -170,6 +172,8 @@ const MainSection = ({
       setActiveDepartment(singleProgram?.department?.name);
       setFieldValue("code", singleProgram?.code);
       fetchEmployeeInDepartment(singleProgram?.department?.id);
+      const res = updateEmployeeData(singleProgram?.employee);
+      setFieldValue("employee", res);
     }
   }, [singleProgram]);
 
@@ -280,7 +284,8 @@ const MainSection = ({
       dispatch(storeSupplyList([]));
       dispatch(storeSalaryList([]));
       dispatch(storeSingleProgram(null));
-      navigate("/program-head/draft");
+      // navigate("/program-head/draft");
+      navigate("/program-head/program");
     } catch (error: any) {
       setStatusData({
         type: "error",
@@ -295,7 +300,6 @@ const MainSection = ({
       fetchProgrambyId(singleProgram?.id);
     }
   }, [singleProgram?.id]);
-  console.log("singleProgram:::::::", singleProgram);
   const fetchComments = async () => {
     try {
       const response = await fetchAllcomments();
@@ -353,6 +357,43 @@ const MainSection = ({
     setactionStatus(data);
     setAttentionModal(true);
   };
+
+  const handleCustomeSubmit = async (event: any) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      return;
+    }
+    const errors: any = await formik.validateForm();
+    const employeeErrors = errors.employee?.some(
+      (employeeError: any) => Object.keys(employeeError).length > 0
+    );
+    if (employeeErrors) {
+      setStatusData({
+        type: "error",
+        message: "Please fill the employee form as well.",
+      });
+      return;
+    }
+    formik.setFieldValue("status", Status.PENDING);
+    handleSubmit();
+  };
+
+  const handleCustomeSave = async () => {
+    const errors: any = await formik.validateForm();
+    const employeeErrors = errors.employee?.some(
+      (employeeError: any) => Object.keys(employeeError).length > 0
+    );
+    if (employeeErrors) {
+      setStatusData({
+        type: "error",
+        message: "Please fill the employee form as well.",
+      });
+      return;
+    }
+    formik.setFieldValue("status", Status.DRAFTED);
+    handleSubmit();
+  };
+
   const Save = async () => {};
   return (
     <Grid item xs={9}>
@@ -377,8 +418,17 @@ const MainSection = ({
                 <>
                   <Buttons
                     key={0}
+                    btntext="submit"
+                    onClick={(e: any) => handleCustomeSubmit(e)}
+                    variant="outlined"
+                    color="primary"
+                    size="medium"
+                    startIcon={<SaveOutlinedIcon />}
+                  />
+                  <Buttons
+                    key={0}
                     btntext="Save"
-                    onClick={handleSubmit}
+                    onClick={handleCustomeSave}
                     variant="outlined"
                     color="primary"
                     size="medium"
@@ -391,10 +441,11 @@ const MainSection = ({
                   <Buttons
                     key={0}
                     btntext="Save"
-                    onClick={() => {
-                      setAttentionModal(true);
-                      setRevicedStatus("save");
-                    }}
+                    // onClick={() => {
+                    //   setAttentionModal(true);
+                    //   setRevicedStatus("save");
+                    // }}
+                    onClick={handleCustomeSave}
                     variant="outlined"
                     color="primary"
                     size="medium"
@@ -509,7 +560,7 @@ const MainSection = ({
           handleOK={handleOK}
           loading={isSubmitting}
           heading="Attention"
-          text="You are changing the status of the program"
+          text="Are you sure you want to submit this budget?"
         />
       </Grid>
       <StatusModal

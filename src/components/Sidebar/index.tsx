@@ -15,10 +15,10 @@ import LogoImg from "../../assets/logo.png";
 import { useAuth } from "../../contexts/AuthContext";
 import { Button, Collapse, Grid } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
-import SelectDemo from "../Select";
 import { getCapitalizedFirstLetters, handleRole } from "../../utils";
 import { useDispatch } from "react-redux";
 import { storeSideBarCheck } from "../../store/reducers/programSlice";
+import SidebarSelect from "../SidebarSelect";
 // import SelectDemo from "../Select";
 
 const SideArea = styled(Box)(({ theme }) => ({
@@ -210,7 +210,6 @@ export default function ResponsiveDrawer(props: Props) {
       dispatch(storeSideBarCheck("admin"));
       localStorage.setItem("sidebarCheck", "admin");
     }
-
     localStorage.setItem("currentRole", item);
     setCurrentRole(item);
   };
@@ -243,6 +242,9 @@ export default function ResponsiveDrawer(props: Props) {
       case "/hr":
         navigate("/hr");
         break;
+      case "/hr/role":
+        navigate("/hr/role");
+        break;
 
       case "HR":
         navigate("/hr/employees");
@@ -251,7 +253,6 @@ export default function ResponsiveDrawer(props: Props) {
       // navigate("/hr");
     }
   }, [currentRole]);
-
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("currentRole");
@@ -270,7 +271,7 @@ export default function ResponsiveDrawer(props: Props) {
         <Box className="user-name">
           {getCapitalizedFirstLetters(user?.firstname, user?.lastname)}
         </Box>
-        <SelectDemo
+        <SidebarSelect
           className="sidebar_select_input"
           title="Department"
           value={currentRole}

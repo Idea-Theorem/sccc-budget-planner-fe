@@ -4,6 +4,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { styled } from "@mui/material/styles";
+import { handleRole } from "../../utils";
 
 const StyledFormControl = styled(FormControl)({
   width: "100%",
@@ -51,7 +52,7 @@ const ErrorMessage = styled("div")(({ theme }) => ({
   marginTop: "8px",
 }));
 
-export default function SelectDemo({
+export default function SidebarSelect({
   title,
   list,
   receiveValue,
@@ -92,7 +93,7 @@ export default function SelectDemo({
         <StyledSelect
           placeholder={placeholder}
           disabled={disabled}
-          value={value}
+          value={handleRole(value)}
           labelId="select-label"
           id="select-demo"
           label="Label"

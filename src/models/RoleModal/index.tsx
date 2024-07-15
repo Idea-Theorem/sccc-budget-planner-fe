@@ -144,7 +144,7 @@ const RoleModal: React.FC<IDepartmentInfo> = ({
     },
     onSubmit: async (values) => {
       try {
-        if (heading == "Edit role") {
+        if (heading == "Edit Title") {
           await updateRole(values, singleCenter?.id);
         } else {
           await createRole(values);

@@ -3,8 +3,6 @@ import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import TabsComponent from "../../../Components/HRComponents/HRTabs";
 import { Typography } from "@mui/material";
-import { useAuth } from "../../../../contexts/AuthContext";
-import { handleRole } from "../../../../utils";
 
 const StyledBox = styled(Box)(() => ({
   "& .dashboardCards": {
@@ -63,18 +61,19 @@ interface SuperAdminProps {
   name: string;
 }
 
-const HREmployeees: React.FC<SuperAdminProps> = ({ name }) => {
-  const { currentRole } = useAuth();
+const HRDepartment: React.FC<SuperAdminProps> = ({ name }) => {
+  // const { currentRole } = useAuth();
   const handleTabsDynamically = () => {
-    if (handleRole(currentRole) == "HR") {
-      return ["Employees", "New Hires"];
-    } else if (handleRole(currentRole) == "Admin") {
-      return ["Departments"];
-    } else if (handleRole(currentRole) == "Super_Admin") {
-      return ["Community Centres"];
-    } else {
-      return [];
-    }
+    return ["Departments"];
+    // if (handleRole(currentRole) == "HR") {
+    //   return ["Departments"];
+    // } else if (handleRole(currentRole) == "Admin") {
+    //   return ["Departments"];
+    // } else if (handleRole(currentRole) == "Super_Admin") {
+    //   return ["Community Centres"];
+    // } else {
+    //   return [];
+    // }
   };
   return (
     <StyledBox className="appContainer">
@@ -87,4 +86,4 @@ const HREmployeees: React.FC<SuperAdminProps> = ({ name }) => {
   );
 };
 
-export default HREmployeees;
+export default HRDepartment;

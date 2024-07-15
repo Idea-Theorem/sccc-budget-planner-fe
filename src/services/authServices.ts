@@ -17,11 +17,4 @@ const getUserRole = async () => {
   return await HTTP_CLIENT.get("/role");
 };
 
-
-
-export {
-  loggedIn,
-  getUserRole,
-  forgotPassword,
-  resetPassword
-};
+export { loggedIn, getUserRole, forgotPassword, resetPassword };

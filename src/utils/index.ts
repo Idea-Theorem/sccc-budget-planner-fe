@@ -231,16 +231,31 @@ export const handleRole = (data: any) => {
   if (
     data == "/super-admin/review-budgets" ||
     data == "/super-admin" ||
-    (data == "/hr" && issideCheck == "superAdmin")
+    (data == "/hr/role" && issideCheck == "superAdmin")
   ) {
     return "Super_Admin";
   } else if (
     data == "/admin" ||
     data == "/admin/review-budget" ||
-    (data == "/hr" && issideCheck == "admin")
+    (data == "/hr/role" && issideCheck == "admin")
   ) {
     return "Admin";
   } else {
     return data;
   }
+};
+
+export const capitalizeFirstLetter = (str: string) => {
+  if (!str) return str;
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+};
+
+export const updateEmployeeData = (receivedArray: any) => {
+  return receivedArray.map((employee: any) => ({
+    ...employee,
+    amount: `$${employee.amount}`,
+    hourlyRate: `$${employee.hourlyRate}`,
+    hoursPerWeek: `${employee.hoursPerWeek}h`,
+    workingWeeks: `${employee.workingWeeks}w`,
+  }));
 };

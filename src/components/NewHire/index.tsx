@@ -22,16 +22,8 @@ export default function TabsNewHire({ employee, formik }: any) {
     try {
       const response = await getAllBenefit();
       setBenefit(response?.data?.centers);
-      // formik.setFieldValue("benefitOptions", response?.data?.centers);
-    } catch (error) {
-      console.log("🚀 ~ fetchAllBenefit ~ error:", error);
-    }
+    } catch (error) {}
   };
-
-  // useEffect(() => {
-  //   const response = calculateAmount(formik.values.employee);
-  //   formik.setFieldValue("employee", response);
-  // }, [formik.values.employee]);
 
   const handleAddRecord = () => {
     formik.setFieldValue("employee", [
