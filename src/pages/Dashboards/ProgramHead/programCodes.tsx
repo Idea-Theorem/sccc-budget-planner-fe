@@ -118,6 +118,32 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
       color: theme.palette.text.primary,
     },
   },
+  "& .MuiButton-root": {
+    color: "#979797",
+    fontSize: "14px",
+    lineHeight: "24px",
+    "&:hover": {
+      background: "none",
+    },
+  },
+
+  ".actions-btn-holder": {
+    ".MuiButton-textPrimary:not(:hover)": {
+      color: "rgba(48, 48, 48, 1)",
+    },
+    ".MuiButton-outlinedPrimary": {
+      color: "rgba(4, 128, 113, 1)",
+
+      "&:hover": {
+        background: "rgba(4, 128, 113, 1)",
+        color: "#fff",
+      },
+    },
+
+    ".MuiButtonBase-root": {
+      textTransform: "capitalize",
+    },
+  },
 }));
 
 interface HRTableProps {
@@ -149,10 +175,10 @@ const HRTableComponent: React.FC<HRTableProps> = ({  }) => {
           gap="10px"
           alignItems="center"
           ml="auto                                       "
+          className="actions-btn-holder"
         >
           <Button
             variant="text"
-            color="error"
             size="small"
             startIcon={<DeleteOutlineIcon />}
             onClick={() => handleDelete(params.row)}
@@ -161,7 +187,6 @@ const HRTableComponent: React.FC<HRTableProps> = ({  }) => {
           </Button>
           <Button
             variant="outlined"
-            color="primary"
             size="small"
             startIcon={<EditNoteIcon />}
             // onClick={onEdit}

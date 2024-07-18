@@ -23,6 +23,9 @@ const StyledBox = styled(Box)(({}) => ({
   "&.mainTableBlock": {
     width: "100%",
     position: "relative",
+    marginTop: '-10px',
+    paddingTop: '10px',
+    borderTop: "1px solid #e8e8e8",
   },
 
   "& .MuiDataGrid-toolbarContainer": {
@@ -141,6 +144,10 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
         background: "rgba(4, 128, 113, 1)",
         color: "#fff",
       },
+    },
+
+    ".MuiButtonBase-root": {
+      textTransform: "capitalize",
     },
   },
 }));

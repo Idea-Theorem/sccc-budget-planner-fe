@@ -14,7 +14,7 @@ const StyledInputSearch = styled(Box)(({ theme }) => ({
   "&.tableSearch": {
     position: "absolute",
     right: "0",
-    top: "0",
+    top: "12px",
     zIndex: "1",
     width: "220px",
   },
