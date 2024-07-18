@@ -109,7 +109,7 @@ const AdminScreen = () => {
         approvedBudget={programs?.totalApprovedProgrambudget}
         fetchTotalbudget={fetchTotalbudget}
         totalBudget={totalBudget}
-        placeholder="$ Emter amount"
+        placeholder="$ Enter amount"
         open={isOpen}
         handleClose={handleModalClose}
         heading="Add Budget"

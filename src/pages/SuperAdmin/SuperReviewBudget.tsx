@@ -54,21 +54,22 @@ const SuperReviewBudget = () => {
         editable: false,
         flex: 1,
       },
-      // {
-      //   field: "status",
-      //   headerName: "Status",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
 
       {
-        field: "lYearBudget",
-        headerName: "Last Year Budget",
+        field: "status",
+        headerName: "Status",
         sortable: false,
         editable: false,
         flex: 1,
       },
+
+      // {
+      //   field: "lYearBudget",
+      //   headerName: "Last Year Budget",
+      //   sortable: false,
+      //   editable: false,
+      //   flex: 1,
+      // },
       {
         field: "budget",
         headerName: "Budget",
@@ -76,17 +77,18 @@ const SuperReviewBudget = () => {
         editable: false,
         flex: 1,
       },
-      {
-        field: "profit",
-        headerName: "Profit",
-        sortable: false,
-        editable: false,
-        flex: 1,
-      },
+      // {
+      //   field: "profit",
+      //   headerName: "Profit",
+      //   sortable: false,
+      //   editable: false,
+      //   flex: 1,
+      // },
       {
         field: "nPrograms",
         headerName:
-          step == 0 ? "No. Dept" : step == 1 ? "No. Programs" : "Review Date",
+          step == 0 ? "No. Dept." : step == 1 ? "No. Programs" : "No. Programs",
+        // headerName: 'No. Dept.',
         sortable: false,
         editable: false,
         flex: 1,
@@ -121,21 +123,21 @@ const SuperReviewBudget = () => {
         editable: false,
         flex: 1,
       },
-      // {
-      //   field: "status",
-      //   headerName: "Status",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
-
       {
-        field: "lYearBudget",
-        headerName: "Last Year Budget",
+        field: "status",
+        headerName: "Status",
         sortable: false,
         editable: false,
         flex: 1,
       },
+
+      // {
+      //   field: "lYearBudget",
+      //   headerName: "Last Year Budget",
+      //   sortable: false,
+      //   editable: false,
+      //   flex: 1,
+      // },
       {
         field: "budget",
         headerName: "Budget",
@@ -143,16 +145,16 @@ const SuperReviewBudget = () => {
         editable: false,
         flex: 1,
       },
-      {
-        field: "profit",
-        headerName: "Profit",
-        sortable: false,
-        editable: false,
-        flex: 1,
-      },
+      // {
+      //   field: "profit",
+      //   headerName: "Profit",
+      //   sortable: false,
+      //   editable: false,
+      //   flex: 1,
+      // },
       {
         field: "nPrograms",
-        headerName: "No. Programs",
+        headerName: "No. Dept.",
         sortable: false,
         editable: false,
         flex: 1,
@@ -187,21 +189,21 @@ const SuperReviewBudget = () => {
         editable: false,
         flex: 1,
       },
-      // {
-      //   field: "status",
-      //   headerName: "Status",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
-
       {
-        field: "lYearBudget",
-        headerName: "Last Year Budget",
+        field: "status",
+        headerName: "Status",
         sortable: false,
         editable: false,
         flex: 1,
       },
+
+      // {
+      //   field: "lYearBudget",
+      //   headerName: "Last Year Budget",
+      //   sortable: false,
+      //   editable: false,
+      //   flex: 1,
+      // },
       {
         field: "budget",
         headerName: "Budget",
@@ -209,16 +211,16 @@ const SuperReviewBudget = () => {
         editable: false,
         flex: 1,
       },
-      {
-        field: "profit",
-        headerName: "Profit",
-        sortable: false,
-        editable: false,
-        flex: 1,
-      },
+      // {
+      //   field: "profit",
+      //   headerName: "Profit",
+      //   sortable: false,
+      //   editable: false,
+      //   flex: 1,
+      // },
       {
         field: "nPrograms",
-        headerName: "No. Programs",
+        headerName: "No. Dept.",
         sortable: false,
         editable: false,
         flex: 1,

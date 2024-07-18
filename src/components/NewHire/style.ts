@@ -101,6 +101,7 @@ export const EmployeeInfoArea = styled(Box)(() => ({
           padding: "0 30px 0 12px",
           display: "flex",
           alignItems: "center",
+          textTransform: "capitalize",
         },
       },
 

@@ -111,7 +111,7 @@ const SuperAdminScreen = () => {
         subheading="Budget Total"
         fetchTotalbudget={fetchTotalbudget}
         totalBudget={totalBudget}
-        placeholder="$ Emter amount"
+        placeholder="$ Enter amount"
       />
       <AdminDepartmentProgress
         from="super-admin"
