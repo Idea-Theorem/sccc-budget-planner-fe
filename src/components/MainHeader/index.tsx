@@ -48,6 +48,8 @@ const AppHeader = styled(Box)(({ theme }) => ({
       display: "flex",
       alignItems: "center",
       padding: "4px 0 0",
+      marginBottom: "20px",
+
       "& .welcomeText": {
         fontSize: "20px",
         lineHeight: "1.3",

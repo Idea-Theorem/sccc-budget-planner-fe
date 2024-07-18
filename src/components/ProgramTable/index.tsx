@@ -27,6 +27,7 @@ import {
 import { attachCommentsToProgram } from "../../utils";
 import CommentIcon from "@mui/icons-material/Comment";
 import Status from "../../utils/dumpData";
+import { BorderClear, BorderColor, Opacity } from "@mui/icons-material";
 
 const TabsProgramAreas = styled(Box)(({ theme }) => ({
   ".input-border": {
@@ -84,13 +85,17 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
         border: "0",
         color: "#303030",
         fontFamily: "Work Sans",
-        fontSize: "16px",
+        fontSize: "14px",
         fontWeight: "500",
-        padding: "24px 0 0 15px",
+        padding: "16px 0 0 15px",
 
         "&.MuiTableCell-alignRight": {
           fontFamily: "Roboto",
           fontWeight: "400",
+        },
+
+        ".MuiInputBase-input ": {
+          fontSize: '14px',
         },
       },
 
@@ -103,10 +108,22 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
 
         "&:last-child": {
           "& .MuiTableCell-body": {
-            // borderTop: "1px solid #000",
+            borderTop: "1px solid #494949",
             color: "#000",
             // fontWeight: "600",
             letterSpacing: "0.4px",
+          },
+
+          ".MuiOutlinedInput-notchedOutline": {
+            display: "none !important",
+          },
+
+          ".MuiInputBase-input ": {
+            paddingTop: '0',
+            paddingBottom: '0',
+            height: '20px',
+            color: "#000",
+            fontWeight: 700,
           },
         },
       },

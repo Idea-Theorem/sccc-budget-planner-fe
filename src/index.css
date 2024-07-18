@@ -64,7 +64,7 @@
 }
 
 .createProgramContentHead input {
-    color: rgba(0, 0, 0, 0.87);
+    color: #303030;
     font-family: Work Sans;
     font-size: 22px;
     font-weight: 500;
@@ -74,6 +74,7 @@
 
 .createProgramContentHead input::placeholder {
     opacity: 1;
+    color: rgba(0, 0, 0, 0.87);
 }
 
 /*.table_custom_style {

@@ -50,13 +50,13 @@ const ReviewBudgetScreen = () => {
           );
         },
       },
-      {
-        field: "lYearBudget",
-        headerName: "Last Year Budget",
-        sortable: false,
-        editable: false,
-        flex: 1,
-      },
+      // {
+      //   field: "lYearBudget",
+      //   headerName: "Last Year Budget",
+      //   sortable: false,
+      //   editable: false,
+      //   flex: 1,
+      // },
       {
         field: "budget",
         headerName: "Budget",
@@ -64,13 +64,13 @@ const ReviewBudgetScreen = () => {
         editable: false,
         flex: 1,
       },
-      {
-        field: "profit",
-        headerName: "Profit",
-        sortable: false,
-        editable: false,
-        flex: 1,
-      },
+      // {
+      //   field: "profit",
+      //   headerName: "Profit",
+      //   sortable: false,
+      //   editable: false,
+      //   flex: 1,
+      // },
       {
         field: "nPrograms",
         headerName: "No. Programs",
@@ -122,13 +122,13 @@ const ReviewBudgetScreen = () => {
           );
         },
       },
-      {
-        field: "lYearBudget",
-        headerName: "Last Year Budget",
-        sortable: false,
-        editable: false,
-        flex: 1,
-      },
+      // {
+      //   field: "lYearBudget",
+      //   headerName: "Last Year Budget",
+      //   sortable: false,
+      //   editable: false,
+      //   flex: 1,
+      // },
       {
         field: "budget",
         headerName: "Budget",
@@ -136,13 +136,13 @@ const ReviewBudgetScreen = () => {
         editable: false,
         flex: 1,
       },
-      {
-        field: "profit",
-        headerName: "Profit",
-        sortable: false,
-        editable: false,
-        flex: 1,
-      },
+      // {
+      //   field: "profit",
+      //   headerName: "Profit",
+      //   sortable: false,
+      //   editable: false,
+      //   flex: 1,
+      // },
       {
         field: "nPrograms",
         headerName: "No. Programs",
@@ -194,13 +194,13 @@ const ReviewBudgetScreen = () => {
           );
         },
       },
-      {
-        field: "lYearBudget",
-        headerName: "Last Year Budget",
-        sortable: false,
-        editable: false,
-        flex: 1,
-      },
+      // {
+      //   field: "lYearBudget",
+      //   headerName: "Last Year Budget",
+      //   sortable: false,
+      //   editable: false,
+      //   flex: 1,
+      // },
       {
         field: "budget",
         headerName: "Budget",
@@ -208,13 +208,13 @@ const ReviewBudgetScreen = () => {
         editable: false,
         flex: 1,
       },
-      {
-        field: "profit",
-        headerName: "Profit",
-        sortable: false,
-        editable: false,
-        flex: 1,
-      },
+      // {
+      //   field: "profit",
+      //   headerName: "Profit",
+      //   sortable: false,
+      //   editable: false,
+      //   flex: 1,
+      // },
       {
         field: "nPrograms",
         headerName: "No. Programs",
