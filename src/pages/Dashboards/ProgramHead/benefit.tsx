@@ -47,8 +47,10 @@ const StyledBox = styled(Box)(({ theme }) => ({
 const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
   width: "100%",
   "&.MuiDataGrid-root": {
-    borderWidth: "0 !important",
-    borderStyle: "none",
+    borderWidth: "1px 0 0 0 !important",
+    borderRadius: '0',
+    marginTop: '15px',
+    paddingTop: '5px',
     "&.MuiDataGrid-footerContainer": {
       border: "none",
     },
@@ -67,9 +69,9 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
     },
   },
   "& .MuiButton-root": {
-    // color: "#979797",
-    // fontSize: "14px",
-    // lineHeight: "24px",
+    color: "#979797",
+    fontSize: "14px",
+    lineHeight: "24px",
     "&:hover": {
       background: "none",
     },
@@ -128,6 +130,23 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
   ".MuiStack-root": {
     "&.MuiButtonBase-root": {
       color: theme.palette.text.primary,
+    },
+  },
+  ".actions-btn-holder": {
+    ".MuiButton-textPrimary:not(:hover)": {
+      color: "rgba(48, 48, 48, 1)",
+    },
+    ".MuiButton-outlinedPrimary": {
+      color: "rgba(4, 128, 113, 1)",
+
+      "&:hover": {
+        background: "rgba(4, 128, 113, 1)",
+        color: "#fff",
+      },
+    },
+
+    ".MuiButtonBase-root": {
+      textTransform: "capitalize",
     },
   },
 }));
@@ -204,10 +223,10 @@ const Benefit = () => {
           alignItems="center"
           justifyContent="flex-end"
           width="100%"
+          className="actions-btn-holder"
         >
           <Button
             variant="text"
-            color="error"
             size="small"
             startIcon={<DeleteOutlineIcon />}
             onClick={() => handleDelete(data)}

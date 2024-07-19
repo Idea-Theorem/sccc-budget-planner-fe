@@ -252,6 +252,7 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
           </Button>
           <Button
             variant="outlined"
+            color="primary"
             size="small"
             startIcon={<EditNoteIcon />}
             onClick={() => handleEditClick(params.row)}
