@@ -311,11 +311,11 @@ export default function CollapsibleTable() {
               <TableCell>$00,000.00</TableCell>
             </TableRow>
             <TableRow className="totalRow">
-              <TableCell>&nbsp;</TableCell>
+              {/* <TableCell>&nbsp;</TableCell>
               <TableCell>Total Salaries</TableCell>
               <TableCell>$00,000.00</TableCell>
               <TableCell>$00,000.00</TableCell>
-              <TableCell>$00,000.00</TableCell>
+              <TableCell>$00,000.00</TableCell> */}
             </TableRow>
             <TableRow className="totalRow last">
               <TableCell>&nbsp;</TableCell>

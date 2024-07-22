@@ -116,13 +116,13 @@ const DHReviewBudgets = () => {
           );
         },
       },
-      {
-        field: "lYearBudget",
-        headerName: "Previous Year Budget",
-        sortable: false,
-        editable: false,
-        flex: 1,
-      },
+      // {
+      //   field: "lYearBudget",
+      //   headerName: "Previous Year Budget",
+      //   sortable: false,
+      //   editable: false,
+      //   flex: 1,
+      // },
       // {
       //   field: "profit",
       //   headerName: "Profit",
