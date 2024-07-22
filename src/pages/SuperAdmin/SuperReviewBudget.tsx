@@ -10,7 +10,7 @@ import {
 import React, { useEffect, useState } from "react";
 import Status from "../../utils/dumpData";
 import { getPrograms } from "../../services/adminServices";
-import { formatNumber } from "../../utils";
+import { capitalizeFirstLetter, formatNumber } from "../../utils";
 import { Stack } from "@mui/material";
 import moment from "moment";
 import {
@@ -40,6 +40,7 @@ const SuperReviewBudget = () => {
   console.log(tabstatus);
 
   const [step, setStep] = useState(0);
+  console.log("step == 1:::::", step);
   const tableColumnsTitleArray = [
     [
       {
@@ -77,13 +78,15 @@ const SuperReviewBudget = () => {
         editable: false,
         flex: 1,
       },
-      // {
-      //   field: "profit",
-      //   headerName: "Profit",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+      step == 1
+        ? ""
+        : {
+            field: "profit",
+            headerName: "Profit",
+            sortable: false,
+            editable: false,
+            flex: 1,
+          },
       {
         field: "nPrograms",
         headerName:
@@ -129,6 +132,13 @@ const SuperReviewBudget = () => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{capitalizeFirstLetter(params?.row?.status)}</Box>
+            </Stack>
+          );
+        },
       },
 
       // {
