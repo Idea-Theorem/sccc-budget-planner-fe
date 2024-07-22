@@ -13,6 +13,14 @@ const StyledFormControl = styled(FormControl)({
 
   ".input-wrap": {
     position: "relative",
+
+    ".MuiInputBase-root": {
+      textTransform: "capitalize",
+    },
+
+    '.MuiSelect-select': {
+      color: "#303030",
+    },
   },
 
   // ".MuiSelect-select": {

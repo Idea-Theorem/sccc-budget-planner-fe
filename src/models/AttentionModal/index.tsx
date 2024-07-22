@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import Check from "@mui/icons-material/Check";
 import Clear from "@mui/icons-material/Clear";
 import Modal from "@mui/material/Modal";
+import WarningAmberOutlinedIcon from '@mui/icons-material/WarningAmberOutlined';
 
 const DepartmentInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
@@ -25,6 +26,13 @@ const DepartmentInfoArea = styled(Box)(({ theme }) => ({
     fontSize: "20px",
     fontWeight: "600",
     margin: "0 0 25px",
+    display: "flex",
+    alignItems: "center",
+    gap: '10px',
+  },
+
+  "p": {
+    marginBottom: "25px",
   },
 
   "& .secondaryRow": {
@@ -81,12 +89,8 @@ const AttentionModal: React.FC<IAttentionModal> = ({
       aria-describedby="modal-modal-description"
     >
       <DepartmentInfoArea>
-        <Box>
-          <Typography variant="h6">{heading}</Typography>
-        </Box>
-        <Box>
-          <Typography variant="h6">{text}</Typography>
-        </Box>
+        <Typography variant="h6"><WarningAmberOutlinedIcon /> Attention</Typography>
+        <Typography>{text}</Typography>
         <Stack
           className="formButtons"
           direction="row"
@@ -103,7 +107,7 @@ const AttentionModal: React.FC<IAttentionModal> = ({
           >
             <Button
               variant="text"
-              color="error"
+              color="inherit"
               size="medium"
               startIcon={<Clear />}
               onClick={handleClose}
@@ -111,7 +115,7 @@ const AttentionModal: React.FC<IAttentionModal> = ({
               Cancel
             </Button>
             <Button
-              variant="outlined"
+              variant="contained"
               color="primary"
               size="medium"
               startIcon={<Check />}

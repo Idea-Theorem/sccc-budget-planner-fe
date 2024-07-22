@@ -23,6 +23,9 @@ const StyledBox = styled(Box)(({}) => ({
   "&.mainTableBlock": {
     width: "100%",
     position: "relative",
+    marginTop: '-10px',
+    paddingTop: '10px',
+    borderTop: "1px solid #e8e8e8",
   },
 
   "& .MuiDataGrid-toolbarContainer": {
@@ -142,6 +145,10 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
         color: "#fff",
       },
     },
+
+    ".MuiButtonBase-root": {
+      textTransform: "capitalize",
+    },
   },
 }));
 
@@ -245,6 +252,7 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
           </Button>
           <Button
             variant="outlined"
+            color="primary"
             size="small"
             startIcon={<EditNoteIcon />}
             onClick={() => handleEditClick(params.row)}

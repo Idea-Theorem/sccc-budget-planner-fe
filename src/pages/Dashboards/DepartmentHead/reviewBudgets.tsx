@@ -28,7 +28,7 @@ import { useLocation } from "react-router-dom";
 import moment from "moment";
 const StyledBox = styled(Box)(() => ({
   "& .reviewBudgetHead": {
-    marginBottom: "23px",
+    marginBottom: "0",
     position: "relative",
   },
 
@@ -188,99 +188,13 @@ const DHReviewBudgets = () => {
           );
         },
       },
-      {
-        field: "lYearBudget",
-        headerName: "Last Year Budget",
-        sortable: false,
-        editable: false,
-        flex: 1,
-      },
-      {
-        field: "programBudget",
-        headerName: "Budget",
-        sortable: false,
-        editable: false,
-        flex: 1,
-        renderCell: (params: any) => {
-          return (
-            <Stack>
-              <Box>{formatNumber(params?.row?.programBudget)}</Box>
-            </Stack>
-          );
-        },
-      },
-      {
-        field: "profit",
-        headerName: "Profit",
-        sortable: false,
-        editable: false,
-        flex: 1,
-      },
-      {
-        field: "nPrograms",
-        headerName: "No. Programs",
-        sortable: false,
-        editable: false,
-        flex: 1,
-      },
-      {
-        field: "created_at",
-        headerName: "Submission Date",
-        sortable: false,
-        editable: false,
-        flex: 1,
-        renderCell: (params: any) => {
-          return (
-            <Stack>
-              <Box>{moment(params?.row?.created_at).format("D-MMM YYYY")}</Box>
-            </Stack>
-          );
-        },
-      },
-      {
-        field: "comments",
-        headerName: "Comments",
-        sortable: false,
-        editable: false,
-        flex: 1,
-      },
-    ],
-    [
-      {
-        field: "name",
-        headerName: "Program Name",
-        sortable: false,
-        editable: false,
-        flex: 1,
-        renderCell: (params: any) => {
-          return (
-            <Stack>
-              <Box>{params?.row?.code + "-" + params?.row?.name}</Box>
-            </Stack>
-          );
-        },
-      },
-      {
-        field: "status",
-        headerName: "Status",
-        sortable: false,
-        editable: false,
-        flex: 1,
-        renderCell: (params: any) => {
-          return (
-            <Stack>
-              <Box>{capitalizeFirstLetter(params?.row?.status)}</Box>
-            </Stack>
-          );
-        },
-      },
-      {
-        field: "lYearBudget",
-        headerName: "Last Year Budget",
-        sortable: false,
-        editable: false,
-        flex: 1,
-      },
+      // {
+      //   field: "lYearBudget",
+      //   headerName: "Last Year Budget",
+      //   sortable: false,
+      //   editable: false,
+      //   flex: 1,
+      // },
       {
         field: "programBudget",
         headerName: "Budget",
@@ -295,20 +209,20 @@ const DHReviewBudgets = () => {
           );
         },
       },
-      {
-        field: "profit",
-        headerName: "Profit",
-        sortable: false,
-        editable: false,
-        flex: 1,
-      },
-      {
-        field: "nPrograms",
-        headerName: "No. Programs",
-        sortable: false,
-        editable: false,
-        flex: 1,
-      },
+      // {
+      //   field: "profit",
+      //   headerName: "Profit",
+      //   sortable: false,
+      //   editable: false,
+      //   flex: 1,
+      // },
+      // {
+      //   field: "nPrograms",
+      //   headerName: "No. Programs",
+      //   sortable: false,
+      //   editable: false,
+      //   flex: 1,
+      // },
       {
         field: "created_at",
         headerName: "Submission Date",

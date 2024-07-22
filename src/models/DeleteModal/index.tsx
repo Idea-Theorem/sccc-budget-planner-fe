@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import Check from "@mui/icons-material/Check";
 import Clear from "@mui/icons-material/Clear";
 import Modal from "@mui/material/Modal";
+import WarningAmberOutlinedIcon from '@mui/icons-material/WarningAmberOutlined';
 
 const DepartmentInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
@@ -25,6 +26,13 @@ const DepartmentInfoArea = styled(Box)(({ theme }) => ({
     fontSize: "20px",
     fontWeight: "600",
     margin: "0 0 25px",
+    display: "flex",
+    alignItems: "center",
+    gap: '10px',
+  },
+
+  "p": {
+    marginBottom: "25px",
   },
 
   "& .secondaryRow": {
@@ -80,7 +88,8 @@ const DeleteModal: React.FC<IDeleteModal> = ({
     >
       <DepartmentInfoArea>
         <Box>
-          <Typography variant="h6">{heading}</Typography>
+          <Typography variant="h6"><WarningAmberOutlinedIcon /> Attention</Typography>
+          <Typography>{heading}</Typography>
         </Box>
         <Stack
           className="formButtons"
@@ -98,7 +107,7 @@ const DeleteModal: React.FC<IDeleteModal> = ({
           >
             <Button
               variant="text"
-              color="error"
+              color="inherit"
               size="medium"
               startIcon={<Clear />}
               onClick={handleClose}
@@ -106,13 +115,13 @@ const DeleteModal: React.FC<IDeleteModal> = ({
               Cancel
             </Button>
             <Button
-              variant="outlined"
+              variant="contained"
               color="primary"
               size="medium"
               startIcon={<Check />}
               onClick={() => handleCloseModal()}
             >
-             {loading ? "Deleting..." : "Yes"} 
+             {loading ? "Deleting..." : "Ok"} 
             </Button>
           </Stack>
         </Stack>
