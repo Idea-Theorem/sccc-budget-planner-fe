@@ -10,7 +10,7 @@ import {
 import React, { useEffect, useState } from "react";
 import Status from "../../utils/dumpData";
 import { getPrograms } from "../../services/adminServices";
-import { formatNumber } from "../../utils";
+import { capitalizeFirstLetter, formatNumber } from "../../utils";
 import { Stack } from "@mui/material";
 import moment from "moment";
 import {
@@ -29,6 +29,7 @@ const StyledBox = styled(Box)(() => ({
     paddingBottom: "5px",
   },
 }));
+
 const SuperReviewBudget = () => {
   const [center, setCenters] = useState([]);
   const [currenttitle, setCurrentTitle] = useState("");
@@ -40,58 +41,54 @@ const SuperReviewBudget = () => {
   console.log(tabstatus);
 
   const [step, setStep] = useState(0);
-  const tableColumnsTitleArray = [
+
+  const tableColumnsCenter = [
     [
       {
         field: "name",
-        headerName:
-          step == 0
-            ? "Center Name"
-            : step == 1
-            ? "Department Name"
-            : "Program Name",
-        sortable: false,
-        editable: false,
-        flex: 1,
-      },
-
-      {
-        field: "status",
-        headerName: "Status",
+        headerName: "Center Name",
         sortable: false,
         editable: false,
         flex: 1,
       },
 
       // {
-      //   field: "lYearBudget",
-      //   headerName: "Last Year Budget",
+      //   field: "status",
+      //   headerName: "Status",
       //   sortable: false,
       //   editable: false,
       //   flex: 1,
       // },
+
       {
-        field: "budget",
+        field: "totalIncomeSum",
         headerName: "Budget",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{formatNumber(params?.row?.totalIncomeSum)}</Box>
+            </Stack>
+          );
+        },
       },
-      // {
-      //   field: "profit",
-      //   headerName: "Profit",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "nPrograms",
-        headerName:
-          step == 0 ? "No. Dept." : step == 1 ? "No. Programs" : "No. Programs",
+        headerName: "No. Dept.",
         // headerName: 'No. Dept.',
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{params?.row?.Department?.length}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "created_at",
@@ -107,13 +104,13 @@ const SuperReviewBudget = () => {
           );
         },
       },
-      {
-        field: "comments",
-        headerName: "Comments",
-        sortable: false,
-        editable: false,
-        flex: 1,
-      },
+      // {
+      //   field: "comments",
+      //   headerName: "Comments",
+      //   sortable: false,
+      //   editable: false,
+      //   flex: 1,
+      // },
     ],
     [
       {
@@ -129,15 +126,15 @@ const SuperReviewBudget = () => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{capitalizeFirstLetter(params?.row?.status)}</Box>
+            </Stack>
+          );
+        },
       },
 
-      // {
-      //   field: "lYearBudget",
-      //   headerName: "Last Year Budget",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
       {
         field: "budget",
         headerName: "Budget",
@@ -145,13 +142,7 @@ const SuperReviewBudget = () => {
         editable: false,
         flex: 1,
       },
-      // {
-      //   field: "profit",
-      //   headerName: "Profit",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "nPrograms",
         headerName: "No. Dept.",
@@ -197,13 +188,6 @@ const SuperReviewBudget = () => {
         flex: 1,
       },
 
-      // {
-      //   field: "lYearBudget",
-      //   headerName: "Last Year Budget",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
       {
         field: "budget",
         headerName: "Budget",
@@ -211,13 +195,7 @@ const SuperReviewBudget = () => {
         editable: false,
         flex: 1,
       },
-      // {
-      //   field: "profit",
-      //   headerName: "Profit",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "nPrograms",
         headerName: "No. Dept.",
@@ -245,6 +223,393 @@ const SuperReviewBudget = () => {
         sortable: false,
         editable: false,
         flex: 1,
+      },
+    ],
+  ];
+  const tableColumnsDepartment = [
+    [
+      {
+        field: "name",
+        headerName: "Department Name",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+
+      {
+        field: "status",
+        headerName: "Status",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+
+      {
+        field: "totalAmount",
+        headerName: "Budget",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "profit",
+        headerName: "Profit",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "nPrograms",
+        headerName: "No. Programs",
+        // headerName: 'No. Dept.',
+        sortable: false,
+        editable: false,
+        flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{params?.row?._count?.Program}</Box>
+            </Stack>
+          );
+        },
+      },
+      {
+        field: "created_at",
+        headerName: "Submission Date",
+        sortable: false,
+        editable: false,
+        flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{moment(params?.row?.created_at).format("D-MMM YYYY")}</Box>
+            </Stack>
+          );
+        },
+      },
+      {
+        field: "totalComments",
+        headerName: "Comments",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+    ],
+    [
+      {
+        field: "name",
+        headerName: "Center Name",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "status",
+        headerName: "Status",
+        sortable: false,
+        editable: false,
+        flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{capitalizeFirstLetter(params?.row?.status)}</Box>
+            </Stack>
+          );
+        },
+      },
+
+      {
+        field: "totalAmount",
+        headerName: "Budget",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+
+      {
+        field: "nPrograms",
+        headerName: "No. Dept.",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "created_at",
+        headerName: "Submission Date",
+        sortable: false,
+        editable: false,
+        flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{moment(params?.row?.created_at).format("D-MMM YYYY")}</Box>
+            </Stack>
+          );
+        },
+      },
+      {
+        field: "comments",
+        headerName: "Comments",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+    ],
+    [
+      {
+        field: "name",
+        headerName: "Center Name",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "status",
+        headerName: "Status",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+
+      {
+        field: "totalAmount",
+        headerName: "Budget",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+
+      {
+        field: "nPrograms",
+        headerName: "No. Dept.",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "created_at",
+        headerName: "Submission Date",
+        sortable: false,
+        editable: false,
+        flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{moment(params?.row?.created_at).format("D-MMM YYYY")}</Box>
+            </Stack>
+          );
+        },
+      },
+      {
+        field: "comments",
+        headerName: "Comments",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+    ],
+  ];
+  const tableColumnsProgram = [
+    [
+      {
+        field: "name",
+        headerName: "Program Name",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+
+      {
+        field: "status",
+        headerName: "Status",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+
+      {
+        field: "programBudget",
+        headerName: "Budget",
+        sortable: false,
+        editable: false,
+        flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+            </Stack>
+          );
+        },
+      },
+
+      {
+        field: "created_at",
+        headerName: "Submission Date",
+        sortable: false,
+        editable: false,
+        flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{moment(params?.row?.created_at).format("D-MMM YYYY")}</Box>
+            </Stack>
+          );
+        },
+      },
+      {
+        field: "comments",
+        headerName: "Comments",
+        sortable: false,
+        editable: false,
+        flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{params?.row?._count?.Comment}</Box>
+            </Stack>
+          );
+        },
+      },
+    ],
+    [
+      {
+        field: "name",
+        headerName: "Center Name",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "status",
+        headerName: "Status",
+        sortable: false,
+        editable: false,
+        flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{capitalizeFirstLetter(params?.row?.status)}</Box>
+            </Stack>
+          );
+        },
+      },
+
+      {
+        field: "programBudget",
+        headerName: "Budget",
+        sortable: false,
+        editable: false,
+        flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+            </Stack>
+          );
+        },
+      },
+
+      {
+        field: "nPrograms",
+        headerName: "No. Dept.",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "created_at",
+        headerName: "Submission Date",
+        sortable: false,
+        editable: false,
+        flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{moment(params?.row?.created_at).format("D-MMM YYYY")}</Box>
+            </Stack>
+          );
+        },
+      },
+      {
+        field: "comments",
+        headerName: "Comments",
+        sortable: false,
+        editable: false,
+        flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{params?.row?._count?.Comment}</Box>
+            </Stack>
+          );
+        },
+      },
+    ],
+    [
+      {
+        field: "name",
+        headerName: "Center Name",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "status",
+        headerName: "Status",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+
+      {
+        field: "programBudget",
+        headerName: "Budget",
+        sortable: false,
+        editable: false,
+        flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+            </Stack>
+          );
+        },
+      },
+
+      {
+        field: "nPrograms",
+        headerName: "No. Dept.",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+      {
+        field: "created_at",
+        headerName: "Submission Date",
+        sortable: false,
+        editable: false,
+        flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{moment(params?.row?.created_at).format("D-MMM YYYY")}</Box>
+            </Stack>
+          );
+        },
+      },
+      {
+        field: "comments",
+        headerName: "Comments",
+        sortable: false,
+        editable: false,
+        flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{formatNumber(params?.row?._count?.Comment)}</Box>
+            </Stack>
+          );
+        },
       },
     ],
   ];
@@ -335,7 +700,13 @@ const SuperReviewBudget = () => {
           // { title: "Drafts" },
           // { title: "History" },
         ]}
-        table={tableColumnsTitleArray}
+        table={
+          step == 0
+            ? tableColumnsCenter
+            : step == 1
+            ? tableColumnsDepartment
+            : tableColumnsProgram
+        }
         row={center}
         onRowClick={handleSingleRow}
         receiveProgramSearch={receiveProgramSearch}

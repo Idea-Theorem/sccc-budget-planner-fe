@@ -27,7 +27,6 @@ import {
 import { attachCommentsToProgram } from "../../utils";
 import CommentIcon from "@mui/icons-material/Comment";
 import Status from "../../utils/dumpData";
-import { BorderClear, BorderColor, Opacity } from "@mui/icons-material";
 
 const TabsProgramAreas = styled(Box)(({ theme }) => ({
   ".input-border": {
@@ -95,7 +94,7 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
         },
 
         ".MuiInputBase-input ": {
-          fontSize: '14px',
+          fontSize: "14px",
         },
       },
 
@@ -119,9 +118,9 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
           },
 
           ".MuiInputBase-input ": {
-            paddingTop: '0',
-            paddingBottom: '0',
-            height: '20px',
+            paddingTop: "0",
+            paddingBottom: "0",
+            height: "20px",
             color: "#000",
             fontWeight: 700,
           },

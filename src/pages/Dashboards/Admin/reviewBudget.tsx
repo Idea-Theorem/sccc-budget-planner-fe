@@ -50,33 +50,35 @@ const ReviewBudgetScreen = () => {
           );
         },
       },
-      // {
-      //   field: "lYearBudget",
-      //   headerName: "Last Year Budget",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "budget",
         headerName: "Budget",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{formatNumber(params?.row?.totalBudget)}</Box>
+            </Stack>
+          );
+        },
       },
-      // {
-      //   field: "profit",
-      //   headerName: "Profit",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "nPrograms",
         headerName: "No. Programs",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{params?.row?._count?.Program}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "created_at",
@@ -93,7 +95,7 @@ const ReviewBudgetScreen = () => {
         },
       },
       {
-        field: "comments",
+        field: "totalComments",
         headerName: "Comments",
         sortable: false,
         editable: false,
@@ -122,33 +124,35 @@ const ReviewBudgetScreen = () => {
           );
         },
       },
-      // {
-      //   field: "lYearBudget",
-      //   headerName: "Last Year Budget",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "budget",
         headerName: "Budget",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{formatNumber(params?.row?.totalBudget)}</Box>
+            </Stack>
+          );
+        },
       },
-      // {
-      //   field: "profit",
-      //   headerName: "Profit",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "nPrograms",
         headerName: "No. Programs",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{params?.row?._count?.Program}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "created_at",
@@ -165,7 +169,7 @@ const ReviewBudgetScreen = () => {
         },
       },
       {
-        field: "comments",
+        field: "totalComments",
         headerName: "Comments",
         sortable: false,
         editable: false,
@@ -194,33 +198,35 @@ const ReviewBudgetScreen = () => {
           );
         },
       },
-      // {
-      //   field: "lYearBudget",
-      //   headerName: "Last Year Budget",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "budget",
         headerName: "Budget",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{formatNumber(params?.row?.totalBudget)}</Box>
+            </Stack>
+          );
+        },
       },
-      // {
-      //   field: "profit",
-      //   headerName: "Profit",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "nPrograms",
         headerName: "No. Programs",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{params?.row?._count?.Program}</Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "created_at",
@@ -237,7 +243,7 @@ const ReviewBudgetScreen = () => {
         },
       },
       {
-        field: "comments",
+        field: "totalComments",
         headerName: "Comments",
         sortable: false,
         editable: false,

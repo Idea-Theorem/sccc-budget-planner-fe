@@ -175,7 +175,8 @@ const SideArea = styled(Box)(({ theme }) => ({
       lineHeight: "20.02px",
       fontWeight: "400",
       fontFamily: "Roboto, sans-serif",
-      textAlign: "center",
+      textAlign: "left",
+      paddingLeft: "19px",
     },
   },
 }));
@@ -203,6 +204,9 @@ export default function ResponsiveDrawer(props: Props) {
   };
 
   const handleReceive = (item: any) => {
+    if (item == "/department-head/review-budgets") {
+      return;
+    }
     if (item == "Super_Admin") {
       dispatch(storeSideBarCheck("superAdmin"));
       localStorage.setItem("sidebarCheck", "superAdmin");
@@ -215,7 +219,7 @@ export default function ResponsiveDrawer(props: Props) {
   };
   React.useEffect(() => {
     switch (currentRole) {
-      case "Program_Head":
+      case "Coordinator":
         navigate("/program-head");
         break;
       case "Admin":

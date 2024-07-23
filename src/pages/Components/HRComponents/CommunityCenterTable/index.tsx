@@ -6,11 +6,13 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { Button, Stack } from "@mui/material";
 import { deleteCenter } from "../../../../services/centersServices";
-import { useState } from "react";
+import React, { useState } from "react";
+import DeleteModal from "../../../../models/DeleteModal";
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
     position: "relative",
+    borderTop: "1px solid rgba(224, 224, 224, 1)",
   },
 
   "& .MuiDataGrid-toolbarContainer": {
@@ -51,9 +53,9 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
     },
   },
   "& .MuiButton-root": {
-    // color: "#979797",
-    // fontSize: "14px",
-    // lineHeight: "24px",
+    color: "#979797",
+    fontSize: "14px",
+    lineHeight: "24px",
     "&:hover": {
       background: "none",
     },
@@ -112,11 +114,26 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
   ".MuiStack-root": {
     "&.MuiButtonBase-root": {
       color: theme.palette.text.primary,
-    }
-  }
+    },
+  },
+  ".actions-btn-holder": {
+    ".MuiButton-textPrimary:not(:hover)": {
+      color: "rgba(48, 48, 48, 1)",
+    },
+    ".MuiButton-outlinedPrimary": {
+      color: "rgba(4, 128, 113, 1)",
+
+      "&:hover": {
+        background: "rgba(4, 128, 113, 1)",
+        color: "#fff",
+      },
+    },
+
+    ".MuiButtonBase-root": {
+      textTransform: "capitalize",
+    },
+  },
 }));
-
-
 
 // const rows = [
 //   {
@@ -126,7 +143,7 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
 //     lYearBudget: "02-Mar-2024",
 //   },
 //   {
-//     id: 2, 
+//     id: 2,
 //     departmentName: "ACCC",
 //     status: "20",
 //     lYearBudget: "02-Mar-2024",
@@ -134,25 +151,37 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
 // ];
 interface HRTableProps {
   onCommunityEdit?: any;
-  row?: any
-  refresh?: any
-  onChange?: any
+  row?: any;
+  refresh?: any;
+  onChange?: any;
 }
-const CommunityTableComponent: React.FC<HRTableProps> = ({onCommunityEdit, row, refresh, onChange}) => { 
-const [loading, setLoading] = useState<boolean>(false)
-console.log(loading)
+const CommunityTableComponent: React.FC<HRTableProps> = ({
+  onCommunityEdit,
+  row,
+  refresh,
+  onChange,
+}) => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = React.useState<any>(false);
+  const [rowData, setRowData] = React.useState<any>(false);
 
-  const handleDelete = async (data: any) => {
+  const closeModel = () => {
+    setIsOpen(false);
+  };
+  console.log(loading);
+
+  const handleDelete = async () => {
     try {
-      setLoading(true)
-      await deleteCenter(data?.id)
-      setLoading(false)
-      refresh()
+      setLoading(true);
+      await deleteCenter(rowData?.id);
+      closeModel();
+      setLoading(false);
+      refresh();
     } catch (error) {
-      setLoading(false)
-
+      setLoading(false);
     }
-  }
+  };
+
   const columns: GridColDef[] = [
     {
       field: "name",
@@ -179,14 +208,23 @@ console.log(loading)
       field: "buttonsColumn",
       headerName: "",
       flex: 0.5,
-      renderCell: (data: any ) => (
-        <Stack direction="row" gap="10px" alignItems="center" justifyContent="flex-end" width="100%">
+      renderCell: (data: any) => (
+        <Stack
+          direction="row"
+          gap="10px"
+          alignItems="center"
+          justifyContent="flex-end"
+          width="100%"
+          className="actions-btn-holder"
+        >
           <Button
             variant="text"
-            color="error"
             size="small"
             startIcon={<DeleteOutlineIcon />}
-            onClick={() => handleDelete(data)}
+            onClick={() => {
+              setIsOpen(true);
+              setRowData(data);
+            }}
           >
             Delete
           </Button>
@@ -206,10 +244,7 @@ console.log(loading)
   return (
     <>
       <StyledBox className="mainTableBlock">
-        <InputSearch placeholder="Search..." 
-          onChange={onChange}
-        
-        /> 
+        <InputSearch placeholder="Search..." onChange={onChange} />
         <StyleDataGrid
           rows={row}
           columns={columns}
@@ -221,6 +256,13 @@ console.log(loading)
           pageSizeOptions={[5, 10, 15]}
           disableRowSelectionOnClick
           slots={{ toolbar: GridToolbar }}
+        />
+        <DeleteModal
+          open={isOpen}
+          handleOK={() => handleDelete()}
+          handleClose={closeModel}
+          loading={loading}
+          heading="Are you sure you want to delete?"
         />
       </StyledBox>
     </>

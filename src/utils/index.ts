@@ -216,7 +216,7 @@ export const validateArray = (arr: any) => {
   return true; // All checks passed
 };
 
-const roleOrder = ["Super_Admin", "Admin", "Department_Head", "Program_Head"];
+const roleOrder = ["Super_Admin", "Admin", "Department_Head", "Coordinator"];
 
 export const roleSort = (roles: any) => {
   roles.sort((a: any, b: any) => {
@@ -258,4 +258,66 @@ export const updateEmployeeData = (receivedArray: any) => {
     hoursPerWeek: `${employee.hoursPerWeek}h`,
     workingWeeks: `${employee.workingWeeks}w`,
   }));
+};
+
+export const calculateExpensesSumSecondHalf = (data: any) => {
+  let sum = 0;
+
+  data?.forEach((item: any) => {
+    if (
+      item?.name === "Expense (Supplies & Services)" ||
+      item?.name === "Expense (Salaries)"
+    ) {
+      item?.history.forEach((historyItem: any) => {
+        sum += historyItem?.value_second || 0;
+      });
+    }
+  });
+
+  return sum;
+};
+
+export const calculateExpensesSumFirstHalf = (data: any) => {
+  let sum = 0;
+
+  data?.forEach((item: any) => {
+    if (
+      item?.name === "Expense (Supplies & Services)" ||
+      item?.name === "Expense (Salaries)"
+    ) {
+      item?.history.forEach((historyItem: any) => {
+        sum += historyItem?.value || 0;
+      });
+    }
+  });
+
+  return sum;
+};
+
+export const profitFirstHalf = (data: any) => {
+  let sum = 0;
+
+  data?.forEach((item: any) => {
+    if (item?.name === "Income") {
+      item?.history.forEach((historyItem: any) => {
+        sum += historyItem?.value || 0;
+      });
+    }
+  });
+
+  return sum;
+};
+
+export const profitSecondHalf = (data: any) => {
+  let sum = 0;
+
+  data?.forEach((item: any) => {
+    if (item?.name === "Income") {
+      item?.history.forEach((historyItem: any) => {
+        sum += historyItem?.value_second || 0;
+      });
+    }
+  });
+
+  return sum;
 };
