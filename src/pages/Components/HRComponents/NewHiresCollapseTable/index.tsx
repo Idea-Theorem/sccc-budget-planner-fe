@@ -95,6 +95,38 @@ const HrCollapseableTable = styled(Box)(({ theme }) => ({
         },
       },
     },
+
+    "& .MuiButton-root": {
+    color: "#979797",
+    fontSize: "14px",
+    lineHeight: "24px",
+    "&:hover": {
+      background: "none",
+    },
+  },
+  ".MuiStack-root": {
+    "&.MuiButtonBase-root": {
+      color: theme.palette.text.primary,
+    },
+  },
+
+  ".actions-btn-holder": {
+    ".MuiButton-textPrimary:not(:hover)": {
+      color: "rgba(48, 48, 48, 1)",
+    },
+    ".MuiButton-outlinedPrimary": {
+      color: "rgba(4, 128, 113, 1)",
+
+      "&:hover": {
+        background: "rgba(4, 128, 113, 1)",
+        color: "#fff",
+      },
+    },
+
+    ".MuiButtonBase-root": {
+      textTransform: "capitalize",
+    },
+  },
   },
 }));
 
@@ -190,10 +222,10 @@ function Row(props: {
             alignItems="center"
             justifyContent="flex-end"
             width="100%"
+            className="actions-btn-holder"
           >
             <Button
               variant="text"
-              color="error"
               size="small"
               startIcon={<DeleteOutlineIcon />}
               onClick={() => {

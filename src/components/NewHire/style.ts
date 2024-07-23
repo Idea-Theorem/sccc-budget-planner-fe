@@ -22,6 +22,7 @@ export const EmployeeInfoArea = styled(Box)(() => ({
 
     tbody: {
       tr: {
+        verticalAlign: "top",
         "&:only-child": {
           td: {
             paddingBottom: "16px",

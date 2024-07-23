@@ -62,7 +62,7 @@ export default function SelectDepartments({
   }
 
 
-  return (
+  return (<>
     <StyledFormControl size="medium" variant="standard" error={error}>
       <StyledInputLabel>{title}</StyledInputLabel>
       <StyledSelect
@@ -85,7 +85,8 @@ export default function SelectDepartments({
           </MenuItem>
         ))}
       </StyledSelect>
-      {error && errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
     </StyledFormControl>
+      {error && errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+      </>
   );
 }
