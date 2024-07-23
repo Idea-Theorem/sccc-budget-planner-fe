@@ -251,7 +251,7 @@ const ReviewBudgetScreen = () => {
       },
     ],
   ];
-  const array = [{ text: "Approved" }, { text: "Rejected" }];
+  const array = [{ text: "Approve" }, { text: "Reject" }];
 
   const [tabstatus, setTabstatus] = React.useState(Status.PENDING);
   const [departmentList, setDepartmentList] = React.useState<any>([]);
@@ -274,9 +274,9 @@ const ReviewBudgetScreen = () => {
     } catch (error) {}
   };
   const handleStatusChange = (selectedStatus: any) => {
-    if (selectedStatus === "Approved") {
+    if (selectedStatus === "Approve") {
       setStatus("APPROVED");
-    } else if (selectedStatus === "Rejected") {
+    } else if (selectedStatus === "Reject") {
       setStatus("REJECTED");
     }
     setAttentionModal(true);
