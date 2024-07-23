@@ -11,6 +11,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
     position: "relative",
+    borderTop: '1px solid rgba(224, 224, 224, 1)',
   },
 
   "& .MuiDataGrid-toolbarContainer": {
@@ -51,9 +52,9 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
     },
   },
   "& .MuiButton-root": {
-    // color: "#979797",
-    // fontSize: "14px",
-    // lineHeight: "24px",
+    color: "#979797",
+    fontSize: "14px",
+    lineHeight: "24px",
     "&:hover": {
       background: "none",
     },
@@ -113,7 +114,24 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
     "&.MuiButtonBase-root": {
       color: theme.palette.text.primary,
     }
-  }
+  },
+  ".actions-btn-holder": {
+    ".MuiButton-textPrimary:not(:hover)": {
+      color: "rgba(48, 48, 48, 1)",
+    },
+    ".MuiButton-outlinedPrimary": {
+      color: "rgba(4, 128, 113, 1)",
+
+      "&:hover": {
+        background: "rgba(4, 128, 113, 1)",
+        color: "#fff",
+      },
+    },
+
+    ".MuiButtonBase-root": {
+      textTransform: "capitalize",
+    },
+  },
 }));
 
 
@@ -136,8 +154,9 @@ interface HRTableProps {
   onCommunityEdit?: any;
   row?: any
   refresh?: any
+  onChange?: any
 }
-const CommunityTableComponent: React.FC<HRTableProps> = ({onCommunityEdit, row, refresh}) => { 
+const CommunityTableComponent: React.FC<HRTableProps> = ({onCommunityEdit, row, refresh, onChange}) => { 
 const [loading, setLoading] = useState<boolean>(false)
 console.log(loading)
 
@@ -179,10 +198,9 @@ console.log(loading)
       headerName: "",
       flex: 0.5,
       renderCell: (data: any ) => (
-        <Stack direction="row" gap="10px" alignItems="center" justifyContent="flex-end" width="100%">
+        <Stack direction="row" gap="10px" alignItems="center" justifyContent="flex-end" width="100%" className="actions-btn-holder">
           <Button
             variant="text"
-            color="error"
             size="small"
             startIcon={<DeleteOutlineIcon />}
             onClick={() => handleDelete(data)}
@@ -205,7 +223,10 @@ console.log(loading)
   return (
     <>
       <StyledBox className="mainTableBlock">
-        <InputSearch placeholder="Search..." /> 
+        <InputSearch placeholder="Search..." 
+          onChange={onChange}
+        
+        /> 
         <StyleDataGrid
           rows={row}
           columns={columns}

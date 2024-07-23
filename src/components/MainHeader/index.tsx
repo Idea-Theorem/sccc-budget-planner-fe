@@ -3,13 +3,14 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import AddIcon from "@mui/icons-material/Add";
-import DropdownButton from "../Button/dropDownButton";
+// import DropdownButton from "../Button/dropDownButton";
 import Buttons from "../Button";
+import DropdownButton from "../Button/dropDownButton";
 
 const AppHeader = styled(Box)(({ theme }) => ({
   "&.appHeader": {
     width: "100%",
-    paddingBottom: "40px",
+    // paddingBottom: "40px",
     "& .appHeaderHolder": {
       display: "flex",
       alignItems: "center",
@@ -47,6 +48,8 @@ const AppHeader = styled(Box)(({ theme }) => ({
       display: "flex",
       alignItems: "center",
       padding: "4px 0 0",
+      marginBottom: "20px",
+
       "& .welcomeText": {
         fontSize: "20px",
         lineHeight: "1.3",
@@ -74,6 +77,13 @@ const AppHeader = styled(Box)(({ theme }) => ({
       fontFamily: "Work Sans",
       letterSpacing: "0.4px",
     },
+    "& .title": {
+      fontWeight: "400",
+      fontSize: "19px",
+    },
+    "& .sub": {
+      fontWeight: "600",
+    },
   },
 }));
 
@@ -81,27 +91,51 @@ interface MainHeaderProps {
   title?: string;
   btnTitle?: string;
   subHeader?: boolean;
-  subTitle?: string;
+  subTitle?: string | any;
   date?: string;
   array?: any;
+  onStatusChange?: any;
+  handleUpdate?: any;
   action?: boolean;
   subdes?: string;
-  classname?: string; 
-  onClick?: () => void;
+  classname?: string;
+  onClick?: any;
+  step?: any;
 }
 
 const MainHeaderComponent = (props: MainHeaderProps) => {
-  const { classname } = props; 
+  const { classname, onClick } = props;
+  const handleOptionSelect = (selectedStatus: any) => {
+    props.onStatusChange(selectedStatus);
+  };
   return (
     <AppHeader className={`${classname} appHeader`}>
       <Stack className="appHeaderHolder">
         <Box>
-          <Typography variant="h3">{props.title}</Typography>
-          <Typography variant="h6">{props.subdes}</Typography>
+          <Typography
+            className={props.step == "0" ? "" : "title"}
+            variant="h3"
+            onClick={() => onClick(props.title)}
+          >
+            {props.title}
+          </Typography>
+          <Typography className="sub" variant="h6">
+            {props.subdes}
+          </Typography>
         </Box>
         {props?.action ? (
-          <DropdownButton title="Actions" array={props?.array} />
+          <DropdownButton
+            title="Actions"
+            array={props?.array}
+            onSelect={handleOptionSelect}
+            handleUpdate={props?.handleUpdate}
+          />
         ) : (
+          // <Buttons
+          //   startIcon={<IosShareIcon />}
+          //   btntext="Export"
+          //   variant="contained"
+          // />
           <Buttons
             startIcon={<AddIcon />}
             onClick={props?.onClick}

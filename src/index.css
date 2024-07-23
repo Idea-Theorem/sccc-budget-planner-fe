@@ -1,0 +1,100 @@
+.sidebar_select_input > div {
+    width: 100%;
+}
+
+.sidebar_select_input > div::before {
+    display: none;
+}
+
+.sidebar_select_input .MuiInputBase-root:after {
+    display: none !important;
+}
+
+.btnLogout {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    position: absolute;
+    padding: 20px 20px 12px !important;
+    border-color: #676779 !important;
+    background: #676779;
+    color: #fff !important;
+    border-radius: 0 !important;
+}
+
+.btnLogout:hover {
+    background: #414158 !important;
+    border-color: #414158 !important;
+}
+
+.customSelect {
+    position: relative;
+}
+
+.block-selection {
+    position: relative;
+    margin: -35px 0 0;
+}
+.block-selection .departmentSelect  {
+    padding: 0;
+    max-width: 368px;
+    width: 100%;
+    border: none;
+}
+
+.block-selection .departmentSelect  .MuiInputBase-root {
+    width: 100%;
+    font-size: 20px;
+    line-height: 1.2;
+    color: #303030;
+    font-weight: 600;
+}
+
+.block-selection .departmentSelect  .MuiInputBase-root:before {
+}
+
+.departmentSelect {
+    /* top: 100%;
+    left: 0;
+    position: absolute;
+    border: none;
+    width: auto;
+    z-index: 5;
+    padding: 3px 0 0; */
+}
+
+.createProgramContentHead input {
+    color: #303030;
+    font-family: Work Sans;
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: 0.25px;
+}
+
+.createProgramContentHead input::placeholder {
+    opacity: 1;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+/*.table_custom_style {
+    height: calc(100vh - 165px);
+    position: relative;
+}*/
+
+.amount_field {
+    width: 90px;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.page-title {
+    margin: 0 0 25px;
+}
+
+.MuiButtonBase-root:disabled {
+    background: rgba(0, 0, 0, 0.12) !important;
+    color: rgba(0, 0, 0, 0.38);
+}

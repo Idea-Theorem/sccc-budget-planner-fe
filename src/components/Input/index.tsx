@@ -7,13 +7,14 @@ import { Search } from "@mui/icons-material";
 interface InputProps {
   placeholder: string;
   type?: string;
+  onChange?: any
 }
 
 const StyledInputSearch = styled(Box)(({ theme }) => ({
   "&.tableSearch": {
     position: "absolute",
     right: "0",
-    top: "0",
+    top: "12px",
     zIndex: "1",
     width: "220px",
   },
@@ -38,6 +39,7 @@ const InputSearch = (props: InputProps) => {
     <>
       <StyledInputSearch className="tableSearch">
         <Input
+        onChange={props?.onChange}
           placeholder={placeholder}
           type={type}
           {...rest}

@@ -11,6 +11,8 @@ import { createCentresSchema } from "../../utils/yupSchema";
 import { TextField } from "@mui/material";
 import { createCenters, updateCenter } from "../../services/centersServices";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
+import { useState } from "react";
+import StatusModal from "../../components/StatusModal";
 
 const DepartmentInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
@@ -135,6 +137,8 @@ const CommunityModal: React.FC<IDepartmentInfo> = ({
   setSingleCenter,
 }) => {
   console.log(heading);
+  const [statusData, setStatusData] = useState<any>(null);
+
   const formik = useFormik<any>({
     validateOnBlur: false,
     validationSchema: createCentresSchema,
@@ -152,16 +156,25 @@ const CommunityModal: React.FC<IDepartmentInfo> = ({
         formik.resetForm();
         setSingleCenter(null);
         handleClose();
-      } catch (error) {}
+      } catch (error: any) {
+        setStatusData({
+          type: "error",
+          message: error.response?.data?.message,
+        });
+      }
     },
   });
 
   const { values, handleChange, isSubmitting, errors, handleSubmit } = formik;
-
+  const handlemodalclose = () => {
+    formik.resetForm();
+    setSingleCenter(null);
+    handleClose();
+  };
   return (
     <Modal
       open={open}
-      onClose={handleClose}
+      onClose={handlemodalclose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
@@ -174,6 +187,7 @@ const CommunityModal: React.FC<IDepartmentInfo> = ({
           <Grid container spacing={4}>
             <Grid item xs={12}>
               <TextField
+                error={errors?.name ? true : false}
                 variant="standard"
                 label="Center Name"
                 value={values.name}
@@ -218,6 +232,10 @@ const CommunityModal: React.FC<IDepartmentInfo> = ({
             </Button>
           </Stack>
         </Stack>
+        <StatusModal
+          statusData={statusData}
+          onClose={() => setStatusData(null)}
+        />
       </DepartmentInfoArea>
     </Modal>
   );

@@ -4,7 +4,10 @@ import TextFieldWithButton from "../../components/ThreadPopups/TextFieldWithButt
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
-import { useState } from "react";
+import {  useState } from "react";
+import moment from "moment";
+import { getCapitalizedFirstLetters } from "../../utils";
+import { CircularProgress } from "@mui/material";
 
 const DepartmentModalArea = styled(Box)(({ theme }) => ({
   transform: "translateY(-50%)",
@@ -20,6 +23,11 @@ const DepartmentModalArea = styled(Box)(({ theme }) => ({
     margin: "0 auto",
     overflow: "auto",
     position: "relative",
+
+    ".MuiCircularProgress-root": {
+      display: "block",
+      margin: "0 auto",
+    },
   },
 
   ".custom-label": {
@@ -89,16 +97,35 @@ const DepartmentModalArea = styled(Box)(({ theme }) => ({
 interface IHrAddEmployee {
   handleClose?: () => void;
   open?: boolean;
+  setcommentText?: any
+  commenttext?: any
+  handleAddcomment?: any
+  currentExpense?: any
+  commentLoading?: any
+  handleDelete?: any
+  deleteLoading?: any
+  currentComment?: any
+  setcurrentComment?: any
 }
 
 const DepartmentHeadModal: React.FC<IHrAddEmployee> = ({
   handleClose,
   open,
+  setcommentText,
+  commenttext,
+  handleAddcomment,
+  currentExpense,
+  commentLoading,
+  handleDelete,
+  deleteLoading,
+  currentComment,
+  setcurrentComment
 }) => {
   const [dropdown, setDropdown] = useState(false);
   const handleDropdown = () => {
     setDropdown(!dropdown);
   };
+
   return (
     <Modal
       open={open || false}
@@ -109,21 +136,25 @@ const DepartmentHeadModal: React.FC<IHrAddEmployee> = ({
       <DepartmentModalArea>
         <Stack direction="column" gap="1px">
           <Box className="comment-area">
-            {[1].map(() => (
+            {deleteLoading ? <CircularProgress/> :  currentExpense?.comments?.map((item: any) => (
               <ThreadHeader
+              setcurrentComment={setcurrentComment}
+              item={item}
+                handleDelete={() => handleDelete(currentComment)}
+                setcommentText={() => setcommentText(currentComment?.comment?.text)}
                 dropdown={dropdown}
                 setDropdown={handleDropdown}
-                title="Tomohiro Komase"
-                name="TK"
-                date="06-Mar-2024"
+                title={item?.user?.firstname + ' ' + item.user.lastname}
+                name={getCapitalizedFirstLetters(item?.user?.firstname, item?.user?.lastname)}
+                date={moment(item?.comment?.created_at).format("D-MMM YYYY")}
                 subtitle={
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+                  item?.comment?.text
                 }
               />
             ))}
           </Box>
           <Box className="custom-label">
-            <TextFieldWithButton placeholder="Label" isBtn={true} />
+            <TextFieldWithButton commentLoading={commentLoading} handleAddcomment={handleAddcomment} commenttext={commenttext} placeholder="Label" isBtn={true} setcommentText={setcommentText}/>
           </Box>
         </Stack>
       </DepartmentModalArea>

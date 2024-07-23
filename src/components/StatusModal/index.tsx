@@ -4,9 +4,10 @@ const StatusModal = ({ statusData, onClose }: any) => {
   return (
     <Snackbar
       open={Boolean(statusData)}
-      autoHideDuration={6000}
+      autoHideDuration={2000}
       onClose={onClose}
       className="toast"
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
     >
       <Alert severity={statusData?.type == "error" ? "error" : "success"}>
         {statusData?.message}

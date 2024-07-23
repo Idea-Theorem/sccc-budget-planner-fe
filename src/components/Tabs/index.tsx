@@ -7,12 +7,11 @@ import { styled } from "@mui/material/styles";
 import TableComponent from "../Table";
 import { getAllProgramsViaStatus } from "../../services/programServices";
 import Status from "../../utils/dumpData";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   storeProgramFromStatus,
   storeProgramList,
 } from "../../store/reducers/programSlice";
-import { RootState } from "../../store";
 import { storeSingleProgram } from "../../store/reducers/programSlice";
 import { useNavigate } from "react-router";
 import { useLocation } from "react-router-dom";
@@ -29,10 +28,15 @@ interface TabTitle {
 interface BasicTabsProps {
   tabsTitleArray: TabTitle[];
   table: any;
+  onRowClick?: any;
   row?: any;
   currentStatus?: any;
   handleActionReieve?: any;
   setTabstatus?: any;
+  checkout?: boolean;
+  receiveProgramSearch?: any;
+  approveTabAcriveClass?: boolean;
+  fetchProgramList?: any;
 }
 
 const CustomTabPanel = (props: TabPanelProps) => {
@@ -67,7 +71,7 @@ const BasicTabs = (props: BasicTabsProps) => {
   const [loading, setLoading] = React.useState(false);
   const [status, setStatus] = React.useState(Status.PENDING);
   const dispatch = useDispatch();
-  const { programList } = useSelector((state: RootState) => state.program);
+  // const { programList } = useSelector((state: RootState) => state.program);
   const navigate: any = useNavigate();
   const location = useLocation();
 
@@ -86,23 +90,29 @@ const BasicTabs = (props: BasicTabsProps) => {
     } else if (newValue == 3) {
       setStatus(Status.DRAFTED);
       props?.setTabstatus(Status.DRAFTED);
+    } else if (newValue == 4) {
+      setStatus(Status.EXPIRED);
+      props?.setTabstatus(Status.EXPIRED);
     }
   };
   React.useEffect(() => {
-    if (props?.tabsTitleArray.length > 0) {
-      if (props?.tabsTitleArray[0].title == "Drafts") {
-        setStatus(Status.DRAFTED);
-      }
+    if (location?.pathname == "/program-head/draft") {
+      // setStatus(Status.DRAFTED);
+      fetchProgramList(Status.DRAFTED, "");
     }
-  }, [props?.tabsTitleArray]);
+  }, [location?.pathname]);
 
   React.useEffect(() => {
-    fetchProgramList(status);
+    // if (location?.pathname == "/program-head/draft") {
+    //   return
+    // }
+    fetchProgramList(status, "");
   }, [status]);
-  const fetchProgramList = async (status: string) => {
+
+  const fetchProgramList = async (status: string, Searchvalue: string) => {
     try {
       setLoading(true);
-      const response = await getAllProgramsViaStatus(status);
+      const response = await getAllProgramsViaStatus(status, Searchvalue);
       // const modifyArray = modifyCreatedAt(response?.data?.programs);
       dispatch(storeProgramList(response?.data?.programs));
       setLoading(false);
@@ -112,6 +122,9 @@ const BasicTabs = (props: BasicTabsProps) => {
   };
 
   const handleClick = (rowData: any) => {
+    if (props && props.onRowClick && typeof props.onRowClick === "function") {
+      props.onRowClick(rowData);
+    }
     if (
       location?.pathname == "/program-head/program" &&
       status == Status.REJECTED
@@ -140,6 +153,12 @@ const BasicTabs = (props: BasicTabsProps) => {
     }
   };
 
+  const handleProgramSearch = (value: string) => {
+    fetchProgramList(status, value);
+    props?.fetchProgramList(status, value);
+    props?.receiveProgramSearch(value);
+  };
+
   return (
     <Box width="100%">
       <Box borderBottom="1" borderColor="divider">
@@ -158,11 +177,14 @@ const BasicTabs = (props: BasicTabsProps) => {
           <TableComponent
             onRowClick={(rowData) => handleClick(rowData)}
             columns={item}
-            row={typeof programList == "undefined" ? [] : programList}
+            row={typeof props?.row == "undefined" ? [] : props?.row}
             status={props?.currentStatus}
             handleActionReieve={props?.handleActionReieve}
             loading={loading}
             currentTab={status}
+            checkout={props?.checkout}
+            handleProgramSearch={handleProgramSearch}
+            approveTabAcriveClass={props?.approveTabAcriveClass}
           />
         </CustomTabPanel>
       ))}
@@ -219,6 +241,11 @@ export default function TabsArea(props: BasicTabsProps) {
         row={props?.row}
         currentStatus={props?.currentStatus}
         handleActionReieve={props?.handleActionReieve}
+        onRowClick={props?.onRowClick}
+        checkout={props?.checkout}
+        receiveProgramSearch={props?.receiveProgramSearch}
+        approveTabAcriveClass={props?.approveTabAcriveClass}
+        fetchProgramList={props?.fetchProgramList}
       />
     </TabsAreas>
   );

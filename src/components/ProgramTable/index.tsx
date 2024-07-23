@@ -19,12 +19,41 @@ import {
 } from "../../store/reducers/programSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import {
+  addComments,
+  deleteComment,
+  updatecomment,
+} from "../../services/programServices";
+import { attachCommentsToProgram } from "../../utils";
+import CommentIcon from "@mui/icons-material/Comment";
+import Status from "../../utils/dumpData";
 
 const TabsProgramAreas = styled(Box)(({ theme }) => ({
   ".input-border": {
     ".MuiInputBase-root": {
       "&:before": {
         display: "none",
+      },
+    },
+  },
+
+  ".MuiTableContainer-root": {
+    margin: "0 0 0 -40px",
+    padding: "0 0 0 40px",
+
+    ".MuiTableCell-root": {
+      position: "relative",
+    },
+
+    ".comment-icon": {
+      position: "absolute",
+      left: "-30px",
+      top: "30px",
+      color: "#048071",
+      cursor: "pointer",
+
+      svg: {
+        display: "block",
       },
     },
   },
@@ -55,13 +84,17 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
         border: "0",
         color: "#303030",
         fontFamily: "Work Sans",
-        fontSize: "16px",
+        fontSize: "14px",
         fontWeight: "500",
-        padding: "24px 15px 0",
+        padding: "16px 0 0 15px",
 
         "&.MuiTableCell-alignRight": {
           fontFamily: "Roboto",
           fontWeight: "400",
+        },
+
+        ".MuiInputBase-input ": {
+          fontSize: '14px',
         },
       },
 
@@ -74,10 +107,22 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
 
         "&:last-child": {
           "& .MuiTableCell-body": {
-            // borderTop: "1px solid #000",
+            borderTop: "1px solid #494949",
             color: "#000",
             // fontWeight: "600",
             letterSpacing: "0.4px",
+          },
+
+          ".MuiOutlinedInput-notchedOutline": {
+            display: "none !important",
+          },
+
+          ".MuiInputBase-input ": {
+            paddingTop: '0',
+            paddingBottom: '0',
+            height: '20px',
+            color: "#000",
+            fontWeight: 700,
           },
         },
       },
@@ -129,6 +174,9 @@ interface Props {
   handleSalaryExpenseReceived?: any;
   formik?: any;
   disabled?: any;
+  singleProgram?: any;
+  allComments?: any;
+  fetchComments?: any;
 }
 export default function TabsProgramArea({
   handleReceived,
@@ -136,15 +184,26 @@ export default function TabsProgramArea({
   handleSalaryExpenseReceived,
   handleSupplyExpenseReceived,
   disabled,
+  // singleProgram,
+  allComments,
+  fetchComments,
 }: Props) {
   const [isOpen, setIsOpen] = useState(false);
-
+  const [commentLoading, setCommentLoading] = useState(false);
+  const [deleteLoading, setdeleteLoading] = useState(false);
   const [entities, setEntities] = useState<any>([]);
-
+  const [commenttext, setcommentText] = useState<any>("");
+  const [currentExpense, setcurrentExpense] = useState<any>("");
+  const [currentComment, setcurrentComment] = useState<any>("");
   const dispatch = useAppDispatch();
-  const { incomeList, supplyList, salaryList } = useSelector(
-    (state: RootState) => state.program
-  );
+
+  const {
+    incomeList,
+    supplyList,
+    salaryList,
+    singleProgram,
+    programFromStatus,
+  } = useSelector((state: RootState) => state.program);
 
   const handleInputChange = (key: string, value: number) => {
     if (title == "income") {
@@ -161,6 +220,15 @@ export default function TabsProgramArea({
       dispatch(storeSalaryList(newSalaryArray));
     }
   };
+
+  useEffect(() => {
+    if (allComments?.length > 0 && singleProgram?.id) {
+      const res = attachCommentsToProgram(singleProgram, allComments);
+      dispatch(storeIncomeList(res?.income));
+      dispatch(storeSupplyList(res?.supply_expense));
+      dispatch(storeSalaryList(res?.salary_expense));
+    }
+  }, [allComments]);
   useEffect(() => {
     if (title == "income") {
       handleReceived(incomeList);
@@ -209,11 +277,74 @@ export default function TabsProgramArea({
 
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
+
+  const handleAddcomment = async () => {
+    const obj = {
+      program_id: singleProgram?.id,
+      field_id: currentExpense?.id,
+      text: commenttext,
+    };
+    try {
+      setCommentLoading(true);
+      if (currentComment?.comment?.text) {
+        await updatecomment(currentComment.comment_id, obj);
+      } else {
+        await addComments(obj);
+      }
+      await fetchComments();
+      setCommentLoading(false);
+      setcommentText("");
+      setcurrentComment("");
+      setIsOpen(false);
+    } catch (error) {
+      setCommentLoading(false);
+    }
+  };
+
+  const handleDelete = async (data: any) => {
+    try {
+      setdeleteLoading(true);
+      await deleteComment(data?.comment_id);
+      removeCommentById(data?.comment_id);
+      await fetchComments();
+      setcurrentComment("");
+      setdeleteLoading(false);
+    } catch (error) {
+      setdeleteLoading(false);
+    }
+  };
+
+  function removeCommentById(commentId: any) {
+    setcurrentExpense((prevArray: any) => {
+      const updatedComments = prevArray.comments.filter(
+        (comment: any) => comment.comment_id !== commentId
+      );
+      return { ...prevArray, comments: updatedComments };
+    });
+  }
+  const handleCommentclick = (data: any) => {
+    if (
+      programFromStatus == Status.CREATED ||
+      programFromStatus == Status.DRAFTED ||
+      programFromStatus == Status.REJECTED ||
+      programFromStatus == Status.REVISED
+    ) {
+      return;
+    }
+    setIsOpen(true);
+    setcurrentExpense(data);
+  };
+
   return (
     <>
       <TabsProgramAreas>
         <TableContainer className="programsTableHolder" component={Paper}>
-          <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+          <Table
+            sx={{ minWidth: 650 }}
+            size="small"
+            aria-label="a dense table"
+            className="program-table"
+          >
             <TableHead>
               <TableRow>
                 <TableCell>Item</TableCell>
@@ -225,13 +356,24 @@ export default function TabsProgramArea({
                 <TableRow
                   key={row.item}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  onClick={() => setIsOpen(false)}
                 >
-                  <TableCell component="th" scope="row">
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    onClick={() => handleCommentclick(row)}
+                  >
+                    {row?.comments?.length > 0 ? (
+                      <span className="comment-icon">
+                        <CommentIcon />
+                      </span>
+                    ) : (
+                      ""
+                    )}
                     {row.name}
                   </TableCell>
                   <TableCell align="right" className="input-border">
                     <TextFields
+                      className="amount_field"
                       autoFocus={false}
                       disabled={disabled}
                       variant="standard"
@@ -255,6 +397,8 @@ export default function TabsProgramArea({
                 </TableCell>
                 <TableCell align="right">
                   <TextFields
+                    className="amount_field"
+                    disabled={true}
                     type="text"
                     placeholder="$00,000.00"
                     value={getTotalAmount()}
@@ -265,7 +409,19 @@ export default function TabsProgramArea({
           </Table>
         </TableContainer>
       </TabsProgramAreas>
-      <DepartmentHeadModal open={isOpen} handleClose={closeModal} />
+      <DepartmentHeadModal
+        currentComment={currentComment}
+        setcurrentComment={setcurrentComment}
+        deleteLoading={deleteLoading}
+        handleDelete={handleDelete}
+        commentLoading={commentLoading}
+        currentExpense={currentExpense}
+        handleAddcomment={handleAddcomment}
+        commenttext={commenttext}
+        setcommentText={setcommentText}
+        open={isOpen}
+        handleClose={closeModal}
+      />
     </>
   );
 }

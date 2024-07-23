@@ -3,6 +3,9 @@ import defaultConfig from "./config";
 
 export const HTTP_CLIENT: AxiosInstance = axios.create({
   baseURL: defaultConfig.Base_URL,
+  headers: {
+    'ngrok-skip-browser-warning': 'true'
+  }
 });
 
 export const setupAxios = () => {

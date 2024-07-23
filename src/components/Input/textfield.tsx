@@ -18,6 +18,7 @@ interface ITextFields {
   error?: any;
   onBlur?: any;
   autoFocus?: boolean;
+  className?: string;
 }
 
 const TextFields: React.FC<ITextFields> = ({
@@ -35,10 +36,11 @@ const TextFields: React.FC<ITextFields> = ({
   error,
   onBlur,
   autoFocus,
+  className="",
 }) => {
   return (
     <Box component="form" noValidate autoComplete="off">
-      <TextField
+      <TextField className={className}
         type={type}
         id="standard-basic"
         label={label}

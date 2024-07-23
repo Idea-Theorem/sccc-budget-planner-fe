@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import ProgramTable from "../ProgramTable";
+import TabsNewHire from "../NewHire";
 
 interface TabsProgramPanelProps {
   children?: React.ReactNode;
@@ -37,13 +38,17 @@ function a11yProps(index: number) {
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
-
+// .
 const TabsProgram = ({
   handleReceived,
   handleSupplyExpenseReceived,
-  handleSalaryExpenseReceived,
+  // handleSalaryExpenseReceived,
   formik,
   disabled,
+  employee,
+  singleProgram,
+  allComments,
+  fetchComments,
 }: any) => {
   const [value, setValue] = React.useState(0);
 
@@ -80,6 +85,9 @@ const TabsProgram = ({
           handleReceived={handleReceived}
           title="income"
           formik={formik}
+          singleProgram={singleProgram}
+          allComments={allComments}
+          fetchComments={fetchComments}
         />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
@@ -88,15 +96,12 @@ const TabsProgram = ({
           handleSupplyExpenseReceived={handleSupplyExpenseReceived}
           title="supply-expense"
           formik={formik}
+          allComments={allComments}
+          fetchComments={fetchComments}
         />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        <ProgramTable
-          disabled={disabled}
-          handleSalaryExpenseReceived={handleSalaryExpenseReceived}
-          title="salary-expense"
-          formik={formik}
-        />
+        <TabsNewHire employee={employee} formik={formik} />
       </CustomTabPanel>
     </Box>
   );
@@ -121,7 +126,7 @@ const TabsAreas = styled(Box)(({ theme }) => ({
     },
   },
   ".MuiInputBase-input": {
-    marginRight: "-100px",
+    textAlign: "right",
   },
   ".MuiTableCell-head": {
     padding: "0 15px !important",
@@ -134,6 +139,10 @@ export default function TabsProgramArea({
   handleSalaryExpenseReceived,
   formik,
   disabled,
+  employee,
+  singleProgram,
+  allComments,
+  fetchComments,
 }: any) {
   return (
     <TabsAreas>
@@ -143,6 +152,10 @@ export default function TabsProgramArea({
         handleSupplyExpenseReceived={handleSupplyExpenseReceived}
         handleSalaryExpenseReceived={handleSalaryExpenseReceived}
         formik={formik}
+        employee={employee}
+        singleProgram={singleProgram}
+        allComments={allComments}
+        fetchComments={fetchComments}
       />
     </TabsAreas>
   );

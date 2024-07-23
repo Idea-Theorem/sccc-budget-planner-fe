@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
-import {  Clear } from "@mui/icons-material"; // Import Clear icon from Material-UI
+import { Clear } from "@mui/icons-material"; // Import Clear icon from Material-UI
 import Grid from "@mui/material/Grid"; // Import Grid component from MUI
 import Modal from "@mui/material/Modal";
 import { TextField } from "@mui/material";
@@ -17,7 +17,7 @@ import SelectDemo from "../../components/Select";
 import { useEffect, useState } from "react";
 import { getAllCenters } from "../../services/centersServices";
 import StatusModal from "../../components/StatusModal";
-import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
+import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 
 const DepartmentInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
@@ -157,11 +157,14 @@ const DepartmentInfo: React.FC<IDepartmentInfo> = ({
 
   const formik = useFormik<any>({
     validateOnBlur: false,
+    validateOnChange: false,
     validationSchema: createDepartmentSchema,
     enableReinitialize: true,
     initialValues: {
       name: singleDepartments?.name ? singleDepartments?.name : "",
-      center_id: "",
+      center_id: singleDepartments?.center_id
+        ? singleDepartments?.center_id
+        : "",
     },
     onSubmit: async (values) => {
       try {
@@ -180,6 +183,7 @@ const DepartmentInfo: React.FC<IDepartmentInfo> = ({
         }
         formik.resetForm();
         setDingleDepartments(null);
+        setActiveCenter(null);
         handleClose();
       } catch (error: any) {
         setStatusData({
@@ -209,9 +213,20 @@ const DepartmentInfo: React.FC<IDepartmentInfo> = ({
   }, []);
   const fetchCenters = async () => {
     try {
-      const response = await getAllCenters();
+      const response = await getAllCenters("");
       setCenter(response?.data?.centers);
     } catch (error) {}
+  };
+  useEffect(() => {
+    if (singleDepartments?.center?.name) {
+      setActiveCenter(singleDepartments?.center?.name);
+    }
+  }, [singleDepartments]);
+  const handleCloseModal = () => {
+    formik.resetForm();
+    setDingleDepartments(null);
+    setActiveCenter(null);
+    handleClose();
   };
 
   return (
@@ -222,7 +237,7 @@ const DepartmentInfo: React.FC<IDepartmentInfo> = ({
       />
       <Modal
         open={open}
-        onClose={handleClose}
+        onClose={handleCloseModal}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >

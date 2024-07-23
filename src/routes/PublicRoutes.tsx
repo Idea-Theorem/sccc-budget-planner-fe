@@ -27,6 +27,14 @@ import SuperAdminProgramScreen from "../pages/SuperAdmin/superAdminProgram";
 import SuperReviewBudget from "../pages/SuperAdmin/SuperReviewBudget";
 import SuperAdminScreen from "../pages/SuperAdmin";
 import SuperDepartmentDetail from "../pages/SuperAdmin/superDepartmentDetail";
+import HRRole from "../pages/Dashboards/ProgramHead/hrRole";
+import RecreationAndCultureScreen from "../pages/Dashboards/Admin/recreation-culture";
+import Benefit from "../pages/Dashboards/ProgramHead/benefit";
+import ForgotPasswordScreen from "../pages/Forgotpassword";
+import ResetPasswordScreen from "../pages/Resetpassword";
+import ExpiredProgram from "../pages/Dashboards/ProgramHead/expireProgram";
+import HRDepartment from "../pages/Dashboards/SuperAdmin/HRDepartment";
+import HRCenters from "../pages/Dashboards/SuperAdmin/HRCenters";
 
 const authRoutes: RouteObject = {
   path: "*",
@@ -34,6 +42,14 @@ const authRoutes: RouteObject = {
     {
       path: "login",
       element: <LoginScreen />,
+    },
+    {
+      path: "forgot-password",
+      element: <ForgotPasswordScreen />,
+    },
+    {
+      path: "reset-password",
+      element: <ResetPasswordScreen />,
     },
   ],
 };
@@ -61,6 +77,7 @@ const adminRoute: RouteObject = {
             },
           ],
         },
+        { path: "recreation", element: <RecreationAndCultureScreen /> },
         { path: "programs", element: <AdminProgramScreen /> },
         { path: "settings", element: <AdminProgramScreen /> },
       ],
@@ -82,7 +99,7 @@ const superAdminRoute: RouteObject = {
       children: [
         { index: true, element: <SuperAdminScreen /> },
         {
-          path: "review-budget",
+          path: "review-budgets",
           children: [
             { index: true, element: <SuperReviewBudget /> },
             {
@@ -115,6 +132,7 @@ const programHeadRoute: RouteObject = {
         { index: true, element: <ProgramHeadScreen /> },
         { path: "program", element: <PHProgramsScreen /> },
         { path: "create", element: <CreateProgramScreen /> },
+        { path: "expire", element: <ExpiredProgram /> },
         { path: "program-settings", element: <ProgramSetting /> },
         { path: "program-codes", element: <ProgramCodes /> },
         { path: "draft", element: <ProgramsDraftScreen /> },
@@ -138,12 +156,19 @@ const hrRoute: RouteObject = {
       // element: <AdminScreen />,
       children: [
         // { index: true, element: <SuperAdminMain name="raoof" /> },
-        { index: true, element: <Navigate to="/hr/employees" /> },
-        { path: "employees", element: <HREmployees name="HR-Employees" /> },
+        { index: true, element: <HREmployees name="HR (Human Resources)" /> },
+        {
+          path: "employees",
+          element: <HREmployees name="HR (Human Resources)" />,
+        },
         { path: "addemployees", element: <AddEmployee /> },
         { path: "adddepartment", element: <AddDepartment /> },
         { path: "addcenter", element: <AddCenter /> },
         { path: "settings", element: <HRSettings /> },
+        { path: "role", element: <HRRole /> },
+        { path: "benefits", element: <Benefit /> },
+        { path: "departments", element: <HRDepartment name="Departments" /> },
+        { path: "centers", element: <HRCenters name="Centers" /> },
       ],
     },
   ],

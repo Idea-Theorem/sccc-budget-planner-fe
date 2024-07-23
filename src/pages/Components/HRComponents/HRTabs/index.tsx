@@ -17,7 +17,13 @@ import CommunityModal from "../../../../models/CommunityModal";
 import Buttons from "../../../../components/Button";
 import { getAllDepartments } from "../../../../services/departmentServices";
 import { getAllCenters } from "../../../../services/centersServices";
-import { getEmployee } from "../../../../services/employeeServices";
+import {
+  getEmployee,
+  getNewhires,
+} from "../../../../services/employeeServices";
+import NewHiresCollapsibleTable from "../NewHiresCollapseTable";
+import AddNewHire from "../../../Dashboards/SuperAdmin/AddNewHire";
+import { getAllBenefit } from "../../../../services/benefitServices";
 
 const AppHuman = styled(Box)(({ theme }) => ({
   ".MuiTabs-flexContainer": {
@@ -48,32 +54,54 @@ interface TabProps {
 const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
   const [value, setValue] = React.useState(0);
   const [isOpen, setIsopen] = useState(false);
+
+  const [isNewhireOpen, setIsNewhireopen] = useState(false);
   const [isDepartOpen, setIsDepartopen] = useState(false);
   const [isCommunityOpen, setCommunityModal] = useState(false);
   const [heading, setHeading] = useState<string>("");
+  const [newHireheading, setNewHireheading] = useState<string>("");
   const [departHeading, setDepartHeading] = useState<string>("");
   const [centerHeading, setCenterHeading] = useState<string>("");
   const [departments, setDepartments] = useState<any>(null);
+  const [departmentsLoading, setDepartmentsLoading] = useState<any>(false);
   const [employee, setEmployee] = useState<any>([]);
+  const [newHires, setNewHires] = useState<any>([]);
   const [center, setCenter] = useState<any>(null);
   const [singleDepartments, setDingleDepartments] = useState<any>(null);
   const [singleCenter, setSingleCenter] = useState<any>(null);
   const [singleEmployeeData, setSingleEmployeeData] = useState<any>(null);
+  const [singleNewHireData, setSingleNewHireData] = useState<any>(null);
+  const [benefit, setBenefit] = useState<any>([]);
+
   const handleChange = (_: ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
 
+  const fetchBenefits = async () => {
+    try {
+      const response = await getAllBenefit();
+      setBenefit(response?.data?.centers);
+    } catch (error) {}
+  };
+  const handleCloseNewHireModal = () => {
+    const filteredhire = newHires.filter(
+      (item: any) => item?.emp_id != singleNewHireData?.emp_id
+    );
+    setNewHires(filteredhire);
+    setSingleNewHireData(null);
+    setIsNewhireopen(false);
+  };
   const handleCloseModal = () => {
-    fetchEmployee();
+    fetchEmployee("");
     setSingleEmployeeData(null);
     setIsopen(false);
   };
   const handleCloseDepartmentModal = () => {
-    fetchDepartments();
+    fetchDepartments("");
     setIsDepartopen(false);
   };
   const handleCloseCommunityModal = () => {
-    fetchCenters();
+    fetchCenters("");
     setCommunityModal(false);
   };
   const handleClick = (e: any) => {
@@ -93,6 +121,12 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
     setIsopen(true);
     setHeading("Edit Employee");
   };
+
+  const handleEditNewhireClick = (data: any) => {
+    setSingleNewHireData(data);
+    setIsNewhireopen(true);
+    setNewHireheading("Modify New hire");
+  };
   const onEdit = (data: any) => {
     setDingleDepartments(data?.row);
     setIsDepartopen(true);
@@ -103,33 +137,68 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
     setCommunityModal(true);
     setCenterHeading("Edit center");
   };
-
-  const fetchDepartments = async () => {
+  const fetchDepartments = async (value: string) => {
     try {
-      const response = await getAllDepartments();
+      setDepartmentsLoading(true);
+      const response = await getAllDepartments(value);
+      setDepartmentsLoading(false);
       setDepartments(response?.data?.departments);
-    } catch (error) {}
+    } catch (error) {
+      setDepartmentsLoading(false);
+    }
   };
 
-  const fetchCenters = async () => {
+  const fetchCenters = async (value: string) => {
     try {
-      const response = await getAllCenters();
+      const response = await getAllCenters(value);
       setCenter(response?.data?.centers);
     } catch (error) {}
   };
 
-  const fetchEmployee = async () => {
+  const fetchEmployee = async (value: string) => {
     try {
-      const response = await getEmployee();
+      const response = await getEmployee(value);
       setEmployee(response?.data?.users);
     } catch (error) {}
   };
 
+  const fetchNewHires = async () => {
+    try {
+      const response = await getNewhires();
+      const users = response?.data?.filter((item: any) => item?.emp_id);
+
+      setNewHires(users);
+    } catch (error) {}
+  };
+  const handleSearchCenters = async (e: any) => {
+    const { value } = e.target;
+    await fetchCenters(value);
+  };
+
+  const handleDepartmentCenters = async (e: any) => {
+    const { value } = e.target;
+    await fetchDepartments(value);
+  };
+
+  const handleEmployeeCenters = async (e: any) => {
+    const { value } = e.target;
+    await fetchEmployee(value);
+  };
+
   useEffect(() => {
-    fetchDepartments();
-    fetchCenters();
-    fetchEmployee();
+    fetchDepartments("");
+    fetchCenters("");
+    fetchEmployee("");
+    fetchNewHires();
+    fetchBenefits();
   }, []);
+
+  useEffect(() => {
+    if (value == 0 || value == 1) {
+      fetchEmployee("");
+      fetchNewHires();
+    }
+  }, [value]);
 
   return (
     <AppHuman>
@@ -159,52 +228,69 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
                   ? "Departments"
                   : tabNames[value] === "Employees"
                   ? "Employees"
+                  : tabNames[value] === "New Hires"
+                  ? "New Hires"
                   : null}
               </Typography>
-
-              <Buttons
-                variant="contained"
-                color="primary"
-                size="medium"
-                startIcon={<AddIcon />}
-                onClick={() => handleClick(tabNames[value])}
-                btntext={`Add New ${
-                  typeof tabNames == "undefined"
-                    ? ""
-                    : tabNames[value] === "Community Centres"
-                    ? "Centre"
-                    : tabNames[value] === "Departments"
-                    ? "Department"
-                    : tabNames[value] === "Employees"
-                    ? "Employee"
-                    : null
-                }`}
-              />
+              {tabNames[value] === "New Hires" ? (
+                ""
+              ) : (
+                <Buttons
+                  variant="contained"
+                  color="primary"
+                  size="medium"
+                  startIcon={<AddIcon />}
+                  onClick={() => handleClick(tabNames[value])}
+                  btntext={`Add New ${
+                    typeof tabNames == "undefined"
+                      ? ""
+                      : tabNames[value] === "Community Centres"
+                      ? "Centre"
+                      : tabNames[value] === "Departments"
+                      ? "Department"
+                      : tabNames[value] === "Employees"
+                      ? "Employee"
+                      : null
+                  }`}
+                />
+              )}
             </Toolbar>
           </AppBar>
         </Grid>
         <Grid item xs={12}>
-          {value === 0 && (
-            <HrCollapsibleTable
-              handleClick={handleEditClick}
-              employeeData={employee}
-              refresh={fetchEmployee}
-            />
-          )}
-          {value === 1 && (
-            <HRTableComponent
-              onEdit={onEdit}
-              row={departments}
-              refresh={handleCloseDepartmentModal}
-            />
-          )}
-          {value === 2 && (
+          {typeof tabNames == "undefined" ? (
+            ""
+          ) : tabNames[value] === "Community Centres" ? (
             <CommunityTableComponent
               onCommunityEdit={onCommunityEdit}
               row={typeof center == "undefined" || !center ? [] : center}
               refresh={handleCloseCommunityModal}
+              onChange={handleSearchCenters}
             />
-          )}
+          ) : tabNames[value] === "Departments" ? (
+            <HRTableComponent
+              onEdit={onEdit}
+              row={departments}
+              refresh={handleCloseDepartmentModal}
+              onChange={handleDepartmentCenters}
+              departmentsLoading={departmentsLoading}
+            />
+          ) : tabNames[value] === "Employees" ? (
+            <HrCollapsibleTable
+              handleClick={handleEditClick}
+              employeeData={employee}
+              refresh={fetchEmployee}
+              onChange={handleEmployeeCenters}
+              benefit={benefit}
+            />
+          ) : tabNames[value] === "New Hires" ? (
+            <NewHiresCollapsibleTable
+              handleClick={handleEditNewhireClick}
+              employeeData={newHires}
+              refresh={fetchNewHires}
+              onChange={handleEmployeeCenters}
+            />
+          ) : null}
         </Grid>
       </Grid>
       <AddEmployee
@@ -213,6 +299,13 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
         heading={heading}
         singleEmployeeData={singleEmployeeData}
         setSingleEmployeeData={setSingleEmployeeData}
+      />
+      <AddNewHire
+        open={isNewhireOpen}
+        handleClose={handleCloseNewHireModal}
+        heading={newHireheading}
+        singleEmployeeData={singleNewHireData}
+        setSingleEmployeeData={setSingleNewHireData}
       />
       <DepartmentInfo
         open={isDepartOpen}

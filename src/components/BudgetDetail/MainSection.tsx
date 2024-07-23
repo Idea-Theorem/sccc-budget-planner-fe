@@ -7,16 +7,20 @@ import { Grid } from "../../pages/Components/MUIComponents/index";
 import TabsProgramArea from "../TabsProgram";
 import { ActionsType } from "../../types/common";
 import Buttons from "../Button";
-import { getAllDepartments } from "../../services/departmentServices";
-import { useEffect, useState } from "react";
+import {
+  fetchEmployeeInDepartments,
+  getAllDepartmentsByUser,
+} from "../../services/departmentServices";
+import { useEffect, useMemo, useState } from "react";
 import Status, { ProgramCode } from "../../utils/dumpData";
 import { useFormik } from "formik";
 import {
   createProgram,
+  fetchAllcomments,
+  getSingleProgramById,
   programUpdate,
   updateProgram,
 } from "../../services/programServices";
-import { Box, Input } from "@mui/material";
 import {
   storeIncomeList,
   storeProgramFromStatus,
@@ -32,23 +36,52 @@ import { programSchema } from "../../utils/yupSchema";
 import TextFields from "../Input/textfield";
 import { EditNote, UploadFile } from "@mui/icons-material";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
+import { v4 as uuidv4 } from "uuid";
+import AttentionModal from "../../models/AttentionModal";
+import StatusModal from "../StatusModal";
+import { updateEmployeeData } from "../../utils";
 
-const MainSection = ({ actions }: { actions: ActionsType[] }) => {
+function createData(name?: string, amount?: number) {
+  return { name, amount, id: uuidv4() };
+}
+
+const benefits = [
+  createData("Courier & Postage", 0),
+  createData("printing", 0),
+  createData("Office & Computer Supplies", 0),
+  createData("Program Food", 0),
+  createData("Recreational Supplies", 0),
+  createData("recreational Equipment", 0),
+  createData("Furniture & Equipment", 0),
+  createData("Office Furniture & Equip", 0),
+  createData("Employee Development", 0),
+  createData("Program Travel", 0),
+  createData("Program Admission", 0),
+  createData("Telephone", 0),
+];
+
+const MainSection = ({
+  actions,
+  fromParentDisabled = false,
+}: any | { actions: ActionsType[] }) => {
   const [departments, setDepartments] = useState<any>([]);
+  const [employee, setEmployee] = useState<any>([]);
+  const [allComments, setAllComments] = useState<any>([]);
   const [activeDepartment, setActiveDepartment] = useState<any>(null);
+  const [attentionModal, setAttentionModal] = useState<any>(false);
+  const [actionStatus, setactionStatus] = useState<any>("");
+  const [revicedStatus] = useState<any>("");
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [isEditing, setIsEditing] = useState(false);
   const [disable, setDisable] = useState(false);
+  const [statusData, setStatusData] = useState<any>(null);
+
   const { singleProgram, programFromStatus } = useSelector(
     (state: RootState) => state.program
   );
 
-  const formik = useFormik<any>({
-    validateOnBlur: false,
-    validationSchema: programSchema,
-    enableReinitialize: true,
-    initialValues: {
+  const initialValues = useMemo(
+    () => ({
       name: singleProgram ? singleProgram?.name : "",
       code: "",
       department_id: "",
@@ -58,48 +91,97 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
       supply_expense: [],
       salary_expense: [],
       status: "PENDING",
-    },
-    onSubmit: async (values) => {
-      try {
-        if (singleProgram?.id) {
-          await programUpdate(values, singleProgram?.id);
-        } else {
-          await createProgram(values);
-        }
-        formik.resetForm();
-        dispatch(storeIncomeList([]));
-        dispatch(storeSupplyList([]));
-        dispatch(storeSalaryList([]));
-        dispatch(storeSingleProgram(null));
-        navigate("/program-head/program");
-      } catch (error) {}
+      employee: singleProgram?.employee
+        ? singleProgram?.employee
+        : [
+            {
+              emp_id: uuidv4(),
+              employee: "",
+              hourlyRate: "",
+              hoursPerWeek: "",
+              workingWeeks: "",
+              benefit: "",
+              amount: "",
+            },
+          ],
+    }),
+    [singleProgram]
+  );
+  const formik = useFormik<any>({
+    validateOnBlur: false,
+    validateOnChange: false,
+    validationSchema: programSchema,
+    enableReinitialize: true,
+    initialValues,
+    onSubmit: async (values: any) => {
+      if (values.status === Status.DRAFTED) {
+        handleSave();
+        return;
+      } else {
+        setAttentionModal(true);
+        return;
+      }
     },
   });
+  const formikSubmit = async () => {
+    let obj: any = {};
+    if (values?.supply_expense.length == 0) {
+      obj = {
+        ...values,
+        supply_expense: singleProgram?.supply_expense
+          ? singleProgram?.supply_expense
+          : benefits,
+      };
+    } else {
+      obj = { ...values };
+    }
+    obj.employee = cleanFormDataForFormik(obj.employee);
+    try {
+      if (singleProgram?.id) {
+        await programUpdate(obj, singleProgram?.id);
+      } else {
+        await createProgram(obj);
+      }
+      formik.resetForm();
+      dispatch(storeIncomeList([]));
+      dispatch(storeSupplyList([]));
+      dispatch(storeSalaryList([]));
+      dispatch(storeSingleProgram(null));
+      navigate("/program-head/program");
+    } catch (error: any) {
+      setStatusData({
+        type: "error",
+        message: error.response.data.message,
+      });
+    }
+  };
   useEffect(() => {
     return () => {
       dispatch(storeIncomeList([]));
       dispatch(storeSupplyList([]));
       dispatch(storeSalaryList([]));
-      // dispatch(storeSingleProgram(null));
     };
   }, []);
 
   useEffect(() => {
-    if (singleProgram) {
+    if (singleProgram?.id) {
       dispatch(storeIncomeList(singleProgram?.income));
       dispatch(storeSupplyList(singleProgram?.salary_expense));
       dispatch(storeSalaryList(singleProgram?.supply_expense));
       setFieldValue("department_id", singleProgram?.department?.id);
       setActiveDepartment(singleProgram?.department?.name);
       setFieldValue("code", singleProgram?.code);
+      fetchEmployeeInDepartment(singleProgram?.department?.id);
+      const res = updateEmployeeData(singleProgram?.employee);
+      setFieldValue("employee", res);
     }
-  }, []);
+  }, [singleProgram]);
 
-  const { values, handleSubmit, setFieldValue, errors } = formik;
+  const { values, handleSubmit, setFieldValue, errors, isSubmitting } = formik;
 
   const fetchDepartments = async () => {
     try {
-      const response = await getAllDepartments();
+      const response = await getAllDepartmentsByUser();
       setDepartments(response?.data?.departments);
     } catch (error) {}
   };
@@ -117,10 +199,33 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
     setFieldValue("code", value);
   };
 
-  const receiveDepartment = (value: any) => {
+  const receiveDepartment = async (value: any) => {
     const filteredID = departments.find((item: any) => item?.name === value);
     setFieldValue("department_id", filteredID?.id);
     setActiveDepartment(filteredID?.name);
+    const response = await fetchEmployeeInDepartments(filteredID?.id);
+    const modifyArray = response?.data?.departments?.map((user: any) => ({
+      ...user,
+      name: `${user.firstname} ${user.lastname}`,
+    }));
+    modifyArray.unshift({
+      id: "New Hire",
+      name: "New Hire",
+    });
+    setEmployee(modifyArray);
+  };
+
+  const fetchEmployeeInDepartment = async (id: string) => {
+    const response = await fetchEmployeeInDepartments(id);
+    const modifyArray = response?.data?.departments?.map((user: any) => ({
+      ...user,
+      name: `${user.firstname} ${user.lastname}`,
+    }));
+    modifyArray.unshift({
+      id: "New Hire",
+      name: "New Hire",
+    });
+    setEmployee(modifyArray);
   };
 
   const receiveFromDate = (value: any) => {
@@ -141,12 +246,34 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
     setFieldValue("salary_expense", value);
   };
 
+  const cleanFormDataForFormik = (data: any) => {
+    return data.map((item: any) => ({
+      ...item,
+      amount: item.amount.replace("$", ""),
+      hourlyRate: item.hourlyRate.replace("$", ""),
+      hoursPerWeek: item.hoursPerWeek.replace("h", ""),
+      workingWeeks: item.workingWeeks.replace("w", ""),
+    }));
+  };
+
   const handleSave = async () => {
     try {
-      let obj = {
-        ...values,
-        status: Status.DRAFTED,
-      };
+      let obj: any = {};
+      if (values?.supply_expense.length == 0) {
+        obj = {
+          ...values,
+          status: Status.DRAFTED,
+          supply_expense: singleProgram?.supply_expense
+            ? singleProgram?.supply_expense
+            : benefits,
+        };
+      } else {
+        obj = {
+          ...values,
+          status: Status.DRAFTED,
+        };
+      }
+      obj.employee = cleanFormDataForFormik(obj.employee);
       if (singleProgram?.id) {
         await programUpdate(obj, singleProgram?.id);
       } else {
@@ -157,11 +284,35 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
       dispatch(storeSupplyList([]));
       dispatch(storeSalaryList([]));
       dispatch(storeSingleProgram(null));
-      navigate("/program-head/draft");
+      // navigate("/program-head/draft");
+      navigate("/program-head/program");
+    } catch (error: any) {
+      setStatusData({
+        type: "error",
+        message: error.response.data.message,
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (singleProgram?.id) {
+      fetchComments();
+      fetchProgrambyId(singleProgram?.id);
+    }
+  }, [singleProgram?.id]);
+  const fetchComments = async () => {
+    try {
+      const response = await fetchAllcomments();
+      setAllComments(response?.data?.comments);
     } catch (error) {}
   };
-  const handleClick = () => {
-    setIsEditing(true);
+  const fetchProgrambyId = async (id: any) => {
+    try {
+      const response = await getSingleProgramById(id);
+      dispatch(storeIncomeList(response?.data?.program?.income));
+      dispatch(storeSupplyList(response?.data?.program?.supply_expense));
+      dispatch(storeSalaryList(response?.data?.program?.salary_expense));
+    } catch (error) {}
   };
 
   const handleChangeEvent = (e: any) => {
@@ -170,7 +321,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
   };
 
   const handleBlur = () => {
-    setIsEditing(false);
+    // setIsEditing(false);
   };
 
   const handleStatausSubmit = async (action: any) => {
@@ -191,6 +342,57 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
       navigate("/department-head/review-budgets");
     }
   };
+  const handleOK = async () => {
+    if (programFromStatus == Status.REVISED && revicedStatus == "save") {
+      await handleSave();
+    } else if (programFromStatus == Status.PENDING) {
+      await handleStatausSubmit(actionStatus);
+    } else {
+      await formikSubmit();
+    }
+    setAttentionModal(false);
+  };
+
+  const handleApproveReject = (data: string) => {
+    setactionStatus(data);
+    setAttentionModal(true);
+  };
+
+  const handleCustomeSubmit = async (event: any) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      return;
+    }
+    const errors: any = await formik.validateForm();
+    const employeeErrors = errors.employee?.some(
+      (employeeError: any) => Object.keys(employeeError).length > 0
+    );
+    if (employeeErrors) {
+      setStatusData({
+        type: "error",
+        message: "Please fill the employee form as well.",
+      });
+      return;
+    }
+    formik.setFieldValue("status", Status.PENDING);
+    handleSubmit();
+  };
+
+  const handleCustomeSave = async () => {
+    const errors: any = await formik.validateForm();
+    const employeeErrors = errors.employee?.some(
+      (employeeError: any) => Object.keys(employeeError).length > 0
+    );
+    if (employeeErrors) {
+      setStatusData({
+        type: "error",
+        message: "Please fill the employee form as well.",
+      });
+      return;
+    }
+    formik.setFieldValue("status", Status.DRAFTED);
+    handleSubmit();
+  };
 
   const Save = async () => {};
   return (
@@ -198,34 +400,35 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
       <Grid className="createProgramContent" item xs={12}>
         <Grid item xs={12}>
           <Stack className="createProgramContentHead">
-            {isEditing ? (
-              <TextFields
-                disabled={disable}
-                autoFocus
-                type="text"
-                value={formik.values.name}
-                onChange={handleChangeEvent}
-                onBlur={handleBlur}
-                variant="standard"
-                error={errors.name ? true : false}
-                helperText={errors.name ? errors.name.toString() : ""}
-              />
-            ) : (
-              <Typography
-                className="mainHeading"
-                variant="h5"
-                onClick={handleClick}
-              >
-                Enter Program Name
-              </Typography>
-            )}
+            <TextFields
+              disabled={disable || fromParentDisabled}
+              autoFocus
+              type="text"
+              placeholder="Enter Program Name"
+              value={formik.values.name}
+              onChange={handleChangeEvent}
+              onBlur={handleBlur}
+              variant="standard"
+              error={errors.name ? true : false}
+              helperText={errors.name ? errors.name.toString() : ""}
+            />
+
             <Stack direction={"row"} gap={"20px"}>
               {programFromStatus == Status.CREATED ? (
                 <>
                   <Buttons
                     key={0}
+                    btntext="submit"
+                    onClick={(e: any) => handleCustomeSubmit(e)}
+                    variant="outlined"
+                    color="primary"
+                    size="medium"
+                    startIcon={<SaveOutlinedIcon />}
+                  />
+                  <Buttons
+                    key={0}
                     btntext="Save"
-                    onClick={handleSave}
+                    onClick={handleCustomeSave}
                     variant="outlined"
                     color="primary"
                     size="medium"
@@ -238,7 +441,11 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
                   <Buttons
                     key={0}
                     btntext="Save"
-                    onClick={handleSave}
+                    // onClick={() => {
+                    //   setAttentionModal(true);
+                    //   setRevicedStatus("save");
+                    // }}
+                    onClick={handleCustomeSave}
                     variant="outlined"
                     color="primary"
                     size="medium"
@@ -278,7 +485,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
                     btntext={action?.title}
                     onClick={
                       action.title == "Reject" || action.title == "Approve"
-                        ? () => handleStatausSubmit(action.title)
+                        ? () => handleApproveReject(action.title)
                         : Save
                     }
                     variant={action.variant}
@@ -300,7 +507,7 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
               receiveValue={receiveCode}
               list={ProgramCode}
               value={values.code}
-              disabled={disable}
+              disabled={disable || fromParentDisabled}
               placeholder="Please Select"
               error={errors.code ? true : false}
               errorMessage={errors.code}
@@ -336,14 +543,30 @@ const MainSection = ({ actions }: { actions: ActionsType[] }) => {
         </Grid>
         <Grid className="createFormTable" item xs={12}>
           <TabsProgramArea
+            singleProgram={singleProgram}
             disabled={disable}
             handleReceived={receiveIncome}
             handleSupplyExpenseReceived={receiveSupplyExpense}
             handleSalaryExpenseReceived={receiveSalaryExpense}
             formik={formik}
+            employee={employee}
+            allComments={allComments}
+            fetchComments={fetchComments}
           />
         </Grid>
+        <AttentionModal
+          open={attentionModal}
+          handleClose={() => setAttentionModal(false)}
+          handleOK={handleOK}
+          loading={isSubmitting}
+          heading="Attention"
+          text="Are you sure you want to submit this budget?"
+        />
       </Grid>
+      <StatusModal
+        statusData={statusData}
+        onClose={() => setStatusData(null)}
+      />
     </Grid>
   );
 };

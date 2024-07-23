@@ -13,13 +13,57 @@ import { useNavigate, useLocation } from "react-router-dom";
 import LogoImg from "../../assets/logo.png";
 // import { SidebarAction } from "../../types/common";
 import { useAuth } from "../../contexts/AuthContext";
-import { Collapse, Grid } from "@mui/material";
+import { Button, Collapse, Grid } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
-import SelectDemo from "../Select";
+import { getCapitalizedFirstLetters, handleRole } from "../../utils";
+import { useDispatch } from "react-redux";
+import { storeSideBarCheck } from "../../store/reducers/programSlice";
+import SidebarSelect from "../SidebarSelect";
 // import SelectDemo from "../Select";
 
 const SideArea = styled(Box)(({ theme }) => ({
   background: theme.palette.primary.main,
+
+  ".full-width": {
+    padding: "17px 19px",
+
+    ".MuiSelect-select": {
+      color: "#fff",
+      fontWeight: 600,
+      textTransform: "capitalize",
+      paddingLeft: "42px",
+    },
+
+    ".MuiSvgIcon-root": {
+      color: "#fff",
+      top: "calc(50% - 14px)",
+    },
+
+    ".MuiFormLabel-root": {
+      display: "none",
+    },
+  },
+
+  ".selectGrid": {
+    position: "relative",
+
+    ".user-name": {
+      position: "absolute",
+      left: "19px",
+      top: "calc(50% - 1px)",
+      width: "33px",
+      height: "33px",
+      borderRadius: "100%",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      transform: "translate(0, -50%)",
+      background: "#fff",
+      fontSize: "14px",
+      lineHeight: "21px",
+      color: "#000",
+    },
+  },
 
   "& .MuiPaper-root": {
     background: `${theme.palette.primary.main} !important`,
@@ -83,7 +127,8 @@ const SideArea = styled(Box)(({ theme }) => ({
   },
 
   ".MuiButtonBase-root": {
-    color: "#303030",
+    // color: "#303030",
+    color: "#fff",
     padding: "8px 19px",
 
     "&:hover": {
@@ -98,7 +143,7 @@ const SideArea = styled(Box)(({ theme }) => ({
   },
 
   ".MuiCollapse-root": {
-    background: "#fff",
+    background: "#fafafa",
 
     "& .MuiListItem-root": {
       textAlign: "center",
@@ -114,6 +159,14 @@ const SideArea = styled(Box)(({ theme }) => ({
       "&.active": {
         color: "#fff",
         background: "#676779",
+
+        ".MuiButtonBase-root": {
+          color: "#fff !important",
+        },
+      },
+
+      ".MuiButtonBase-root:not(:hover)": {
+        color: "#303030",
       },
     },
 
@@ -123,7 +176,6 @@ const SideArea = styled(Box)(({ theme }) => ({
       fontWeight: "400",
       fontFamily: "Roboto, sans-serif",
       textAlign: "center",
-      
     },
   },
 }));
@@ -145,16 +197,22 @@ export default function ResponsiveDrawer(props: Props) {
     navigate(path);
   };
   const { withMore } = filterSidebarActionsWithMore(SIDEBARACTIONS);
-
+  const dispatch = useDispatch();
   const handleDrawerClose = () => {
     setMobileOpen(false);
   };
 
   const handleReceive = (item: any) => {
+    if (item == "Super_Admin") {
+      dispatch(storeSideBarCheck("superAdmin"));
+      localStorage.setItem("sidebarCheck", "superAdmin");
+    } else if (item == "Admin") {
+      dispatch(storeSideBarCheck("admin"));
+      localStorage.setItem("sidebarCheck", "admin");
+    }
     localStorage.setItem("currentRole", item);
     setCurrentRole(item);
   };
-
   React.useEffect(() => {
     switch (currentRole) {
       case "Program_Head":
@@ -169,17 +227,52 @@ export default function ResponsiveDrawer(props: Props) {
       case "Department_Head":
         navigate("/department-head/review-budgets");
         break;
-      default:
+      case "/super-admin/review-budgets":
+        navigate("/super-admin/review-budgets");
+        break;
+      case "/super-admin":
+        navigate("/super-admin");
+        break;
+      case "/admin/review-budget":
+        navigate("/admin/review-budget");
+        break;
+      case "/admin":
+        navigate("/admin");
+        break;
+      case "/hr":
+        navigate("/hr");
+        break;
+      case "/hr/role":
+        navigate("/hr/role");
+        break;
+
+      case "HR":
         navigate("/hr/employees");
+        break;
+      default:
+      // navigate("/hr");
     }
   }, [currentRole]);
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("currentRole");
+    localStorage.clear();
+    setCurrentRole("");
+    navigate("/");
+  };
+
   const drawer = (
     <Box>
       <Box className="siteLogo">
         <img src={LogoImg} alt="Description image" />
       </Box>
+
       <Grid className="selectGrid" item xs={6}>
-        <SelectDemo
+        <Box className="user-name">
+          {getCapitalizedFirstLetters(user?.firstname, user?.lastname)}
+        </Box>
+        <SidebarSelect
+          className="sidebar_select_input"
           title="Department"
           value={currentRole}
           list={user?.roles}
@@ -189,7 +282,7 @@ export default function ResponsiveDrawer(props: Props) {
       <List>
         {withMore?.map((item: any, index: any) => (
           <React.Fragment key={index}>
-            {item.role === currentRole && item.more ? (
+            {item.role === handleRole(currentRole) && item.more ? (
               <>
                 <ListItem
                   disablePadding
@@ -204,7 +297,10 @@ export default function ResponsiveDrawer(props: Props) {
                     <ListItem
                       key={nestedIndex}
                       disablePadding
-                      onClick={() => navigate(nestedItem.path ?? "")}
+                      onClick={() => {
+                        // handleReceive(nestedItem);
+                        navigate(nestedItem.path ?? "");
+                      }}
                       className={
                         location.pathname === nestedItem.path ? "active" : ""
                       }
@@ -220,7 +316,10 @@ export default function ResponsiveDrawer(props: Props) {
               <ListItem
                 disablePadding
                 button
-                onClick={() => navigate(item.path ?? "")}
+                onClick={() => {
+                  handleReceive(item?.path);
+                  navigate(item.path ?? "");
+                }}
                 className={location.pathname === item.path ? "active" : ""}
               >
                 <ListItemButton>
@@ -231,6 +330,14 @@ export default function ResponsiveDrawer(props: Props) {
           </React.Fragment>
         ))}
       </List>
+      <Button
+        className="btnLogout"
+        variant="outlined"
+        color="error"
+        onClick={handleLogout}
+      >
+        Logout
+      </Button>
     </Box>
   );
 

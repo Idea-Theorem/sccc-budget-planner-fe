@@ -117,6 +117,23 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
       color: theme.palette.text.primary,
     },
   },
+  ".actions-btn-holder": {
+    ".MuiButton-textPrimary:not(:hover)": {
+      color: "rgba(48, 48, 48, 1)",
+    },
+    ".MuiButton-outlinedPrimary": {
+      color: "rgba(4, 128, 113, 1)",
+
+      "&:hover": {
+        background: "rgba(4, 128, 113, 1)",
+        color: "#fff",
+      },
+    },
+
+    ".MuiButtonBase-root": {
+      textTransform: "capitalize",
+    },
+  },
 }));
 
 const rows = [
@@ -167,7 +184,6 @@ const HRSettings: React.FC<HRTableProps> = ({ }) => {
         <Stack direction="row" gap="10px" alignItems="center">
           <Button
             variant="text"
-            color="error"
             size="small"
             startIcon={<DeleteOutlineIcon />}
           >

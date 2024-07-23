@@ -23,6 +23,9 @@ import * as XLSX from "xlsx";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import StatusModal from "../../../../components/StatusModal";
+import DeleteModal from "../../../../models/DeleteModal";
+import { getAllRole } from "../../../../services/roleServices";
+import { roleSort } from "../../../../utils";
 
 const HrCollapseableTable = styled(Box)(({ theme }) => ({
   ".MuiTableCell-root": {
@@ -32,6 +35,10 @@ const HrCollapseableTable = styled(Box)(({ theme }) => ({
 
   "&.dashboardTable": {
     padding: "30px",
+
+    "&.pt-0": {
+      paddingTop: "0",
+    },
 
     "& .MuiPaper-rounded": {
       borderRadius: "0",
@@ -128,9 +135,50 @@ function Row(props: {
   handleClick: any;
   employeeData?: any;
   handleDelete?: any;
+  loading?: any;
+  setIsOpen?: any;
+  isOpen?: any;
+  setCurrentRow?: any;
+  benefit?: any;
 }) {
-  const { row, handleClick, handleDelete } = props;
+  const {
+    row,
+    handleClick,
+    handleDelete,
+    setCurrentRow,
+    loading,
+    isOpen,
+    setIsOpen,
+    benefit,
+  } = props;
   const [open, setOpen] = React.useState(false);
+  // const [isOpen, setIsOpen] = React.useState<any>(false);
+  const [titles, setTitles] = React.useState<any>([]);
+
+  const closeModel = () => {
+    setIsOpen(false);
+  };
+
+  React.useEffect(() => {
+    fetchTitle();
+  }, []);
+
+  const fetchTitle = async () => {
+    try {
+      const response = await getAllRole();
+      setTitles(response?.data?.role);
+    } catch (error) {}
+  };
+
+  const fetchTitleName = (id: any) => {
+    const findtitle = titles.find((item: any) => item.id === id);
+    return findtitle?.name;
+  };
+
+  const findBenefitName = (id: any) => {
+    const findBenefit = benefit?.find((item: any) => item.id === id);
+    return findBenefit?.name?.toLowerCase()?.replace(/_/g, " ");
+  };
   return (
     <React.Fragment>
       <TableRow>
@@ -144,10 +192,14 @@ function Row(props: {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {row.firstname + " " + row.lastname}
+          {row?.firstname + " " + row?.lastname}
         </TableCell>
-        <TableCell>{row?.roles[0].name}</TableCell>
-        <TableCell>{row?.department.name}</TableCell>
+        <TableCell>
+          {roleSort(row?.roles)?.[0]?.name?.replace(/_/g, " ")}
+        </TableCell>
+        <TableCell style={{ textTransform: "capitalize" }}>
+          {row?.department?.name}
+        </TableCell>
         <TableCell>{row?.hire_date}</TableCell>
         <TableCell>
           <Stack
@@ -162,7 +214,10 @@ function Row(props: {
               color="error"
               size="small"
               startIcon={<DeleteOutlineIcon />}
-              onClick={() => handleDelete(row)}
+              onClick={() => {
+                setCurrentRow(row);
+                setIsOpen(true);
+              }}
             >
               Delete
             </Button>
@@ -186,26 +241,28 @@ function Row(props: {
                 <TableHead>
                   <TableRow>
                     <TableCell style={{ paddingLeft: "62px" }}>
-                      Email Address
+                      Department
                     </TableCell>
-                    <TableCell>Compensation type</TableCell>
-                    <TableCell>Employement Type</TableCell>
-                    <TableCell>Salary</TableCell>
+                    <TableCell>Title</TableCell>
+                    <TableCell>Hourly Rate</TableCell>
+                    <TableCell>Benefit %</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {[0].map(() => (
+                  {row?.employeDepartments?.map((element: any) => (
                     <TableRow key={row.id}>
                       <TableCell style={{ paddingLeft: "62px" }}>
-                        {row.email}
+                        {element?.department?.name.toLowerCase()}
                       </TableCell>
                       <TableCell style={{ textTransform: "capitalize" }}>
-                        {row?.compensation_type?.toLowerCase()}
+                        {fetchTitleName(element?.title)}
                       </TableCell>
                       <TableCell style={{ textTransform: "capitalize" }}>
-                        {row?.employment_type?.toLowerCase()}
+                        {element?.hourlyRate?.toLowerCase()}
                       </TableCell>
-                      <TableCell>{row?.salary_rate}</TableCell>
+                      <TableCell style={{ textTransform: "capitalize" }}>
+                        {findBenefitName(element?.salaryRate)}
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -214,6 +271,13 @@ function Row(props: {
           </Collapse>
         </TableCell>
       </TableRow>
+      <DeleteModal
+        open={isOpen}
+        handleOK={() => handleDelete()}
+        handleClose={closeModel}
+        loading={loading}
+        heading="Are you sure you want to delete?"
+      />
     </React.Fragment>
   );
 }
@@ -237,10 +301,15 @@ export default function HrCollapsibleTable({
   handleClick,
   employeeData,
   refresh,
+  onChange,
+  benefit,
 }: any) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [statusData, setStatusData] = React.useState<any>(null);
+  const [loading, setLoading] = React.useState<any>(false);
+  const [isOpen, setIsOpen] = React.useState<any>(false);
+  const [currentRow, setCurrentRow] = React.useState<any>("");
 
   const handleChangePage = (_: unknown, newPage: number) => {
     setPage(newPage);
@@ -253,19 +322,23 @@ export default function HrCollapsibleTable({
     setPage(0);
   };
 
-  const handleDelete = async (data: any) => {
+  const handleDelete = async () => {
     try {
-      await deleteEmployee(data?.id);
+      setLoading(true);
+      await deleteEmployee(currentRow?.id);
       setStatusData({
         type: "success",
         message: "Employee Deleted Successfully",
       });
       refresh();
+      setLoading(false);
+      setIsOpen(false);
     } catch (error: any) {
       setStatusData({
         type: "error",
         message: error.response.data.message,
       });
+      setLoading(false);
     }
   };
 
@@ -275,9 +348,10 @@ export default function HrCollapsibleTable({
     XLSX.utils.book_append_sheet(workbook, worksheet, "Data");
     XLSX.writeFile(workbook, "data.xlsx");
   };
+
   return (
     <>
-      <HrCollapseableTable className="dashboardTable">
+      <HrCollapseableTable className="dashboardTable pt-0">
         <Stack
           direction="row"
           alignItems="center"
@@ -297,6 +371,7 @@ export default function HrCollapsibleTable({
               ),
             }}
             variant="standard"
+            onChange={(e: any) => onChange(e)}
           />
         </Stack>
         <TableContainer component={Paper}>
@@ -305,8 +380,8 @@ export default function HrCollapsibleTable({
               <TableRow>
                 <TableCell>&nbsp;</TableCell>
                 <TableCell>Employee Name</TableCell>
-                <TableCell>Position</TableCell>
-                <TableCell>Department</TableCell>
+                <TableCell>Roles</TableCell>
+                <TableCell></TableCell>
                 <TableCell>Hire date</TableCell>
               </TableRow>
             </TableHead>
@@ -320,6 +395,11 @@ export default function HrCollapsibleTable({
                     handleClick={handleClick}
                     employeeData={employeeData}
                     handleDelete={handleDelete}
+                    loading={loading}
+                    setIsOpen={setIsOpen}
+                    isOpen={isOpen}
+                    setCurrentRow={setCurrentRow}
+                    benefit={benefit}
                   />
                 ))}
             </TableBody>

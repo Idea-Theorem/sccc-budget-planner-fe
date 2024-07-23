@@ -13,6 +13,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
     position: "relative",
+    borderTop: '1px solid rgba(224, 224, 224, 1)',
   },
 
   "& .MuiDataGrid-toolbarContainer": {
@@ -53,12 +54,12 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
     },
   },
   "& .MuiButton-root": {
-    // color: "#979797",
-    // fontSize: "14px",
-    // lineHeight: "24px",
-    // "&:hover": {
-    //   background: "none",
-    // },
+    color: "#979797",
+    fontSize: "14px",
+    lineHeight: "24px",
+    "&:hover": {
+      background: "none",
+    },
   },
   "& .MuiDataGrid-columnHeaderTitle": {
     color: "rgba(0, 0, 0, 0.87)",
@@ -116,6 +117,23 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
       color: theme.palette.text.primary,
     },
   },
+  ".actions-btn-holder": {
+    ".MuiButton-textPrimary:not(:hover)": {
+      color: "rgba(48, 48, 48, 1)",
+    },
+    ".MuiButton-outlinedPrimary": {
+      color: "rgba(4, 128, 113, 1)",
+
+      "&:hover": {
+        background: "rgba(4, 128, 113, 1)",
+        color: "#fff",
+      },
+    },
+
+    ".MuiButtonBase-root": {
+      textTransform: "capitalize",
+    },
+  },
 }));
 
 // const rows = [
@@ -136,8 +154,10 @@ interface HRTableProps {
   onEdit?: any;
   row?: any;
   refresh?: any;
+  onChange?: any
+  departmentsLoading?: any
 }
-const HRTableComponent: React.FC<HRTableProps> = ({ onEdit, row, refresh }) => {
+const HRTableComponent: React.FC<HRTableProps> = ({ onEdit, row, refresh, onChange, departmentsLoading }) => {
   const [deleteRow, setDeleteRow] = useState<any>(false);
   const [loading, setLoading] = useState<any>(false);
   const [statusData, setStatusData] = useState<any>(null);
@@ -175,10 +195,10 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit, row, refresh }) => {
           alignItems="center"
           justifyContent="flex-end"
           width="100%"
+          className="actions-btn-holder"
         >
           <Button
             variant="text"
-            color="error"
             size="small"
             startIcon={<DeleteOutlineIcon />}
             onClick={() => {
@@ -202,7 +222,7 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit, row, refresh }) => {
     },
   ];
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<any>(false);
   const closeModel = () => {
     setIsOpen(false);
   };
@@ -229,8 +249,9 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit, row, refresh }) => {
   return (
     <>
       <StyledBox className="mainTableBlock">
-        <InputSearch placeholder="Search..." />
+        <InputSearch placeholder="Search..." onChange={onChange} />
         <StyleDataGrid
+         loading={departmentsLoading}
           rows={row || []}
           columns={columns}
           initialState={{

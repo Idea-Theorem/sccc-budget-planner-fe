@@ -279,6 +279,7 @@ const CreateProgramScreen = () => {
       onClick: () => setSecondLevel(true),
     },
   ];
+
   return (
     <>
       {firstLevel && !secondLevel ? (

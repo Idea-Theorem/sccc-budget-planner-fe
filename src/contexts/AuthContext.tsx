@@ -7,7 +7,7 @@ import {
 } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginState from "../interfaces/ITheme.interface";
-import { loggedIn } from "../services/authServices";
+import { forgotPassword, loggedIn, resetPassword } from "../services/authServices";
 import StatusModal from "../components/StatusModal";
 
 const AuthContext = createContext({
@@ -17,7 +17,10 @@ const AuthContext = createContext({
   authToken: "",
   loginLoading: "",
   currentRole: "",
+  resetLoading:"",
   setCurrentRole: (_: string | boolean) => {},
+  handleForgotPassword:  (_: any) => {},
+  handleResetPassword: (_: any) => {}
 });
 
 // const users = [
@@ -35,6 +38,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [currentRole, setCurrentRole] = useState<any>("");
   const [authToken, setAuthToken] = useState("");
   const [loginLoading, setLoginLoading] = useState<any>(false);
+  const [resetLoading, setResetLoading] = useState<any>(false);
   const [statusData, setStatusData] = useState<any>(null);
   const navigate = useNavigate();
 
@@ -108,7 +112,34 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     //   navigate("/hr");
     // }
   };
+const handleForgotPassword = async (data: any) => {
+try {
+  setResetLoading(true)
+  const response = await forgotPassword(data)
+ setStatusData({
+  type: "success",
+  message: response?.data?.message,
+});
+setResetLoading(false)
+} catch (error) {
+  setResetLoading(false)
+}
+}
 
+const handleResetPassword = async (data: any) => {
+  try {
+    setResetLoading(true)
+    const response = await resetPassword(data)
+   setStatusData({
+    type: "success",
+    message: response?.data?.message,
+  });
+  navigate("/login");
+  setResetLoading(false)
+  } catch (error) {
+    setResetLoading(false)
+  }
+  }
   const logout = () => {
     setUser(null);
     localStorage.removeItem("user");
@@ -128,6 +159,9 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
           loginLoading,
           currentRole,
           setCurrentRole,
+          handleForgotPassword,
+          resetLoading,
+          handleResetPassword,
         }}
       >
         {children}

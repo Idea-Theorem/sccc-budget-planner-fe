@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import Check from "@mui/icons-material/Check";
 import Clear from "@mui/icons-material/Clear";
 import Modal from "@mui/material/Modal";
+import WarningAmberOutlinedIcon from '@mui/icons-material/WarningAmberOutlined';
 
 const DepartmentInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
@@ -25,6 +26,13 @@ const DepartmentInfoArea = styled(Box)(({ theme }) => ({
     fontSize: "20px",
     fontWeight: "600",
     margin: "0 0 25px",
+    display: "flex",
+    alignItems: "center",
+    gap: '10px',
+  },
+
+  "p": {
+    marginBottom: "25px",
   },
 
   "& .secondaryRow": {
@@ -44,8 +52,8 @@ const DepartmentInfoArea = styled(Box)(({ theme }) => ({
 interface IDeleteModal {
   heading?: string;
   subheading?: string;
-  handleClose: () => void;
-  open: boolean;
+  handleClose?: () => void;
+  open?: boolean;
   selectRow?: any
   handleOK?: any
   loading?: any
@@ -58,16 +66,30 @@ const DeleteModal: React.FC<IDeleteModal> = ({
   loading,
   handleOK
 }) => {
+  const handleCloseModal = async () => {
+    if (handleOK) {
+        await handleOK();
+    } else {
+        console.error("handleOK is not defined");
+    }
+
+    // if (handleClose) {
+    //     handleClose();
+    // } else {
+    //     console.error("handleClose is not defined");
+    // }
+};
   return (
     <Modal
-      open={open}
+      open={typeof open !== 'undefined' && open}
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
       <DepartmentInfoArea>
         <Box>
-          <Typography variant="h6">{heading}</Typography>
+          <Typography variant="h6"><WarningAmberOutlinedIcon /> Attention</Typography>
+          <Typography>{heading}</Typography>
         </Box>
         <Stack
           className="formButtons"
@@ -85,7 +107,7 @@ const DeleteModal: React.FC<IDeleteModal> = ({
           >
             <Button
               variant="text"
-              color="error"
+              color="inherit"
               size="medium"
               startIcon={<Clear />}
               onClick={handleClose}
@@ -93,13 +115,13 @@ const DeleteModal: React.FC<IDeleteModal> = ({
               Cancel
             </Button>
             <Button
-              variant="outlined"
+              variant="contained"
               color="primary"
               size="medium"
               startIcon={<Check />}
-              onClick={() => handleOK()}
+              onClick={() => handleCloseModal()}
             >
-             {loading ? "Deleting..." : "Yes"} 
+             {loading ? "Deleting..." : "Ok"} 
             </Button>
           </Stack>
         </Stack>
