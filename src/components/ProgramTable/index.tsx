@@ -27,7 +27,6 @@ import {
 import { attachCommentsToProgram } from "../../utils";
 import CommentIcon from "@mui/icons-material/Comment";
 import Status from "../../utils/dumpData";
-import { BorderClear, BorderColor, Opacity } from "@mui/icons-material";
 
 const TabsProgramAreas = styled(Box)(({ theme }) => ({
   ".input-border": {

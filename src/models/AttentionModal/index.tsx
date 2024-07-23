@@ -80,6 +80,7 @@ const AttentionModal: React.FC<IAttentionModal> = ({
     // } else {
     //     console.error("handleClose is not defined");
     // }
+    console.log(heading);
   };
   return (
     <Modal
