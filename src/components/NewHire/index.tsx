@@ -20,7 +20,7 @@ export default function TabsNewHire({ employee, formik }: any) {
 
   const fetchAllBenefit = async () => {
     try {
-      const response = await getAllBenefit();
+      const response = await getAllBenefit("");
       setBenefit(response?.data?.centers);
     } catch (error) {}
   };

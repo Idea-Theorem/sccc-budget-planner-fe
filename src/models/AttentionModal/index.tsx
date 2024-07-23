@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import Check from "@mui/icons-material/Check";
 import Clear from "@mui/icons-material/Clear";
 import Modal from "@mui/material/Modal";
-import WarningAmberOutlinedIcon from '@mui/icons-material/WarningAmberOutlined';
+import WarningAmberOutlinedIcon from "@mui/icons-material/WarningAmberOutlined";
 
 const DepartmentInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
@@ -28,10 +28,10 @@ const DepartmentInfoArea = styled(Box)(({ theme }) => ({
     margin: "0 0 25px",
     display: "flex",
     alignItems: "center",
-    gap: '10px',
+    gap: "10px",
   },
 
-  "p": {
+  p: {
     marginBottom: "25px",
   },
 
@@ -61,7 +61,6 @@ interface IAttentionModal {
 }
 
 const AttentionModal: React.FC<IAttentionModal> = ({
-  heading,
   handleClose,
   open,
   loading,
@@ -89,7 +88,9 @@ const AttentionModal: React.FC<IAttentionModal> = ({
       aria-describedby="modal-modal-description"
     >
       <DepartmentInfoArea>
-        <Typography variant="h6"><WarningAmberOutlinedIcon /> Attention</Typography>
+        <Typography variant="h6">
+          <WarningAmberOutlinedIcon /> Attention
+        </Typography>
         <Typography>{text}</Typography>
         <Stack
           className="formButtons"

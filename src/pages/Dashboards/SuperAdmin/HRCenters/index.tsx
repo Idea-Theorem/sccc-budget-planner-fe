@@ -62,18 +62,8 @@ interface SuperAdminProps {
 }
 
 const HRCenters: React.FC<SuperAdminProps> = ({ name }) => {
-  // const { currentRole } = useAuth();
   const handleTabsDynamically = () => {
     return ["Community Centres"];
-    // if (handleRole(currentRole) == "HR") {
-    //   return ["Departments"];
-    // } else if (handleRole(currentRole) == "Admin") {
-    //   return ["Departments"];
-    // } else if (handleRole(currentRole) == "Super_Admin") {
-    //   return ["Community Centres"];
-    // } else {
-    //   return [];
-    // }
   };
   return (
     <StyledBox className="appContainer">

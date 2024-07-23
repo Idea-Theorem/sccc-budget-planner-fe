@@ -79,7 +79,7 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
 
   const fetchBenefits = async () => {
     try {
-      const response = await getAllBenefit();
+      const response = await getAllBenefit("");
       setBenefit(response?.data?.centers);
     } catch (error) {}
   };

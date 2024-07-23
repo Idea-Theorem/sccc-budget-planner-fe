@@ -445,7 +445,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
 
   const fetchBenefits = async () => {
     try {
-      const response = await getAllBenefit();
+      const response = await getAllBenefit("");
       setBenefit(response?.data?.centers);
     } catch (error) {}
   };
@@ -459,7 +459,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
 
   const fetchTitle = async () => {
     try {
-      const response = await getAllRole();
+      const response = await getAllRole("");
       setTitles(response?.data?.role);
     } catch (error) {}
   };
@@ -594,24 +594,6 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                   error={errors.password ? true : false}
                 />
               </Grid>
-              {/* <Grid className="selectGrid" item xs={6}>
-                <SelectDemo
-                  title="Department"
-                  value={activeDepartment}
-                  list={departments}
-                  receiveValue={receiveDepartments}
-                  error={errors.department_id ? true : false}
-                />
-                <Typography
-                  style={{
-                    color: "rgba(211, 47, 47, 1)",
-                    fontSize: "12px",
-                    fontWeight: "400",
-                  }}
-                >
-                  {errors.department_id ? errors.department_id.toString() : ""}
-                </Typography>
-              </Grid> */}
               <Grid className="selectGrid multiselectgrid" item xs={6}>
                 <InputLabel
                   id="demo-multiple-checkbox-label"

@@ -219,7 +219,7 @@ export default function ResponsiveDrawer(props: Props) {
   };
   React.useEffect(() => {
     switch (currentRole) {
-      case "Program_Head":
+      case "Coordinator":
         navigate("/program-head");
         break;
       case "Admin":

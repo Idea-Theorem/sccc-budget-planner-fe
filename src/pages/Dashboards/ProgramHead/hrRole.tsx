@@ -12,6 +12,7 @@ import { deleteRole, getAllRole } from "../../../services/roleServices";
 import RoleModal from "../../../models/RoleModal";
 import moment from "moment";
 import DeleteModal from "../../../models/DeleteModal";
+import InputSearch from "../../../components/Input";
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
@@ -26,7 +27,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
     h4: {
       fontSize: "20px",
       lineHeight: "1.2",
-      marginBottom: '0',
+      marginBottom: "0",
     },
   },
 
@@ -49,9 +50,9 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
   width: "100%",
   "&.MuiDataGrid-root": {
     borderWidth: "1px 0 0 0 !important",
-    borderRadius: '0',
-    marginTop: '15px',
-    paddingTop: '5px',
+    borderRadius: "0",
+    marginTop: "15px",
+    paddingTop: "5px",
     "&.MuiDataGrid-footerContainer": {
       border: "none",
     },
@@ -176,19 +177,19 @@ const HRRole = () => {
   const [open, setOpen] = React.useState(false);
   const [rowData, setRowData] = React.useState<any>(null);
 
-  const fetchCenters = async () => {
+  const fetchCenters = async (name: string) => {
     try {
-      const response = await getAllRole();
+      const response = await getAllRole(name);
       setCenter(response?.data.role);
     } catch (error) {}
   };
 
   useEffect(() => {
-    fetchCenters();
+    fetchCenters("");
   }, []);
 
   const handleCloseCommunityModal = () => {
-    fetchCenters();
+    fetchCenters("");
     setCommunityModal(false);
   };
 
@@ -203,7 +204,7 @@ const HRRole = () => {
       setLoading(true);
       await deleteRole(rowData?.id);
       closeModel();
-      fetchCenters();
+      fetchCenters("");
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -290,13 +291,16 @@ const HRRole = () => {
             onClick={handleClick}
             className="btn-add-title"
           />
+          <InputSearch
+            onChange={(e: any) => fetchCenters(e.target.value)}
+            placeholder="Search..."
+          />
         </Box>
-        {/* <InputSearch placeholder="Search..." /> */}
+
         {center.length == 0 ? (
           ""
         ) : (
           <StyleDataGrid
-            //  rows={center.length == 0 ? [] : center}
             rows={
               center.length === 0
                 ? []

@@ -412,7 +412,7 @@ const HrAddNewHire: React.FC<IHrAddEmployee> = ({
 
   const fetchBenefits = async () => {
     try {
-      const response = await getAllBenefit();
+      const response = await getAllBenefit("");
       setBenefit(response?.data?.centers);
     } catch (error) {}
   };
@@ -426,7 +426,7 @@ const HrAddNewHire: React.FC<IHrAddEmployee> = ({
 
   const fetchTitle = async () => {
     try {
-      const response = await getAllRole();
+      const response = await getAllRole("");
       setTitles(response?.data?.role);
     } catch (error) {}
   };

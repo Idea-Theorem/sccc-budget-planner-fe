@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { Button, Stack, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import Buttons from "../../../components/Button";
 import BenefitModal from "../../../models/BenefitModal";
@@ -12,6 +12,8 @@ import {
   deleteBenefit,
   getAllBenefit,
 } from "../../../services/benefitServices";
+import DeleteModal from "../../../models/DeleteModal";
+import InputSearch from "../../../components/Input";
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
@@ -48,9 +50,9 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
   width: "100%",
   "&.MuiDataGrid-root": {
     borderWidth: "1px 0 0 0 !important",
-    borderRadius: '0',
-    marginTop: '15px',
-    paddingTop: '5px',
+    borderRadius: "0",
+    marginTop: "15px",
+    paddingTop: "5px",
     "&.MuiDataGrid-footerContainer": {
       border: "none",
     },
@@ -158,10 +160,12 @@ const Benefit = () => {
   const [center, setCenter] = useState<any>([]);
   const [isCommunityOpen, setCommunityModal] = useState(false);
   const [centerHeading, setCenterHeading] = useState<string>("");
+  const [isOpen, setIsOpen] = React.useState<any>(false);
+  const [rowData, setRowData] = React.useState<any>(false);
 
-  const fetchCenters = async () => {
+  const fetchCenters = async (name: string) => {
     try {
-      const response = await getAllBenefit();
+      const response = await getAllBenefit(name);
       const newData = response?.data?.centers.map((item: any) => {
         return {
           ...item,
@@ -173,11 +177,11 @@ const Benefit = () => {
   };
 
   useEffect(() => {
-    fetchCenters();
+    fetchCenters("");
   }, []);
 
   const handleCloseCommunityModal = () => {
-    fetchCenters();
+    fetchCenters("");
     setCommunityModal(false);
   };
 
@@ -187,11 +191,12 @@ const Benefit = () => {
     setCenterHeading("Edit benefit");
   };
 
-  const handleDelete = async (data: any) => {
+  const handleDelete = async () => {
     try {
       setLoading(true);
-      await deleteBenefit(data?.id);
-      fetchCenters();
+      await deleteBenefit(rowData?.id);
+      fetchCenters("");
+      closeModel();
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -203,6 +208,9 @@ const Benefit = () => {
     setCenterHeading("Add New benefit");
   };
 
+  const closeModel = () => {
+    setIsOpen(false);
+  };
   const columns: GridColDef[] = [
     {
       field: "name",
@@ -229,7 +237,10 @@ const Benefit = () => {
             variant="text"
             size="small"
             startIcon={<DeleteOutlineIcon />}
-            onClick={() => handleDelete(data)}
+            onClick={() => {
+              setIsOpen(true);
+              setRowData(data);
+            }}
           >
             Delete
           </Button>
@@ -256,6 +267,7 @@ const Benefit = () => {
           <Typography className="page-title" variant="h4">
             Benefit Percentage
           </Typography>
+
           <Buttons
             variant="contained"
             color="primary"
@@ -264,6 +276,10 @@ const Benefit = () => {
             startIcon={<AddIcon />}
             onClick={handleClick}
             className="btn-add-title"
+          />
+          <InputSearch
+            onChange={(e: any) => fetchCenters(e.target.value)}
+            placeholder="Search..."
           />
         </Box>
         {center.length == 0 ? (
@@ -290,6 +306,13 @@ const Benefit = () => {
         subheading="Benefits Information"
         singleCenter={singleCenter}
         setSingleCenter={setSingleCenter}
+      />
+      <DeleteModal
+        open={isOpen}
+        handleOK={() => handleDelete()}
+        handleClose={closeModel}
+        loading={loading}
+        heading="Are you sure you want to delete?"
       />
     </>
   );

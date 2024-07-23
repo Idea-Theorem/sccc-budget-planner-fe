@@ -84,13 +84,7 @@ const RecreationAndCultureScreen = ({}: any) => {
           );
         },
       },
-      // {
-      //   field: "lYearBudget",
-      //   headerName: "Last Year Budget",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "programBudget",
         headerName: "Budget",
@@ -105,20 +99,7 @@ const RecreationAndCultureScreen = ({}: any) => {
           );
         },
       },
-      // {
-      //   field: "profit",
-      //   headerName: "Profit",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
-      // {
-      //   field: "nPrograms",
-      //   headerName: "No. Programs",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "created_at",
         headerName: "Submission Date",
@@ -139,6 +120,13 @@ const RecreationAndCultureScreen = ({}: any) => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{params?.row?._count?.Comment}</Box>
+            </Stack>
+          );
+        },
       },
     ],
     [
@@ -170,13 +158,7 @@ const RecreationAndCultureScreen = ({}: any) => {
           );
         },
       },
-      // {
-      //   field: "lYearBudget",
-      //   headerName: "Last Year Budget",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "programBudget",
         headerName: "Budget",
@@ -191,20 +173,7 @@ const RecreationAndCultureScreen = ({}: any) => {
           );
         },
       },
-      // {
-      //   field: "profit",
-      //   headerName: "Profit",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
-      // {
-      //   field: "nPrograms",
-      //   headerName: "No. Programs",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "created_at",
         headerName: "Submission Date",
@@ -225,6 +194,13 @@ const RecreationAndCultureScreen = ({}: any) => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{params?.row?._count?.Comment}</Box>
+            </Stack>
+          );
+        },
       },
     ],
     [
@@ -256,13 +232,7 @@ const RecreationAndCultureScreen = ({}: any) => {
           );
         },
       },
-      // {
-      //   field: "lYearBudget",
-      //   headerName: "Last Year Budget",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "programBudget",
         headerName: "Budget",
@@ -277,20 +247,7 @@ const RecreationAndCultureScreen = ({}: any) => {
           );
         },
       },
-      // {
-      //   field: "profit",
-      //   headerName: "Profit",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
-      // {
-      //   field: "nPrograms",
-      //   headerName: "No. Programs",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "created_at",
         headerName: "Submission Date",
@@ -311,6 +268,13 @@ const RecreationAndCultureScreen = ({}: any) => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{params?.row?._count?.Comment}</Box>
+            </Stack>
+          );
+        },
       },
     ],
   ];

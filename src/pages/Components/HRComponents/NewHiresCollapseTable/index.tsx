@@ -134,37 +134,35 @@ function Row(props: {
   handleClick: any;
   employeeData?: any;
   handleDelete?: any;
-  setIsOpen?: any
-  isOpen?: any
-  loading?: any
+  setIsOpen?: any;
+  isOpen?: any;
+  loading?: any;
 }) {
-  const { row, handleClick, handleDelete, isOpen ,setIsOpen, loading} = props;
+  const { row, handleClick, handleDelete, isOpen, setIsOpen, loading } = props;
   const [open, setOpen] = React.useState(false);
   // const [isOpen, setIsOpen] = React.useState<any>(false);
   const [currentRow, setCurrentRow] = React.useState<any>("");
   const [titles, setTitles] = React.useState<any>([]);
-
-
 
   const closeModel = () => {
     setIsOpen(false);
   };
 
   React.useEffect(() => {
-    fetchTitle()
-  }, [])
+    fetchTitle();
+  }, []);
 
   const fetchTitle = async () => {
     try {
-      const response = await getAllRole();
+      const response = await getAllRole("");
       setTitles(response?.data?.role);
     } catch (error) {}
   };
 
   const fetchTitleName = (id: any) => {
     const findtitle = titles.find((item: any) => item.id === id);
-    return findtitle?.name
-  }
+    return findtitle?.name;
+  };
   return (
     <React.Fragment>
       <TableRow>
@@ -172,9 +170,7 @@ function Row(props: {
           <IconButton
             aria-label="expand row"
             size="small"
-            onClick={() => setOpen(!open)
-              
-            }
+            onClick={() => setOpen(!open)}
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
@@ -200,10 +196,9 @@ function Row(props: {
               color="error"
               size="small"
               startIcon={<DeleteOutlineIcon />}
-              onClick={() =>{ 
-                setCurrentRow(row)
+              onClick={() => {
+                setCurrentRow(row);
                 setIsOpen(true);
-
               }}
             >
               Delete
@@ -227,8 +222,9 @@ function Row(props: {
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                  
-                    <TableCell style={{ paddingLeft: "62px" }}>Email Address</TableCell>
+                    <TableCell style={{ paddingLeft: "62px" }}>
+                      Email Address
+                    </TableCell>
                     <TableCell>Hourly Rate</TableCell>
                     <TableCell>Benefit %</TableCell>
                   </TableRow>
@@ -237,7 +233,7 @@ function Row(props: {
                   {row?.employeDepartments?.map((element: any) => (
                     <TableRow key={row.id}>
                       <TableCell style={{ paddingLeft: "62px" }}>
-                      {element?.department?.name.toLowerCase()}
+                        {element?.department?.name.toLowerCase()}
                       </TableCell>
                       <TableCell style={{ textTransform: "capitalize" }}>
                         {fetchTitleName(element?.title)}
@@ -246,9 +242,7 @@ function Row(props: {
                         {element?.hourlyRate?.toLowerCase()}
                       </TableCell>
                       <TableCell style={{ textTransform: "capitalize" }}>
-                        {element?.salaryRate
-                          ?.toLowerCase()
-                          ?.replace(/_/g, " ")}
+                        {element?.salaryRate?.toLowerCase()?.replace(/_/g, " ")}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -288,7 +282,7 @@ export default function NewHiresCollapsibleTable({
   handleClick,
   employeeData,
   refresh,
-  onChange
+  onChange,
 }: any) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -309,12 +303,12 @@ export default function NewHiresCollapsibleTable({
 
   const handleDelete = async (data: any) => {
     try {
-      setLoading(true)
-     await DeleteNewhire(data?.otherinfo?.program_id, data?.emp_id)
-     
-     await refresh();
-      setLoading(false)
-      setIsOpen(false)
+      setLoading(true);
+      await DeleteNewhire(data?.otherinfo?.program_id, data?.emp_id);
+
+      await refresh();
+      setLoading(false);
+      setIsOpen(false);
       setStatusData({
         type: "success",
         message: "New hires Deleted Successfully",
@@ -324,7 +318,7 @@ export default function NewHiresCollapsibleTable({
         type: "error",
         message: error.response.data.message,
       });
-      setLoading(false)
+      setLoading(false);
     }
   };
 
@@ -346,7 +340,7 @@ export default function NewHiresCollapsibleTable({
             <SaveAlt />
           </IconButton>
           <TextField
-            id="input-with-icon-textfield" 
+            id="input-with-icon-textfield"
             placeholder="Search..."
             InputProps={{
               startAdornment: (

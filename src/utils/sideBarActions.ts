@@ -2,7 +2,7 @@ import { SidebarAction } from "../types/common";
 
 export const SIDEBARACTIONS: SidebarAction[] = [
   {
-    role: "Program_Head",
+    role: "Coordinator",
     title: "Programs",
     path: "/program-head",
     more: [
