@@ -420,7 +420,7 @@ const MainSection = ({
                     key={0}
                     btntext="submit"
                     onClick={(e: any) => handleCustomeSubmit(e)}
-                    variant="outlined"
+                    variant="contained"
                     color="primary"
                     size="medium"
                     startIcon={<SaveOutlinedIcon />}
