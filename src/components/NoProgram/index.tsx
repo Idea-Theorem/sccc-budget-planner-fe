@@ -14,6 +14,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
   "&.programsEmptyBox": {
     minHeight: "281px",
     display: "flex",
+    marginTop: "25px",
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",

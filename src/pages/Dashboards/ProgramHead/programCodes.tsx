@@ -18,11 +18,11 @@ const StyledBox = styled(Box)(({ theme }) => ({
   },
 
   ".MuiTypography-h3": {
-    margin: " 0 0 33px",
+    margin: " 0 0 20px",
   },
 
   ".MuiTypography-h6": {
-    margin: " 0 0 23px",
+    margin: " 0 0 15px",
   },
 
   "& .MuiDataGrid-toolbarContainer": {
@@ -43,8 +43,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
 const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
   width: "100%",
   "&.MuiDataGrid-root": {
-    borderWidth: "0 !important",
-    borderStyle: "none",
+    borderWidth: "1px 0 0 !important",
     "&.MuiDataGrid-footerContainer": {
       border: "none",
     },
