@@ -13,7 +13,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
     position: "relative",
-    borderTop: '1px solid rgba(224, 224, 224, 1)',
+    borderTop: "1px solid rgba(224, 224, 224, 1)",
   },
 
   "& .MuiDataGrid-toolbarContainer": {
@@ -154,10 +154,16 @@ interface HRTableProps {
   onEdit?: any;
   row?: any;
   refresh?: any;
-  onChange?: any
-  departmentsLoading?: any
+  onChange?: any;
+  departmentsLoading?: any;
 }
-const HRTableComponent: React.FC<HRTableProps> = ({ onEdit, row, refresh, onChange, departmentsLoading }) => {
+const HRTableComponent: React.FC<HRTableProps> = ({
+  onEdit,
+  row,
+  refresh,
+  onChange,
+  departmentsLoading,
+}) => {
   const [deleteRow, setDeleteRow] = useState<any>(false);
   const [loading, setLoading] = useState<any>(false);
   const [statusData, setStatusData] = useState<any>(null);
@@ -170,13 +176,20 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit, row, refresh, onChan
       editable: false,
       flex: 1,
     },
-    // {
-    //   field: "status",
-    //   headerName: "Employee Count",
-    //   sortable: false,
-    //   editable: false,
-    //   flex: 1,
-    // },
+    {
+      field: "status",
+      headerName: "Employee Count",
+      sortable: false,
+      editable: false,
+      flex: 1,
+      renderCell: (params: any) => {
+        return (
+          <Stack>
+            <Box>{params?.row?._count?.EmployeeDepartment}</Box>
+          </Stack>
+        );
+      },
+    },
     {
       field: "created_at",
       headerName: "Date Created",
@@ -251,7 +264,7 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit, row, refresh, onChan
       <StyledBox className="mainTableBlock">
         <InputSearch placeholder="Search..." onChange={onChange} />
         <StyleDataGrid
-         loading={departmentsLoading}
+          loading={departmentsLoading}
           rows={row || []}
           columns={columns}
           initialState={{
