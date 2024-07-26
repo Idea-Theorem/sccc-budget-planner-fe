@@ -33,8 +33,9 @@ import Benefit from "../pages/Dashboards/ProgramHead/benefit";
 import ForgotPasswordScreen from "../pages/Forgotpassword";
 import ResetPasswordScreen from "../pages/Resetpassword";
 import ExpiredProgram from "../pages/Dashboards/ProgramHead/expireProgram";
-import HRDepartment from "../pages/Dashboards/SuperAdmin/HRDepartment";
-import HRCenters from "../pages/Dashboards/SuperAdmin/HRCenters";
+
+import Center from "../pages/Dashboards/ProgramHead/centers";
+import Departments from "../pages/Dashboards/ProgramHead/departments";
 
 const authRoutes: RouteObject = {
   path: "*",
@@ -167,8 +168,8 @@ const hrRoute: RouteObject = {
         { path: "settings", element: <HRSettings /> },
         { path: "role", element: <HRRole /> },
         { path: "benefits", element: <Benefit /> },
-        { path: "departments", element: <HRDepartment name="Departments" /> },
-        { path: "centers", element: <HRCenters name="Centers" /> },
+        { path: "departments", element: <Departments /> },
+        { path: "centers", element: <Center /> },
       ],
     },
   ],

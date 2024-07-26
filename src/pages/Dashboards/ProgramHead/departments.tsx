@@ -1,19 +1,37 @@
 import { styled } from "@mui/material/styles";
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
-import InputSearch from "../../../../components/Input";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteIcon from "@mui/icons-material/EditNote";
-import { Button, Stack } from "@mui/material";
-import { useState } from "react";
-import DeleteModal from "../../../../models/DeleteModal";
-import { deleteDepartment } from "../../../../services/departmentServices";
-import StatusModal from "../../../../components/StatusModal";
+import { Button, Stack, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import AddIcon from "@mui/icons-material/Add";
+import Buttons from "../../../components/Button";
+
+import DeleteModal from "../../../models/DeleteModal";
+import InputSearch from "../../../components/Input";
+
+import {
+  deleteDepartment,
+  getAllDepartments,
+} from "../../../services/departmentServices";
+import DepartmentInfo from "../../../models/HrDepartment";
+import StatusModal from "../../../components/StatusModal";
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
     position: "relative",
-    borderTop: "1px solid rgba(224, 224, 224, 1)",
+  },
+
+  ".page-subheader": {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+
+    h4: {
+      fontSize: "20px",
+      lineHeight: "1.2",
+    },
   },
 
   "& .MuiDataGrid-toolbarContainer": {
@@ -34,8 +52,10 @@ const StyledBox = styled(Box)(({ theme }) => ({
 const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
   width: "100%",
   "&.MuiDataGrid-root": {
-    borderWidth: "0 !important",
-    borderStyle: "none",
+    borderWidth: "1px 0 0 0 !important",
+    borderRadius: "0",
+    marginTop: "15px",
+    paddingTop: "5px",
     "&.MuiDataGrid-footerContainer": {
       border: "none",
     },
@@ -136,38 +156,69 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
   },
 }));
 
-// const rows = [
-//   {
-//     id: 1,
-//     name: "Recreation & Culture",
-//     // status: "5",
-//     lYearBudget: "02-Mar-2024",
-//   },
-//   {
-//     id: 2,
-//     name: "HR",
-//     // status: "5",
-//     lYearBudget: "02-Mar-2024",
-//   },
-// ];
-interface HRTableProps {
-  onEdit?: any;
-  row?: any;
-  refresh?: any;
-  onChange?: any;
-  departmentsLoading?: any;
-}
-const HRTableComponent: React.FC<HRTableProps> = ({
-  onEdit,
-  row,
-  refresh,
-  onChange,
-  departmentsLoading,
-}) => {
+const Departments = () => {
+  const [statusData, setStatusData] = useState<any>(null);
+  const [singleDepartments, setDingleDepartments] = useState<any>(null);
+  const [isDepartOpen, setIsDepartopen] = useState(false);
+  const [departments, setDepartments] = useState<any>(null);
+  const [departmentsLoading, setDepartmentsLoading] = useState<any>(false);
+  const [departHeading, setDepartHeading] = useState<string>("");
+  const [isOpen, setIsOpen] = useState<any>(false);
   const [deleteRow, setDeleteRow] = useState<any>(false);
   const [loading, setLoading] = useState<any>(false);
-  const [statusData, setStatusData] = useState<any>(null);
 
+  useEffect(() => {
+    fetchDepartments("");
+  }, []);
+
+  const fetchDepartments = async (value: string) => {
+    try {
+      setDepartmentsLoading(true);
+      const response = await getAllDepartments(value);
+      setDepartmentsLoading(false);
+      closeModel();
+      setDepartments(response?.data?.departments);
+    } catch (error) {
+      setDepartmentsLoading(false);
+    }
+  };
+  const handleCloseDepartmentModal = () => {
+    fetchDepartments("");
+    setIsDepartopen(false);
+  };
+  const onEdit = (data: any) => {
+    setDingleDepartments(data?.row);
+    setIsDepartopen(true);
+    setDepartHeading("Edit Department");
+  };
+
+  const handleDelete = async () => {
+    try {
+      setLoading(true);
+      await deleteDepartment(deleteRow?.id);
+      setLoading(false);
+      setStatusData({
+        type: "success",
+        message: "Department Deleted Successfully",
+      });
+      handleCloseDepartmentModal();
+      handleCloseDepartmentModal();
+    } catch (error: any) {
+      setStatusData({
+        type: "error",
+        message: error.response.data.message,
+      });
+      setLoading(false);
+    }
+  };
+  const handleClick = () => {
+    setIsDepartopen(true);
+    setDepartHeading("Add New Department");
+  };
+  const handleDepartmentCenters = async (e: any) => {
+    const { value } = e.target;
+    await fetchDepartments(value);
+  };
   const columns: GridColDef[] = [
     {
       field: "name",
@@ -234,61 +285,76 @@ const HRTableComponent: React.FC<HRTableProps> = ({
       ),
     },
   ];
-
-  const [isOpen, setIsOpen] = useState<any>(false);
   const closeModel = () => {
     setIsOpen(false);
-  };
-
-  const handleDelete = async () => {
-    try {
-      setLoading(true);
-      await deleteDepartment(deleteRow?.id);
-      setLoading(false);
-      setStatusData({
-        type: "success",
-        message: "Department Deleted Successfully",
-      });
-      refresh();
-      closeModel();
-    } catch (error: any) {
-      setStatusData({
-        type: "error",
-        message: error.response.data.message,
-      });
-      setLoading(false);
-    }
   };
   return (
     <>
       <StyledBox className="mainTableBlock">
-        <InputSearch placeholder="Search..." onChange={onChange} />
-        <StyleDataGrid
-          loading={departmentsLoading}
-          rows={row || []}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 5 },
-            },
-          }}
-          pageSizeOptions={[5, 10, 15]}
-          disableRowSelectionOnClick
-          slots={{ toolbar: GridToolbar }}
+        <Typography className="page-title" variant="h3">
+          HR (Human Resources)
+        </Typography>
+        <Box className="page-subheader">
+          <Typography className="page-title" variant="h4">
+            Departments
+          </Typography>
+
+          <Buttons
+            variant="contained"
+            color="primary"
+            size="medium"
+            btntext="Add New Department"
+            startIcon={<AddIcon />}
+            onClick={handleClick}
+            className="btn-add-title"
+          />
+          <InputSearch
+            onChange={(e: any) => handleDepartmentCenters(e)}
+            placeholder="Search..."
+          />
+        </Box>
+        {departments?.length == 0 ? (
+          ""
+        ) : (
+          <StyleDataGrid
+            loading={departmentsLoading}
+            rows={
+              typeof departments == "undefined" || !departments
+                ? []
+                : departments
+            }
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 5 },
+              },
+            }}
+            pageSizeOptions={[5, 10, 15]}
+            disableRowSelectionOnClick
+            slots={{ toolbar: GridToolbar }}
+          />
+        )}
+        <DeleteModal
+          open={isOpen}
+          handleOK={() => handleDelete()}
+          handleClose={closeModel}
+          loading={loading}
+          heading="Are you sure you want to delete?"
+        />
+        <DepartmentInfo
+          open={isDepartOpen}
+          handleClose={handleCloseDepartmentModal}
+          heading={departHeading}
+          subheading="Department Information"
+          singleDepartments={singleDepartments}
+          setDingleDepartments={setDingleDepartments}
+        />
+        <StatusModal
+          statusData={statusData}
+          onClose={() => setStatusData(null)}
         />
       </StyledBox>
-      <DeleteModal
-        open={isOpen}
-        handleOK={() => handleDelete()}
-        handleClose={closeModel}
-        loading={loading}
-        heading="Are you sure you want to delete?"
-      />
-      <StatusModal
-        statusData={statusData}
-        onClose={() => setStatusData(null)}
-      />
     </>
   );
 };
-export default HRTableComponent;
+export default Departments;
