@@ -37,7 +37,7 @@ const StyledBox = styled(Box)(({}) => ({
     },
   },
   ".MuiTypography-h3": {
-    margin: " 0 0 33px",
+    margin: " 0 0 20px",
   },
 
   ".MuiTypography-h6": {

@@ -20,6 +20,11 @@ const StyledBox = styled(Box)(({ theme }) => ({
     position: "relative",
   },
 
+  ".inner-table-holder": {
+    position: "relative",
+    minHeight: "80px",
+  },
+
   ".page-subheader": {
     display: "flex",
     alignItems: "center",
@@ -277,27 +282,30 @@ const Benefit = () => {
             onClick={handleClick}
             className="btn-add-title"
           />
+        </Box>
+        
+        <div className="inner-table-holder">
           <InputSearch
             onChange={(e: any) => fetchCenters(e.target.value)}
             placeholder="Search..."
           />
-        </Box>
-        {center.length == 0 ? (
-          ""
-        ) : (
-          <StyleDataGrid
-            rows={center.length == 0 ? [] : center}
-            columns={columns}
-            initialState={{
-              pagination: {
-                paginationModel: { page: 0, pageSize: 5 },
-              },
-            }}
-            pageSizeOptions={[5, 10, 15]}
-            disableRowSelectionOnClick
-            slots={{ toolbar: GridToolbar }}
-          />
-        )}
+          {center.length == 0 ? (
+            ""
+          ) : (
+              <StyleDataGrid
+                rows={center.length == 0 ? [] : center}
+                columns={columns}
+                initialState={{
+                  pagination: {
+                    paginationModel: { page: 0, pageSize: 5 },
+                  },
+                }}
+                pageSizeOptions={[5, 10, 15]}
+                disableRowSelectionOnClick
+                slots={{ toolbar: GridToolbar }}
+              />
+          )}
+          </div>
       </StyledBox>
       <BenefitModal
         open={isCommunityOpen}

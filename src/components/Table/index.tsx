@@ -6,6 +6,10 @@ const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
     position: "relative",
+
+    ".MuiDataGrid-footerContainer": {
+      border: "none",
+    },
   },
 
   "& .MuiDataGrid-toolbarContainer": {

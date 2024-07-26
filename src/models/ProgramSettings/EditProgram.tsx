@@ -151,7 +151,7 @@ const EditProgramModal: React.FC<IHrAddEmployee> = ({
         >
           <Button
             variant="text"
-            color="error"
+            color="inherit"
             size="medium"
             startIcon={<Clear />}
             onClick={handleClose}
