@@ -625,11 +625,11 @@ const SuperReviewBudget = () => {
   };
   const handleSingleRow = async (row: any) => {
     if (step == 2) {
-      if (row?.status == Status.PENDING) {
-        dispatch(storeSingleProgram(row));
-        dispatch(storeProgramFromStatus(Status.DEFAULT));
-        navigate("/program-head/create");
-      }
+      // if (row?.status == Status.PENDING) {
+      dispatch(storeSingleProgram(row));
+      dispatch(storeProgramFromStatus(Status.DEFAULT));
+      navigate("/program-head/create");
+      // }
       return;
     }
     if (step == 1) {

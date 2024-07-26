@@ -364,6 +364,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
         salaryRate: "",
       },
     ]);
+    setPersonName([]);
     formik.resetForm();
     handleClose();
   };
@@ -517,11 +518,6 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
     setData(newData);
   };
 
-  const handleModalClose = () => {
-    formik.resetForm();
-    handleClose();
-  };
-
   return (
     <>
       <StatusModal
@@ -530,7 +526,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
       />
       <Modal
         open={open}
-        onClose={handleModalClose}
+        onClose={handleClear}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >

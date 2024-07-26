@@ -7,7 +7,7 @@ import { Clear } from "@mui/icons-material"; // Import Clear icon from Material-
 import Grid from "@mui/material/Grid"; // Import Grid component from MUI
 import Modal from "@mui/material/Modal";
 import { useFormik } from "formik";
-import { createCentresSchema } from "../../utils/yupSchema";
+import { createCentresSchema, createProfitSchema } from "../../utils/yupSchema";
 import { TextField } from "@mui/material";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import { createBenefit, updateBenefit } from "../../services/benefitServices";
@@ -137,7 +137,7 @@ const BenefitModal: React.FC<IDepartmentInfo> = ({
   console.log(heading);
   const formik = useFormik<any>({
     validateOnBlur: false,
-    validationSchema: createCentresSchema,
+    validationSchema: createProfitSchema,
     enableReinitialize: true,
     initialValues: {
       name: singleCenter?.name ? singleCenter?.name : "",

@@ -17,6 +17,7 @@ import {
 } from "../../../services/departmentServices";
 import DepartmentInfo from "../../../models/HrDepartment";
 import StatusModal from "../../../components/StatusModal";
+import moment from "moment";
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
@@ -247,6 +248,13 @@ const Departments = () => {
       sortable: false,
       editable: false,
       flex: 1,
+      renderCell: (params: any) => {
+        return (
+          <Stack>
+            <Box>{moment(params?.row?.created_at).format("D-MMM YYYY")}</Box>
+          </Stack>
+        );
+      },
     },
     {
       field: "buttonsColumn",

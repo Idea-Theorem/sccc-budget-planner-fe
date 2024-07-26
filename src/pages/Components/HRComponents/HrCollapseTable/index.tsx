@@ -26,6 +26,7 @@ import StatusModal from "../../../../components/StatusModal";
 import DeleteModal from "../../../../models/DeleteModal";
 import { getAllRole } from "../../../../services/roleServices";
 import { roleSort } from "../../../../utils";
+import moment from "moment";
 
 const HrCollapseableTable = styled(Box)(({ theme }) => ({
   ".MuiTableCell-root": {
@@ -98,7 +99,6 @@ const HrCollapseableTable = styled(Box)(({ theme }) => ({
     },
   },
 
-  
   "& .MuiButton-root": {
     color: "#979797",
     fontSize: "14px",
@@ -233,7 +233,7 @@ function Row(props: {
         <TableCell style={{ textTransform: "capitalize" }}>
           {row?.department?.name}
         </TableCell>
-        <TableCell>{row?.hire_date}</TableCell>
+        <TableCell>{moment(row?.hire_date).format("D-MMM YYYY")}</TableCell>
         <TableCell>
           <Stack
             direction="row"

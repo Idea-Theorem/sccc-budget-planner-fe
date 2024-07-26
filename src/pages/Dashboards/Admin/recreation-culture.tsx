@@ -303,11 +303,11 @@ const RecreationAndCultureScreen = ({}: any) => {
   }, [tabstatus]);
 
   const onRowClick = (data: any) => {
-    if (data?.status == Status.PENDING) {
-      dispatch(storeSingleProgram(data));
-      dispatch(storeProgramFromStatus(Status.DEFAULT));
-      navigate("/program-head/create");
-    }
+    // if (data?.status == Status.PENDING) {
+    dispatch(storeSingleProgram(data));
+    dispatch(storeProgramFromStatus(Status.DEFAULT));
+    navigate("/program-head/create");
+    // }
   };
   return (
     <StyledBox className="appContainer">
