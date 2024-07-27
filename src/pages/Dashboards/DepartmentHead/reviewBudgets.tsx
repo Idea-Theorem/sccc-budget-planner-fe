@@ -381,6 +381,7 @@ const DHReviewBudgets = () => {
       </LoadingContainer>
     );
   }
+
   return (
     <StyledBox className="appContainer">
       <Box className="reviewBudgetHead">

@@ -233,10 +233,6 @@ const TableComponent = (props: ColumnnsProps) => {
           placeholder="Search..."
           onChange={(e: any) => props?.handleProgramSearch(e?.target?.value)}
         />
-        {/* {props.loading && 
-        
-        <LinearProgress color="success" />
-        } */}
         <Box style={{ height: props.loading ? 300 : "", minHeight: 300 }}>
           <StyleDataGrid
             rows={props.loading ? [] : props.row}

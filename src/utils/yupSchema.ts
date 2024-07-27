@@ -22,8 +22,14 @@ export const createEmployeeSchema = yup.object().shape({
 });
 
 export const editEmployeeSchema = yup.object().shape({
-  firstname: yup.string().required("First Name is required!"),
-  lastname: yup.string().required("Last Name is required!"),
+  firstname: yup
+    .string()
+    .matches(/^[A-Za-z]+$/, "Only alphabetic characters are allowed")
+    .required("First Name is required!"),
+  lastname: yup
+    .string()
+    .matches(/^[A-Za-z]+$/, "Only alphabetic characters are allowed")
+    .required("Last Name is required!"),
   email: yup
     .string()
     .email("enter a valid email")
@@ -97,8 +103,8 @@ export const createCentresSchema = yup.object().shape({
 export const createProfitSchema = yup.object().shape({
   name: yup
     .number()
-    .typeError("Number field must be a number")
-    .required("Number field is required!")
+    .typeError("Profit field must be a number")
+    .required("Profit is required!")
     .test(
       "no-spaces-special-chars",
       "Number field must not contain spaces or special characters",

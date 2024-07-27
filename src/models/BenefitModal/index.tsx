@@ -177,6 +177,7 @@ const BenefitModal: React.FC<IDepartmentInfo> = ({
           <Grid container spacing={4}>
             <Grid item xs={12}>
               <TextField
+                error={errors.name ? true : false}
                 type="string"
                 variant="standard"
                 label="Benefits"
