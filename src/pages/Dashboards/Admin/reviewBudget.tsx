@@ -49,6 +49,8 @@ const ReviewBudgetScreen = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          capitalizeFirstLetter(params?.row?.status),
       },
 
       {
@@ -64,6 +66,7 @@ const ReviewBudgetScreen = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) => formatNumber(params?.row?.totalBudget),
       },
 
       {
@@ -79,6 +82,7 @@ const ReviewBudgetScreen = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) => params?.row?._count?.Program,
       },
       {
         field: "created_at",
@@ -93,6 +97,8 @@ const ReviewBudgetScreen = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          moment(params?.row?.created_at).format("D-MMM YYYY"),
       },
       {
         field: "totalComments",
@@ -123,6 +129,8 @@ const ReviewBudgetScreen = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          capitalizeFirstLetter(params?.row?.status),
       },
 
       {
@@ -138,6 +146,7 @@ const ReviewBudgetScreen = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) => formatNumber(params?.row?.totalBudget),
       },
 
       {
@@ -153,6 +162,7 @@ const ReviewBudgetScreen = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) => params?.row?._count?.Program,
       },
       {
         field: "created_at",
@@ -167,6 +177,8 @@ const ReviewBudgetScreen = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          moment(params?.row?.created_at).format("D-MMM YYYY"),
       },
       {
         field: "totalComments",
@@ -197,6 +209,8 @@ const ReviewBudgetScreen = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          capitalizeFirstLetter(params?.row?.status),
       },
 
       {
@@ -212,6 +226,7 @@ const ReviewBudgetScreen = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) => formatNumber(params?.row?.totalBudget),
       },
 
       {
@@ -227,6 +242,7 @@ const ReviewBudgetScreen = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) => params?.row?._count?.Program,
       },
       {
         field: "created_at",
@@ -241,6 +257,8 @@ const ReviewBudgetScreen = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          moment(params?.row?.created_at).format("D-MMM YYYY"),
       },
       {
         field: "totalComments",

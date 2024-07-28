@@ -175,10 +175,7 @@ const Center = () => {
   const closeModel = () => {
     setIsOpen(false);
   };
-  // const handleSearchCenters = async (e: any) => {
-  //   const { value } = e.target;
-  //   await fetchCenters(value);
-  // };
+
   console.log(loading);
   const onCommunityEdit = (data: any) => {
     setSingleCenter(data.row);
@@ -214,11 +211,7 @@ const Center = () => {
       editable: false,
       flex: 1,
     },
-    // {
-    //   field: "status",
-    //   headerName: "Employee Count",
-    //   sortable: false,
-    //   editable: false,
+
     //   flex: 1,
     // },
     {
@@ -234,9 +227,11 @@ const Center = () => {
           </Stack>
         );
       },
+      valueGetter: (params: any) =>
+        moment(params.row?.created_at).format("D-MMM YYYY"),
     },
     {
-      field: "buttonsColumn",
+      field: "",
       headerName: "",
       flex: 0.5,
       renderCell: (data: any) => (

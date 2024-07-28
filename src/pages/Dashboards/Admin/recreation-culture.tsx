@@ -69,6 +69,8 @@ const RecreationAndCultureScreen = ({}: any) => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          params?.row?.code + "-" + params?.row?.name,
       },
       {
         field: "status",
@@ -83,6 +85,8 @@ const RecreationAndCultureScreen = ({}: any) => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          capitalizeFirstLetter(params?.row?.status),
       },
 
       {
@@ -98,6 +102,7 @@ const RecreationAndCultureScreen = ({}: any) => {
             </Stack>
           );
         },
+        valueGetter: (params: any) => formatNumber(params?.row?.programBudget),
       },
 
       {
@@ -113,6 +118,8 @@ const RecreationAndCultureScreen = ({}: any) => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          moment(params?.row?.created_at).format("D-MMM YYYY"),
       },
       {
         field: "comments",
@@ -127,6 +134,7 @@ const RecreationAndCultureScreen = ({}: any) => {
             </Stack>
           );
         },
+        valueGetter: (params: any) => params?.row?._count?.Comment,
       },
     ],
     [
@@ -143,6 +151,8 @@ const RecreationAndCultureScreen = ({}: any) => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          params?.row?.code + "-" + params?.row?.name,
       },
       {
         field: "status",
@@ -157,6 +167,8 @@ const RecreationAndCultureScreen = ({}: any) => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          capitalizeFirstLetter(params?.row?.status),
       },
 
       {
@@ -172,6 +184,7 @@ const RecreationAndCultureScreen = ({}: any) => {
             </Stack>
           );
         },
+        valueGetter: (params: any) => formatNumber(params?.row?.programBudget),
       },
 
       {
@@ -187,6 +200,8 @@ const RecreationAndCultureScreen = ({}: any) => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          moment(params?.row?.created_at).format("D-MMM YYYY"),
       },
       {
         field: "comments",
@@ -201,6 +216,7 @@ const RecreationAndCultureScreen = ({}: any) => {
             </Stack>
           );
         },
+        valueGetter: (params: any) => params?.row?._count?.Comment,
       },
     ],
     [
@@ -217,6 +233,8 @@ const RecreationAndCultureScreen = ({}: any) => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          params?.row?.code + "-" + params?.row?.name,
       },
       {
         field: "status",
@@ -231,6 +249,8 @@ const RecreationAndCultureScreen = ({}: any) => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          capitalizeFirstLetter(params?.row?.status),
       },
 
       {
@@ -246,6 +266,7 @@ const RecreationAndCultureScreen = ({}: any) => {
             </Stack>
           );
         },
+        valueGetter: (params: any) => formatNumber(params?.row?.programBudget),
       },
 
       {
@@ -261,6 +282,8 @@ const RecreationAndCultureScreen = ({}: any) => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          moment(params?.row?.created_at).format("D-MMM YYYY"),
       },
       {
         field: "comments",
@@ -275,6 +298,7 @@ const RecreationAndCultureScreen = ({}: any) => {
             </Stack>
           );
         },
+        valueGetter: (params: any) => params?.row?._count?.Comment,
       },
     ],
   ];

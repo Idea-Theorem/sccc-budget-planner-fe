@@ -18,14 +18,15 @@ import EditNoteIcon from "@mui/icons-material/EditNote";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { DeleteNewhire } from "../../../../services/employeeServices";
-import { SaveAlt, Search } from "@mui/icons-material";
-import * as XLSX from "xlsx";
+
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import StatusModal from "../../../../components/StatusModal";
 import DeleteModal from "../../../../models/DeleteModal";
 import { getAllRole } from "../../../../services/roleServices";
 import moment from "moment";
+import NewHireCsv from "../../../../components/NewHireCsv";
+import { Search } from "@mui/icons-material";
 
 const HrCollapseableTable = styled(Box)(({ theme }) => ({
   ".MuiTableCell-root": {
@@ -324,21 +325,6 @@ function Row(props: {
   );
 }
 
-// const rows = [
-//   createData(
-//     "Tomohiro Komase",
-//     "Program Head",
-//     "Recreation & Culture",
-//     "02-Mar-2024"
-//   ),
-//   createData(
-//     "Vishesh Thind",
-//     "Department Head",
-//     "Recreation & Culture",
-//     "02-Mar-2024"
-//   ),
-// ];
-
 export default function NewHiresCollapsibleTable({
   handleClick,
   employeeData,
@@ -349,7 +335,6 @@ export default function NewHiresCollapsibleTable({
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [statusData, setStatusData] = React.useState<any>(null);
   const [isOpen, setIsOpen] = React.useState<any>(false);
-  const [loading, setLoading] = React.useState<any>(false);
 
   const handleChangePage = (_: unknown, newPage: number) => {
     setPage(newPage);
@@ -362,33 +347,6 @@ export default function NewHiresCollapsibleTable({
     setPage(0);
   };
 
-  const handleDelete = async (data: any) => {
-    try {
-      setLoading(true);
-      await DeleteNewhire(data?.otherinfo?.program_id, data?.emp_id);
-
-      await refresh();
-      setLoading(false);
-      setIsOpen(false);
-      setStatusData({
-        type: "success",
-        message: "New hires Deleted Successfully",
-      });
-    } catch (error: any) {
-      setStatusData({
-        type: "error",
-        message: error.response.data.message,
-      });
-      setLoading(false);
-    }
-  };
-
-  const exportToExcel = () => {
-    const worksheet = XLSX.utils.json_to_sheet(employeeData);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Data");
-    XLSX.writeFile(workbook, "data.xlsx");
-  };
   return (
     <>
       <HrCollapseableTable className="dashboardTable pt-0">
@@ -397,9 +355,8 @@ export default function NewHiresCollapsibleTable({
           alignItems="center"
           justifyContent="space-between"
         >
-          <IconButton aria-label="export" onClick={exportToExcel}>
-            <SaveAlt />
-          </IconButton>
+          <NewHireCsv data={employeeData} />
+
           <TextField
             id="input-with-icon-textfield"
             placeholder="Search..."

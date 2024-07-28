@@ -43,7 +43,7 @@ export const editEmployeeSchema = yup.object().shape({
 export const programSchema = yup.object().shape({
   name: yup
     .string()
-    .matches(/^[A-Za-z]+$/, "Only alphabetic characters are allowed")
+    .matches(/^[A-Za-z ]+$/, "Only alphabetic characters are allowed")
     .required("Program Name is required"),
   code: yup.string().required("Program Code is required"),
   department_id: yup.string().required("Departments is required"),
@@ -88,7 +88,7 @@ export const programSchema = yup.object().shape({
 export const createDepartmentSchema = yup.object().shape({
   name: yup
     .string()
-    .matches(/^[A-Za-z]+$/, "Only alphabetic characters are allowed")
+    .matches(/^[A-Za-z ]+$/, "Only alphabetic characters are allowed")
     .required("Name is required!"),
   center_id: yup.string().required("Community Center is required!"),
 });
@@ -96,7 +96,7 @@ export const createDepartmentSchema = yup.object().shape({
 export const createCentresSchema = yup.object().shape({
   name: yup
     .string()
-    .matches(/^[A-Za-z]+$/, "Only alphabetic characters are allowed")
+    .matches(/^[A-Za-z ]+$/, "Only alphabetic characters are allowed")
     .required("Center name is required!"),
 });
 

@@ -158,20 +158,6 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
   },
 }));
 
-// const rows = [
-//   {
-//     id: 1,
-//     departmentName: "SCCC",
-//     status: "25",
-//     lYearBudget: "02-Mar-2024",
-//   },
-//   {
-//     id: 2,
-//     departmentName: "ACCC",
-//     status: "20",
-//     lYearBudget: "02-Mar-2024",
-//   },
-// ];
 const HRRole = () => {
   const [loading, setLoading] = useState<boolean>(false);
   console.log(loading);
@@ -241,7 +227,7 @@ const HRRole = () => {
       flex: 1,
     },
     {
-      field: "buttonsColumn",
+      field: "",
       headerName: "",
       flex: 0.5,
       renderCell: (data: any) => (
@@ -306,25 +292,25 @@ const HRRole = () => {
           {center.length == 0 ? (
             ""
           ) : (
-              <StyleDataGrid
-                rows={
-                  center.length === 0
-                    ? []
-                    : center.map((row: any) => ({
-                        ...row,
-                        created_at: moment(row.created_at).format("D-MMMM-YYYY"),
-                      }))
-                }
-                columns={columns}
-                initialState={{
-                  pagination: {
-                    paginationModel: { page: 0, pageSize: 5 },
-                  },
-                }}
-                pageSizeOptions={[5, 10, 15]}
-                disableRowSelectionOnClick
-                slots={{ toolbar: GridToolbar }}
-              />
+            <StyleDataGrid
+              rows={
+                center.length === 0
+                  ? []
+                  : center.map((row: any) => ({
+                      ...row,
+                      created_at: moment(row.created_at).format("D-MMMM-YYYY"),
+                    }))
+              }
+              columns={columns}
+              initialState={{
+                pagination: {
+                  paginationModel: { page: 0, pageSize: 5 },
+                },
+              }}
+              pageSizeOptions={[5, 10, 15]}
+              disableRowSelectionOnClick
+              slots={{ toolbar: GridToolbar }}
+            />
           )}
         </div>
       </StyledBox>

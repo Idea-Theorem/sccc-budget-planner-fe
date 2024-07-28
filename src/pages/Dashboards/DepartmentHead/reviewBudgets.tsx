@@ -87,6 +87,8 @@ const DHReviewBudgets = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          params?.row?.code + "-" + params?.row?.name,
       },
       {
         field: "status",
@@ -101,6 +103,8 @@ const DHReviewBudgets = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          capitalizeFirstLetter(params?.row?.status),
       },
       {
         field: "programBudget",
@@ -115,6 +119,7 @@ const DHReviewBudgets = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) => formatNumber(params?.row?.programBudget),
       },
       {
         field: "created_at",
@@ -123,13 +128,14 @@ const DHReviewBudgets = () => {
         editable: false,
         flex: 1,
         renderCell: (params: any) => {
-          console.log("params:::::", params);
           return (
             <Stack>
               <Box>{moment(params?.row?.created_at).format("D-MMM YYYY")}</Box>
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          moment(params?.row?.created_at).format("D-MMM YYYY"),
       },
       {
         field: "commentCount",
@@ -148,6 +154,10 @@ const DHReviewBudgets = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          params?.row?.commentCount
+            ? params?.row?.commentCount
+            : params?.row?._count?.Comment,
       },
     ],
     [
@@ -164,6 +174,8 @@ const DHReviewBudgets = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          params?.row?.code + "-" + params?.row?.name,
       },
       {
         field: "status",
@@ -178,6 +190,8 @@ const DHReviewBudgets = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          capitalizeFirstLetter(params?.row?.status),
       },
 
       {
@@ -193,6 +207,7 @@ const DHReviewBudgets = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) => formatNumber(params?.row?.programBudget),
       },
 
       {
@@ -208,6 +223,8 @@ const DHReviewBudgets = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          moment(params?.row?.created_at).format("D-MMM YYYY"),
       },
       {
         field: "commentCount",
@@ -226,6 +243,10 @@ const DHReviewBudgets = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          params?.row?.commentCount
+            ? params?.row?.commentCount
+            : params?.row?._count?.Comment,
       },
     ],
     [
@@ -242,6 +263,8 @@ const DHReviewBudgets = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          params?.row?.code + "-" + params?.row?.name,
       },
       {
         field: "status",
@@ -256,6 +279,8 @@ const DHReviewBudgets = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          capitalizeFirstLetter(params?.row?.status),
       },
 
       {
@@ -271,6 +296,7 @@ const DHReviewBudgets = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) => formatNumber(params?.row?.programBudget),
       },
 
       {
@@ -286,6 +312,8 @@ const DHReviewBudgets = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          moment(params?.row?.created_at).format("D-MMM YYYY"),
       },
       {
         field: "commentCount",
@@ -304,6 +332,10 @@ const DHReviewBudgets = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          params?.row?.commentCount
+            ? params?.row?.commentCount
+            : params?.row?._count?.Comment,
       },
     ],
   ];
@@ -352,7 +384,6 @@ const DHReviewBudgets = () => {
       setActiveDepartment(filteredID?.name);
       setDepartmentID(filteredID?.id);
       const res = await getProgramInDepartment(filteredID?.id);
-      console.log("res?.data:::::::::::", res?.data);
       settotalBudget(res?.data?.totalBudget);
       dispatch(storeProgramList(res?.data?.programs));
       getDepartmentCount(filteredID?.id);
@@ -437,7 +468,6 @@ const DHReviewBudgets = () => {
       </LoadingContainer>
     );
   }
-  console.log("programList:::::::", programList);
   return (
     <StyledBox className="appContainer">
       <Box className="reviewBudgetHead">
