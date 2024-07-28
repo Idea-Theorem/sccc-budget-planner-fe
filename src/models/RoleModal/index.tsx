@@ -174,6 +174,7 @@ const RoleModal: React.FC<IDepartmentInfo> = ({
           <Grid container spacing={4}>
             <Grid item xs={12}>
               <TextField
+                error={errors.name ? true : false}
                 variant="standard"
                 label="Title Name"
                 value={values.name}

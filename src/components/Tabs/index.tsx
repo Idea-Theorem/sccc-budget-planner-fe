@@ -172,6 +172,7 @@ const BasicTabs = (props: BasicTabsProps) => {
           ))}
         </Tabs>
       </Box>
+
       {props?.table?.map((item: any, index: any) => (
         <CustomTabPanel key={index} value={value} index={index}>
           <TableComponent

@@ -18,14 +18,15 @@ import EditNoteIcon from "@mui/icons-material/EditNote";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { deleteEmployee } from "../../../../services/employeeServices";
-import { SaveAlt, Search } from "@mui/icons-material";
-import * as XLSX from "xlsx";
+import { Search } from "@mui/icons-material";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import StatusModal from "../../../../components/StatusModal";
 import DeleteModal from "../../../../models/DeleteModal";
 import { getAllRole } from "../../../../services/roleServices";
 import { roleSort } from "../../../../utils";
+import moment from "moment";
+import ExportCustomeCsv from "../../../../components/ExportcustomCsv";
 
 const HrCollapseableTable = styled(Box)(({ theme }) => ({
   ".MuiTableCell-root": {
@@ -98,7 +99,6 @@ const HrCollapseableTable = styled(Box)(({ theme }) => ({
     },
   },
 
-  
   "& .MuiButton-root": {
     color: "#979797",
     fontSize: "14px",
@@ -233,7 +233,7 @@ function Row(props: {
         <TableCell style={{ textTransform: "capitalize" }}>
           {row?.department?.name}
         </TableCell>
-        <TableCell>{row?.hire_date}</TableCell>
+        <TableCell>{moment(row?.hire_date).format("D-MMM YYYY")}</TableCell>
         <TableCell>
           <Stack
             direction="row"
@@ -315,21 +315,6 @@ function Row(props: {
   );
 }
 
-// const rows = [
-//   createData(
-//     "Tomohiro Komase",
-//     "Program Head",
-//     "Recreation & Culture",
-//     "02-Mar-2024"
-//   ),
-//   createData(
-//     "Vishesh Thind",
-//     "Department Head",
-//     "Recreation & Culture",
-//     "02-Mar-2024"
-//   ),
-// ];
-
 export default function HrCollapsibleTable({
   handleClick,
   employeeData,
@@ -375,13 +360,6 @@ export default function HrCollapsibleTable({
     }
   };
 
-  const exportToExcel = () => {
-    const worksheet = XLSX.utils.json_to_sheet(employeeData);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Data");
-    XLSX.writeFile(workbook, "data.xlsx");
-  };
-
   return (
     <>
       <HrCollapseableTable className="dashboardTable pt-0">
@@ -390,9 +368,8 @@ export default function HrCollapsibleTable({
           alignItems="center"
           justifyContent="space-between"
         >
-          <IconButton aria-label="export" onClick={exportToExcel}>
-            <SaveAlt />
-          </IconButton>
+          <ExportCustomeCsv data={employeeData} />
+
           <TextField
             id="input-with-icon-textfield"
             placeholder="Search..."

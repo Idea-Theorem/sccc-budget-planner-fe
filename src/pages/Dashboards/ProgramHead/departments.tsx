@@ -17,6 +17,7 @@ import {
 } from "../../../services/departmentServices";
 import DepartmentInfo from "../../../models/HrDepartment";
 import StatusModal from "../../../components/StatusModal";
+import moment from "moment";
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
@@ -228,7 +229,7 @@ const Departments = () => {
       flex: 1,
     },
     {
-      field: "status",
+      field: "Employee Count",
       headerName: "Employee Count",
       sortable: false,
       editable: false,
@@ -240,16 +241,26 @@ const Departments = () => {
           </Stack>
         );
       },
+      valueGetter: (params: any) => params.row?._count?.EmployeeDepartment,
     },
     {
-      field: "created_at",
+      field: "Date Created",
       headerName: "Date Created",
       sortable: false,
       editable: false,
       flex: 1,
+      renderCell: (params: any) => {
+        return (
+          <Stack>
+            <Box>{moment(params?.row?.created_at).format("D-MMM YYYY")}</Box>
+          </Stack>
+        );
+      },
+      valueGetter: (params: any) =>
+        moment(params.row?.created_at).format("D-MMM YYYY"),
     },
     {
-      field: "buttonsColumn",
+      field: "",
       headerName: "",
       flex: 0.5,
       renderCell: (data?: any) => (

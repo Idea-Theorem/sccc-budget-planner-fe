@@ -1,8 +1,14 @@
 import * as yup from "yup";
 
 export const createEmployeeSchema = yup.object().shape({
-  firstname: yup.string().required("First Name is required!"),
-  lastname: yup.string().required("Last Name is required!"),
+  firstname: yup
+    .string()
+    .matches(/^[A-Za-z]+$/, "Only alphabetic characters are allowed")
+    .required("First Name is required!"),
+  lastname: yup
+    .string()
+    .matches(/^[A-Za-z]+$/, "Only alphabetic characters are allowed")
+    .required("Last Name is required!"),
   email: yup
     .string()
     .email("enter a valid email")
@@ -13,23 +19,17 @@ export const createEmployeeSchema = yup.object().shape({
     .array()
     .min(1, "At least one role is required!")
     .required("Roles is required!"),
-  // department_id: yup
-  //   .string()
-  //   .required("Departments is required!"),
-  // employment_type: yup
-  //   .string()
-  //   .required("Employement Type is required!"),
-  // compensation_type: yup
-  //   .string()
-  //   .required("Compensation Type is required!"),
-  // salary_rate: yup
-  //   .number()
-  //   .required("Salary Rates is required!"),
 });
 
 export const editEmployeeSchema = yup.object().shape({
-  firstname: yup.string().required("First Name is required!"),
-  lastname: yup.string().required("Last Name is required!"),
+  firstname: yup
+    .string()
+    .matches(/^[A-Za-z]+$/, "Only alphabetic characters are allowed")
+    .required("First Name is required!"),
+  lastname: yup
+    .string()
+    .matches(/^[A-Za-z]+$/, "Only alphabetic characters are allowed")
+    .required("Last Name is required!"),
   email: yup
     .string()
     .email("enter a valid email")
@@ -39,21 +39,12 @@ export const editEmployeeSchema = yup.object().shape({
     .array()
     .min(1, "At least one role is required!")
     .required("Roles is required!"),
-  // department_id: yup
-  //   .string()
-  //   .required("Departments is required!"),
-  // employment_type: yup
-  //   .string()
-  //   .required("Employement Type is required!"),
-  // compensation_type: yup
-  //   .string()
-  //   .required("Compensation Type is required!"),
-  // salary_rate: yup
-  //   .number()
-  //   .required("Salary Rates is required!"),
 });
 export const programSchema = yup.object().shape({
-  name: yup.string().required("Program Name is required"),
+  name: yup
+    .string()
+    .matches(/^[A-Za-z ]+$/, "Only alphabetic characters are allowed")
+    .required("Program Name is required"),
   code: yup.string().required("Program Code is required"),
   department_id: yup.string().required("Departments is required"),
   employee: yup
@@ -95,12 +86,30 @@ export const programSchema = yup.object().shape({
 });
 
 export const createDepartmentSchema = yup.object().shape({
-  name: yup.string().required("Name is required!"),
+  name: yup
+    .string()
+    .matches(/^[A-Za-z ]+$/, "Only alphabetic characters are allowed")
+    .required("Name is required!"),
   center_id: yup.string().required("Community Center is required!"),
 });
 
 export const createCentresSchema = yup.object().shape({
-  name: yup.string().required("Center name is required!"),
+  name: yup
+    .string()
+    .matches(/^[A-Za-z ]+$/, "Only alphabetic characters are allowed")
+    .required("Center name is required!"),
+});
+
+export const createProfitSchema = yup.object().shape({
+  name: yup
+    .number()
+    .typeError("Profit field must be a number")
+    .required("Profit is required!")
+    .test(
+      "no-spaces-special-chars",
+      "Number field must not contain spaces or special characters",
+      (value: any) => /^[0-9]+$/.test(value)
+    ),
 });
 
 export const createBudgetSchema = yup.object().shape({

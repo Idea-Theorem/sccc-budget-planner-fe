@@ -51,15 +51,6 @@ const SuperReviewBudget = () => {
         editable: false,
         flex: 1,
       },
-
-      // {
-      //   field: "status",
-      //   headerName: "Status",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
-
       {
         field: "totalIncomeSum",
         headerName: "Budget",
@@ -73,12 +64,13 @@ const SuperReviewBudget = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) => formatNumber(params?.row?.totalIncomeSum),
       },
 
       {
         field: "nPrograms",
         headerName: "No. Dept.",
-        // headerName: 'No. Dept.',
+
         sortable: false,
         editable: false,
         flex: 1,
@@ -89,6 +81,8 @@ const SuperReviewBudget = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          formatNumber(params?.row?.Department?.length),
       },
       {
         field: "created_at",
@@ -103,14 +97,9 @@ const SuperReviewBudget = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          moment(params?.row?.created_at).format("D-MMM YYYY"),
       },
-      // {
-      //   field: "comments",
-      //   headerName: "Comments",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
     ],
     [
       {
@@ -133,6 +122,8 @@ const SuperReviewBudget = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          capitalizeFirstLetter(params?.row?.status),
       },
 
       {
@@ -163,6 +154,8 @@ const SuperReviewBudget = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          moment(params?.row?.created_at).format("D-MMM YYYY"),
       },
       {
         field: "comments",
@@ -216,6 +209,8 @@ const SuperReviewBudget = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          moment(params?.row?.created_at).format("D-MMM YYYY"),
       },
       {
         field: "comments",
@@ -272,6 +267,7 @@ const SuperReviewBudget = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) => params?.row?._count?.Program,
       },
       {
         field: "created_at",
@@ -286,6 +282,8 @@ const SuperReviewBudget = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          moment(params?.row?.created_at).format("D-MMM YYYY"),
       },
       {
         field: "totalComments",
@@ -316,6 +314,8 @@ const SuperReviewBudget = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          capitalizeFirstLetter(params?.row?.status),
       },
 
       {
@@ -346,6 +346,8 @@ const SuperReviewBudget = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          moment(params?.row?.created_at).format("D-MMM YYYY"),
       },
       {
         field: "comments",
@@ -399,6 +401,8 @@ const SuperReviewBudget = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          moment(params?.row?.created_at).format("D-MMM YYYY"),
       },
       {
         field: "comments",
@@ -417,6 +421,15 @@ const SuperReviewBudget = () => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{params?.row?.code + "-" + params?.row?.name}</Box>
+            </Stack>
+          );
+        },
+        valueGetter: (params: any) =>
+          params?.row?.code + "-" + params?.row?.name,
       },
 
       {
@@ -440,6 +453,7 @@ const SuperReviewBudget = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) => formatNumber(params?.row?.programBudget),
       },
 
       {
@@ -455,6 +469,8 @@ const SuperReviewBudget = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          moment(params?.row?.created_at).format("D-MMM YYYY"),
       },
       {
         field: "comments",
@@ -469,6 +485,7 @@ const SuperReviewBudget = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) => params?.row?._count?.Comment,
       },
     ],
     [
@@ -492,6 +509,8 @@ const SuperReviewBudget = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          capitalizeFirstLetter(params?.row?.status),
       },
 
       {
@@ -507,6 +526,7 @@ const SuperReviewBudget = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) => formatNumber(params?.row?.programBudget),
       },
 
       {
@@ -529,6 +549,8 @@ const SuperReviewBudget = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          moment(params?.row?.created_at).format("D-MMM YYYY"),
       },
       {
         field: "comments",
@@ -543,6 +565,7 @@ const SuperReviewBudget = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) => params?.row?._count?.Comment,
       },
     ],
     [
@@ -574,6 +597,7 @@ const SuperReviewBudget = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) => formatNumber(params?.row?.programBudget),
       },
 
       {
@@ -596,6 +620,8 @@ const SuperReviewBudget = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          moment(params?.row?.created_at).format("D-MMM YYYY"),
       },
       {
         field: "comments",
@@ -610,6 +636,8 @@ const SuperReviewBudget = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          formatNumber(params?.row?._count?.Comment),
       },
     ],
   ];
@@ -625,11 +653,11 @@ const SuperReviewBudget = () => {
   };
   const handleSingleRow = async (row: any) => {
     if (step == 2) {
-      if (row?.status == Status.PENDING) {
-        dispatch(storeSingleProgram(row));
-        dispatch(storeProgramFromStatus(Status.DEFAULT));
-        navigate("/program-head/create");
-      }
+      // if (row?.status == Status.PENDING) {
+      dispatch(storeSingleProgram(row));
+      dispatch(storeProgramFromStatus(Status.DEFAULT));
+      navigate("/program-head/create");
+      // }
       return;
     }
     if (step == 1) {

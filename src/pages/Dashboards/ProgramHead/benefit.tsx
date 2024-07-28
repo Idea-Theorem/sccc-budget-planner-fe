@@ -226,7 +226,7 @@ const Benefit = () => {
     },
 
     {
-      field: "buttonsColumn",
+      field: "",
       headerName: "",
       flex: 0.5,
       renderCell: (data: any) => (
@@ -283,7 +283,7 @@ const Benefit = () => {
             className="btn-add-title"
           />
         </Box>
-        
+
         <div className="inner-table-holder">
           <InputSearch
             onChange={(e: any) => fetchCenters(e.target.value)}
@@ -292,20 +292,20 @@ const Benefit = () => {
           {center.length == 0 ? (
             ""
           ) : (
-              <StyleDataGrid
-                rows={center.length == 0 ? [] : center}
-                columns={columns}
-                initialState={{
-                  pagination: {
-                    paginationModel: { page: 0, pageSize: 5 },
-                  },
-                }}
-                pageSizeOptions={[5, 10, 15]}
-                disableRowSelectionOnClick
-                slots={{ toolbar: GridToolbar }}
-              />
+            <StyleDataGrid
+              rows={center.length == 0 ? [] : center}
+              columns={columns}
+              initialState={{
+                pagination: {
+                  paginationModel: { page: 0, pageSize: 5 },
+                },
+              }}
+              pageSizeOptions={[5, 10, 15]}
+              disableRowSelectionOnClick
+              slots={{ toolbar: GridToolbar }}
+            />
           )}
-          </div>
+        </div>
       </StyledBox>
       <BenefitModal
         open={isCommunityOpen}

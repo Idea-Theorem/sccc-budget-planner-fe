@@ -87,6 +87,8 @@ const DHReviewBudgets = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          params?.row?.code + "-" + params?.row?.name,
       },
       {
         field: "status",
@@ -101,6 +103,8 @@ const DHReviewBudgets = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          capitalizeFirstLetter(params?.row?.status),
       },
       {
         field: "programBudget",
@@ -115,28 +119,8 @@ const DHReviewBudgets = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) => formatNumber(params?.row?.programBudget),
       },
-      // {
-      //   field: "lYearBudget",
-      //   headerName: "Previous Year Budget",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
-      // {
-      //   field: "profit",
-      //   headerName: "Profit",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
-      // {
-      //   field: "nPrograms",
-      //   headerName: "No. Programs",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
       {
         field: "created_at",
         headerName: "Submission Date",
@@ -150,13 +134,30 @@ const DHReviewBudgets = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          moment(params?.row?.created_at).format("D-MMM YYYY"),
       },
       {
-        field: "comments",
+        field: "commentCount",
         headerName: "Comments",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>
+                {params?.row?.commentCount
+                  ? params?.row?.commentCount
+                  : params?.row?._count?.Comment}
+              </Box>
+            </Stack>
+          );
+        },
+        valueGetter: (params: any) =>
+          params?.row?.commentCount
+            ? params?.row?.commentCount
+            : params?.row?._count?.Comment,
       },
     ],
     [
@@ -173,6 +174,8 @@ const DHReviewBudgets = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          params?.row?.code + "-" + params?.row?.name,
       },
       {
         field: "status",
@@ -187,14 +190,10 @@ const DHReviewBudgets = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          capitalizeFirstLetter(params?.row?.status),
       },
-      // {
-      //   field: "lYearBudget",
-      //   headerName: "Last Year Budget",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "programBudget",
         headerName: "Budget",
@@ -208,21 +207,9 @@ const DHReviewBudgets = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) => formatNumber(params?.row?.programBudget),
       },
-      // {
-      //   field: "profit",
-      //   headerName: "Profit",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
-      // {
-      //   field: "nPrograms",
-      //   headerName: "No. Programs",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "created_at",
         headerName: "Submission Date",
@@ -236,13 +223,119 @@ const DHReviewBudgets = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          moment(params?.row?.created_at).format("D-MMM YYYY"),
       },
       {
-        field: "comments",
+        field: "commentCount",
         headerName: "Comments",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>
+                {params?.row?.commentCount
+                  ? params?.row?.commentCount
+                  : params?.row?._count?.Comment}
+              </Box>
+            </Stack>
+          );
+        },
+        valueGetter: (params: any) =>
+          params?.row?.commentCount
+            ? params?.row?.commentCount
+            : params?.row?._count?.Comment,
+      },
+    ],
+    [
+      {
+        field: "name",
+        headerName: "Program Name",
+        sortable: false,
+        editable: false,
+        flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{params?.row?.code + "-" + params?.row?.name}</Box>
+            </Stack>
+          );
+        },
+        valueGetter: (params: any) =>
+          params?.row?.code + "-" + params?.row?.name,
+      },
+      {
+        field: "status",
+        headerName: "Status",
+        sortable: false,
+        editable: false,
+        flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{capitalizeFirstLetter(params?.row?.status)}</Box>
+            </Stack>
+          );
+        },
+        valueGetter: (params: any) =>
+          capitalizeFirstLetter(params?.row?.status),
+      },
+
+      {
+        field: "programBudget",
+        headerName: "Budget",
+        sortable: false,
+        editable: false,
+        flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+            </Stack>
+          );
+        },
+        valueGetter: (params: any) => formatNumber(params?.row?.programBudget),
+      },
+
+      {
+        field: "created_at",
+        headerName: "Submission Date",
+        sortable: false,
+        editable: false,
+        flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{moment(params?.row?.created_at).format("D-MMM YYYY")}</Box>
+            </Stack>
+          );
+        },
+        valueGetter: (params: any) =>
+          moment(params?.row?.created_at).format("D-MMM YYYY"),
+      },
+      {
+        field: "commentCount",
+        headerName: "Comments",
+        sortable: false,
+        editable: false,
+        flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>
+                {params?.row?.commentCount
+                  ? params?.row?.commentCount
+                  : params?.row?._count?.Comment}
+              </Box>
+            </Stack>
+          );
+        },
+        valueGetter: (params: any) =>
+          params?.row?.commentCount
+            ? params?.row?.commentCount
+            : params?.row?._count?.Comment,
       },
     ],
   ];
@@ -256,11 +349,7 @@ const DHReviewBudgets = () => {
   const [count, setCount] = useState<any>(null);
   const [departmentId, setDepartmentID] = useState<any>(null);
   const [totalCount, setTotalCount] = useState<any>(null);
-  // const [programListing, setprogramListing] = useState<any>([]);
-  // console.log(programListing);
-  const [filteredProgramListing, setFilteredProgramListing] = useState<any>([]);
   const [attentionModal, setAttentionModal] = useState<any>(false);
-  dispatch(storeProgramList(filteredProgramListing));
   const [activeDepartment, setActiveDepartment] = useState<any>("");
   const [statusData, setStatusData] = useState<any>(null);
   const [totalBudget, settotalBudget] = useState("");
@@ -322,9 +411,7 @@ const DHReviewBudgets = () => {
       const newArray = response?.data?.programs?.filter(
         (item: any) => item?.department?.id === departmentId
       );
-      setFilteredProgramListing(newArray);
-
-      // setprogramListing(response?.data?.programs);
+      dispatch(storeProgramList(newArray));
     } catch (error) {}
   };
   const handleStatusChange = (selectedStatus: any) => {

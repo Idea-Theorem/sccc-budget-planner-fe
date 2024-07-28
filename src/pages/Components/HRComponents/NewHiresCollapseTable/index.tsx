@@ -18,13 +18,15 @@ import EditNoteIcon from "@mui/icons-material/EditNote";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { DeleteNewhire } from "../../../../services/employeeServices";
-import { SaveAlt, Search } from "@mui/icons-material";
-import * as XLSX from "xlsx";
+
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import StatusModal from "../../../../components/StatusModal";
 import DeleteModal from "../../../../models/DeleteModal";
 import { getAllRole } from "../../../../services/roleServices";
+import moment from "moment";
+import NewHireCsv from "../../../../components/NewHireCsv";
+import { Search } from "@mui/icons-material";
 
 const HrCollapseableTable = styled(Box)(({ theme }) => ({
   ".MuiTableCell-root": {
@@ -97,36 +99,36 @@ const HrCollapseableTable = styled(Box)(({ theme }) => ({
     },
 
     "& .MuiButton-root": {
-    color: "#979797",
-    fontSize: "14px",
-    lineHeight: "24px",
-    "&:hover": {
-      background: "none",
-    },
-  },
-  ".MuiStack-root": {
-    "&.MuiButtonBase-root": {
-      color: theme.palette.text.primary,
-    },
-  },
-
-  ".actions-btn-holder": {
-    ".MuiButton-textPrimary:not(:hover)": {
-      color: "rgba(48, 48, 48, 1)",
-    },
-    ".MuiButton-outlinedPrimary": {
-      color: "rgba(4, 128, 113, 1)",
-
+      color: "#979797",
+      fontSize: "14px",
+      lineHeight: "24px",
       "&:hover": {
-        background: "rgba(4, 128, 113, 1)",
-        color: "#fff",
+        background: "none",
+      },
+    },
+    ".MuiStack-root": {
+      "&.MuiButtonBase-root": {
+        color: theme.palette.text.primary,
       },
     },
 
-    ".MuiButtonBase-root": {
-      textTransform: "capitalize",
+    ".actions-btn-holder": {
+      ".MuiButton-textPrimary:not(:hover)": {
+        color: "rgba(48, 48, 48, 1)",
+      },
+      ".MuiButton-outlinedPrimary": {
+        color: "rgba(4, 128, 113, 1)",
+
+        "&:hover": {
+          background: "rgba(4, 128, 113, 1)",
+          color: "#fff",
+        },
+      },
+
+      ".MuiButtonBase-root": {
+        textTransform: "capitalize",
+      },
     },
-  },
   },
 }));
 
@@ -165,16 +167,17 @@ function Row(props: {
   row: ReturnType<typeof createData> | any;
   handleClick: any;
   employeeData?: any;
-  handleDelete?: any;
   setIsOpen?: any;
   isOpen?: any;
-  loading?: any;
+  refresh?: any;
 }) {
-  const { row, handleClick, handleDelete, isOpen, setIsOpen, loading } = props;
+  const { row, handleClick, refresh } = props;
   const [open, setOpen] = React.useState(false);
-  // const [isOpen, setIsOpen] = React.useState<any>(false);
+  const [isOpen, setIsOpen] = React.useState<any>(false);
   const [currentRow, setCurrentRow] = React.useState<any>("");
   const [titles, setTitles] = React.useState<any>([]);
+  const [statusData, setStatusData] = React.useState<any>(null);
+  const [loading, setLoading] = React.useState<any>(false);
 
   const closeModel = () => {
     setIsOpen(false);
@@ -195,6 +198,27 @@ function Row(props: {
     const findtitle = titles.find((item: any) => item.id === id);
     return findtitle?.name;
   };
+
+  const handleDelete = async (data: any) => {
+    try {
+      setLoading(true);
+      await DeleteNewhire(data?.otherinfo?.program_id, data?.emp_id);
+
+      await refresh();
+      setLoading(false);
+      setIsOpen(false);
+      setStatusData({
+        type: "success",
+        message: "New hires Deleted Successfully",
+      });
+    } catch (error: any) {
+      setStatusData({
+        type: "error",
+        message: error.response.data.message,
+      });
+      setLoading(false);
+    }
+  };
   return (
     <React.Fragment>
       <TableRow>
@@ -214,7 +238,9 @@ function Row(props: {
         <TableCell style={{ textTransform: "capitalize" }}>
           {row?.otherinfo?.department?.name}
         </TableCell>
-        <TableCell>{row?.otherinfo?.hire_date}</TableCell>
+        <TableCell>
+          {moment(row?.otherinfo?.hire_date).format("D-MMM YYYY")}
+        </TableCell>
         <TableCell>
           <Stack
             direction="row"
@@ -291,24 +317,13 @@ function Row(props: {
         loading={loading}
         heading="Are you sure you want to delete?"
       />
+      <StatusModal
+        statusData={statusData}
+        onClose={() => setStatusData(null)}
+      />
     </React.Fragment>
   );
 }
-
-// const rows = [
-//   createData(
-//     "Tomohiro Komase",
-//     "Program Head",
-//     "Recreation & Culture",
-//     "02-Mar-2024"
-//   ),
-//   createData(
-//     "Vishesh Thind",
-//     "Department Head",
-//     "Recreation & Culture",
-//     "02-Mar-2024"
-//   ),
-// ];
 
 export default function NewHiresCollapsibleTable({
   handleClick,
@@ -320,7 +335,6 @@ export default function NewHiresCollapsibleTable({
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [statusData, setStatusData] = React.useState<any>(null);
   const [isOpen, setIsOpen] = React.useState<any>(false);
-  const [loading, setLoading] = React.useState<any>(false);
 
   const handleChangePage = (_: unknown, newPage: number) => {
     setPage(newPage);
@@ -333,33 +347,6 @@ export default function NewHiresCollapsibleTable({
     setPage(0);
   };
 
-  const handleDelete = async (data: any) => {
-    try {
-      setLoading(true);
-      await DeleteNewhire(data?.otherinfo?.program_id, data?.emp_id);
-
-      await refresh();
-      setLoading(false);
-      setIsOpen(false);
-      setStatusData({
-        type: "success",
-        message: "New hires Deleted Successfully",
-      });
-    } catch (error: any) {
-      setStatusData({
-        type: "error",
-        message: error.response.data.message,
-      });
-      setLoading(false);
-    }
-  };
-
-  const exportToExcel = () => {
-    const worksheet = XLSX.utils.json_to_sheet(employeeData);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Data");
-    XLSX.writeFile(workbook, "data.xlsx");
-  };
   return (
     <>
       <HrCollapseableTable className="dashboardTable pt-0">
@@ -368,9 +355,8 @@ export default function NewHiresCollapsibleTable({
           alignItems="center"
           justifyContent="space-between"
         >
-          <IconButton aria-label="export" onClick={exportToExcel}>
-            <SaveAlt />
-          </IconButton>
+          <NewHireCsv data={employeeData} />
+
           <TextField
             id="input-with-icon-textfield"
             placeholder="Search..."
@@ -405,10 +391,11 @@ export default function NewHiresCollapsibleTable({
                     row={row}
                     handleClick={handleClick}
                     employeeData={employeeData}
-                    handleDelete={handleDelete}
+                    // handleDelete={handleDelete}
                     setIsOpen={setIsOpen}
                     isOpen={isOpen}
-                    loading={loading}
+                    // loading={loading}
+                    refresh={refresh}
                   />
                 ))}
             </TableBody>
