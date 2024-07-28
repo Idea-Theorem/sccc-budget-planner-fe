@@ -116,27 +116,6 @@ const DHReviewBudgets = () => {
           );
         },
       },
-      // {
-      //   field: "lYearBudget",
-      //   headerName: "Previous Year Budget",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
-      // {
-      //   field: "profit",
-      //   headerName: "Profit",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
-      // {
-      //   field: "nPrograms",
-      //   headerName: "No. Programs",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
       {
         field: "created_at",
         headerName: "Submission Date",
@@ -144,6 +123,7 @@ const DHReviewBudgets = () => {
         editable: false,
         flex: 1,
         renderCell: (params: any) => {
+          console.log("params:::::", params);
           return (
             <Stack>
               <Box>{moment(params?.row?.created_at).format("D-MMM YYYY")}</Box>
@@ -152,11 +132,22 @@ const DHReviewBudgets = () => {
         },
       },
       {
-        field: "comments",
+        field: "commentCount",
         headerName: "Comments",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>
+                {params?.row?.commentCount
+                  ? params?.row?.commentCount
+                  : params?.row?._count?.Comment}
+              </Box>
+            </Stack>
+          );
+        },
       },
     ],
     [
@@ -188,13 +179,7 @@ const DHReviewBudgets = () => {
           );
         },
       },
-      // {
-      //   field: "lYearBudget",
-      //   headerName: "Last Year Budget",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "programBudget",
         headerName: "Budget",
@@ -209,20 +194,7 @@ const DHReviewBudgets = () => {
           );
         },
       },
-      // {
-      //   field: "profit",
-      //   headerName: "Profit",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
-      // {
-      //   field: "nPrograms",
-      //   headerName: "No. Programs",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "created_at",
         headerName: "Submission Date",
@@ -238,11 +210,100 @@ const DHReviewBudgets = () => {
         },
       },
       {
-        field: "comments",
+        field: "commentCount",
         headerName: "Comments",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>
+                {params?.row?.commentCount
+                  ? params?.row?.commentCount
+                  : params?.row?._count?.Comment}
+              </Box>
+            </Stack>
+          );
+        },
+      },
+    ],
+    [
+      {
+        field: "name",
+        headerName: "Program Name",
+        sortable: false,
+        editable: false,
+        flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{params?.row?.code + "-" + params?.row?.name}</Box>
+            </Stack>
+          );
+        },
+      },
+      {
+        field: "status",
+        headerName: "Status",
+        sortable: false,
+        editable: false,
+        flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{capitalizeFirstLetter(params?.row?.status)}</Box>
+            </Stack>
+          );
+        },
+      },
+
+      {
+        field: "programBudget",
+        headerName: "Budget",
+        sortable: false,
+        editable: false,
+        flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+            </Stack>
+          );
+        },
+      },
+
+      {
+        field: "created_at",
+        headerName: "Submission Date",
+        sortable: false,
+        editable: false,
+        flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{moment(params?.row?.created_at).format("D-MMM YYYY")}</Box>
+            </Stack>
+          );
+        },
+      },
+      {
+        field: "commentCount",
+        headerName: "Comments",
+        sortable: false,
+        editable: false,
+        flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>
+                {params?.row?.commentCount
+                  ? params?.row?.commentCount
+                  : params?.row?._count?.Comment}
+              </Box>
+            </Stack>
+          );
+        },
       },
     ],
   ];
@@ -256,11 +317,7 @@ const DHReviewBudgets = () => {
   const [count, setCount] = useState<any>(null);
   const [departmentId, setDepartmentID] = useState<any>(null);
   const [totalCount, setTotalCount] = useState<any>(null);
-  // const [programListing, setprogramListing] = useState<any>([]);
-  // console.log(programListing);
-  const [filteredProgramListing, setFilteredProgramListing] = useState<any>([]);
   const [attentionModal, setAttentionModal] = useState<any>(false);
-  dispatch(storeProgramList(filteredProgramListing));
   const [activeDepartment, setActiveDepartment] = useState<any>("");
   const [statusData, setStatusData] = useState<any>(null);
   const [totalBudget, settotalBudget] = useState("");
@@ -295,6 +352,7 @@ const DHReviewBudgets = () => {
       setActiveDepartment(filteredID?.name);
       setDepartmentID(filteredID?.id);
       const res = await getProgramInDepartment(filteredID?.id);
+      console.log("res?.data:::::::::::", res?.data);
       settotalBudget(res?.data?.totalBudget);
       dispatch(storeProgramList(res?.data?.programs));
       getDepartmentCount(filteredID?.id);
@@ -322,9 +380,7 @@ const DHReviewBudgets = () => {
       const newArray = response?.data?.programs?.filter(
         (item: any) => item?.department?.id === departmentId
       );
-      setFilteredProgramListing(newArray);
-
-      // setprogramListing(response?.data?.programs);
+      dispatch(storeProgramList(newArray));
     } catch (error) {}
   };
   const handleStatusChange = (selectedStatus: any) => {
@@ -381,7 +437,7 @@ const DHReviewBudgets = () => {
       </LoadingContainer>
     );
   }
-
+  console.log("programList:::::::", programList);
   return (
     <StyledBox className="appContainer">
       <Box className="reviewBudgetHead">
