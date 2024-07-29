@@ -214,7 +214,7 @@ const CommunityModal: React.FC<IDepartmentInfo> = ({
           >
             <Button
               variant="text"
-              color="error"
+              color="inherit"
               size="medium"
               startIcon={<Clear />}
               onClick={handleClose}
