@@ -1,9 +1,5 @@
 import { HTTP_CLIENT } from "../utils/axiosClient";
 
-
-
-
-
 const createCenters = async (data: any) => {
   return await HTTP_CLIENT.post("/center", data);
 };
@@ -22,18 +18,17 @@ const deleteCenter = async (id: string) => {
 
 const getDepartmentInCenters = async (id: string) => {
   return await HTTP_CLIENT.get(`/center/department/${id}`);
-}
+};
 
 const getProgramInDepartment = async (id: string) => {
   return await HTTP_CLIENT.get(`/department/programs/${id}`);
-}
+};
 
 export {
-
   createCenters,
   getAllCenters,
   updateCenter,
   deleteCenter,
   getDepartmentInCenters,
-  getProgramInDepartment
+  getProgramInDepartment,
 };

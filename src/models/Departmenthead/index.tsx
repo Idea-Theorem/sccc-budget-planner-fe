@@ -125,7 +125,6 @@ const DepartmentHeadModal: React.FC<IHrAddEmployee> = ({
   handleResolved,
   input,
 }) => {
-  console.log("input:::::::", input);
   const [dropdown, setDropdown] = useState(false);
 
   const handleDropdown = () => {

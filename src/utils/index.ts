@@ -245,7 +245,7 @@ export const handleRole = (data: any) => {
   }
 };
 
-export const capitalizeFirstLetter = (str: string) => {
+export const capitalizeFirstLetter = (str: string | any) => {
   if (!str) return str;
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 };

@@ -3,14 +3,17 @@ import * as yup from "yup";
 export const createEmployeeSchema = yup.object().shape({
   firstname: yup
     .string()
+    .trim()
     .matches(/^[A-Za-z]+$/, "Only alphabetic characters are allowed")
     .required("First Name is required!"),
   lastname: yup
     .string()
+    .trim()
     .matches(/^[A-Za-z]+$/, "Only alphabetic characters are allowed")
     .required("Last Name is required!"),
   email: yup
     .string()
+    .trim()
     .email("enter a valid email")
     .required("Email is required!"),
   password: yup.string().required("Password is required!"),
@@ -24,14 +27,17 @@ export const createEmployeeSchema = yup.object().shape({
 export const editEmployeeSchema = yup.object().shape({
   firstname: yup
     .string()
+    .trim()
     .matches(/^[A-Za-z]+$/, "Only alphabetic characters are allowed")
     .required("First Name is required!"),
   lastname: yup
     .string()
+    .trim()
     .matches(/^[A-Za-z]+$/, "Only alphabetic characters are allowed")
     .required("Last Name is required!"),
   email: yup
     .string()
+    .trim()
     .email("enter a valid email")
     .required("Email is required!"),
   hire_date: yup.string().required("Hire Date is required!"),
@@ -43,6 +49,7 @@ export const editEmployeeSchema = yup.object().shape({
 export const programSchema = yup.object().shape({
   name: yup
     .string()
+    .trim()
     .matches(/^[A-Za-z ]+$/, "Only alphabetic characters are allowed")
     .required("Program Name is required"),
   code: yup.string().required("Program Code is required"),
@@ -88,6 +95,7 @@ export const programSchema = yup.object().shape({
 export const createDepartmentSchema = yup.object().shape({
   name: yup
     .string()
+    .trim()
     .matches(/^[A-Za-z ]+$/, "Only alphabetic characters are allowed")
     .required("Name is required!"),
   center_id: yup.string().required("Community Center is required!"),
@@ -96,6 +104,7 @@ export const createDepartmentSchema = yup.object().shape({
 export const createCentresSchema = yup.object().shape({
   name: yup
     .string()
+    .trim()
     .matches(/^[A-Za-z ]+$/, "Only alphabetic characters are allowed")
     .required("Center name is required!"),
 });

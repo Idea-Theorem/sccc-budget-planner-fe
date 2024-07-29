@@ -33,6 +33,10 @@ const StyledBox = styled(Box)(({ theme }) => ({
 }));
 const StyleDataGrid = styled(DataGrid)(() => ({
   width: "100%",
+  
+  ".MuiDataGrid-iconButtonContainer ": {
+    display: "none !important",
+  },
 
   ".pointer-cursor": {
     cursor: "pointer",
@@ -87,7 +91,7 @@ const StyleDataGrid = styled(DataGrid)(() => ({
       outline: "none",
     },
   },
-  "& .MuiDataGrid-columnSeparator": {
+  "& .MuiDataGrid-columnSeparator , .MuiDataGrid-iconButtonContainer ": {
     visibility: "hidden !important",
   },
   "& .MuiTablePagination-selectLabel": {
