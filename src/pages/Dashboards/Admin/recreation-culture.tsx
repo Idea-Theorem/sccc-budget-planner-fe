@@ -307,6 +307,7 @@ const RecreationAndCultureScreen = ({}: any) => {
     (state: RootState) => state.program
   );
   const [tabstatus, setTabstatus] = React.useState(Status.PENDING);
+  const [clonedProgram, setClonedProgram] = React.useState<any>([]);
   const [programInDepartment, setProgramInDepartment] = React.useState<any>([]);
   const dispatch = useDispatch();
   console.log(tabstatus);
@@ -320,6 +321,7 @@ const RecreationAndCultureScreen = ({}: any) => {
     const filteredArray = singleDepart.filter(
       (item) => item?.status?.toLowerCase() == tabstatus?.toLowerCase()
     );
+    setClonedProgram(filteredArray);
     setProgramInDepartment(filteredArray);
     if (false) {
       setStatus("");
@@ -327,11 +329,16 @@ const RecreationAndCultureScreen = ({}: any) => {
   }, [tabstatus]);
 
   const onRowClick = (data: any) => {
-    // if (data?.status == Status.PENDING) {
     dispatch(storeSingleProgram(data));
     dispatch(storeProgramFromStatus(Status.DEFAULT));
     navigate("/program-head/create");
-    // }
+  };
+
+  const receiveProgramSearch = (value: string) => {
+    const filteredArray = clonedProgram.filter((item: any) =>
+      item?.name?.toLowerCase().includes(value.toLowerCase())
+    );
+    setProgramInDepartment(filteredArray);
   };
   return (
     <StyledBox className="appContainer">
@@ -349,13 +356,12 @@ const RecreationAndCultureScreen = ({}: any) => {
           { title: "Pending" },
           { title: "Approved" },
           { title: "Rejected" },
-          // { title: "Drafts" },
-          // { title: "History" },
         ]}
         table={tableColumnsTitleArray}
         row={programInDepartment}
         currentStatus={status}
         onRowClick={onRowClick}
+        receiveProgramSearch={receiveProgramSearch}
       />
     </StyledBox>
   );

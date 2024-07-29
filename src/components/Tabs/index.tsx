@@ -154,9 +154,16 @@ const BasicTabs = (props: BasicTabsProps) => {
   };
 
   const handleProgramSearch = (value: string) => {
-    fetchProgramList(status, value);
-    props?.fetchProgramList(status, value);
-    props?.receiveProgramSearch(value);
+    if (
+      location.pathname == "/admin/review-budget" ||
+      location.pathname == "/admin/recreation" ||
+      location.pathname == "/super-admin/review-budgets"
+    ) {
+      props?.receiveProgramSearch(value);
+    } else {
+      fetchProgramList(status, value);
+      props?.fetchProgramList(status, value);
+    }
   };
 
   return (

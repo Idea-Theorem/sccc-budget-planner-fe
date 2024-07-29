@@ -7,7 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import DepartmentHeadModal from "../../models/Departmenthead";
 import TextFields from "../Input/textfield";
 import { v4 as uuidv4 } from "uuid";
@@ -208,6 +208,9 @@ export default function TabsProgramArea({
   } = useSelector((state: RootState) => state.program);
 
   const handleInputChange = (key: string, value: number) => {
+    if (isNaN(value)) {
+      return;
+    }
     if (title == "income") {
       const newIncomeArray: any = [...incomeList];
       newIncomeArray[key] = { ...newIncomeArray[key], amount: Number(value) };
@@ -223,29 +226,37 @@ export default function TabsProgramArea({
     }
   };
 
-  useEffect(() => {
+  const handleAttachComments = useCallback(() => {
     if (allComments?.length > 0 && singleProgram?.id) {
       const res = attachCommentsToProgram(singleProgram, allComments);
       dispatch(storeIncomeList(res?.income));
       dispatch(storeSupplyList(res?.supply_expense));
       dispatch(storeSalaryList(res?.salary_expense));
     }
-  }, [allComments]);
+  }, [allComments, singleProgram, dispatch]);
 
-  useEffect(() => {
-    if (title == "income") {
+  const handleTitleChange = useCallback(() => {
+    if (title === "income") {
       handleReceived(incomeList);
       setEntities(incomeList);
-    } else if (title == "supply-expense") {
+    } else if (title === "supply-expense") {
       handleSupplyExpenseReceived(supplyList);
       setEntities(supplyList);
-    } else if (title == "salary-expense") {
+    } else if (title === "salary-expense") {
       handleSalaryExpenseReceived(salaryList);
       setEntities(salaryList);
     }
-  }, [incomeList, supplyList, salaryList]);
+  }, [
+    title,
+    incomeList,
+    supplyList,
+    salaryList,
+    handleReceived,
+    handleSupplyExpenseReceived,
+    handleSalaryExpenseReceived,
+  ]);
 
-  useEffect(() => {
+  const handleListsChange = useCallback(() => {
     if (incomeList.length > 0) {
       dispatch(storeIncomeList(incomeList));
     } else {
@@ -261,7 +272,13 @@ export default function TabsProgramArea({
     } else {
       dispatch(storeSalaryList(expense));
     }
-  }, [incomeList, supplyList, salaryList]);
+  }, [incomeList, supplyList, salaryList, rows, benefits, expense, dispatch]);
+
+  useEffect(handleAttachComments, [handleAttachComments]);
+
+  useEffect(handleTitleChange, [handleTitleChange]);
+
+  useEffect(handleListsChange, [handleListsChange]);
 
   const closeModal = () => {
     setIsOpen(false);
@@ -342,8 +359,8 @@ export default function TabsProgramArea({
     if (
       programFromStatus == Status.CREATED ||
       programFromStatus == Status.DRAFTED ||
-      programFromStatus == Status.REJECTED ||
-      programFromStatus == Status.REVISED
+      programFromStatus == Status.REJECTED
+      // programFromStatus == Status.REVISED
     ) {
       return;
     }
@@ -353,14 +370,12 @@ export default function TabsProgramArea({
 
   useEffect(() => {
     const res = checkIfAllResolved(currentExpense?.comments);
-    console.log("res:::::::", res);
     if (res) {
       setInput(true);
     } else {
       setInput(false);
     }
   }, [currentExpense, isOpen]);
-
   return (
     <>
       <TabsProgramAreas>

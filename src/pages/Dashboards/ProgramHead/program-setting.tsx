@@ -12,6 +12,7 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import {
   deleteProgram,
+  getAllProgramsByUsers,
   getAllProgramsViaStatus,
   getDepartments,
   programUpdate,
@@ -23,8 +24,8 @@ const StyledBox = styled(Box)(({}) => ({
   "&.mainTableBlock": {
     width: "100%",
     position: "relative",
-    marginTop: '-10px',
-    paddingTop: '10px',
+    marginTop: "-10px",
+    paddingTop: "10px",
     borderTop: "1px solid #e8e8e8",
   },
 
@@ -262,13 +263,6 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
         </Stack>
       ),
     },
-    // {
-    //   field: "",
-    //   headerName: "",
-    //   sortable: false,
-    //   editable: false,
-    //   flex: 1,
-    // },
   ];
   const [settingData, setSettingData] = React.useState([]);
   const [departmentList, setDepartmentList] = React.useState([]);
@@ -302,7 +296,7 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
   }, []);
   const fetchProgramList = async (status: string, Searchvalue: string) => {
     try {
-      const response = await getAllProgramsViaStatus(status, Searchvalue);
+      const response = await getAllProgramsByUsers(status, Searchvalue);
       setSettingData(response?.data?.programs);
     } catch (error) {}
   };

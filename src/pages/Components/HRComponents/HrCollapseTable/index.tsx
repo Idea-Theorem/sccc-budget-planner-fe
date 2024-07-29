@@ -312,7 +312,7 @@ function Row(props: {
                   {row?.employeDepartments?.map((element: any) => (
                     <TableRow key={row.id}>
                       <TableCell style={{ paddingLeft: "62px" }}>
-                        {element?.department?.name.toLowerCase()}
+                        {element?.department?.name}
                       </TableCell>
                       <TableCell style={{ textTransform: "capitalize" }}>
                         {fetchTitleName(element?.title)}

@@ -63,7 +63,6 @@ const ThreadHeader = ({
   dropdown,
   handleDelete,
 }: Props) => {
-  console.log("item:::::::", item);
   const handleDropdown = () => {
     setDropdown();
     setcurrentComment(item);
