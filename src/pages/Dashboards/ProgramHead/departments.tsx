@@ -24,6 +24,11 @@ const StyledBox = styled(Box)(({ theme }) => ({
     position: "relative",
   },
 
+  ".inner-table-holder": {
+    position: "relative",
+    minHeight: "80px",
+  },
+
   ".page-subheader": {
     display: "flex",
     alignItems: "center",
@@ -319,32 +324,34 @@ const Departments = () => {
             onClick={handleClick}
             className="btn-add-title"
           />
+        </Box>
+        <div className="inner-table-holder">
           <InputSearch
             onChange={(e: any) => handleDepartmentCenters(e)}
             placeholder="Search..."
           />
-        </Box>
-        {departments?.length == 0 ? (
-          ""
-        ) : (
-          <StyleDataGrid
-            loading={departmentsLoading}
-            rows={
-              typeof departments == "undefined" || !departments
-                ? []
-                : departments
-            }
-            columns={columns}
-            initialState={{
-              pagination: {
-                paginationModel: { page: 0, pageSize: 5 },
-              },
-            }}
-            pageSizeOptions={[5, 10, 15]}
-            disableRowSelectionOnClick
-            slots={{ toolbar: GridToolbar }}
-          />
-        )}
+          {departments?.length == 0 ? (
+            ""
+          ) : (
+            <StyleDataGrid
+              loading={departmentsLoading}
+              rows={
+                typeof departments == "undefined" || !departments
+                  ? []
+                  : departments
+              }
+              columns={columns}
+              initialState={{
+                pagination: {
+                  paginationModel: { page: 0, pageSize: 5 },
+                },
+              }}
+              pageSizeOptions={[5, 10, 15]}
+              disableRowSelectionOnClick
+              slots={{ toolbar: GridToolbar }}
+            />
+          )}
+        </div>
         <DeleteModal
           open={isOpen}
           handleOK={() => handleDelete()}
