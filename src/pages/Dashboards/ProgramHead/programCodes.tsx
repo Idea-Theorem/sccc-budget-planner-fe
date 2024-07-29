@@ -8,7 +8,6 @@ import InputSearch from "../../../components/Input";
 import {
   deleteProgram,
   getAllProgramsByUsers,
-  getAllProgramsViaStatus,
   programUpdate,
 } from "../../../services/programServices";
 import React, { useState } from "react";

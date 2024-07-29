@@ -13,7 +13,6 @@ import EditNoteIcon from "@mui/icons-material/EditNote";
 import {
   deleteProgram,
   getAllProgramsByUsers,
-  getAllProgramsViaStatus,
   getDepartments,
   programUpdate,
 } from "../../../services/programServices";
