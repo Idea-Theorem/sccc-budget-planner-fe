@@ -1,8 +1,9 @@
 import Papa from "papaparse";
 import { IconButton } from "@mui/material";
 import { SaveAlt } from "@mui/icons-material";
+import moment from "moment";
 
-const convertToCSV = (data: any) => {
+const convertToCSV = (data: any, benefit: any, title: any) => {
   const csvData: any = [];
 
   data.forEach((item: any) => {
@@ -15,11 +16,12 @@ const convertToCSV = (data: any) => {
           index === 0
             ? item.roles.map((role: any) => role.name).join(", ")
             : "",
-        hire_date: index === 0 ? item.hire_date : "",
+        hire_date:
+          index === 0 ? moment(item.hire_date).format("D-MMM YYYY") : "",
         department: department.department.name,
-        title: department.title,
+        title: fetchTitleName(department.title, title),
         hourlyRate: department.hourlyRate,
-        salaryRate: department.salaryRate,
+        salaryRate: findBenefitName(benefit, department.salaryRate),
       });
     });
   });
@@ -40,6 +42,16 @@ const convertToCSV = (data: any) => {
   return csv;
 };
 
+const findBenefitName = (benefit: any, id: any) => {
+  const findBenefit = benefit?.find((item: any) => item.id === id);
+  return findBenefit?.name?.toLowerCase()?.replace(/_/g, " ");
+};
+
+const fetchTitleName = (id: any, title: any) => {
+  const findtitle = title.find((item: any) => item.id === id);
+  return findtitle?.name;
+};
+
 const downloadCSV = (csv: any) => {
   const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
   const link = document.createElement("a");
@@ -50,9 +62,9 @@ const downloadCSV = (csv: any) => {
   document.body.removeChild(link);
 };
 
-const ExportCSVButton = ({ data }: any) => {
+const ExportCSVButton = ({ data, benefit, title }: any) => {
   const handleExport = () => {
-    const csv = convertToCSV(data);
+    const csv = convertToCSV(data, benefit, title);
     downloadCSV(csv);
   };
 
@@ -65,9 +77,9 @@ const ExportCSVButton = ({ data }: any) => {
   );
 };
 
-const ExportCustomCSV = ({ data }: any) => (
+const ExportCustomCSV = ({ data, benefit, title }: any) => (
   <div>
-    <ExportCSVButton data={data} />
+    <ExportCSVButton data={data} benefit={benefit} title={title} />
   </div>
 );
 

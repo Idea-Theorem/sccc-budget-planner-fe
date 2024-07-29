@@ -22,9 +22,10 @@ import { RootState } from "../../store";
 import {
   addComments,
   deleteComment,
+  resolvedComment,
   updatecomment,
 } from "../../services/programServices";
-import { attachCommentsToProgram } from "../../utils";
+import { attachCommentsToProgram, checkIfAllResolved } from "../../utils";
 import CommentIcon from "@mui/icons-material/Comment";
 import Status from "../../utils/dumpData";
 
@@ -195,6 +196,7 @@ export default function TabsProgramArea({
   const [commenttext, setcommentText] = useState<any>("");
   const [currentExpense, setcurrentExpense] = useState<any>("");
   const [currentComment, setcurrentComment] = useState<any>("");
+  const [input, setInput] = useState(false);
   const dispatch = useAppDispatch();
 
   const {
@@ -229,6 +231,7 @@ export default function TabsProgramArea({
       dispatch(storeSalaryList(res?.salary_expense));
     }
   }, [allComments]);
+
   useEffect(() => {
     if (title == "income") {
       handleReceived(incomeList);
@@ -314,6 +317,19 @@ export default function TabsProgramArea({
     }
   };
 
+  const handleResolved = async (data: any) => {
+    try {
+      setdeleteLoading(true);
+      await resolvedComment(data?.id);
+      await fetchComments();
+      setcurrentComment("");
+      setdeleteLoading(false);
+      setIsOpen(false);
+    } catch (error) {
+      setdeleteLoading(false);
+    }
+  };
+
   function removeCommentById(commentId: any) {
     setcurrentExpense((prevArray: any) => {
       const updatedComments = prevArray.comments.filter(
@@ -334,6 +350,16 @@ export default function TabsProgramArea({
     setIsOpen(true);
     setcurrentExpense(data);
   };
+
+  useEffect(() => {
+    const res = checkIfAllResolved(currentExpense?.comments);
+    console.log("res:::::::", res);
+    if (res) {
+      setInput(true);
+    } else {
+      setInput(false);
+    }
+  }, [currentExpense, isOpen]);
 
   return (
     <>
@@ -421,6 +447,8 @@ export default function TabsProgramArea({
         setcommentText={setcommentText}
         open={isOpen}
         handleClose={closeModal}
+        handleResolved={handleResolved}
+        input={input}
       />
     </>
   );

@@ -321,3 +321,7 @@ export const profitSecondHalf = (data: any) => {
 
   return sum;
 };
+
+export const checkIfAllResolved = (data: any) => {
+  return data?.find((item: any) => item.isResolved === true);
+};

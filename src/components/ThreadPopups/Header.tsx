@@ -41,24 +41,38 @@ interface Props {
   subtitle?: string;
   dropdown?: boolean;
   date?: string;
-  setDropdown?: any
+  setDropdown?: any;
   name?: string;
-  handleDelete?: any
-  commentEdit?: any
-  setcurrentComment?: any
-  item?: any
-  setcommentText?: any
+  handleDelete?: any;
+  commentEdit?: any;
+  setcurrentComment?: any;
+  item?: any;
+  setcommentText?: any;
+  handleResolved?: any;
 }
-const ThreadHeader = ({setcommentText,item,setcurrentComment,title, subtitle, date, setDropdown, name, dropdown,handleDelete }: Props) => {
+const ThreadHeader = ({
+  setcommentText,
+  item,
+  setcurrentComment,
+  title,
+  subtitle,
+  date,
+  setDropdown,
+  handleResolved,
+  name,
+  dropdown,
+  handleDelete,
+}: Props) => {
+  console.log("item:::::::", item);
   const handleDropdown = () => {
-    setDropdown()
-    setcurrentComment(item)
+    setDropdown();
+    setcurrentComment(item);
   };
 
   const handleEditcomment = () => {
-    setcommentText()
-    setDropdown()
-  }
+    setcommentText();
+    setDropdown();
+  };
   return (
     <CommentModalArea>
       <Stack
@@ -81,9 +95,21 @@ const ThreadHeader = ({setcommentText,item,setcurrentComment,title, subtitle, da
         </Box>
         {dropdown && (
           <Stack className="comment-box">
-            <Typography onClick={handleEditcomment}  className="cursor-pointer">Edit Comment</Typography>
-            <Typography  className="cursor-pointer">Resolve Thread</Typography>
-            <Typography onClick={() =>{ handleDelete(); setDropdown(false)}}  className="cursor-pointer">Delete Thread</Typography>
+            <Typography onClick={handleEditcomment} className="cursor-pointer">
+              Edit Comment
+            </Typography>
+            <Typography onClick={handleResolved} className="cursor-pointer">
+              Resolve Thread
+            </Typography>
+            <Typography
+              onClick={() => {
+                handleDelete();
+                setDropdown(false);
+              }}
+              className="cursor-pointer"
+            >
+              Delete Thread
+            </Typography>
           </Stack>
         )}
       </Stack>
