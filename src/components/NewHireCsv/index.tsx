@@ -1,6 +1,7 @@
 import Papa from "papaparse";
 import { IconButton } from "@mui/material";
 import { SaveAlt } from "@mui/icons-material";
+import moment from "moment";
 
 const convertToCSV = (data: any) => {
   const csvData = data.map((item: any) => ({
@@ -12,7 +13,7 @@ const convertToCSV = (data: any) => {
     workingWeeks: item.workingWeeks,
     name: item.otherinfo.name,
     department_name: item.otherinfo.department.name,
-    hire_date: item.otherinfo.hire_date,
+    hire_date: moment(item.otherinfo.hire_date).format("D-MMM YYYY"),
   }));
 
   const headers = [

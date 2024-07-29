@@ -303,6 +303,7 @@ const MainSection = ({
   const fetchComments = async () => {
     try {
       const response = await fetchAllcomments();
+      console.log("response::::::", response);
       setAllComments(response?.data?.comments);
     } catch (error) {}
   };

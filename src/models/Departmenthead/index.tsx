@@ -4,7 +4,7 @@ import TextFieldWithButton from "../../components/ThreadPopups/TextFieldWithButt
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
-import {  useState } from "react";
+import { useState } from "react";
 import moment from "moment";
 import { getCapitalizedFirstLetters } from "../../utils";
 import { CircularProgress } from "@mui/material";
@@ -97,15 +97,17 @@ const DepartmentModalArea = styled(Box)(({ theme }) => ({
 interface IHrAddEmployee {
   handleClose?: () => void;
   open?: boolean;
-  setcommentText?: any
-  commenttext?: any
-  handleAddcomment?: any
-  currentExpense?: any
-  commentLoading?: any
-  handleDelete?: any
-  deleteLoading?: any
-  currentComment?: any
-  setcurrentComment?: any
+  setcommentText?: any;
+  commenttext?: any;
+  handleAddcomment?: any;
+  currentExpense?: any;
+  commentLoading?: any;
+  handleDelete?: any;
+  deleteLoading?: any;
+  currentComment?: any;
+  setcurrentComment?: any;
+  handleResolved?: any;
+  input?: any;
 }
 
 const DepartmentHeadModal: React.FC<IHrAddEmployee> = ({
@@ -119,9 +121,13 @@ const DepartmentHeadModal: React.FC<IHrAddEmployee> = ({
   handleDelete,
   deleteLoading,
   currentComment,
-  setcurrentComment
+  setcurrentComment,
+  handleResolved,
+  input,
 }) => {
+  console.log("input:::::::", input);
   const [dropdown, setDropdown] = useState(false);
+
   const handleDropdown = () => {
     setDropdown(!dropdown);
   };
@@ -136,26 +142,45 @@ const DepartmentHeadModal: React.FC<IHrAddEmployee> = ({
       <DepartmentModalArea>
         <Stack direction="column" gap="1px">
           <Box className="comment-area">
-            {deleteLoading ? <CircularProgress/> :  currentExpense?.comments?.map((item: any) => (
-              <ThreadHeader
-              setcurrentComment={setcurrentComment}
-              item={item}
-                handleDelete={() => handleDelete(currentComment)}
-                setcommentText={() => setcommentText(currentComment?.comment?.text)}
-                dropdown={dropdown}
-                setDropdown={handleDropdown}
-                title={item?.user?.firstname + ' ' + item.user.lastname}
-                name={getCapitalizedFirstLetters(item?.user?.firstname, item?.user?.lastname)}
-                date={moment(item?.comment?.created_at).format("D-MMM YYYY")}
-                subtitle={
-                  item?.comment?.text
-                }
+            {deleteLoading ? (
+              <CircularProgress />
+            ) : (
+              currentExpense?.comments?.map((item: any) => (
+                <ThreadHeader
+                  setcurrentComment={setcurrentComment}
+                  item={item}
+                  handleDelete={() => handleDelete(currentComment)}
+                  setcommentText={() =>
+                    setcommentText(currentComment?.comment?.text)
+                  }
+                  handleResolved={() => handleResolved(currentComment)}
+                  dropdown={dropdown}
+                  setDropdown={handleDropdown}
+                  title={item?.user?.firstname + " " + item.user.lastname}
+                  name={getCapitalizedFirstLetters(
+                    item?.user?.firstname,
+                    item?.user?.lastname
+                  )}
+                  date={moment(item?.comment?.created_at).format("D-MMM YYYY")}
+                  subtitle={item?.comment?.text}
+                />
+              ))
+            )}
+          </Box>
+          {!input ? (
+            <Box className="custom-label">
+              <TextFieldWithButton
+                commentLoading={commentLoading}
+                handleAddcomment={handleAddcomment}
+                commenttext={commenttext}
+                placeholder="Label"
+                isBtn={true}
+                setcommentText={setcommentText}
               />
-            ))}
-          </Box>
-          <Box className="custom-label">
-            <TextFieldWithButton commentLoading={commentLoading} handleAddcomment={handleAddcomment} commenttext={commenttext} placeholder="Label" isBtn={true} setcommentText={setcommentText}/>
-          </Box>
+            </Box>
+          ) : (
+            ""
+          )}
         </Stack>
       </DepartmentModalArea>
     </Modal>

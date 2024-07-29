@@ -173,20 +173,27 @@ function Row(props: {
   isOpen?: any;
   setCurrentRow?: any;
   benefit?: any;
+  setLoading?: any;
+  setStatusData?: any;
+  refresh?: any;
 }) {
   const {
     row,
     handleClick,
-    handleDelete,
-    setCurrentRow,
+    // handleDelete,
+    // setCurrentRow,
     loading,
     // isOpen,
     // setIsOpen,
     benefit,
+    setLoading,
+    setStatusData,
+    refresh,
   } = props;
   const [open, setOpen] = React.useState(false);
   const [isOpen, setIsOpen] = React.useState<any>(false);
   const [titles, setTitles] = React.useState<any>([]);
+  const [currentRow, setCurrentRow] = React.useState<any>("");
 
   const closeModel = () => {
     setIsOpen(false);
@@ -212,6 +219,26 @@ function Row(props: {
     const findBenefit = benefit?.find((item: any) => item.id === id);
     return findBenefit?.name?.toLowerCase()?.replace(/_/g, " ");
   };
+  const handleDelete = async () => {
+    try {
+      setLoading(true);
+      await deleteEmployee(currentRow?.id);
+      setStatusData({
+        type: "success",
+        message: "Employee Deleted Successfully",
+      });
+      refresh();
+      setLoading(false);
+      setIsOpen(false);
+    } catch (error: any) {
+      setStatusData({
+        type: "error",
+        message: error.response.data.message,
+      });
+      setLoading(false);
+    }
+  };
+
   return (
     <React.Fragment>
       <TableRow>
@@ -328,6 +355,7 @@ export default function HrCollapsibleTable({
   const [loading, setLoading] = React.useState<any>(false);
   const [isOpen, setIsOpen] = React.useState<any>(false);
   const [currentRow, setCurrentRow] = React.useState<any>("");
+  const [titleParent, setTitleParent] = React.useState<any>([]);
 
   const handleChangePage = (_: unknown, newPage: number) => {
     setPage(newPage);
@@ -339,6 +367,17 @@ export default function HrCollapsibleTable({
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  const fetchTitle = async () => {
+    try {
+      const response = await getAllRole("");
+      setTitleParent(response?.data?.role);
+    } catch (error) {}
+  };
+
+  React.useEffect(() => {
+    fetchTitle();
+  }, []);
 
   const handleDelete = async () => {
     try {
@@ -368,7 +407,11 @@ export default function HrCollapsibleTable({
           alignItems="center"
           justifyContent="space-between"
         >
-          <ExportCustomeCsv data={employeeData} />
+          <ExportCustomeCsv
+            benefit={benefit}
+            data={employeeData}
+            title={titleParent}
+          />
 
           <TextField
             id="input-with-icon-textfield"
@@ -410,6 +453,9 @@ export default function HrCollapsibleTable({
                     isOpen={isOpen}
                     setCurrentRow={setCurrentRow}
                     benefit={benefit}
+                    setLoading={setLoading}
+                    setStatusData={setStatusData}
+                    refresh={refresh}
                   />
                 ))}
             </TableBody>
