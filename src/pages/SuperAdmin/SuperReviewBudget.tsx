@@ -716,7 +716,7 @@ const SuperReviewBudget = () => {
             : ""
         }
         subdes={currenttitle}
-        subheading="Review Budgets"
+        subheading=""
         btnTitle="Actions"
         subHeader={true}
         subTitle={`Total Budget: $${formatNumber(totalBudget)}`}

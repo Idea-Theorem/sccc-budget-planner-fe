@@ -49,7 +49,7 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
     ".comment-icon": {
       position: "absolute",
       left: "-30px",
-      top: "30px",
+      top: "22px",
       color: "#048071",
       cursor: "pointer",
 
@@ -275,7 +275,7 @@ export default function TabsProgramArea({
     for (let i = 0; i < entities?.length; i++) {
       total += entities[i].amount;
     }
-    const amount = "$" + " " + total
+    const amount = "$" + " " + total;
     return String(amount);
   }
 
@@ -429,7 +429,7 @@ export default function TabsProgramArea({
                     disabled={true}
                     type="text"
                     placeholder="$00,000.00"
-                    value={ getTotalAmount()}
+                    value={getTotalAmount()}
                   />
                 </TableCell>
               </TableRow>

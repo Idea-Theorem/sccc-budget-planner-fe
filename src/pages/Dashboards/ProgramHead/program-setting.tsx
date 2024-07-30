@@ -233,6 +233,7 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
     {
       field: "buttonsColumn",
       headerName: "",
+      sortable: false,
       flex: 1,
       renderCell: (params: any) => (
         <Stack

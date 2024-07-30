@@ -229,6 +229,8 @@ const HRRole = () => {
     {
       field: "",
       headerName: "",
+      sortable: false,
+
       flex: 0.5,
       renderCell: (data: any) => (
         <Stack
