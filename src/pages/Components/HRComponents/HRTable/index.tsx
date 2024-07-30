@@ -200,6 +200,7 @@ const HRTableComponent: React.FC<HRTableProps> = ({
     {
       field: "buttonsColumn",
       headerName: "",
+      sortable: false,
       flex: 0.5,
       renderCell: (data?: any) => (
         <Stack
