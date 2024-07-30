@@ -78,11 +78,13 @@ const AppHeader = styled(Box)(({ theme }) => ({
       letterSpacing: "0.4px",
     },
     "& .title": {
-      fontWeight: "400",
-      fontSize: "19px",
+      fontWeight: "500",
+      fontSize: "14px",
+      marginBottom: "20px",
     },
     "& .sub": {
       fontWeight: "600",
+      marginBottom: "10px",
     },
   },
 }));
@@ -101,6 +103,7 @@ interface MainHeaderProps {
   classname?: string;
   onClick?: any;
   step?: any;
+  subheading? :string;
 }
 
 const MainHeaderComponent = (props: MainHeaderProps) => {
@@ -118,6 +121,9 @@ const MainHeaderComponent = (props: MainHeaderProps) => {
             onClick={() => onClick(props.title)}
           >
             {props.title}
+          </Typography>
+          <Typography className="sub" variant="h4">
+            {props.subheading}
           </Typography>
           <Typography className="sub" variant="h6">
             {props.subdes}

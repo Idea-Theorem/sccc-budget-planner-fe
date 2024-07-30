@@ -117,6 +117,10 @@ const DepartmentInfoArea = styled(Box)(({ theme }) => ({
     "& .MuiButtonBase-root": {
       textTransform: "capitalize",
     },
+
+    "& .MuiButton-text": {
+      color: "inherit",
+    },
   },
 }));
 
