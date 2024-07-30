@@ -211,7 +211,7 @@ const AdminDepartmentProgress = ({
                 <Box>
                   <strong>Departments</strong>
                 </Box>
-                <strong>{totalDepartment}</strong>
+                <strong>${totalDepartment}</strong>
               </Stack>
 
               {departmentInCenterLoading && departmentInCenter?.length == 0 ? (

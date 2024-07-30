@@ -7,7 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import DepartmentHeadModal from "../../models/Departmenthead";
 import TextFields from "../Input/textfield";
 import { v4 as uuidv4 } from "uuid";
@@ -226,37 +226,29 @@ export default function TabsProgramArea({
     }
   };
 
-  const handleAttachComments = useCallback(() => {
+  useEffect(() => {
     if (allComments?.length > 0 && singleProgram?.id) {
       const res = attachCommentsToProgram(singleProgram, allComments);
       dispatch(storeIncomeList(res?.income));
       dispatch(storeSupplyList(res?.supply_expense));
       dispatch(storeSalaryList(res?.salary_expense));
     }
-  }, [allComments, singleProgram, dispatch]);
+  }, [allComments]);
 
-  const handleTitleChange = useCallback(() => {
-    if (title === "income") {
+  useEffect(() => {
+    if (title == "income") {
       handleReceived(incomeList);
       setEntities(incomeList);
-    } else if (title === "supply-expense") {
+    } else if (title == "supply-expense") {
       handleSupplyExpenseReceived(supplyList);
       setEntities(supplyList);
-    } else if (title === "salary-expense") {
+    } else if (title == "salary-expense") {
       handleSalaryExpenseReceived(salaryList);
       setEntities(salaryList);
     }
-  }, [
-    title,
-    incomeList,
-    supplyList,
-    salaryList,
-    handleReceived,
-    handleSupplyExpenseReceived,
-    handleSalaryExpenseReceived,
-  ]);
+  }, [incomeList, supplyList, salaryList]);
 
-  const handleListsChange = useCallback(() => {
+  useEffect(() => {
     if (incomeList.length > 0) {
       dispatch(storeIncomeList(incomeList));
     } else {
@@ -272,13 +264,7 @@ export default function TabsProgramArea({
     } else {
       dispatch(storeSalaryList(expense));
     }
-  }, [incomeList, supplyList, salaryList, rows, benefits, expense, dispatch]);
-
-  useEffect(handleAttachComments, [handleAttachComments]);
-
-  useEffect(handleTitleChange, [handleTitleChange]);
-
-  useEffect(handleListsChange, [handleListsChange]);
+  }, [incomeList, supplyList, salaryList]);
 
   const closeModal = () => {
     setIsOpen(false);
@@ -289,7 +275,8 @@ export default function TabsProgramArea({
     for (let i = 0; i < entities?.length; i++) {
       total += entities[i].amount;
     }
-    return String(total);
+    const amount = "$" + " " + total
+    return String(amount);
   }
 
   function capitalizeFirstLetter(str: string | any) {
@@ -442,7 +429,7 @@ export default function TabsProgramArea({
                     disabled={true}
                     type="text"
                     placeholder="$00,000.00"
-                    value={getTotalAmount()}
+                    value={ getTotalAmount()}
                   />
                 </TableCell>
               </TableRow>

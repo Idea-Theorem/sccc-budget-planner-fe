@@ -27,6 +27,11 @@ const StyledBox = styled(Box)(() => ({
   },
   ".appHeader": {
     paddingBottom: "5px",
+
+    "& .title": {
+      fontWeight: "500",
+      fontSize: "14px",
+    },
   },
 }));
 
@@ -705,12 +710,13 @@ const SuperReviewBudget = () => {
           step == 0
             ? "Review Budgets"
             : step == 1
-            ? "Review Budgets: Center  >  Departments"
+            ? " Review Budgets > Center    "
             : step == 2
-            ? "Review Budgets: Center  >  Departments > Program"
+            ? " Review Budgets > Center  > Departments"
             : ""
         }
         subdes={currenttitle}
+        subheading="Review Budgets"
         btnTitle="Actions"
         subHeader={true}
         subTitle={`Total Budget: $${formatNumber(totalBudget)}`}
