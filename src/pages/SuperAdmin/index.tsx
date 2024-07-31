@@ -68,6 +68,7 @@ const SuperAdminScreen = () => {
         array={array}
         title="Dashboard"
         btnTitle="Actions"
+        step={0}
         subTitle={"Welcome" + " " + user?.firstname + " " + user?.lastname}
         date={moment().format("dddd D, MMM ")}
         subHeader={true}

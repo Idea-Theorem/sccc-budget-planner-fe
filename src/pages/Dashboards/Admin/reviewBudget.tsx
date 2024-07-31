@@ -335,6 +335,7 @@ const ReviewBudgetScreen = () => {
         array={array}
         action={true}
         title="Review Budgets"
+        step={0}
         btnTitle="Actions"
         subTitle={`Total Budget: $${formatNumber(totalBudget)}`}
         // subTitle={`Total Budget: 0`}

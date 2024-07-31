@@ -69,6 +69,7 @@ const AdminScreen = () => {
       <MainHeaderComponent
         array={array}
         title="Dashboard"
+        step={0}
         btnTitle="Actions"
         subTitle={"Welcome" + " " + user?.firstname + " " + user?.lastname}
         date={moment().format("dddd D, MMM ")}
