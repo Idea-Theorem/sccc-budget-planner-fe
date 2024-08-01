@@ -1,0 +1,7 @@
+.MuiButton-containedPrimary:not(:hover) {
+    background: #048071;
+}
+
+.MuiButton-outlinedPrimary:not(:hover) {
+    border-color: #048071;
+}

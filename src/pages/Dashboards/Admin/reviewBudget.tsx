@@ -307,7 +307,7 @@ const ReviewBudgetScreen = () => {
       departmentIds: selectedRows,
       status: status,
     };
-    const response = await getSingleDepartments(data);
+    const response = await getSingleDepartments(data); 
     setUpdateprogram(response?.data);
   };
   const onRowClick = async (data: any) => {
@@ -335,7 +335,6 @@ const ReviewBudgetScreen = () => {
         array={array}
         action={true}
         title="Review Budgets"
-        step={0}
         btnTitle="Actions"
         subTitle={`Total Budget: $${formatNumber(totalBudget)}`}
         // subTitle={`Total Budget: 0`}

@@ -35,7 +35,7 @@ const StyledBox = styled(Box)(() => ({
   },
 
   "& .totalBudgetText": {
-    fontSize: "18px",
+    fontSize: "16px",
     fontWeight: "400",
     marginTop: "-10px",
     marginBottom: "0",

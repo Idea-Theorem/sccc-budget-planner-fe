@@ -70,10 +70,10 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
     letterSpacing: "0.17px",
   },
   "& .MuiButtonBase-root.Mui-checked": {
-    color: "rgba(42, 157, 143, 1) !important",
+    color: "#048071 !important",
   },
   "& .Mui-selected .MuiCheckbox-root": {
-    color: "rgba(42, 157, 143, 1) !important",
+    color: "#048071 !important",
   },
   "& .MuiDataGrid-menuIcon": {
     display: "none",
@@ -122,10 +122,10 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
       color: "rgba(48, 48, 48, 1)",
     },
     ".MuiButton-outlinedPrimary": {
-      color: "rgba(4, 128, 113, 1)",
+      color: "#048071",
 
       "&:hover": {
-        background: "rgba(4, 128, 113, 1)",
+        background: "#048071",
         color: "#fff",
       },
     },

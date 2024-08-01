@@ -1,5 +1,4 @@
 import { Navigate, RouteObject } from "react-router-dom";
-
 import SecureLayout from "../layouts/SecureLayout";
 import SideBarLayout from "../layouts/SideBar";
 import Layout from "../layouts/SimpleLayout";
@@ -36,6 +35,8 @@ import ExpiredProgram from "../pages/Dashboards/ProgramHead/expireProgram";
 
 import Center from "../pages/Dashboards/ProgramHead/centers";
 import Departments from "../pages/Dashboards/ProgramHead/departments";
+import SuperReviewBudgetDepartment from "../pages/SuperAdmin/SuperReviewBudgetDepartment";
+import SuperReviewBudgetPrograms from "../pages/SuperAdmin/SuperReviewBudgetPrograms";
 
 const authRoutes: RouteObject = {
   path: "*",
@@ -110,6 +111,10 @@ const superAdminRoute: RouteObject = {
           ],
         },
         { path: "super-department", element: <SuperDepartmentDetail /> },
+        { path: "review-budgets-departments", element: <SuperReviewBudgetDepartment /> },
+        { path: "review-budgets-program", element: <SuperReviewBudgetPrograms /> },
+
+        
         { path: "program", element: <SuperAdminProgramScreen /> },
       ],
     },

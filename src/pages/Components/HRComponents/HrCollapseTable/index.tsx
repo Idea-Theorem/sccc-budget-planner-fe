@@ -118,10 +118,10 @@ const HrCollapseableTable = styled(Box)(({ theme }) => ({
       color: "rgba(48, 48, 48, 1)",
     },
     ".MuiButton-outlinedPrimary": {
-      color: "rgba(4, 128, 113, 1)",
+      color: "#048071",
 
       "&:hover": {
-        background: "rgba(4, 128, 113, 1)",
+        background: "#048071",
         color: "#fff",
       },
     },

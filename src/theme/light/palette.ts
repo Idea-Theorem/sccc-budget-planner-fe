@@ -12,8 +12,8 @@ export const lightPallete: any = {
   mode: "light",
   primary: {
     // ...defaultPalette.primary,
-    main: "rgba(42, 157, 143, 1)",
-    light: "rgba(42, 157, 143, 1)",
+    main: "#048071",
+    light: "#048071",
 
     // contrastText: "rgba(0, 0, 0, 0.12)",
     shades: {
