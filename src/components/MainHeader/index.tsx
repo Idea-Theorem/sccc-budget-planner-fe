@@ -102,7 +102,6 @@ interface MainHeaderProps {
   subdes?: string;
   classname?: string;
   onClick?: any;
-  step?: any;
   subheading? :string;
 }
 
@@ -116,7 +115,7 @@ const MainHeaderComponent = (props: MainHeaderProps) => {
       <Stack className="appHeaderHolder">
         <Box>
           <Typography
-            className={props.step == "0" ? "" : "title"}
+          
             variant="h3"
             onClick={() => onClick(props.title)}
           >

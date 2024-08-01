@@ -3,21 +3,23 @@ import Box from "@mui/material/Box";
 import MainHeaderComponent from "../../components/MainHeader";
 import TabsArea from "../../components/Tabs";
 import {
-  getAllCenters,
-  getDepartmentInCenters,
+
+  getProgramInDepartment,
 } from "../../services/centersServices";
 import React, { useEffect, useState } from "react";
 import Status from "../../utils/dumpData";
-import { getPrograms } from "../../services/adminServices";
 import { capitalizeFirstLetter, formatNumber } from "../../utils";
-import { Stack } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import moment from "moment";
-import {
-  storeCurrentCenter,
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
+import {
+  storeProgramFromStatus,
+  storeSingleProgram,
 } from "../../store/reducers/programSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "../../store";
 const StyledBox = styled(Box)(() => ({
   "& .dashboardCards": {
     display: "flex",
@@ -34,7 +36,7 @@ const StyledBox = styled(Box)(() => ({
   },
 }));
 
-const SuperReviewBudget = () => {
+const SuperReviewBudgetPrograms = () => {
   const [center, setCenters] = useState([]);
   const [totalBudget, settotalBudget] = useState("");
   const [tabstatus, setTabstatus] = React.useState(Status.PENDING);
@@ -42,19 +44,39 @@ const SuperReviewBudget = () => {
   const navigate = useNavigate();
 
   console.log(tabstatus);
+  const { currentDepartment } = useSelector(
+    (state: RootState) => state.program
+  );
 
-
-  const tableColumnsCenter = [
+  const tableColumnsProgram = [
     [
       {
         field: "name",
-        headerName: "Center Name",
+        headerName: "Program Name",
+        sortable: false,
+        editable: false,
+        flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{params?.row?.code + "-" + params?.row?.name}</Box>
+            </Stack>
+          );
+        },
+        valueGetter: (params: any) =>
+          params?.row?.code + "-" + params?.row?.name,
+      },
+
+      {
+        field: "status",
+        headerName: "Status",
         sortable: false,
         editable: false,
         flex: 1,
       },
+
       {
-        field: "totalIncomeSum",
+        field: "programBudget",
         headerName: "Budget",
         sortable: false,
         editable: false,
@@ -62,30 +84,13 @@ const SuperReviewBudget = () => {
         renderCell: (params: any) => {
           return (
             <Stack>
-              <Box>{formatNumber(params?.row?.totalIncomeSum)}</Box>
+              <Box>{formatNumber(params?.row?.programBudget)}</Box>
             </Stack>
           );
         },
-        valueGetter: (params: any) => formatNumber(params?.row?.totalIncomeSum),
+        valueGetter: (params: any) => formatNumber(params?.row?.programBudget),
       },
 
-      {
-        field: "nPrograms",
-        headerName: "No. Dept.",
-
-        sortable: false,
-        editable: false,
-        flex: 1,
-        renderCell: (params: any) => {
-          return (
-            <Stack>
-              <Box>{params?.row?.Department?.length}</Box>
-            </Stack>
-          );
-        },
-        valueGetter: (params: any) =>
-          formatNumber(params?.row?.Department?.length),
-      },
       {
         field: "created_at",
         headerName: "Submission Date",
@@ -101,6 +106,21 @@ const SuperReviewBudget = () => {
         },
         valueGetter: (params: any) =>
           moment(params?.row?.created_at).format("D-MMM YYYY"),
+      },
+      {
+        field: "comments",
+        headerName: "Comments",
+        sortable: false,
+        editable: false,
+        flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{params?.row?._count?.Comment}</Box>
+            </Stack>
+          );
+        },
+        valueGetter: (params: any) => params?.row?._count?.Comment,
       },
     ],
     [
@@ -129,11 +149,19 @@ const SuperReviewBudget = () => {
       },
 
       {
-        field: "budget",
+        field: "programBudget",
         headerName: "Budget",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+            </Stack>
+          );
+        },
+        valueGetter: (params: any) => formatNumber(params?.row?.programBudget),
       },
 
       {
@@ -165,6 +193,14 @@ const SuperReviewBudget = () => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{params?.row?._count?.Comment}</Box>
+            </Stack>
+          );
+        },
+        valueGetter: (params: any) => params?.row?._count?.Comment,
       },
     ],
     [
@@ -184,11 +220,19 @@ const SuperReviewBudget = () => {
       },
 
       {
-        field: "budget",
+        field: "programBudget",
         headerName: "Budget",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+            </Stack>
+          );
+        },
+        valueGetter: (params: any) => formatNumber(params?.row?.programBudget),
       },
 
       {
@@ -220,52 +264,61 @@ const SuperReviewBudget = () => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{formatNumber(params?.row?._count?.Comment)}</Box>
+            </Stack>
+          );
+        },
+        valueGetter: (params: any) =>
+          formatNumber(params?.row?._count?.Comment),
       },
     ],
   ];
-
   const array = [{ text: "Approve" }, { text: "Reject" }];
-
-  const fetchCenter = async (value: string) => {
-    try {
-      const response = await getAllCenters(value);
-      const res = await getPrograms();
-      settotalBudget(res?.data?.totalApprovedProgrambudget);
-      setCenters(response?.data?.centers);
-    } catch (error) {}
-  };
-  const handleSingleRow = async (row: any) => {
-    
-    try {
-      dispatch(storeCurrentCenter(row))
-      navigate('/super-admin/review-budgets-departments') 
-      const res = await getDepartmentInCenters(row?.id);
-      setCenters(res?.data?.center?.department);
-      settotalBudget(res?.data?.center?.totalDepartmentBudget); 
-    } catch (error) {}
-  };
-
   useEffect(() => {
-    fetchCenter("");
-  }, []);
+    if(currentDepartment?.id){
+      fetchProgramInDepartment(currentDepartment?.id)
+    }
+  },[currentDepartment])
+  
+  const handleSingleRow = async (row: any) => {
+   
+      dispatch(storeSingleProgram(row));
+      dispatch(storeProgramFromStatus(Status.DEFAULT));
+      navigate("/program-head/create");
+      
+  };
+
+  const fetchProgramInDepartment = async (id: string) => {
+    try {
+      const res = await getProgramInDepartment(id);
+      setCenters(res?.data?.programs);
+      settotalBudget(res?.data?.totalBudget);
+    } catch (error) {}
+  };
+
 
   const handleBackFunctionality = () => {
  
   };
 
-  const receiveProgramSearch = async (value: string) => {
-      await fetchCenter(value);
-  };
 
   return (
     <StyledBox className="appContainer">
+      <Typography onClick={() => navigate("/super-admin/review-budgets")}>Review Budgets Centre</Typography>
+        <ArrowForwardIosIcon className="right-arrow" />
+        <Typography onClick={() => navigate("/super-admin/review-budgets")} >Centre</Typography>
+        <ArrowForwardIosIcon className="right-arrow" />
+        <Typography onClick={() => navigate("/super-admin/review-budgets-departments")} >Department</Typography>
       <MainHeaderComponent
         array={array}
         action={true}
         title={""
-       
+         
         }
-        subdes={""}
+        subdes={currentDepartment.name}
         subheading="Review Budgets"
         btnTitle="Actions"
         subHeader={true}
@@ -279,16 +332,14 @@ const SuperReviewBudget = () => {
           { title: "Approved" },
           { title: "Rejected" },
         ]}
-        table={
-           tableColumnsCenter
-           
+        table={ tableColumnsProgram
         }
         row={center}
         onRowClick={handleSingleRow}
-        receiveProgramSearch={receiveProgramSearch}
+        // receiveProgramSearch={receiveProgramSearch}
       />
     </StyledBox>
   );
 };
 
-export default SuperReviewBudget;
+export default SuperReviewBudgetPrograms;

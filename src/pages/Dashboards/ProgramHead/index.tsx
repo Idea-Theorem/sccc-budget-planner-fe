@@ -71,7 +71,6 @@ const ProgramHeadScreen = () => {
     <StyledBox className="appContainer">
       <MainHeaderComponent
         title="Programs"
-        step={0}
         btnTitle="Create New Programs"
         onClick={() => {
           navigate("/program-head/create");

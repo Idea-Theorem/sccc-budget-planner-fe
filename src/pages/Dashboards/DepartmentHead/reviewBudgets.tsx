@@ -342,7 +342,7 @@ const DHReviewBudgets = () => {
   const { programList } = useSelector((state: RootState) => state.program);
   const dispatch = useDispatch();
   const [status, setStatus] = useState<string>("");
-  const [tabstatus, setTabstatus] = React.useState(Status.PENDING);
+  const [tabstatus, setTabstatus] = React.useState<any>(Status.PENDING);
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
   const [updateprogram, setUpdateprogram] = useState<string[]>([]);
   const [departments, setDepartments] = useState<any>([]);
@@ -361,9 +361,9 @@ const DHReviewBudgets = () => {
   const fetchDepartments = async () => {
     try {
       const response = await getAllDepartments("");
-      response?.data?.departments.find(
-        (item: any) => item?.name === activeDepartment
-      );
+      // response?.data?.departments.find(
+      //   (item: any) => item?.name === activeDepartment
+      // );
       setDepartmentID(response?.data?.departments[0]?.id);
       setActiveDepartment(response?.data?.departments[0]?.name);
       settotalBudget(response?.data?.departments[0]?.value);
@@ -371,11 +371,16 @@ const DHReviewBudgets = () => {
       setDepartments(response?.data?.departments);
     } catch (error) {}
   };
+console.log('tabstatus::::::::', tabstatus)
   useEffect(() => {
-    if (departmentId) {
-      getDepartmentCount(departmentId);
+    if(tabstatus == "APPROVED"){
+      console.log('first::::::::::')
+      if (departmentId) {
+        getDepartmentCount(departmentId);
+      }
     }
-  }, [tabstatus]);
+   
+  }, [tabstatus, departmentId]);
 
   const receiveDepartment = async (value: any) => {
     try {
@@ -384,9 +389,10 @@ const DHReviewBudgets = () => {
       setActiveDepartment(filteredID?.name);
       setDepartmentID(filteredID?.id);
       const res = await getProgramInDepartment(filteredID?.id);
-      settotalBudget(res?.data?.totalBudget);
       dispatch(storeProgramList(res?.data?.programs));
+      settotalBudget(res?.data?.totalBudget);
       getDepartmentCount(filteredID?.id);
+      setTabstatus(Status.PENDING)
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -407,6 +413,7 @@ const DHReviewBudgets = () => {
   }, [updateprogram, activeDepartment, tabstatus]);
   const fetchProgram = async (value: string) => {
     try {
+      
       const response = await getAllProgramsViaStatus(tabstatus, value);
       const newArray = response?.data?.programs?.filter(
         (item: any) => item?.department?.id === departmentId
@@ -474,7 +481,6 @@ const DHReviewBudgets = () => {
         <Typography variant="h3">Review Budgets</Typography>
       </Box>
       <SubHeader
-        // handleUpdate={handleUpdate}
         title=""
         onStatusChange={handleStatusChange}
       />
@@ -536,7 +542,6 @@ const DHReviewBudgets = () => {
         open={attentionModal}
         handleClose={() => setAttentionModal(false)}
         handleOK={handleOK}
-        // loading={isSubmitting}
         heading="Attention"
         text="You are changing the status of the program"
       />

@@ -2,18 +2,21 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import TabsArea from "../../../components/Tabs";
 import Status from "../../../utils/dumpData";
-import { Stack, Typography } from "@mui/material";
-import React, { useEffect } from "react";
+import {  Stack, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { RootState } from "../../../store";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { capitalizeFirstLetter, formatNumber } from "../../../utils";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import moment from "moment";
 import {
   storeProgramFromStatus,
   storeSingleProgram,
 } from "../../../store/reducers/programSlice";
+import SelectDemo from "../../../components/Select";
+import { getAllDepartments } from "../../../services/departmentServices";
+import { getProgramInDepartment } from "../../../services/centersServices";
 const StyledBox = styled(Box)(() => ({
   "& .dashboardCards": {
     display: "flex",
@@ -302,13 +305,20 @@ const RecreationAndCultureScreen = ({}: any) => {
       },
     ],
   ];
-  const { singleDepart } = useSelector((state: RootState) => state.program);
-  const { singleDepartName, programBudgetInDepartment } = useSelector(
+  const { singleDepartName } = useSelector(
     (state: RootState) => state.program
   );
   const [tabstatus, setTabstatus] = React.useState(Status.PENDING);
   const [clonedProgram, setClonedProgram] = React.useState<any>([]);
   const [programInDepartment, setProgramInDepartment] = React.useState<any>([]);
+  const [departments, setDepartments] = useState<any>([]);
+  const [activeDepartment, setActiveDepartment] = useState<any>("");
+  const [totalBudget, settotalBudget] = useState("");
+
+
+
+
+  
   const dispatch = useDispatch();
   console.log(tabstatus);
   const [status, setStatus] = React.useState<string>("");
@@ -318,15 +328,50 @@ const RecreationAndCultureScreen = ({}: any) => {
   };
 
   useEffect(() => {
-    const filteredArray = singleDepart.filter(
-      (item) => item?.status?.toLowerCase() == tabstatus?.toLowerCase()
+    fetchDepartments();
+  }, []);
+  const fetchDepartments = async () => {
+    try {
+      const response = await getAllDepartments("");
+     const matchDepartment =  response?.data?.departments.find(
+        (item: any) => item?.name === singleDepartName?.name
+      );
+      setActiveDepartment(matchDepartment?.name);
+      settotalBudget(matchDepartment?.value);
+      setDepartments(response?.data?.departments);
+    } catch (error) {}
+  };
+
+  const receiveDepartment = async (value: any) => {
+    try {
+      const filteredID = departments.find((item: any) => item?.name === value);
+      setActiveDepartment(filteredID?.name);
+      const res = await getProgramInDepartment(filteredID?.id);
+      settotalBudget(res?.data?.totalBudget);
+      setClonedProgram(res?.data?.programs)
+      const filteredArray = res?.data?.programs?.filter(
+        (item: any) => item?.status?.toLowerCase() == tabstatus?.toLowerCase()
+      );
+    setProgramInDepartment(filteredArray);
+    } catch (error) {
+    }
+  };
+
+  useEffect(() => {
+    if(departments?.length > 0){
+      receiveDepartment(activeDepartment)
+    }
+  },[departments])
+
+  useEffect(() => {
+    const filteredArray = clonedProgram.filter(
+      (item: any) => item?.status?.toLowerCase() == tabstatus?.toLowerCase()
     );
-    setClonedProgram(filteredArray);
     setProgramInDepartment(filteredArray);
     if (false) {
       setStatus("");
     }
-  }, [tabstatus]);
+  }, [tabstatus, departments]);
 
   const onRowClick = (data: any) => {
     dispatch(storeSingleProgram(data));
@@ -340,15 +385,24 @@ const RecreationAndCultureScreen = ({}: any) => {
     );
     setProgramInDepartment(filteredArray);
   };
+
   return (
     <StyledBox className="appContainer">
       <Box className="back">
-        <ArrowBackIosIcon className="right-arrow" />
-        <Typography onClick={() => goBack()}>Back</Typography>
+        <Typography onClick={() => goBack()}>Review Budgets</Typography>
+        <ArrowForwardIosIcon className="right-arrow" />
+        <Typography onClick={() => goBack()}>Departments</Typography>
       </Box>
-      <Typography className="name">{singleDepartName?.name}</Typography>
+      <SelectDemo
+          parentClass="departmentSelect"
+          title=""
+          receiveValue={receiveDepartment}
+          list={departments}
+          value={activeDepartment}
+          placeholder="Please Select"
+        />
       <Typography className="amount-text">
-        Total Budget: ${formatNumber(programBudgetInDepartment)}
+        Total Budget: ${formatNumber(totalBudget)}
       </Typography>
       <TabsArea
         setTabstatus={setTabstatus}

@@ -11,6 +11,8 @@ export type tokenState = {
   singleDepartName: any;
   programFromStatus: any;
   sidebarCheck: any;
+  currentCenter: any;
+  currentDepartment: any;
 };
 
 const initialState: tokenState = {
@@ -23,7 +25,9 @@ const initialState: tokenState = {
   singleDepartName: null,
   programFromStatus: null,
   programBudgetInDepartment: "",
+  currentCenter: "",
   sidebarCheck: "",
+  currentDepartment: "",
 };
 
 export const programSlice = createSlice({
@@ -60,6 +64,12 @@ export const programSlice = createSlice({
     storeSideBarCheck: (state, action) => {
       state.sidebarCheck = action.payload;
     },
+    storeCurrentCenter: (state, action) => {
+      state.currentCenter = action.payload;
+    },
+    storeCurrentDepartment: (state, action) => {
+      state.currentDepartment = action.payload;
+    },
   },
 });
 
@@ -74,6 +84,8 @@ export const {
   storeProgramFromStatus,
   storeSingleDepart,
   storeSingleDepartName,
+  storeCurrentCenter,
+  storeCurrentDepartment
 } = programSlice.actions;
 
 export default programSlice.reducer;
