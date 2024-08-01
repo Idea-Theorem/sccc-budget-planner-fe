@@ -33,6 +33,27 @@ const StyledBox = styled(Box)(() => ({
       fontSize: "14px",
     },
   },
+
+  ".breadcrumbs": {
+    display: "flex",
+    alignItems: "center",
+    gap: "10px",
+    marginBottom: "16px",
+
+    ".breadcrumbs-item": {
+      fontSize: "14px",
+      lineHeight: "21px",
+      "&.previous-item": {
+        cursor: "pointer",
+        color: "#1E88E5",
+      },
+    },
+
+    ".right-arrow": {
+      width: "7px",
+      height: "auto",
+    },
+  },
 }));
 
 const SuperReviewBudgetDepartment = () => {
@@ -272,10 +293,10 @@ useEffect(() => {
 
   return (
     <StyledBox className="appContainer">
-       <Box className="back">
-        <Typography >Review Budgets</Typography>
+       <Box className="breadcrumbs">
+        <Typography className="breadcrumbs-item previous-item">Review Budgets</Typography>
         <ArrowForwardIosIcon className="right-arrow" />
-        <Typography onClick={() => navigate("/super-admin/review-budgets")} >Centre</Typography>
+        <Typography onClick={() => navigate("/super-admin/review-budgets")} className="breadcrumbs-item">Centre</Typography>
       </Box>
       <MainHeaderComponent
         array={array}
@@ -284,7 +305,7 @@ useEffect(() => {
         ""
         }
         subdes={currentCenter?.name}
-        subheading=""
+        subheading="Review Budgets"
         btnTitle="Actions"
         subHeader={true}
         subTitle={`Total Budget: $${formatNumber(totalBudget)}`}

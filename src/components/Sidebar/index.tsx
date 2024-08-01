@@ -66,7 +66,7 @@ const SideArea = styled(Box)(({ theme }) => ({
   },
 
   "& .MuiPaper-root": {
-    background: `${theme.palette.primary.main} !important`,
+    background: "#048071 !important",
     width: "208px",
     border: "none",
   },

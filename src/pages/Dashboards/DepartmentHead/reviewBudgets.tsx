@@ -28,12 +28,12 @@ import { useLocation } from "react-router-dom";
 import moment from "moment";
 const StyledBox = styled(Box)(() => ({
   "& .reviewBudgetHead": {
-    marginBottom: "0",
+    marginBottom: "15px",
     position: "relative",
   },
 
   "& .totalBudgetText": {
-    fontSize: "20px",
+    fontSize: "16px",
     fontWeight: "400",
     marginTop: "5px",
     marginBottom: "8px",

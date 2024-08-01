@@ -13,7 +13,7 @@ const AppHeader = styled(Box)(({ theme }) => ({
     // paddingBottom: "40px",
     "& .appHeaderHolder": {
       display: "flex",
-      alignItems: "center",
+      // alignItems: "center",
       justifyContent: "space-between",
       flexDirection: "row",
     },
@@ -51,11 +51,10 @@ const AppHeader = styled(Box)(({ theme }) => ({
       marginBottom: "20px",
 
       "& .welcomeText": {
-        fontSize: "20px",
+        fontSize: "16px",
         lineHeight: "1.3",
         fontWeight: "500",
         letterSpacing: "0.25px",
-        color: theme.palette.text.primary,
         margin: "0 13px 0 0",
       },
       "& .welcomeDate ": {
@@ -67,7 +66,7 @@ const AppHeader = styled(Box)(({ theme }) => ({
       },
     },
     "& .headerDropdownButton": {
-      background: theme.palette.primary.main,
+      background: "#048071",
       color: theme.palette.background.default,
       minWidth: "113px",
       height: "36px",
@@ -82,9 +81,14 @@ const AppHeader = styled(Box)(({ theme }) => ({
       fontSize: "14px",
       marginBottom: "20px",
     },
-    "& .sub": {
+    "& .sub-heading4": {
       fontWeight: "600",
       marginBottom: "10px",
+      fontSize: "26px",
+    },
+    "& .sub-heading6": {
+      fontWeight: "600",
+      paddingTop: "6px",
     },
   },
 }));
@@ -112,21 +116,27 @@ const MainHeaderComponent = (props: MainHeaderProps) => {
   };
   return (
     <AppHeader className={`${classname} appHeader`}>
-      <Stack className="appHeaderHolder">
+      <Stack className="appHeaderHolder" alignItems={"start"}>
         <Box>
-          <Typography
-          
-            variant="h3"
-            onClick={() => onClick(props.title)}
-          >
-            {props.title}
-          </Typography>
-          <Typography className="sub" variant="h4">
-            {props.subheading}
-          </Typography>
-          <Typography className="sub" variant="h6">
-            {props.subdes}
-          </Typography>
+          {props.title &&
+            <Typography
+            
+              variant="h3"
+              onClick={() => onClick(props.title)}
+            >
+              {props.title}
+            </Typography>
+          }
+          {props.subheading &&
+            <Typography className="sub-heading4" variant="h4">
+              {props.subheading}
+            </Typography>
+          }
+          {props.subdes &&
+            <Typography className="sub-heading6" variant="h6">
+              {props.subdes}
+            </Typography>
+          }
         </Box>
         {props?.action ? (
           <DropdownButton

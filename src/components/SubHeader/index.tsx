@@ -28,7 +28,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
   },
 
   "& .headerDropdownButton": {
-    background: theme.palette.primary.main + " !important",
+    background: "#048071 !important",
     color: theme.palette.background.default,
     minWidth: "113px",
     height: "36px",

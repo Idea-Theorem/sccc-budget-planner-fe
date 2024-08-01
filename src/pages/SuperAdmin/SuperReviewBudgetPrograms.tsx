@@ -34,6 +34,27 @@ const StyledBox = styled(Box)(() => ({
       fontSize: "14px",
     },
   },
+
+  ".breadcrumbs": {
+    display: "flex",
+    alignItems: "center",
+    gap: "10px",
+    marginBottom: "16px",
+
+    ".breadcrumbs-item": {
+      fontSize: "14px",
+      lineHeight: "21px",
+      "&.previous-item": {
+        cursor: "pointer",
+        color: "#1E88E5",
+      },
+    },
+
+    ".right-arrow": {
+      width: "7px",
+      height: "auto",
+    },
+  },
 }));
 
 const SuperReviewBudgetPrograms = () => {
@@ -307,11 +328,13 @@ const SuperReviewBudgetPrograms = () => {
 
   return (
     <StyledBox className="appContainer">
-      <Typography onClick={() => navigate("/super-admin/review-budgets")}>Review Budgets Centre</Typography>
+      <Box className="breadcrumbs">
+        <Typography className="breadcrumbs-item previous-item" onClick={() => navigate("/super-admin/review-budgets")}>Review Budgets Centre</Typography>
         <ArrowForwardIosIcon className="right-arrow" />
-        <Typography onClick={() => navigate("/super-admin/review-budgets")} >Centre</Typography>
+        <Typography className="breadcrumbs-item previous-item" onClick={() => navigate("/super-admin/review-budgets")} >Centre</Typography>
         <ArrowForwardIosIcon className="right-arrow" />
-        <Typography onClick={() => navigate("/super-admin/review-budgets-departments")} >Department</Typography>
+        <Typography className="breadcrumbs-item" onClick={() => navigate("/super-admin/review-budgets-departments")} >Department</Typography>
+      </Box>
       <MainHeaderComponent
         array={array}
         action={true}

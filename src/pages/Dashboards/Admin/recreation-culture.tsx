@@ -34,6 +34,42 @@ const StyledBox = styled(Box)(() => ({
     gap: "10px",
   },
 
+  ".breadcrumbs": {
+    display: "flex",
+    alignItems: "center",
+    gap: "10px",
+    marginBottom: "16px",
+
+    ".breadcrumbs-item": {
+      fontSize: "14px",
+      lineHeight: "21px",
+
+      "&.previous-item": {
+        cursor: "pointer",
+        color: "#1E88E5",
+      },
+    },
+
+    ".right-arrow": {
+      width: "7px",
+      height: "auto",
+    },
+  },
+
+  ".departmentSelect ": {
+    padding: "20px 0 8px",
+
+    ".input-wrap": {
+      ".MuiInputBase-root": {
+        minWidth: "300px",
+      },
+
+      ".MuiSelect-select": {
+        fontWeight: "500",
+      },
+    },
+  },
+
   "& .right-arrow": {
     width: "15px",
     height: "15px",
@@ -49,8 +85,8 @@ const StyledBox = styled(Box)(() => ({
   },
 
   "& .amount-text": {
-    fontSize: "18px",
-    lineHeight: "22.23px",
+    fontSize: "16px",
+    lineHeight: "20px",
     color: "#000000DE",
     margin: "0 0 10px",
     fontWeight: "400",
@@ -388,11 +424,14 @@ const RecreationAndCultureScreen = ({}: any) => {
 
   return (
     <StyledBox className="appContainer">
-      <Box className="back">
-        <Typography onClick={() => goBack()}>Review Budgets</Typography>
+      <Box className="breadcrumbs">
+        <Typography onClick={() => goBack()} className="breadcrumbs-item previous-item">Review Budgets</Typography>
         <ArrowForwardIosIcon className="right-arrow" />
-        <Typography onClick={() => goBack()}>Departments</Typography>
+        <Typography onClick={() => goBack()} className="breadcrumbs-item">Departments</Typography>
       </Box>
+      <Typography variant="h3">
+        Review Budget
+      </Typography>
       <SelectDemo
           parentClass="departmentSelect"
           title=""
