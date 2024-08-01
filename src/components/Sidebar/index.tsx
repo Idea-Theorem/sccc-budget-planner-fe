@@ -126,6 +126,21 @@ const SideArea = styled(Box)(({ theme }) => ({
     padding: "8px 0 !important",
   },
 
+  ".MuiCollapse-wrapperInner": {
+    ".MuiListItemText-root": {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+
+      ".MuiTypography-root": {
+        minWidth: "120px",
+        display: "inline-block",
+        verticalAlign: "top",
+        padding: "0",
+      },
+    },
+  },
+
   ".MuiButtonBase-root": {
     // color: "#303030",
     color: "#fff",
@@ -167,6 +182,17 @@ const SideArea = styled(Box)(({ theme }) => ({
 
       ".MuiButtonBase-root:not(:hover)": {
         color: "#303030",
+      },
+    },
+
+    ".MuiCollapse-wrapperInner ": {
+      ".MuiListItem-root.active:not(:hover)": {
+        background: "#EDEDED !important",
+        color: "#303030 !important",
+
+        ".MuiTypography-root": {
+          color: "#303030 !important",
+        },
       },
     },
 
