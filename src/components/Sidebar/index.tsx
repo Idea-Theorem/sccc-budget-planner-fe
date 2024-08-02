@@ -186,9 +186,14 @@ const SideArea = styled(Box)(({ theme }) => ({
     },
 
     ".MuiCollapse-wrapperInner ": {
-      ".MuiListItem-root.active:not(:hover)": {
+      ".MuiListItem-root.active, .MuiListItem-root:hover": {
         background: "#EDEDED !important",
         color: "#303030 !important",
+
+        ".MuiButtonBase-root": {
+          background: "#EDEDED !important",
+          color: "#303030 !important",
+        },
 
         ".MuiTypography-root": {
           color: "#303030 !important",

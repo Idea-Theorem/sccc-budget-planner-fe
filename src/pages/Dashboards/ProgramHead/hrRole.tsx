@@ -32,7 +32,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
     h4: {
       fontSize: "20px",
       lineHeight: "1.2",
-      marginBottom: "0",
+      marginBottom: "16px",
     },
   },
 

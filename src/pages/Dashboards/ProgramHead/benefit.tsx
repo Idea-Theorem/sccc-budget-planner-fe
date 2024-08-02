@@ -27,12 +27,13 @@ const StyledBox = styled(Box)(({ theme }) => ({
 
   ".page-subheader": {
     display: "flex",
-    alignItems: "center",
+    alignItems: "flex-start",
     justifyContent: "space-between",
 
     h4: {
       fontSize: "20px",
       lineHeight: "1.2",
+      marginBottom: "16px",
     },
   },
 

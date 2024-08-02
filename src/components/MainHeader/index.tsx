@@ -47,8 +47,8 @@ const AppHeader = styled(Box)(({ theme }) => ({
     "& .appSubHead": {
       display: "flex",
       alignItems: "center",
-      padding: "4px 0 0",
-      marginBottom: "20px",
+      padding: "9px 0 0",
+      marginBottom: "5px",
 
       "& .welcomeText": {
         fontSize: "16px",
@@ -88,7 +88,7 @@ const AppHeader = styled(Box)(({ theme }) => ({
     },
     "& .sub-heading6": {
       fontWeight: "600",
-      paddingTop: "6px",
+      paddingTop: "15px",
     },
   },
 }));

@@ -38,7 +38,7 @@ const StyledBox = styled(Box)(() => ({
   ".breadcrumbs": {
     display: "flex",
     alignItems: "center",
-    gap: "10px",
+    gap: "12px",
     marginBottom: "16px",
 
     ".breadcrumbs-item": {
@@ -51,7 +51,7 @@ const StyledBox = styled(Box)(() => ({
     },
 
     ".right-arrow": {
-      width: "7px",
+      width: "9px",
       height: "auto",
     },
   },
