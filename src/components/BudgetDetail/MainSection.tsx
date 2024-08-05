@@ -1,4 +1,3 @@
-// import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import BasicDatePicker from "../DatePicker";
@@ -284,7 +283,6 @@ const MainSection = ({
       dispatch(storeSupplyList([]));
       dispatch(storeSalaryList([]));
       dispatch(storeSingleProgram(null));
-      // navigate("/program-head/draft");
       navigate("/program-head/program");
     } catch (error: any) {
       setStatusData({
@@ -320,9 +318,7 @@ const MainSection = ({
     formik.setFieldValue("name", newName);
   };
 
-  const handleBlur = () => {
-    // setIsEditing(false);
-  };
+  const handleBlur = () => {};
 
   const handleStatausSubmit = async (action: any) => {
     let data = {};
@@ -447,10 +443,6 @@ const MainSection = ({
                       <Buttons
                         key={0}
                         btntext="Save"
-                        // onClick={() => {
-                        //   setAttentionModal(true);
-                        //   setRevicedStatus("save");
-                        // }}
                         onClick={handleCustomeSave}
                         variant="outlined"
                         color="primary"

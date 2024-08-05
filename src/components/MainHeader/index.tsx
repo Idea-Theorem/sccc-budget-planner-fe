@@ -3,17 +3,14 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import AddIcon from "@mui/icons-material/Add";
-// import DropdownButton from "../Button/dropDownButton";
 import Buttons from "../Button";
 import DropdownButton from "../Button/dropDownButton";
 
 const AppHeader = styled(Box)(({ theme }) => ({
   "&.appHeader": {
     width: "100%",
-    // paddingBottom: "40px",
     "& .appHeaderHolder": {
       display: "flex",
-      // alignItems: "center",
       justifyContent: "space-between",
       flexDirection: "row",
     },
@@ -106,7 +103,7 @@ interface MainHeaderProps {
   subdes?: string;
   classname?: string;
   onClick?: any;
-  subheading? :string;
+  subheading?: string;
 }
 
 const MainHeaderComponent = (props: MainHeaderProps) => {
@@ -118,25 +115,21 @@ const MainHeaderComponent = (props: MainHeaderProps) => {
     <AppHeader className={`${classname} appHeader`}>
       <Stack className="appHeaderHolder" alignItems={"start"}>
         <Box>
-          {props.title &&
-            <Typography
-            
-              variant="h3"
-              onClick={() => onClick(props.title)}
-            >
+          {props.title && (
+            <Typography variant="h3" onClick={() => onClick(props.title)}>
               {props.title}
             </Typography>
-          }
-          {props.subheading &&
+          )}
+          {props.subheading && (
             <Typography className="sub-heading4" variant="h4">
               {props.subheading}
             </Typography>
-          }
-          {props.subdes &&
+          )}
+          {props.subdes && (
             <Typography className="sub-heading6" variant="h6">
               {props.subdes}
             </Typography>
-          }
+          )}
         </Box>
         {props?.action ? (
           <DropdownButton
@@ -146,11 +139,6 @@ const MainHeaderComponent = (props: MainHeaderProps) => {
             handleUpdate={props?.handleUpdate}
           />
         ) : (
-          // <Buttons
-          //   startIcon={<IosShareIcon />}
-          //   btntext="Export"
-          //   variant="contained"
-          // />
           <Buttons
             startIcon={<AddIcon />}
             onClick={props?.onClick}
