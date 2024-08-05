@@ -96,7 +96,7 @@ const SideArea = styled(Box)(({ theme }) => ({
 
   "& .active": {
     background: theme.palette.background.DarkGray,
-    padding: "10px 3px",
+    padding: "2px 3px",
 
     ".MuiButtonBase-root": {
       color: "#fff",
@@ -143,7 +143,7 @@ const SideArea = styled(Box)(({ theme }) => ({
   ".MuiButtonBase-root": {
     // color: "#303030",
     color: "#fff",
-    padding: "8px 19px",
+    padding: "0px 19px",
 
     "&:hover": {
       color: "#fff",
@@ -212,6 +212,9 @@ const SideArea = styled(Box)(({ theme }) => ({
 
   ".sidebardropdown": {
     padding: "6px 19px",
+  },
+  ".list-item": {
+    padding: "0px",
   },
 }));
 
@@ -330,7 +333,7 @@ export default function ResponsiveDrawer(props: Props) {
           receiveValue={handleReceive}
         />
       </Grid>
-      <List>
+      <List className="list-item">
         {withMore?.map((item: any, index: any) => (
           <React.Fragment key={index}>
             {item.role === handleRole(currentRole) && item.more ? (
