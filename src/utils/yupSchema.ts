@@ -61,7 +61,6 @@ export const programSchema = yup.object().shape({
         emp_id: yup.string().required("required"),
         employee: yup.string().required("required"),
         hourlyRate: yup.string().required("required"),
-        // .positive("Hourly rate must be a positive number"),
         hoursPerWeek: yup
           .string()
           .required("required")

@@ -37,6 +37,7 @@ interface BasicTabsProps {
   receiveProgramSearch?: any;
   approveTabAcriveClass?: boolean;
   fetchProgramList?: any;
+  showCursor?: boolean;
 }
 
 const CustomTabPanel = (props: TabPanelProps) => {
@@ -71,7 +72,6 @@ const BasicTabs = (props: BasicTabsProps) => {
   const [loading, setLoading] = React.useState(false);
   const [status, setStatus] = React.useState(Status.PENDING);
   const dispatch = useDispatch();
-  // const { programList } = useSelector((state: RootState) => state.program);
   const navigate: any = useNavigate();
   const location = useLocation();
 
@@ -97,15 +97,11 @@ const BasicTabs = (props: BasicTabsProps) => {
   };
   React.useEffect(() => {
     if (location?.pathname == "/program-head/draft") {
-      // setStatus(Status.DRAFTED);
       fetchProgramList(Status.DRAFTED, "");
     }
   }, [location?.pathname]);
 
   React.useEffect(() => {
-    // if (location?.pathname == "/program-head/draft") {
-    //   return
-    // }
     fetchProgramList(status, "");
   }, [status]);
 
@@ -113,7 +109,6 @@ const BasicTabs = (props: BasicTabsProps) => {
     try {
       setLoading(true);
       const response = await getAllProgramsViaStatus(status, Searchvalue);
-      // const modifyArray = modifyCreatedAt(response?.data?.programs);
       dispatch(storeProgramList(response?.data?.programs));
       setLoading(false);
     } catch (error) {
@@ -193,6 +188,7 @@ const BasicTabs = (props: BasicTabsProps) => {
             checkout={props?.checkout}
             handleProgramSearch={handleProgramSearch}
             approveTabAcriveClass={props?.approveTabAcriveClass}
+            showCursor={props?.showCursor}
           />
         </CustomTabPanel>
       ))}
@@ -254,6 +250,7 @@ export default function TabsArea(props: BasicTabsProps) {
         receiveProgramSearch={props?.receiveProgramSearch}
         approveTabAcriveClass={props?.approveTabAcriveClass}
         fetchProgramList={props?.fetchProgramList}
+        showCursor={props?.showCursor}
       />
     </TabsAreas>
   );

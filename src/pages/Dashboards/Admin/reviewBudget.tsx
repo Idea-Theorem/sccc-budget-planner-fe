@@ -307,7 +307,7 @@ const ReviewBudgetScreen = () => {
       departmentIds: selectedRows,
       status: status,
     };
-    const response = await getSingleDepartments(data); 
+    const response = await getSingleDepartments(data);
     setUpdateprogram(response?.data);
   };
   const onRowClick = async (data: any) => {
@@ -337,19 +337,16 @@ const ReviewBudgetScreen = () => {
         title="Review Budgets"
         btnTitle="Actions"
         subTitle={`Total Budget: $${formatNumber(totalBudget)}`}
-        // subTitle={`Total Budget: 0`}
         onStatusChange={handleStatusChange}
         subHeader={true}
-        // handleUpdate={handleUpdate}
       />
       <TabsArea
+        showCursor={true}
         setTabstatus={setTabstatus}
         tabsTitleArray={[
           { title: "Pending" },
           { title: "Approved" },
           { title: "Rejected" },
-          // { title: "Drafts" },
-          // { title: "History" },
         ]}
         table={tableColumnsTitleArray}
         row={departmentList?.departments}
@@ -363,7 +360,6 @@ const ReviewBudgetScreen = () => {
         open={attentionModal}
         handleClose={() => setAttentionModal(false)}
         handleOK={handleOK}
-        // loading={isSubmitting}
         heading="Attention"
         text="You are changing the status of the program"
       />

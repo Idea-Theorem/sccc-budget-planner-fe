@@ -2,13 +2,13 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import TabsArea from "../../../components/Tabs";
 import Status from "../../../utils/dumpData";
-import {  Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { RootState } from "../../../store";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { capitalizeFirstLetter, formatNumber } from "../../../utils";
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import moment from "moment";
 import {
   storeProgramFromStatus,
@@ -341,9 +341,7 @@ const RecreationAndCultureScreen = ({}: any) => {
       },
     ],
   ];
-  const { singleDepartName } = useSelector(
-    (state: RootState) => state.program
-  );
+  const { singleDepartName } = useSelector((state: RootState) => state.program);
   const [tabstatus, setTabstatus] = React.useState(Status.PENDING);
   const [clonedProgram, setClonedProgram] = React.useState<any>([]);
   const [programInDepartment, setProgramInDepartment] = React.useState<any>([]);
@@ -351,10 +349,6 @@ const RecreationAndCultureScreen = ({}: any) => {
   const [activeDepartment, setActiveDepartment] = useState<any>("");
   const [totalBudget, settotalBudget] = useState("");
 
-
-
-
-  
   const dispatch = useDispatch();
   console.log(tabstatus);
   const [status, setStatus] = React.useState<string>("");
@@ -369,7 +363,7 @@ const RecreationAndCultureScreen = ({}: any) => {
   const fetchDepartments = async () => {
     try {
       const response = await getAllDepartments("");
-     const matchDepartment =  response?.data?.departments.find(
+      const matchDepartment = response?.data?.departments.find(
         (item: any) => item?.name === singleDepartName?.name
       );
       setActiveDepartment(matchDepartment?.name);
@@ -384,20 +378,19 @@ const RecreationAndCultureScreen = ({}: any) => {
       setActiveDepartment(filteredID?.name);
       const res = await getProgramInDepartment(filteredID?.id);
       settotalBudget(res?.data?.totalBudget);
-      setClonedProgram(res?.data?.programs)
+      setClonedProgram(res?.data?.programs);
       const filteredArray = res?.data?.programs?.filter(
         (item: any) => item?.status?.toLowerCase() == tabstatus?.toLowerCase()
       );
-    setProgramInDepartment(filteredArray);
-    } catch (error) {
-    }
+      setProgramInDepartment(filteredArray);
+    } catch (error) {}
   };
 
   useEffect(() => {
-    if(departments?.length > 0){
-      receiveDepartment(activeDepartment)
+    if (departments?.length > 0) {
+      receiveDepartment(activeDepartment);
     }
-  },[departments])
+  }, [departments]);
 
   useEffect(() => {
     const filteredArray = clonedProgram.filter(
@@ -425,25 +418,31 @@ const RecreationAndCultureScreen = ({}: any) => {
   return (
     <StyledBox className="appContainer">
       <Box className="breadcrumbs">
-        <Typography onClick={() => goBack()} className="breadcrumbs-item previous-item">Review Budgets</Typography>
+        <Typography
+          onClick={() => goBack()}
+          className="breadcrumbs-item previous-item"
+        >
+          Review Budgets
+        </Typography>
         <ArrowForwardIosIcon className="right-arrow" />
-        <Typography onClick={() => goBack()} className="breadcrumbs-item">Departments</Typography>
+        <Typography onClick={() => goBack()} className="breadcrumbs-item">
+          Departments
+        </Typography>
       </Box>
-      <Typography variant="h3">
-        Review Budget
-      </Typography>
+      <Typography variant="h3">Review Budget</Typography>
       <SelectDemo
-          parentClass="departmentSelect"
-          title=""
-          receiveValue={receiveDepartment}
-          list={departments}
-          value={activeDepartment}
-          placeholder="Please Select"
-        />
+        parentClass="departmentSelect"
+        title=""
+        receiveValue={receiveDepartment}
+        list={departments}
+        value={activeDepartment}
+        placeholder="Please Select"
+      />
       <Typography className="amount-text">
         Total Budget: ${formatNumber(totalBudget)}
       </Typography>
       <TabsArea
+        showCursor={true}
         setTabstatus={setTabstatus}
         tabsTitleArray={[
           { title: "Pending" },

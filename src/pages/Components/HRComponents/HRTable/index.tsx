@@ -136,20 +136,6 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
   },
 }));
 
-// const rows = [
-//   {
-//     id: 1,
-//     name: "Recreation & Culture",
-//     // status: "5",
-//     lYearBudget: "02-Mar-2024",
-//   },
-//   {
-//     id: 2,
-//     name: "HR",
-//     // status: "5",
-//     lYearBudget: "02-Mar-2024",
-//   },
-// ];
 interface HRTableProps {
   onEdit?: any;
   row?: any;

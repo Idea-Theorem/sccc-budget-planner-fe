@@ -40,7 +40,6 @@ const StyledBox = styled(Box)(() => ({
     marginTop: "-10px",
     marginBottom: "0",
   },
-  // Color: theme.palette.secondary.light,
 }));
 const DepartmentDetailScreen = () => {
   const tableColumnsTitleArray = [
@@ -59,13 +58,7 @@ const DepartmentDetailScreen = () => {
         editable: false,
         flex: 1,
       },
-      // {
-      //   field: "lYearBudget",
-      //   headerName: "Last Year Budget",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "budget",
         headerName: "Budget",
@@ -73,20 +66,7 @@ const DepartmentDetailScreen = () => {
         editable: false,
         flex: 1,
       },
-      // {
-      //   field: "profit",
-      //   headerName: "Profit",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
-      // {
-      //   field: "nPrograms",
-      //   headerName: "No. Programs",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "sDate",
         headerName: "Submission Date",
@@ -117,13 +97,7 @@ const DepartmentDetailScreen = () => {
         editable: false,
         flex: 1,
       },
-      // {
-      //   field: "lYearBudget",
-      //   headerName: "Last Year Budget",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "budget",
         headerName: "Budget",
@@ -131,20 +105,7 @@ const DepartmentDetailScreen = () => {
         editable: false,
         flex: 1,
       },
-      // {
-      //   field: "profit",
-      //   headerName: "Profit",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
-      // {
-      //   field: "nPrograms",
-      //   headerName: "No. Programs",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "sDate",
         headerName: "Submission Date",
@@ -175,13 +136,7 @@ const DepartmentDetailScreen = () => {
         editable: false,
         flex: 1,
       },
-      // {
-      //   field: "lYearBudget",
-      //   headerName: "Last Year Budget",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "budget",
         headerName: "Budget",
@@ -189,20 +144,7 @@ const DepartmentDetailScreen = () => {
         editable: false,
         flex: 1,
       },
-      // {
-      //   field: "profit",
-      //   headerName: "Profit",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
-      // {
-      //   field: "nPrograms",
-      //   headerName: "No. Programs",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "sDate",
         headerName: "Submission Date",
@@ -225,14 +167,15 @@ const DepartmentDetailScreen = () => {
         <BackButton />
       </Box>
       <SubHeader title="Recreation & Culture" />
-      <Typography className="totalBudgetText">Total Budget: $00,000.00</Typography>
+      <Typography className="totalBudgetText">
+        Total Budget: $00,000.00
+      </Typography>
       <TabsArea
         tabsTitleArray={[
           { title: "Pending" },
           { title: "Rejected" },
           { title: "Approved" },
           { title: "Drafts" },
-          // { title: "History" },
         ]}
         table={tableColumnsTitleArray}
       />

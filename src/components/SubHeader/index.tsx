@@ -40,9 +40,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
     positon: "relative",
     zIndex: 2,
 
-    "&:hover": {
-      // background: theme.palette.secondary.main,
-    },
+    "&:hover": {},
   },
 }));
 

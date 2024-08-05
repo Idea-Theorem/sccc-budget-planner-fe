@@ -12,10 +12,7 @@ import { getPrograms } from "../../services/adminServices";
 import { capitalizeFirstLetter, formatNumber } from "../../utils";
 import { Stack } from "@mui/material";
 import moment from "moment";
-import {
-  storeCurrentCenter,
-
-} from "../../store/reducers/programSlice";
+import { storeCurrentCenter } from "../../store/reducers/programSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 const StyledBox = styled(Box)(() => ({
@@ -42,7 +39,6 @@ const SuperReviewBudget = () => {
   const navigate = useNavigate();
 
   console.log(tabstatus);
-
 
   const tableColumnsCenter = [
     [
@@ -235,13 +231,12 @@ const SuperReviewBudget = () => {
     } catch (error) {}
   };
   const handleSingleRow = async (row: any) => {
-    
     try {
-      dispatch(storeCurrentCenter(row))
-      navigate('/super-admin/review-budgets-departments') 
+      dispatch(storeCurrentCenter(row));
+      navigate("/super-admin/review-budgets-departments");
       const res = await getDepartmentInCenters(row?.id);
       setCenters(res?.data?.center?.department);
-      settotalBudget(res?.data?.center?.totalDepartmentBudget); 
+      settotalBudget(res?.data?.center?.totalDepartmentBudget);
     } catch (error) {}
   };
 
@@ -249,12 +244,10 @@ const SuperReviewBudget = () => {
     fetchCenter("");
   }, []);
 
-  const handleBackFunctionality = () => {
- 
-  };
+  const handleBackFunctionality = () => {};
 
   const receiveProgramSearch = async (value: string) => {
-      await fetchCenter(value);
+    await fetchCenter(value);
   };
 
   return (
@@ -262,9 +255,7 @@ const SuperReviewBudget = () => {
       <MainHeaderComponent
         array={array}
         action={true}
-        title={""
-       
-        }
+        title={""}
         subdes={""}
         subheading="Review Budgets"
         btnTitle="Actions"
@@ -273,16 +264,14 @@ const SuperReviewBudget = () => {
         onClick={handleBackFunctionality}
       />
       <TabsArea
+        showCursor={true}
         setTabstatus={setTabstatus}
         tabsTitleArray={[
           { title: "Pending" },
           { title: "Approved" },
           { title: "Rejected" },
         ]}
-        table={
-           tableColumnsCenter
-           
-        }
+        table={tableColumnsCenter}
         row={center}
         onRowClick={handleSingleRow}
         receiveProgramSearch={receiveProgramSearch}

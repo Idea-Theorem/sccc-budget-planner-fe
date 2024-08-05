@@ -7,7 +7,11 @@ import {
 } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginState from "../interfaces/ITheme.interface";
-import { forgotPassword, loggedIn, resetPassword } from "../services/authServices";
+import {
+  forgotPassword,
+  loggedIn,
+  resetPassword,
+} from "../services/authServices";
 import StatusModal from "../components/StatusModal";
 
 const AuthContext = createContext({
@@ -17,19 +21,11 @@ const AuthContext = createContext({
   authToken: "",
   loginLoading: "",
   currentRole: "",
-  resetLoading:"",
+  resetLoading: "",
   setCurrentRole: (_: string | boolean) => {},
-  handleForgotPassword:  (_: any) => {},
-  handleResetPassword: (_: any) => {}
+  handleForgotPassword: (_: any) => {},
+  handleResetPassword: (_: any) => {},
 });
-
-// const users = [
-//   "programhead@gmail.com",
-//   "departmenthead@gmail.com",
-//   "admin@gmail.com",
-//   "hr@gmail.com",
-//   "suparadmin@gmail.com",
-// ];
 
 export const useAuth = () => useContext(AuthContext);
 
@@ -96,50 +92,35 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         message: error.response.data.message,
       });
     }
-
-    // const usr = users.find((user) => user === email);
-    // setUser(usr as string);
-    // localStorage.setItem("user", email);
-    // if (email === "suparadmin@gmail.com") {
-    //   navigate("/admin");
-    // } else if (email === "admin@gmail.com") {
-    //   navigate("/admin");
-    // } else if (email === "departmenthead@gmail.com") {
-    //   navigate("/department-head");
-    // } else if (email === "programhead@gmail.com") {
-    //   navigate("/program-head");
-    // } else {
-    //   navigate("/hr");
-    // }
   };
-const handleForgotPassword = async (data: any) => {
-try {
-  setResetLoading(true)
-  const response = await forgotPassword(data)
- setStatusData({
-  type: "success",
-  message: response?.data?.message,
-});
-setResetLoading(false)
-} catch (error) {
-  setResetLoading(false)
-}
-}
+  const handleForgotPassword = async (data: any) => {
+    try {
+      setResetLoading(true);
+      const response = await forgotPassword(data);
+      setStatusData({
+        type: "success",
+        message: response?.data?.message,
+      });
+      setResetLoading(false);
+    } catch (error) {
+      setResetLoading(false);
+    }
+  };
 
-const handleResetPassword = async (data: any) => {
-  try {
-    setResetLoading(true)
-    const response = await resetPassword(data)
-   setStatusData({
-    type: "success",
-    message: response?.data?.message,
-  });
-  navigate("/login");
-  setResetLoading(false)
-  } catch (error) {
-    setResetLoading(false)
-  }
-  }
+  const handleResetPassword = async (data: any) => {
+    try {
+      setResetLoading(true);
+      const response = await resetPassword(data);
+      setStatusData({
+        type: "success",
+        message: response?.data?.message,
+      });
+      navigate("/login");
+      setResetLoading(false);
+    } catch (error) {
+      setResetLoading(false);
+    }
+  };
   const logout = () => {
     setUser(null);
     localStorage.removeItem("user");
