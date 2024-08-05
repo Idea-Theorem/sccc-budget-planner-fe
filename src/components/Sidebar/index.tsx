@@ -11,7 +11,6 @@ import { filterSidebarActionsWithMore } from "../../utils/filterSideBarActios";
 import { SIDEBARACTIONS } from "../../utils/sideBarActions";
 import { useNavigate, useLocation } from "react-router-dom";
 import LogoImg from "../../assets/logo.png";
-// import { SidebarAction } from "../../types/common";
 import { useAuth } from "../../contexts/AuthContext";
 import { Button, Collapse, Grid } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
@@ -19,7 +18,6 @@ import { getCapitalizedFirstLetters, handleRole } from "../../utils";
 import { useDispatch } from "react-redux";
 import { storeSideBarCheck } from "../../store/reducers/programSlice";
 import SidebarSelect from "../SidebarSelect";
-// import SelectDemo from "../Select";
 
 const SideArea = styled(Box)(({ theme }) => ({
   background: theme.palette.primary.main,
@@ -98,6 +96,7 @@ const SideArea = styled(Box)(({ theme }) => ({
 
   "& .active": {
     background: theme.palette.background.DarkGray,
+    padding: "10px 3px",
 
     ".MuiButtonBase-root": {
       color: "#fff",
@@ -186,7 +185,7 @@ const SideArea = styled(Box)(({ theme }) => ({
     },
 
     ".MuiCollapse-wrapperInner ": {
-      ".MuiListItem-root.active, .MuiListItem-root:hover": {
+      ".MuiListItem-root.active-inner, .MuiListItem-root:hover": {
         background: "#EDEDED !important",
         color: "#303030 !important",
 
@@ -209,6 +208,10 @@ const SideArea = styled(Box)(({ theme }) => ({
       textAlign: "left",
       paddingLeft: "19px",
     },
+  },
+
+  ".sidebardropdown": {
+    padding: "6px 19px",
   },
 }));
 
@@ -234,6 +237,18 @@ export default function ResponsiveDrawer(props: Props) {
     setMobileOpen(false);
   };
 
+  const useActiveClass = (item: any) => {
+    const isActive =
+      location.pathname === item.path ||
+      location.pathname === "/hr/benefits" ||
+      location.pathname === "/hr/departments" ||
+      location.pathname === "/hr/centers" ||
+      item?.path === "/hr" ||
+      item?.path === "/program-head/program";
+
+    return isActive ? "active" : "";
+  };
+
   const handleReceive = (item: any) => {
     if (item == "/department-head/review-budgets") {
       return;
@@ -246,12 +261,13 @@ export default function ResponsiveDrawer(props: Props) {
       localStorage.setItem("sidebarCheck", "admin");
     }
     localStorage.setItem("currentRole", item);
+    setOpenHR(false);
     setCurrentRole(item);
   };
   React.useEffect(() => {
     switch (currentRole) {
       case "Coordinator":
-        navigate("/program-head");
+        navigate("/program-head/program");
         break;
       case "Admin":
         navigate("/admin");
@@ -321,10 +337,13 @@ export default function ResponsiveDrawer(props: Props) {
               <>
                 <ListItem
                   disablePadding
-                  button
+                  className={useActiveClass(item)}
                   onClick={() => handleToggleHR(item?.path)}
                 >
-                  <ListItemText primary={item.title} />
+                  <ListItemText
+                    primary={item.title}
+                    className="sidebardropdown"
+                  />
                   {openHR ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
                 <Collapse in={openHR} timeout="auto" unmountOnExit>
@@ -337,7 +356,9 @@ export default function ResponsiveDrawer(props: Props) {
                         navigate(nestedItem.path ?? "");
                       }}
                       className={
-                        location.pathname === nestedItem.path ? "active" : ""
+                        location.pathname === nestedItem.path
+                          ? "active-inner"
+                          : ""
                       }
                     >
                       <ListItemButton>
@@ -352,6 +373,7 @@ export default function ResponsiveDrawer(props: Props) {
                 disablePadding
                 button
                 onClick={() => {
+                  setOpenHR(false);
                   handleReceive(item?.path);
                   navigate(item.path ?? "");
                 }}

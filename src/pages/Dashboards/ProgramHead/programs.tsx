@@ -107,15 +107,9 @@ const PHProgramsScreen = () => {
 
   const fetchProgramList = async (status: string, Searchvalue: string) => {
     try {
-      // setLoading(true);
-
       const response = await getAllProgramsByUsers(status, Searchvalue);
       setprogramListing(response?.data?.programs);
-      // dispatch(storeProgramList(response?.data?.programs));
-      // setLoading(false);
-    } catch (error) {
-      // setLoading(false);
-    }
+    } catch (error) {}
   };
 
   const handleDelete = (rowData: any) => {
@@ -595,7 +589,6 @@ const PHProgramsScreen = () => {
         row={programListing}
         checkout={false}
         fetchProgramList={fetchProgramList}
-        // onRowClick={onRowClick}
       />
       <DeleteModal
         heading="Are you sure you want to delete?"

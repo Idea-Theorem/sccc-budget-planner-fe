@@ -361,9 +361,6 @@ const DHReviewBudgets = () => {
   const fetchDepartments = async () => {
     try {
       const response = await getAllDepartments("");
-      // response?.data?.departments.find(
-      //   (item: any) => item?.name === activeDepartment
-      // );
       setDepartmentID(response?.data?.departments[0]?.id);
       setActiveDepartment(response?.data?.departments[0]?.name);
       settotalBudget(response?.data?.departments[0]?.value);
@@ -371,15 +368,13 @@ const DHReviewBudgets = () => {
       setDepartments(response?.data?.departments);
     } catch (error) {}
   };
-console.log('tabstatus::::::::', tabstatus)
+
   useEffect(() => {
-    if(tabstatus == "APPROVED"){
-      console.log('first::::::::::')
+    if (tabstatus == "APPROVED") {
       if (departmentId) {
         getDepartmentCount(departmentId);
       }
     }
-   
   }, [tabstatus, departmentId]);
 
   const receiveDepartment = async (value: any) => {
@@ -392,7 +387,7 @@ console.log('tabstatus::::::::', tabstatus)
       dispatch(storeProgramList(res?.data?.programs));
       settotalBudget(res?.data?.totalBudget);
       getDepartmentCount(filteredID?.id);
-      setTabstatus(Status.PENDING)
+      setTabstatus(Status.PENDING);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -413,7 +408,6 @@ console.log('tabstatus::::::::', tabstatus)
   }, [updateprogram, activeDepartment, tabstatus]);
   const fetchProgram = async (value: string) => {
     try {
-      
       const response = await getAllProgramsViaStatus(tabstatus, value);
       const newArray = response?.data?.programs?.filter(
         (item: any) => item?.department?.id === departmentId
@@ -480,10 +474,7 @@ console.log('tabstatus::::::::', tabstatus)
       <Box className="reviewBudgetHead">
         <Typography variant="h3">Review Budgets</Typography>
       </Box>
-      <SubHeader
-        title=""
-        onStatusChange={handleStatusChange}
-      />
+      <SubHeader title="" onStatusChange={handleStatusChange} />
       <Box className="block-selection">
         <SelectDemo
           parentClass="departmentSelect"
@@ -517,6 +508,7 @@ console.log('tabstatus::::::::', tabstatus)
             </Box>
           )}
           <TabsArea
+            showCursor={true}
             tabsTitleArray={[
               { title: "Pending" },
               { title: "Approved" },

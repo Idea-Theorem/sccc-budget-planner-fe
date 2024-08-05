@@ -2,22 +2,17 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MainHeaderComponent from "../../components/MainHeader";
 import TabsArea from "../../components/Tabs";
-import {
-  getDepartmentInCenters,
-} from "../../services/centersServices";
+import { getDepartmentInCenters } from "../../services/centersServices";
 import React, { useEffect, useState } from "react";
 import Status from "../../utils/dumpData";
 import { capitalizeFirstLetter, formatNumber } from "../../utils";
 import { Stack, Typography } from "@mui/material";
 import moment from "moment";
-import {
-  storeCurrentDepartment,
-
-} from "../../store/reducers/programSlice";
+import { storeCurrentDepartment } from "../../store/reducers/programSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../store";
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 const StyledBox = styled(Box)(() => ({
   "& .dashboardCards": {
@@ -60,15 +55,11 @@ const SuperReviewBudgetDepartment = () => {
   const [center, setCenters] = useState([]);
   const [totalBudget, settotalBudget] = useState("");
   const [tabstatus, setTabstatus] = React.useState(Status.PENDING);
-  const { currentCenter } = useSelector(
-    (state: RootState) => state.program
-  );
+  const { currentCenter } = useSelector((state: RootState) => state.program);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   console.log(tabstatus);
-
-
 
   const tableColumnsDepartment = [
     [
@@ -105,7 +96,6 @@ const SuperReviewBudgetDepartment = () => {
       {
         field: "nPrograms",
         headerName: "No. Programs",
-        // headerName: 'No. Dept.',
         sortable: false,
         editable: false,
         flex: 1,
@@ -262,48 +252,45 @@ const SuperReviewBudgetDepartment = () => {
       },
     ],
   ];
- 
-  const array = [{ text: "Approve" }, { text: "Reject" }];
-useEffect(() => {
-  if(currentCenter?.id){
-    fetchDepartmentInCenter(currentCenter?.id)
-  }
-},[currentCenter])
 
- const fetchDepartmentInCenter = async (id: any) => {
-  const res = await getDepartmentInCenters(id);
-      setCenters(res?.data?.center?.department);
-      settotalBudget(res?.data?.center?.totalDepartmentBudget);
- }
+  const array = [{ text: "Approve" }, { text: "Reject" }];
+  useEffect(() => {
+    if (currentCenter?.id) {
+      fetchDepartmentInCenter(currentCenter?.id);
+    }
+  }, [currentCenter]);
+
+  const fetchDepartmentInCenter = async (id: any) => {
+    const res = await getDepartmentInCenters(id);
+    setCenters(res?.data?.center?.department);
+    settotalBudget(res?.data?.center?.totalDepartmentBudget);
+  };
 
   const handleSingleRow = async (row: any) => {
-  
-      dispatch(storeCurrentDepartment(row));
-      navigate('/super-admin/review-budgets-program ')  
-   
+    dispatch(storeCurrentDepartment(row));
+    navigate("/super-admin/review-budgets-program ");
   };
 
-
-
-  const handleBackFunctionality = () => {
-  
-  };
-
-
+  const handleBackFunctionality = () => {};
 
   return (
     <StyledBox className="appContainer">
-       <Box className="breadcrumbs">
-        <Typography className="breadcrumbs-item previous-item">Review Budgets</Typography>
+      <Box className="breadcrumbs">
+        <Typography className="breadcrumbs-item previous-item">
+          Review Budgets
+        </Typography>
         <ArrowForwardIosIcon className="right-arrow" />
-        <Typography onClick={() => navigate("/super-admin/review-budgets")} className="breadcrumbs-item">Centre</Typography>
+        <Typography
+          onClick={() => navigate("/super-admin/review-budgets")}
+          className="breadcrumbs-item"
+        >
+          Centre
+        </Typography>
       </Box>
       <MainHeaderComponent
         array={array}
         action={true}
-        title={
-        ""
-        }
+        title={""}
         subdes={currentCenter?.name}
         subheading="Review Budgets"
         btnTitle="Actions"
@@ -312,16 +299,16 @@ useEffect(() => {
         onClick={handleBackFunctionality}
       />
       <TabsArea
+        showCursor={true}
         setTabstatus={setTabstatus}
         tabsTitleArray={[
           { title: "Pending" },
           { title: "Approved" },
           { title: "Rejected" },
         ]}
-        table={ tableColumnsDepartment }
+        table={tableColumnsDepartment}
         row={center}
         onRowClick={handleSingleRow}
-     
       />
     </StyledBox>
   );

@@ -188,11 +188,9 @@ function Row(props: {
   const {
     row,
     handleClick,
-    // handleDelete,
-    // setCurrentRow,
+
     loading,
-    // isOpen,
-    // setIsOpen,
+
     benefit,
     setLoading,
     setStatusData,

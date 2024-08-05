@@ -2,16 +2,13 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MainHeaderComponent from "../../components/MainHeader";
 import TabsArea from "../../components/Tabs";
-import {
-
-  getProgramInDepartment,
-} from "../../services/centersServices";
+import { getProgramInDepartment } from "../../services/centersServices";
 import React, { useEffect, useState } from "react";
 import Status from "../../utils/dumpData";
 import { capitalizeFirstLetter, formatNumber } from "../../utils";
 import { Stack, Typography } from "@mui/material";
 import moment from "moment";
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 import {
   storeProgramFromStatus,
@@ -299,17 +296,15 @@ const SuperReviewBudgetPrograms = () => {
   ];
   const array = [{ text: "Approve" }, { text: "Reject" }];
   useEffect(() => {
-    if(currentDepartment?.id){
-      fetchProgramInDepartment(currentDepartment?.id)
+    if (currentDepartment?.id) {
+      fetchProgramInDepartment(currentDepartment?.id);
     }
-  },[currentDepartment])
-  
+  }, [currentDepartment]);
+
   const handleSingleRow = async (row: any) => {
-   
-      dispatch(storeSingleProgram(row));
-      dispatch(storeProgramFromStatus(Status.DEFAULT));
-      navigate("/program-head/create");
-      
+    dispatch(storeSingleProgram(row));
+    dispatch(storeProgramFromStatus(Status.DEFAULT));
+    navigate("/program-head/create");
   };
 
   const fetchProgramInDepartment = async (id: string) => {
@@ -320,27 +315,36 @@ const SuperReviewBudgetPrograms = () => {
     } catch (error) {}
   };
 
-
-  const handleBackFunctionality = () => {
- 
-  };
-
+  const handleBackFunctionality = () => {};
 
   return (
     <StyledBox className="appContainer">
       <Box className="breadcrumbs">
-        <Typography className="breadcrumbs-item previous-item" onClick={() => navigate("/super-admin/review-budgets")}>Review Budgets Centre</Typography>
+        <Typography
+          className="breadcrumbs-item previous-item"
+          onClick={() => navigate("/super-admin/review-budgets")}
+        >
+          Review Budgets Centre
+        </Typography>
         <ArrowForwardIosIcon className="right-arrow" />
-        <Typography className="breadcrumbs-item previous-item" onClick={() => navigate("/super-admin/review-budgets")} >Centre</Typography>
+        <Typography
+          className="breadcrumbs-item previous-item"
+          onClick={() => navigate("/super-admin/review-budgets")}
+        >
+          Centre
+        </Typography>
         <ArrowForwardIosIcon className="right-arrow" />
-        <Typography className="breadcrumbs-item" onClick={() => navigate("/super-admin/review-budgets-departments")} >Department</Typography>
+        <Typography
+          className="breadcrumbs-item"
+          onClick={() => navigate("/super-admin/review-budgets-departments")}
+        >
+          Department
+        </Typography>
       </Box>
       <MainHeaderComponent
         array={array}
         action={true}
-        title={""
-         
-        }
+        title={""}
         subdes={currentDepartment.name}
         subheading="Review Budgets"
         btnTitle="Actions"
@@ -349,17 +353,16 @@ const SuperReviewBudgetPrograms = () => {
         onClick={handleBackFunctionality}
       />
       <TabsArea
+        showCursor={true}
         setTabstatus={setTabstatus}
         tabsTitleArray={[
           { title: "Pending" },
           { title: "Approved" },
           { title: "Rejected" },
         ]}
-        table={ tableColumnsProgram
-        }
+        table={tableColumnsProgram}
         row={center}
         onRowClick={handleSingleRow}
-        // receiveProgramSearch={receiveProgramSearch}
       />
     </StyledBox>
   );

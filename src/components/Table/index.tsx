@@ -33,7 +33,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
 }));
 const StyleDataGrid = styled(DataGrid)(() => ({
   width: "100%",
-  
+
   ".MuiDataGrid-iconButtonContainer ": {
     display: "none !important",
   },
@@ -144,6 +144,7 @@ interface ColumnnsProps {
   checkout?: boolean | any;
   handleProgramSearch?: any;
   approveTabAcriveClass?: boolean | any;
+  showCursor?: boolean;
 }
 const TableComponent = (props: ColumnnsProps) => {
   const handleSelectionChange = (selection: any) => {
@@ -251,7 +252,6 @@ const TableComponent = (props: ColumnnsProps) => {
             disableRowSelectionOnClick
             slots={{
               toolbar: GridToolbar,
-              // loadingOverlay: LinearProgress as any["loadingOverlay"],
               noRowsOverlay: CustomNoRowsOverlay,
             }}
             onRowClick={handleRowClick}
@@ -260,11 +260,12 @@ const TableComponent = (props: ColumnnsProps) => {
             getRowClassName={() => {
               if (
                 props.currentTab == "REJECTED" ||
-                props.currentTab == "DRAFTED"
+                props.currentTab == "DRAFTED" ||
+                props?.showCursor
               ) {
                 return "pointer-cursor";
               }
-              return ""; // Return empty string if condition is not met
+              return "";
             }}
           />
         </Box>

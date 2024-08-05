@@ -53,7 +53,6 @@ const ProgramHeadScreen = () => {
         navigate("/program-head");
       }
     } catch (error) {
-      // Handle error
     } finally {
       setLoading(false);
     }

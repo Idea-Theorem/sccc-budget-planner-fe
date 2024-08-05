@@ -4,30 +4,20 @@ export const SIDEBARACTIONS: SidebarAction[] = [
   {
     role: "Coordinator",
     title: "Programs",
-    path: "/program-head",
+    path: "/program-head/program",
     more: [
       { title: "Settings", path: "/program-head/program-settings" },
       { title: "Codes", path: "/program-head/program-codes" },
     ],
   },
-  // {
-  //   email: "programhead@gmail.com",
-  //   role: "Program_Head",
-  //   title: "Programs",
-  //   path: "/program-head",
-  // },
+
   {
     email: "departmenthead@gmail.com",
     role: "Department_Head",
     title: "Review Budgets",
     path: "/department-head/review-budgets",
   },
-  // {
-  //   email: "departmenthead@gmail.com",
-  //   role: "Department_Head",
-  //   title: "Programs",
-  //   path: "/program-head",
-  // },
+
   {
     email: "admin@gmail.com",
     role: "Admin",
@@ -39,21 +29,14 @@ export const SIDEBARACTIONS: SidebarAction[] = [
     role: "Admin",
     title: "Review Budgets",
     path: "/admin/review-budget",
-    // path:"/department-head/review-budgets",
   },
-  // {
-  //   email: "admin@gmail.com",
-  //   role: "Admin",
-  //   title: "Programs",
-  //   path: "/program-head",
-  // },
+
   {
     email: "admin@gmail.com",
     role: "Admin",
     title: "HR",
     path: "/hr/role",
     more: [
-      // { title: "Settings", path: "/hr/settings" },
       { title: "Title", path: "/hr/role" },
       { title: "Benefit Percentage", path: "/hr/benefits" },
       { title: "Department", path: "/hr/departments" },
@@ -65,7 +48,6 @@ export const SIDEBARACTIONS: SidebarAction[] = [
     title: "HR",
     path: "/hr",
     more: [
-      // { title: "Settings", path: "/hr/settings" },
       { title: "Title", path: "/hr/role" },
       { title: "Benefit Percentage", path: "/hr/benefits" },
       { title: "Department", path: "/hr/departments" },
@@ -90,7 +72,6 @@ export const SIDEBARACTIONS: SidebarAction[] = [
     title: "HR",
     path: "/hr/role",
     more: [
-      // { title: "Settings", path: "/hr/settings" },
       { title: "Title", path: "/hr/role" },
       { title: "Benefit Percentage", path: "/hr/benefits" },
       { title: "Department", path: "/hr/departments" },

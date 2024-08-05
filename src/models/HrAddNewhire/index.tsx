@@ -285,22 +285,12 @@ const HrAddNewHire: React.FC<IHrAddEmployee> = ({
     },
     onSubmit: async (values) => {
       try {
-        // if (heading == "Edit Employee") {
-        //   delete values.password;
-
-        //   await updateEmployee(values, singleEmployeeData?.id);
-        //   setStatusData({
-        //     type: "success",
-        //     message: "Employee Update Successfully",
-        //   });
-        // } else {
         let obj = {
           ...values,
           employeDepartments: data,
         };
         await createEmployee(obj);
 
-        // }
         handleMovedNewhire();
         setStatusData({
           type: "success",

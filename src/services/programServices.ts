@@ -26,9 +26,6 @@ const resolvedComment = async (id: string) => {
   return await HTTP_CLIENT.put(`/program/resolve/${id}`);
 };
 
-// const getEmployee = async () => {
-//     return await HTTP_CLIENT.get("/user");
-//   };
 const getProgram = async (status: any) => {
   return await HTTP_CLIENT.get(`/program/?status=${status}`);
 };
@@ -50,9 +47,7 @@ const deleteProgram = async (id: string) => {
 const deleteComment = async (id: string) => {
   return await HTTP_CLIENT.delete(`/program/comment/${id}`);
 };
-// const resolvedComment = async (id: string) => {
-//   return await HTTP_CLIENT.put(`/program/resolve/${id}`);
-// };
+
 const getDepartmentOnRowCLick = async (id: string) => {
   return await HTTP_CLIENT.get(`/department/programs/${id}`);
 };

@@ -53,9 +53,7 @@ const HrCollapseableTable = styled(Box)(({ theme }) => ({
       borderRadius: "0",
       boxShadow: "none",
 
-      "& .MuiTableHead-root": {
-        // borderBottom: "1px solid rgba(191, 191, 191, 1)",
-      },
+      "& .MuiTableHead-root": {},
 
       "& .totalRow": {
         borderTop: "1px solid #d9d9d9",
@@ -399,10 +397,8 @@ export default function NewHiresCollapsibleTable({
                     row={row}
                     handleClick={handleClick}
                     employeeData={employeeData}
-                    // handleDelete={handleDelete}
                     setIsOpen={setIsOpen}
                     isOpen={isOpen}
-                    // loading={loading}
                     refresh={refresh}
                   />
                 ))}
