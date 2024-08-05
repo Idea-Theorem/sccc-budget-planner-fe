@@ -34,6 +34,14 @@ const HrCollapseableTable = styled(Box)(({ theme }) => ({
     border: "none",
   },
 
+  ".MuiTableBody-root ": {
+    ">.MuiTableRow-root:nth-child(odd)": {
+      ">.MuiTableCell-root": {
+        borderTop: "1px solid rgba(224, 224, 224, 1)",
+      },
+    },
+  },
+
   "&.dashboardTable": {
     padding: "30px",
 

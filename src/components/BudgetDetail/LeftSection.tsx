@@ -39,16 +39,6 @@ const LeftSection = () => {
     }
   };
   return (
-    // <Grid item xs={3}>
-    //   <DateStack
-    //     className="selected"
-    //     direction={"row"}
-    //     justifyContent={"flex-end"}
-    //     alignItems={"center"}
-    //   >
-    //     <DateTypography variant="h5">{moment().format("D MMM")}</DateTypography>
-    //   </DateStack>
-    // </Grid>
     <Grid item xs={3}>
       {singleProgram?.updated_at?.length
         ? singleProgram?.updated_at?.map((item: any, index: number) => {

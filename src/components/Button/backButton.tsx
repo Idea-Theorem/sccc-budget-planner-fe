@@ -5,7 +5,6 @@ import {
 } from "../../pages/Components/MUIComponents/index";
 import { Stack, Typography } from "@mui/material";
 
-// Styled BackButton component
 const StyledBackButton = styled(Button)(({ theme }) => ({
   padding: "5px",
   color: "#303030",

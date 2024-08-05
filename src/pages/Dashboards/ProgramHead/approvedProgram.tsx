@@ -5,9 +5,9 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Status from "../../../utils/dumpData";
 import React, { useEffect, useState } from "react";
+import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { getPrograms } from "../../../services/adminServices";
 import { getProgram } from "../../../services/programServices";
-import { AddIcCallOutlined } from "@mui/icons-material";
 import AttentionModal from "../../../models/AttentionModal";
 
 const StyledBox = styled(Box)(({ theme }) => ({
@@ -74,7 +74,7 @@ const ApprovedProgram = ({
               variant="contained"
               color="primary"
               size="medium"
-              startIcon={<AddIcCallOutlined />}
+              startIcon={<UploadFileIcon />}
               onClick={() => setAttentionModal(true)}
             >
               Submit

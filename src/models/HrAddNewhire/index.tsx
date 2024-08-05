@@ -503,7 +503,7 @@ const HrAddNewHire: React.FC<IHrAddEmployee> = ({
           <Box>
             <Typography
               className="body1"
-              style={{ color: "#303030", fontSize: "16px", fontWeight: "500" }}
+              style={{ color: "#303030", fontSize: "16px", fontWeight: "600" }}
             >
               Employee Information
             </Typography>
@@ -640,7 +640,7 @@ const HrAddNewHire: React.FC<IHrAddEmployee> = ({
           >
             <Typography
               className="subtitle"
-              style={{ color: "#303030", fontSize: "16px", fontWeight: "500" }}
+              style={{ color: "#303030", fontSize: "16px", fontWeight: "600" }}
             >
               Department Works For
             </Typography>

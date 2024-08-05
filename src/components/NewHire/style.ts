@@ -77,7 +77,6 @@ export const EmployeeInfoArea = styled(Box)(() => ({
 
     ".MuiFormControl-root ": {
       width: "100%",
-      // maxWidth: "76px",
     },
 
     ".select-holder ": {
@@ -104,10 +103,10 @@ export const EmployeeInfoArea = styled(Box)(() => ({
           alignItems: "center",
           textTransform: "capitalize",
 
-          '&.Mui-error': {
+          "&.Mui-error": {
             "&:before": {
               display: "block",
-            }
+            },
           },
 
           "&:before": {
