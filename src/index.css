@@ -66,15 +66,15 @@
 .createProgramContentHead input {
     color: #303030;
     font-family: Work Sans;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 500;
     line-height: 1.2;
     letter-spacing: 0.25px;
 }
 
 .createProgramContentHead input::placeholder {
-    opacity: 1;
-    color: rgba(0, 0, 0, 0.87);
+    opacity: 0.87;
+    color: #000;
 }
 
 /*.table_custom_style {

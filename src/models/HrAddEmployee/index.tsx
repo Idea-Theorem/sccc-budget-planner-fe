@@ -133,7 +133,7 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
   },
 
   "& .secondaryRow": {
-    paddingTop: "29px",
+    paddingTop: "14px",
     position: "relative",
     zIndex: "20",
   },
@@ -151,6 +151,7 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
       marginLeft: "-14px",
       fontSize: "14px",
       LineHeight: "1",
+      top: "11px",
     },
   },
   ".multiselectgrid": {
@@ -174,18 +175,30 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
     },
   },
   ".info-lists-wrap": {
-    padding: "50px 44px 0 33px",
+    padding: "16px 44px 0 33px",
     position: "relative",
     // pointerEvents: "none",
+
+    "+.info-lists-wrap": {
+      paddingTop: "20px",
+    }
   },
 
   ".delete-icon": {
     position: "absolute",
-    top: "73px",
-    right: "25px",
-    width: "16.67px",
-    height: "16.67px",
+    bottom: "0",
+    right: "0",
+    width: "24px",
+    height: "24px",
     cursor: "pointer",
+    padding: "0 !important",
+    zIndex: "3",
+
+    "span": {
+      display: "block",
+      width: "100%",
+      height: "100%",
+    },
 
     button: {
       // border: "1px solid #303030",

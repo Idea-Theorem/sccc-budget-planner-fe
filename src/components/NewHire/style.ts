@@ -139,6 +139,7 @@ export const EmployeeInfoArea = styled(Box)(() => ({
       color: "#048071",
       cursor: "pointer",
       width: "24px",
+      padding: "0",
 
       svg: {
         width: "100%",

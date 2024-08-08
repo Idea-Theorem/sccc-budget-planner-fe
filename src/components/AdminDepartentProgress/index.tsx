@@ -68,6 +68,15 @@ const StyledBox = styled(Box)(() => ({
       paddingRight: "10px",
     },
 
+    ".dashboardGraphsList-title": {
+      fontSize: "14px",
+      lineHeight: "20px",
+      fontWeight: "600",
+      color: "#303030",
+      padding: "0 0 5px",
+      borderBottom: "1px solid #BFBFBF",
+    },
+
     "& .MuiLinearProgress-root ": {
       "&:before": {
         background: "#E8EAED",
@@ -207,10 +216,8 @@ const AdminDepartmentProgress = ({
         {from == "super-admin" ? (
           <>
             <Box className="dashboardGraphsList">
-              <Stack direction={"row"} justifyContent="space-between" mb={2}>
-                <Box>
-                  <strong>Departments</strong>
-                </Box>
+              <Stack direction={"row"} justifyContent="space-between" mb={2} className="dashboardGraphsList-title">
+                <Box>Departments</Box>
                 <strong>${totalDepartment}</strong>
               </Stack>
 
