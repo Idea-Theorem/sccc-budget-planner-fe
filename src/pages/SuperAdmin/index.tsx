@@ -14,7 +14,7 @@ const StyledBox = styled(Box)(() => ({
   "& .dashboardCards": {
     display: "flex",
     justifyContent: "space-between",
-    margin: "0 -6px 0 -12px",
+    margin: "36px -6px 0 -12px",
   },
 }));
 const SuperAdminScreen = () => {

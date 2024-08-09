@@ -30,7 +30,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
       "& .MuiTypography-body1": {
         fontSize: "14px",
         lineHeight: "1.5",
-        fontFamily: "Roboto",
+        // fontFamily: "Roboto",
         color: theme.palette.action.selected,
         fontWeight: "400",
         letterSpacing: "1px",

@@ -37,6 +37,7 @@ const DatePickerArea = styled(Box)(() => ({
       paddingTop: "4px",
       paddingLeft: "0",
       paddingBottom: "5px",
+      color: "#303030",
     },
   },
 }));

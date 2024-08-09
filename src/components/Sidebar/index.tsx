@@ -157,7 +157,7 @@ const SideArea = styled(Box)(({ theme }) => ({
   },
 
   ".MuiCollapse-root": {
-    background: "#fafafa",
+    background: "#EDEDED",
 
     "& .MuiListItem-root": {
       textAlign: "center",
@@ -186,17 +186,18 @@ const SideArea = styled(Box)(({ theme }) => ({
 
     ".MuiCollapse-wrapperInner ": {
       ".MuiListItem-root.active-inner, .MuiListItem-root:hover": {
-        background: "#EDEDED !important",
+        background: "#fff !important",
         color: "#303030 !important",
 
         ".MuiButtonBase-root": {
-          background: "#EDEDED !important",
+          background: "#fff !important",
           color: "#303030 !important",
         },
 
         ".MuiTypography-root": {
           color: "#303030 !important",
-        },
+          fontWeight: "600",
+        }
       },
     },
 

@@ -4,13 +4,21 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 const StyledStack = styled(Stack)(() => ({
   "&.statsTag": {
-    background: "#e7eaee",
+    background: "#EAEAEA",
     borderRadius: "4px",
     margin: "0 3px 8px 4px",
     padding: "4px 10px",
     display: "flex",
     alignItems: "center",
     flexDirection: "row",
+
+    "&.tag-active": {
+      background: "#414158",
+
+      "& .MuiTypography-root": {
+        color: "#fff",
+      },
+    },
 
     "& .MuiBox-root": {
       width: "9px",
@@ -22,10 +30,9 @@ const StyledStack = styled(Stack)(() => ({
     "& .MuiTypography-root": {
       fontSize: "12px",
       lineHeight: "1.5",
-      color: "#2d2d2d",
-      fontWeight: "400",
+      color: "#303030",
+      fontWeight: "500",
       letterSpacing: "0.5px",
-      fontFamily: "Roboto",
     },
   },
 }));

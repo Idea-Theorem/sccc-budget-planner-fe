@@ -144,6 +144,7 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
       marginLeft: "-14px",
       fontSize: "14px",
       LineHeight: "1",
+      top: "11px",
     },
   },
   ".multiselectgrid": {
