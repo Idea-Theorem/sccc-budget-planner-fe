@@ -230,7 +230,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
       "& .MuiTab-root": {
         flexGrow: "1",
         textTransform: "capitalize",
-        fontWeight: "600",
+        fontWeight: "500",
         letterSpacing: "0.4px",
         maxWidth: "100%",
         color: theme.palette.common.blackshades["12p"],

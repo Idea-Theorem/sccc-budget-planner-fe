@@ -110,7 +110,7 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
           "& .MuiTableCell-body": {
             borderTop: "1px solid #494949",
             color: "#000",
-            // fontWeight: "600",
+            fontWeight: "600",
             letterSpacing: "0.4px",
           },
 
@@ -123,7 +123,7 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
             paddingBottom: "0",
             height: "20px",
             color: "#000",
-            fontWeight: 700,
+            fontWeight: 600,
           },
         },
       },

@@ -19,7 +19,9 @@ const StyledFormControl = styled(FormControl)({
     },
 
     '.MuiSelect-select': {
-      color: "#303030",
+      color: "rgba(0,0,0,0.87)",
+      fontFamily: "Work Sans",
+      fontWeight: "500",
     },
   },
 

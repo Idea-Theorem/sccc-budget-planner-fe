@@ -68,7 +68,7 @@ const AppHeader = styled(Box)(({ theme }) => ({
       minWidth: "113px",
       height: "36px",
       fontSize: "14px",
-      fontWeight: "500",
+      fontWeight: "600",
       textTransform: "capitalize",
       fontFamily: "Work Sans",
       letterSpacing: "0.4px",
