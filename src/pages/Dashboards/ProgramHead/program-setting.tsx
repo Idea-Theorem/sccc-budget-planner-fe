@@ -34,6 +34,7 @@ const StyledBox = styled(Box)(({}) => ({
     "& .MuiButtonBase-root": {
       fontSize: "13px",
       letterSpacing: "1",
+      fontFamily: "Work Sans",
     },
   },
   ".MuiTypography-h3": {

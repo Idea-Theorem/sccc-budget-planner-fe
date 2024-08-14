@@ -121,6 +121,23 @@ const DepartmentInfoArea = styled(Box)(({ theme }) => ({
     "& .MuiButton-text": {
       color: "inherit",
     },
+    ".actions-btn-holder": {
+      ".MuiButton-textPrimary:not(:hover)": {
+        color: "rgba(48, 48, 48, 1)",
+      },
+      ".MuiButton-outlinedPrimary": {
+        color: "#048071",
+  
+        "&:hover": {
+          background: "#048071",
+          color: "#fff",
+        },
+      },
+  
+      ".MuiButtonBase-root": {
+        textTransform: "capitalize",
+      },
+    },
   },
 }));
 
@@ -210,7 +227,7 @@ const SuperAdminBudgetModal: React.FC<IDepartmentInfo> = ({
           gap="10px"
         >
           <Stack
-            className="formButtons"
+            className="actions-btn-holder"
             direction="row"
             justifyContent="flex-end"
             alignItems="center"

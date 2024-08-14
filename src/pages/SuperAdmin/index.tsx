@@ -16,6 +16,7 @@ const StyledBox = styled(Box)(() => ({
     justifyContent: "space-between",
     margin: "36px -6px 0 -12px",
   },
+  
 }));
 const SuperAdminScreen = () => {
   const array = [{ text: "Export" }, { text: "Reset" }];
