@@ -37,6 +37,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
       fontSize: "13px",
       letterSpacing: "0.8px",
       marginRight: "-1px",
+      fontFamily: "Work Sans",
 
       "&:hover": {
         color: `${theme.palette.primary.main} !important`,
