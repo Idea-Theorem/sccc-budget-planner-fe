@@ -97,9 +97,14 @@ const SideArea = styled(Box)(({ theme }) => ({
   "& .active": {
     background: theme.palette.background.DarkGray,
     padding: "2px 3px",
+    color: "#fff",
 
     ".MuiButtonBase-root": {
       color: "#fff",
+    },
+
+    ".MuiTypography-root ": {
+      fontWeight: "500",
     },
   },
 
@@ -205,7 +210,7 @@ const SideArea = styled(Box)(({ theme }) => ({
       fontSize: "14px",
       lineHeight: "20.02px",
       fontWeight: "400",
-      fontFamily: "Roboto, sans-serif",
+      fontFamily: "Work Sans,sans-serif",
       textAlign: "left",
       paddingLeft: "19px",
     },
