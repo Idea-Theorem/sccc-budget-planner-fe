@@ -54,26 +54,52 @@ export default function TabsNewHire({ employee, formik }: any) {
     formik.setFieldValue("employee", newFormData);
   };
 
-  const handleInputChange = (index: any, name: any, value: any) => {
-    if (name === "hourlyRate") {
-      if (!value.startsWith("$")) {
-        value = "$" + value;
+  const handleInputChange = (index: any, name: any, value: any, event: any) => {
+    // Handle Backspace key
+    if (event?.nativeEvent?.inputType === 'deleteContentBackward') {
+      if (name === "hourlyRate" && value.endsWith('$')) {
+        value = value.slice(0, -1); // Remove the $
+      } else if (name === "hoursPerWeek" && value.endsWith('h')) {
+        value = value.slice(0, -1); // Remove the h
+      } else if (name === "workingWeeks" && value.endsWith('w')) {
+        value = value.slice(0, -1); // Remove the w
+      } else {
+        // If only numbers and nothing else left, remove numbers
+        if (name === "hourlyRate" && !value.startsWith('$') && !/^\d*$/.test(value)) {
+          value = '';
+        } else if (name === "hoursPerWeek" && !value.endsWith('h') && !/^\d*$/.test(value)) {
+          value = '';
+        } else if (name === "workingWeeks" && !value.endsWith('w') && !/^\d*$/.test(value)) {
+          value = '';
+        }
       }
-    } else if (name === "hoursPerWeek") {
-      value = value.replace(/h/g, "") + "h";
-    } else if (name === "workingWeeks") {
-      value = value.replace(/w/g, "") + "w";
+    } else {
+      // Handle regular input change
+      if (name === "hourlyRate") {
+        if (!value.startsWith("$")) {
+          value = "$" + value;
+        }
+      } else if (name === "hoursPerWeek") {
+        if (!value.endsWith('h')) {
+          value = value.replace(/h/g, "") + "h";
+        }
+      } else if (name === "workingWeeks") {
+        if (!value.endsWith('w')) {
+          value = value.replace(/w/g, "") + "w";
+        }
+      }
     }
-
+  
+    // Update form data
     const newFormData = formik.values.employee.map((employee: any) => ({
       ...employee,
     }));
-
+  
     newFormData[index][name] = value;
     const response = calculateAmount(newFormData);
     formik.setFieldValue("employee", response);
   };
-  console.log("🚀 ~ handleInputChange ~ formik:", formik);
+  
 
   return (
     <EmployeeInfoArea>
@@ -114,59 +140,49 @@ export default function TabsNewHire({ employee, formik }: any) {
                     }
                     errorMessage={formik.errors?.employee?.[index]?.employee}
                     receiveValue={(value: any) =>
-                      handleInputChange(index, "employee", value)
+                      handleInputChange(index, "employee", value, "")
                     }
                   />
                 </Box>
               </td>
               <td>
-                <TextFields
-                  variant="outlined"
-                  size="small"
-                  name={`employee[${index}].hourlyRate`}
-                  value={record.hourlyRate}
-                  onChange={(e: any) =>
-                    handleInputChange(index, "hourlyRate", e.target.value)
-                  }
-                  error={
-                    formik.errors?.employee?.[index]?.hourlyRate ? true : false
-                  }
-                  helperText={formik.errors?.employee?.[index]?.hourlyRate}
-                />
+              <TextFields
+  variant="outlined"
+  size="small"
+  name={`employee[${index}].hourlyRate`}
+  value={record.hourlyRate}
+  onChange={(e: any) =>
+    handleInputChange(index, "hourlyRate", e.target.value, e)
+  }
+  error={formik.errors?.employee?.[index]?.hourlyRate ? true : false}
+  helperText={formik.errors?.employee?.[index]?.hourlyRate}
+/>
               </td>
               <td>
-                <TextFields
-                  variant="outlined"
-                  name={`employee[${index}].hoursPerWeek`}
-                  size="small"
-                  value={record.hoursPerWeek}
-                  onChange={(e: any) =>
-                    handleInputChange(index, "hoursPerWeek", e.target.value)
-                  }
-                  error={
-                    formik.errors?.employee?.[index]?.hoursPerWeek
-                      ? true
-                      : false
-                  }
-                  helperText={formik.errors?.employee?.[index]?.hoursPerWeek}
-                />
+              <TextFields
+  variant="outlined"
+  size="small"
+  name={`employee[${index}].hoursPerWeek`}
+  value={record.hoursPerWeek}
+  onChange={(e: any) =>
+    handleInputChange(index, "hoursPerWeek", e.target.value, e)
+  }
+  error={formik.errors?.employee?.[index]?.hoursPerWeek ? true : false}
+  helperText={formik.errors?.employee?.[index]?.hoursPerWeek}
+/>
               </td>
               <td>
-                <TextFields
-                  variant="outlined"
-                  name={`employee[${index}].workingWeeks`}
-                  size="small"
-                  value={record.workingWeeks}
-                  onChange={(e: any) =>
-                    handleInputChange(index, "workingWeeks", e.target.value)
-                  }
-                  error={
-                    formik.errors?.employee?.[index]?.workingWeeks
-                      ? true
-                      : false
-                  }
-                  helperText={formik.errors?.employee?.[index]?.workingWeeks}
-                />
+              <TextFields
+  variant="outlined"
+  size="small"
+  name={`employee[${index}].workingWeeks`}
+  value={record.workingWeeks}
+  onChange={(e: any) =>
+    handleInputChange(index, "workingWeeks", e.target.value, e)
+  }
+  error={formik.errors?.employee?.[index]?.workingWeeks ? true : false}
+  helperText={formik.errors?.employee?.[index]?.workingWeeks}
+/>
               </td>
               <td>
                 <Box className="select-holder">
@@ -174,7 +190,7 @@ export default function TabsNewHire({ employee, formik }: any) {
                     value={record.benefit}
                     list={benefit}
                     receiveValue={(value: any) =>
-                      handleInputChange(index, "benefit", value)
+                      handleInputChange(index, "benefit", value, "")
                     }
                     error={
                       formik.errors?.employee?.[index]?.benefit ? true : false

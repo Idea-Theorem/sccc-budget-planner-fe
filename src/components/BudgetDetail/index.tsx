@@ -110,6 +110,24 @@ const StyledBox = styled(Box)(({ theme }) => ({
     marginBottom: "28px",
   },
 
+  ".actions-btn-holder": {
+    ".MuiButton-textPrimary:not(:hover)": {
+      color: "rgba(48, 48, 48, 1)",
+    },
+    ".MuiButton-outlinedPrimary": {
+      color: "#048071",
+
+      "&:hover": {
+        background: "#048071",
+        color: "#fff",
+      },
+    },
+
+    ".MuiButtonBase-root": {
+      textTransform: "capitalize",
+    },
+  },
+
   "& .createFormFields": {
     display: "flex",
     alignItems: "center",
