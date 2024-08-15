@@ -115,7 +115,7 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
     fontSize: "12px",
     lineHeight: "20px",
     fontWeight: "400",
-    fontFamily: "Roboto, sans-serif",
+    fontFamily: "Work Sans",
     letterSpacing: "0.4px",
   },
   "& .MuiTablePagination-input": {
