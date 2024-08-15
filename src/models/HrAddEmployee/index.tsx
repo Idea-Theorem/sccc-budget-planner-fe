@@ -119,7 +119,7 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
     display: "inline-block",
     fontSize: "16px",
     lineHeight: "1.2",
-    fontFamily: "Roboto",
+    fontFamily: "Work Sans",
 
     "& + .MuiInputBase-root": {
       marginTop: "15px",
@@ -127,7 +127,7 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
   },
 
   "& .MuiInputBase-input": {
-    fontFamily: "Roboto, sans-serif",
+    fontFamily: "Work Sans",
     fontSize: "16px",
     color: theme.palette.common.blackshades["4p"],
   },

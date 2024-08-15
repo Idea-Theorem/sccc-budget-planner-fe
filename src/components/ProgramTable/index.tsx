@@ -90,7 +90,7 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
         padding: "16px 0 0 15px",
 
         "&.MuiTableCell-alignRight": {
-          fontFamily: "Roboto",
+          fontFamily: "Work Sans",
           fontWeight: "400",
         },
 
