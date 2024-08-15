@@ -415,7 +415,11 @@ const MainSection = ({
                   helperText={errors.name ? errors.name.toString() : ""}
                 />
 
-                <Stack className="actions-btn-holder" direction={"row"} gap={"20px"}>
+                <Stack
+                  className="actions-btn-holder"
+                  direction={"row"}
+                  gap={"20px"}
+                >
                   {programFromStatus == Status.CREATED ? (
                     <>
                       <Buttons

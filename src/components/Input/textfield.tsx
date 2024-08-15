@@ -36,11 +36,12 @@ const TextFields: React.FC<ITextFields> = ({
   error,
   onBlur,
   autoFocus,
-  className="",
+  className = "",
 }) => {
   return (
     <Box component="form" noValidate autoComplete="off">
-      <TextField className={className}
+      <TextField
+        className={className}
         type={type}
         id="standard-basic"
         label={label}

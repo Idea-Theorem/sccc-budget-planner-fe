@@ -14,6 +14,12 @@ const getAllProgramsViaStatus = async (status: any, Searchvalue: string) => {
 const getAllProgramsByUser = async () => {
   return await HTTP_CLIENT.get(`/program/all-programs`);
 };
+
+const fetchEmployeeInfo = async (user_id: string, department_id?: string) => {
+  return await HTTP_CLIENT.get(
+    `/program/employee-info?user_id=${user_id}&department_id=${department_id}`
+  );
+};
 const getAllProgramsByUsers = async (status: any, Searchvalue: string) => {
   return await HTTP_CLIENT.get(
     `/program/fetchProgramByUser/?status=${status}&name=${
@@ -78,4 +84,5 @@ export {
   getAllProgramsByUsers,
   getAllProgramsByUser,
   resolvedComment,
+  fetchEmployeeInfo,
 };
