@@ -129,6 +129,9 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
       },
     },
   },
+  "& .total_amount":{
+    width:"300px"
+  }
 }));
 
 function createData(name?: string, amount?: number) {
@@ -410,12 +413,11 @@ export default function TabsProgramArea({
                       variant="standard"
                       type="text"
                       placeholder="$00,000.00"
-                      value={row.amount || ""} // Set value from state
+                      value={row.amount || ""} 
                       onChange={(e: any) =>
                         handleInputChange(index, e.target.value)
-                      } // Update state on change
+                      } 
                     />
-                    {/* {row.amount} */}
                   </TableCell>
                 </TableRow>
               ))}
@@ -423,12 +425,12 @@ export default function TabsProgramArea({
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 onClick={() => setIsOpen(false)}
               >
-                <TableCell component="th" scope="row">
+                <TableCell  component="th" scope="row">
                   Total {capitalizeFirstLetter(title)}
                 </TableCell>
                 <TableCell align="right">
                   <TextFields
-                    className="amount_field"
+                    className="amount_field total_amount"
                     disabled={true}
                     type="text"
                     placeholder="$00,000.00"

@@ -82,9 +82,11 @@ const EditProgramModal: React.FC<IHrAddEmployee> = ({
     formik.setFieldValue("to_date", value);
   };
 
-  // const handleDepartmentChange = (value: any) => {
-  //   formik.setFieldValue("department_id", value);
-  // };
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+    }
+  };
   return (
     <Modal
       open={open}
@@ -93,6 +95,7 @@ const EditProgramModal: React.FC<IHrAddEmployee> = ({
       aria-describedby="modal-modal-description"
     >
       <EmployeeInfoArea>
+        <form onKeyDown={handleKeyDown}>
         <Box>
           <Typography variant="h6">Edit Program</Typography>
         </Box>
@@ -168,6 +171,7 @@ const EditProgramModal: React.FC<IHrAddEmployee> = ({
             Save
           </Button>
         </Stack>
+        </form>
       </EmployeeInfoArea>
     </Modal>
   );
