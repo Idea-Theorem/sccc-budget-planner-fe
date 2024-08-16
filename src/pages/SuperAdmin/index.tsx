@@ -19,7 +19,7 @@ const StyledBox = styled(Box)(() => ({
   
 }));
 const SuperAdminScreen = () => {
-  const array = [{ text: "Export" }, { text: "Reset" }];
+  const array = [{ text: "Export" }];
   const [center, setCenter] = useState([]);
   const [centerLoading, setCenterLoading] = useState<boolean>(false);
   const [isOpen, setIsOpen] = React.useState<any>(false);
