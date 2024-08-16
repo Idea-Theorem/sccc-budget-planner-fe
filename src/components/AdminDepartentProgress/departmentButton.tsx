@@ -11,13 +11,21 @@ const StyledStack = styled(Stack)(() => ({
     display: "flex",
     alignItems: "center",
     flexDirection: "row",
+    cursor:"pointer",
+    transition: "background 0.3s ease",
+    "&:hover": {
+      background: "#D0D0D0",  // Slightly darker shade than #EAEAEA
+    },
+  
 
     "&.tag-active": {
       background: "#414158",
+       transition: "background 0.3s ease",
 
       "& .MuiTypography-root": {
         color: "#fff",
       },
+        
     },
 
     "& .MuiBox-root": {

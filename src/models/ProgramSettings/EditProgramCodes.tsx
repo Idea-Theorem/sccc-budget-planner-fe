@@ -56,6 +56,23 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
   "& .formButtons": {
     marginTop: "25px",
   },
+  ".actions-btn-holder": {
+    ".MuiButton-textPrimary:not(:hover)": {
+      color: "rgba(48, 48, 48, 1)",
+    },
+    ".MuiButton-outlinedPrimary": {
+      color: "#048071",
+
+      "&:hover": {
+        background: "#048071",
+        color: "#fff",
+      },
+    },
+
+    ".MuiButtonBase-root": {
+      textTransform: "capitalize",
+    },
+  },
 }));
 
 interface IHrAddEmployee {
@@ -91,7 +108,7 @@ return (
         </Grid>
       </Box>
       <Stack
-        className="formButtons" 
+        className="formButtons actions-btn-holder" 
         direction="row"
         justifyContent="flex-end"
         alignItems="center"
