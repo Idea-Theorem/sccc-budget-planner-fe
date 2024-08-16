@@ -4,15 +4,9 @@ import TabsArea from "../../../components/Tabs";
 import Typography from "@mui/material/Typography";
 import SubHeader from "../../../components/SubHeader";
 import ApprovedProgram from "../ProgramHead/approvedProgram";
-import {
-  getAllProgramsViaStatus,
-  updateProgram,
-} from "../../../services/programServices";
+import { updateProgram } from "../../../services/programServices";
 import React, { useEffect, useState } from "react";
 import Status from "../../../utils/dumpData";
-import { useDispatch, useSelector } from "react-redux";
-import { storeProgramList } from "../../../store/reducers/programSlice";
-import { RootState } from "../../../store";
 import SelectDemo from "../../../components/Select";
 import {
   departmentCount,
@@ -21,7 +15,7 @@ import {
 } from "../../../services/departmentServices";
 import StatusModal from "../../../components/StatusModal";
 import AttentionModal from "../../../models/AttentionModal";
-import { getProgramInDepartment } from "../../../services/centersServices";
+import { getProgramInDepartmentBystatus } from "../../../services/centersServices";
 import { capitalizeFirstLetter, formatNumber } from "../../../utils";
 import { CircularProgress, Stack } from "@mui/material";
 import { useLocation } from "react-router-dom";
@@ -339,12 +333,11 @@ const DHReviewBudgets = () => {
       },
     ],
   ];
-  const { programList } = useSelector((state: RootState) => state.program);
-  const dispatch = useDispatch();
   const [status, setStatus] = useState<string>("");
   const [tabstatus, setTabstatus] = React.useState<any>(Status.PENDING);
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
   const [updateprogram, setUpdateprogram] = useState<string[]>([]);
+  const [programs, setPrograms] = useState<string[]>([]);
   const [departments, setDepartments] = useState<any>([]);
   const [count, setCount] = useState<any>(null);
   const [departmentId, setDepartmentID] = useState<any>(null);
@@ -360,39 +353,48 @@ const DHReviewBudgets = () => {
   }, []);
   const fetchDepartments = async () => {
     try {
+      setLoading(true);
+
       const response = await getAllDepartments("");
+      await receiveDepartment(response?.data?.departments[0]?.id, true, "");
       setDepartmentID(response?.data?.departments[0]?.id);
       setActiveDepartment(response?.data?.departments[0]?.name);
       settotalBudget(response?.data?.departments[0]?.value);
-
       setDepartments(response?.data?.departments);
-    } catch (error) {}
-  };
-
-  useEffect(() => {
-    if (tabstatus == "APPROVED") {
-      if (departmentId) {
-        getDepartmentCount(departmentId);
-      }
-    }
-  }, [tabstatus, departmentId]);
-
-  const receiveDepartment = async (value: any) => {
-    try {
-      setLoading(true);
-      const filteredID = departments.find((item: any) => item?.name === value);
-      setActiveDepartment(filteredID?.name);
-      setDepartmentID(filteredID?.id);
-      const res = await getProgramInDepartment(filteredID?.id);
-      dispatch(storeProgramList(res?.data?.programs));
-      settotalBudget(res?.data?.totalBudget);
-      getDepartmentCount(filteredID?.id);
-      setTabstatus(Status.PENDING);
       setLoading(false);
     } catch (error) {
       setLoading(false);
     }
   };
+
+  const receiveDepartment = async (value: any, init = false, name: string) => {
+    try {
+      const filteredID = departments?.find((item: any) => item?.name === value);
+
+      let id = init ? value : filteredID?.id;
+      const res = await getProgramInDepartmentBystatus(id, tabstatus, name);
+      setPrograms(res?.data?.programs);
+      settotalBudget(res?.data?.totalBudget);
+      if (init) {
+        setActiveDepartment(activeDepartment);
+        setDepartmentID(value);
+      } else {
+        setActiveDepartment(filteredID?.name);
+        setDepartmentID(filteredID?.id);
+      }
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    receiveDepartment(departmentId, true, "");
+  }, [tabstatus, updateprogram]);
+
+  useEffect(() => {
+    if (tabstatus == Status.APPROVED) {
+      getDepartmentCount(departmentId);
+    }
+  }, [tabstatus, departmentId, activeDepartment]);
+
   const getDepartmentCount = async (id: any) => {
     try {
       const response = await departmentCount(id);
@@ -403,18 +405,6 @@ const DHReviewBudgets = () => {
     } catch (error) {}
   };
 
-  useEffect(() => {
-    fetchProgram("");
-  }, [updateprogram, activeDepartment, tabstatus]);
-  const fetchProgram = async (value: string) => {
-    try {
-      const response = await getAllProgramsViaStatus(tabstatus, value);
-      const newArray = response?.data?.programs?.filter(
-        (item: any) => item?.department?.id === departmentId
-      );
-      dispatch(storeProgramList(newArray));
-    } catch (error) {}
-  };
   const handleStatusChange = (selectedStatus: any) => {
     if (selectedStatus === "Approve") {
       setStatus("APPROVED");
@@ -455,7 +445,7 @@ const DHReviewBudgets = () => {
   };
 
   const receiveProgramSearch = async (value: string) => {
-    await fetchProgram(value);
+    await receiveDepartment(departmentId, true, value);
   };
   const handleOK = async () => {
     await handleUpdate();
@@ -515,7 +505,7 @@ const DHReviewBudgets = () => {
               { title: "Rejected" },
             ]}
             setTabstatus={setTabstatus}
-            row={programList}
+            row={programs}
             table={tableColumnsTitleArray}
             currentStatus={status}
             handleActionReieve={handleActionReieve}

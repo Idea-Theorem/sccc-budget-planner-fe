@@ -135,6 +135,16 @@ const MainSection = ({
       obj = { ...values };
     }
     obj.employee = cleanFormDataForFormik(obj.employee);
+    obj.income = obj.income.map((item: any) => ({
+      ...item,
+      amount: Number(item.amount),
+    }));
+
+    // Convert amount strings to numbers in the supply_expense array
+    obj.supply_expense = obj.supply_expense.map((item: any) => ({
+      ...item,
+      amount: Number(item.amount),
+    }));
     try {
       if (singleProgram?.id) {
         await programUpdate(obj, singleProgram?.id);
@@ -273,6 +283,16 @@ const MainSection = ({
         };
       }
       obj.employee = cleanFormDataForFormik(obj.employee);
+      obj.income = obj.income.map((item: any) => ({
+        ...item,
+        amount: Number(item.amount),
+      }));
+
+      // Convert amount strings to numbers in the supply_expense array
+      obj.supply_expense = obj.supply_expense.map((item: any) => ({
+        ...item,
+        amount: Number(item.amount),
+      }));
       if (singleProgram?.id) {
         await programUpdate(obj, singleProgram?.id);
       } else {

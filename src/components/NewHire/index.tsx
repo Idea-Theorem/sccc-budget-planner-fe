@@ -113,8 +113,16 @@ export default function TabsNewHire({ employee, formik }: any) {
         value,
         formik?.values?.department_id
       );
-      newFormData[index]["hourlyRate"] = "$" + res?.hours;
-      newFormData[index]["benefit"] = res?.benefit;
+      if (
+        typeof res?.hours == "undefined" &&
+        typeof res?.benefit == "undefined"
+      ) {
+        newFormData[index]["hourlyRate"] = "";
+        newFormData[index]["benefit"] = "";
+      } else {
+        newFormData[index]["hourlyRate"] = "$" + res?.hours;
+        newFormData[index]["benefit"] = res?.benefit;
+      }
     }
 
     newFormData[index][name] = value;

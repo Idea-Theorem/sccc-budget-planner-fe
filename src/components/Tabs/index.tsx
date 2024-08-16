@@ -152,7 +152,8 @@ const BasicTabs = (props: BasicTabsProps) => {
     if (
       location.pathname == "/admin/review-budget" ||
       location.pathname == "/admin/recreation" ||
-      location.pathname == "/super-admin/review-budgets"
+      location.pathname == "/super-admin/review-budgets" ||
+      location.pathname == "/department-head/review-budgets"
     ) {
       props?.receiveProgramSearch(value);
     } else {

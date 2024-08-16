@@ -213,15 +213,15 @@ export default function TabsProgramArea({
     }
     if (title == "income") {
       const newIncomeArray: any = [...incomeList];
-      newIncomeArray[key] = { ...newIncomeArray[key], amount: Number(value) };
+      newIncomeArray[key] = { ...newIncomeArray[key], amount: String(value) };
       dispatch(storeIncomeList(newIncomeArray));
     } else if (title == "supply-expense") {
       const newSupplyArray: any = [...supplyList];
-      newSupplyArray[key] = { ...newSupplyArray[key], amount: Number(value) };
+      newSupplyArray[key] = { ...newSupplyArray[key], amount: String(value) };
       dispatch(storeSupplyList(newSupplyArray));
     } else if (title == "salary-expense") {
       const newSalaryArray: any = [...salaryList];
-      newSalaryArray[key] = { ...newSalaryArray[key], amount: Number(value) };
+      newSalaryArray[key] = { ...newSalaryArray[key], amount: String(value) };
       dispatch(storeSalaryList(newSalaryArray));
     }
   };
@@ -271,11 +271,13 @@ export default function TabsProgramArea({
   };
 
   function getTotalAmount() {
-    let total = 0;
-    for (let i = 0; i < entities?.length; i++) {
-      total += entities[i].amount;
-    }
-    const amount = "$" + " " + total;
+    const total = entities?.reduce((accumulator: any, entity: any) => {
+      // Convert the amount to a number, treating empty strings as 0
+      const amount = parseFloat(entity.amount) || 0;
+      return accumulator + amount;
+    }, 0);
+
+    const amount = "$ " + total.toFixed(2); // Optional: format to two decimal places
     return String(amount);
   }
 
@@ -401,6 +403,7 @@ export default function TabsProgramArea({
                   </TableCell>
                   <TableCell align="right" className="input-border">
                     <TextFields
+                      isSignShow={true}
                       className="amount_field"
                       autoFocus={false}
                       disabled={disabled}
