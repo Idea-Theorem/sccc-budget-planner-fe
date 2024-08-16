@@ -131,7 +131,8 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
   },
   "& .total_amount":{
     width:"300px"
-  }
+  },
+  
 }));
 
 function createData(name?: string, amount?: number) {
