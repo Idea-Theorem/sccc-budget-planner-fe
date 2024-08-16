@@ -5,7 +5,7 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Status from "../../../utils/dumpData";
 import React, { useEffect, useState } from "react";
-import UploadFileIcon from '@mui/icons-material/UploadFile';
+import UploadFileIcon from "@mui/icons-material/UploadFile";
 import { getPrograms } from "../../../services/adminServices";
 import { getProgram } from "../../../services/programServices";
 import AttentionModal from "../../../models/AttentionModal";
@@ -70,7 +70,11 @@ const ApprovedProgram = ({
         {tabstatus == Status.APPROVED && (
           <Stack>
             <Button
-              disabled={count !== totalCount ? true : false}
+              disabled={
+                count !== totalCount || (count == 0 && totalCount == 0)
+                  ? true
+                  : false
+              }
               variant="contained"
               color="primary"
               size="medium"

@@ -23,6 +23,15 @@ const getDepartmentInCenters = async (id: string) => {
 const getProgramInDepartment = async (id: string) => {
   return await HTTP_CLIENT.get(`/department/programs/${id}`);
 };
+const getProgramInDepartmentBystatus = async (
+  id: string,
+  tabstatus: string,
+  name?: any
+) => {
+  return await HTTP_CLIENT.get(
+    `/department/programs-by-status/${id}/${tabstatus}/${name ? name : ""}`
+  );
+};
 
 export {
   createCenters,
@@ -31,4 +40,5 @@ export {
   deleteCenter,
   getDepartmentInCenters,
   getProgramInDepartment,
+  getProgramInDepartmentBystatus,
 };
