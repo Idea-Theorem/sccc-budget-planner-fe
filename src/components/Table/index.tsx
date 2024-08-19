@@ -100,7 +100,7 @@ const StyleDataGrid = styled(DataGrid)(() => ({
     fontSize: "12px",
     lineHeight: "20px",
     fontWeight: "400",
-    fontFamily: "Roboto, sans-serif",
+    fontFamily: "Work Sans",
     letterSpacing: "0.4px",
   },
   "& .MuiTablePagination-input": {
@@ -121,7 +121,7 @@ const StyleDataGrid = styled(DataGrid)(() => ({
   ".MuiDataGrid-cell": {
     overflow: "visible !important",
   },
-  "& .MuiButtonBase-root": {
+  "& .MuiButtonBase-root:not(:disabled)": {
     color: "rgba(0, 0, 0, 0.56) !important",
   },
 }));

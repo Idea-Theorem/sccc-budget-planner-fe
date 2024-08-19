@@ -36,7 +36,7 @@ const LoginArea = styled(Box)(({ theme }) => ({
   },
 
   "& .MuiTypography-h5": {
-    fontFamily: "Roboto",
+    fontFamily: "Work Sans",
     fontWeight: "400",
     fontSize: "24px",
     lineHeight: "1.3",
@@ -46,7 +46,7 @@ const LoginArea = styled(Box)(({ theme }) => ({
 
   ".MuiFormLabel-root": {
     color: theme.palette.common.blackshades["12p"],
-    fontFamily: "Roboto",
+    fontFamily: "Work Sans",
   },
 
   ".MuiButtonBase-root": {
@@ -64,7 +64,7 @@ const LoginArea = styled(Box)(({ theme }) => ({
 
     "& .MuiOutlinedInput-input": {
       width: "100%",
-      fontFamily: "Roboto",
+      fontFamily: "Work Sans",
       fontWeight: "400",
       color: theme.palette.common.blackshades["12p"],
 
@@ -85,18 +85,18 @@ const LoginArea = styled(Box)(({ theme }) => ({
       marginBottom: "16px",
       fontSize: "15px",
       fontWeight: "500",
-      fontFamily: "Roboto",
+      fontFamily: "Work Sans",
       letterSpacing: "0.46px",
     },
 
     "& legend": {
-      fontFamily: "Roboto",
+      fontFamily: "Work Sans",
     },
   },
 
   "& .textLink": {
     color: theme.palette.info.main,
-    fontFamily: "Roboto",
+    fontFamily: "Work Sans",
     fontWeight: "400",
     fontSize: "14px",
     lineHeight: "20px",

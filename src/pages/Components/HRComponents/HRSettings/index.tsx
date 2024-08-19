@@ -14,6 +14,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
     position: "relative",
+    paddingTop: "10px",
   },
 
   ".MuiTypography-h3": {
@@ -92,7 +93,7 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
     fontSize: "12px",
     lineHeight: "20px",
     fontWeight: "400",
-    fontFamily: "Roboto, sans-serif",
+    fontFamily: "Work Sans",
     letterSpacing: "0.4px",
   },
   "& .MuiTablePagination-input": {

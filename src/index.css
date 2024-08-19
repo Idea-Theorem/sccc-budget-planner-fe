@@ -65,7 +65,7 @@
 
 .createProgramContentHead input {
     color: #303030;
-    font-family: Work Sans;
+    font-family: "Work Sans";
     font-size: 20px;
     font-weight: 500;
     line-height: 1.2;
@@ -87,7 +87,7 @@
 }
 
 .amount_field input {
-    font-family: "Roboto";
+    font-family: Work Sans;
 }
 
 .cursor-pointer {
@@ -99,8 +99,8 @@
 }
 
 .MuiButtonBase-root:disabled {
-    background: rgba(0, 0, 0, 0.12) !important;
-    color: rgba(0, 0, 0, 0.38);
+    /* background: rgba(0, 0, 0, 0.12) !important;
+    color: rgba(0, 0, 0, 0.38); */
 }
 
 .MuiButtonBase-root {

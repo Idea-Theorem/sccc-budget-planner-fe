@@ -95,7 +95,7 @@ const DepartmentInfoArea = styled(Box)(({ theme }) => ({
     display: "inline-block",
     fontSize: "16px",
     lineHeight: "1.2",
-    fontFamily: "Roboto",
+    fontFamily: "Work Sans",
 
     "& + .MuiInputBase-root": {
       marginTop: "15px",

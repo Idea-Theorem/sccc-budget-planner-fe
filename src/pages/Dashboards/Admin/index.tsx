@@ -22,7 +22,7 @@ const StyledBox = styled(Box)(() => ({
   },
 }));
 const AdminScreen = () => {
-  const array = [{ text: "Export" }, { text: "Reset" }];
+  const array = [{ text: "Export" }];
   const [programs, setPrograms] = React.useState<any>({});
   const [department, setDepartment] = React.useState<any>([]);
   const [departmentLoading, setDepartmentLoading] = React.useState<any>(false);
