@@ -10,7 +10,6 @@ import Status from "../../../utils/dumpData";
 import SelectDemo from "../../../components/Select";
 import {
   departmentCount,
-  getAllDepartments,
   getAllDepartmentsByUser,
   getSingleDepartments,
 } from "../../../services/departmentServices";
