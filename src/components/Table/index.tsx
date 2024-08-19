@@ -121,7 +121,7 @@ const StyleDataGrid = styled(DataGrid)(() => ({
   ".MuiDataGrid-cell": {
     overflow: "visible !important",
   },
-  "& .MuiButtonBase-root": {
+  "& .MuiButtonBase-root:not(:disabled)": {
     color: "rgba(0, 0, 0, 0.56) !important",
   },
 }));

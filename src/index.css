@@ -99,8 +99,8 @@
 }
 
 .MuiButtonBase-root:disabled {
-    background: rgba(0, 0, 0, 0.12) !important;
-    color: rgba(0, 0, 0, 0.38);
+    /* background: rgba(0, 0, 0, 0.12) !important;
+    color: rgba(0, 0, 0, 0.38); */
 }
 
 .MuiButtonBase-root {

@@ -13,7 +13,7 @@ import ProgramDatePicker from "../../components/ProgramDatePicker";
 const EmployeeInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
   width: "100%",
-  padding: "40px 50px",
+  padding: "26px 40px",
   boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
   maxWidth: "956px",
   margin: "0 auto",
@@ -29,7 +29,7 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
     fontSize: "20px",
     fontWeight: "600",
     margin: "0 0 25px",
-    padding: "20px 0 0",
+    // padding: "20px 0 0",
   },
 
   "& .subtitle": {

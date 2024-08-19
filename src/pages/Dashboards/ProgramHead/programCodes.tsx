@@ -19,6 +19,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
     position: "relative",
+    paddingTop: "10px",
   },
 
   ".MuiTypography-h3": {

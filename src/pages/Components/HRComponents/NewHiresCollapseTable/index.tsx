@@ -42,11 +42,16 @@ const HrCollapseableTable = styled(Box)(({ theme }) => ({
     },
   },
 
+  ".bg-gray": {
+    background: "#FAFAFA",
+  },
+
   "&.dashboardTable": {
     padding: "30px",
 
     "&.pt-0": {
-      paddingTop: "0",
+      padding: "0 0 30px",
+      margin: "-7px 0 0",
     },
 
     "& .MuiPaper-rounded": {
@@ -227,7 +232,7 @@ function Row(props: {
   };
   return (
     <React.Fragment>
-      <TableRow>
+      <TableRow className={`${open ? "bg-gray": "bg-default"}`}>
         <TableCell padding="none" size="small">
           <IconButton
             aria-label="expand row"
@@ -279,7 +284,7 @@ function Row(props: {
           </Stack>
         </TableCell>
       </TableRow>
-      <TableRow>
+      <TableRow className="bg-gray">
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box>
