@@ -189,13 +189,13 @@ const DepartmentInfo: React.FC<IDepartmentInfo> = ({
           await updateDepartment(values, singleDepartments?.id);
           setStatusData({
             type: "success",
-            message: "Department Update Successfully",
+            message: "Department Updated Successfully",
           });
         } else {
           await createDepartment(values);
           setStatusData({
             type: "success",
-            message: "Department Create Successfully",
+            message: "Department Created Successfully",
           });
         }
         formik.resetForm();

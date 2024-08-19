@@ -14,10 +14,12 @@ import {
 } from "../../../services/benefitServices";
 import DeleteModal from "../../../models/DeleteModal";
 import InputSearch from "../../../components/Input";
+import StatusModal from "../../../components/StatusModal";
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
     position: "relative",
+    paddingTop: "10px",
   },
 
   ".inner-table-holder": {
@@ -59,7 +61,7 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
     borderWidth: "1px 0 0 0 !important",
     borderRadius: "0",
     marginTop: "15px",
-    paddingTop: "5px",
+    paddingTop: "10px",
     "&.MuiDataGrid-footerContainer": {
       border: "none",
     },
@@ -169,6 +171,7 @@ const Benefit = () => {
   const [centerHeading, setCenterHeading] = useState<string>("");
   const [isOpen, setIsOpen] = React.useState<any>(false);
   const [rowData, setRowData] = React.useState<any>(false);
+  const [statusData, setStatusData] = useState<any>(null);
 
   const fetchCenters = async (name: string) => {
     try {
@@ -204,6 +207,10 @@ const Benefit = () => {
       await deleteBenefit(rowData?.id);
       fetchCenters("");
       closeModel();
+      setStatusData({
+        type: "success",
+        message: "Benefit deleted successfully!",
+      });
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -310,6 +317,10 @@ const Benefit = () => {
           )}
         </div>
       </StyledBox>
+      <StatusModal
+        statusData={statusData}
+        onClose={() => setStatusData(null)}
+      />
       <BenefitModal
         open={isCommunityOpen}
         handleClose={handleCloseCommunityModal}

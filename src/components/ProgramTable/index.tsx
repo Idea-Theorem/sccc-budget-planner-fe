@@ -52,10 +52,7 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
       top: "22px",
       color: "#048071",
       cursor: "pointer",
-
-      svg: {
-        display: "block",
-      },
+      display: "none",
     },
   },
   ".MuiTabs-flexContainer": {
@@ -88,6 +85,13 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
         fontSize: "14px",
         fontWeight: "500",
         padding: "16px 0 0 15px",
+        cursor: "pointer",
+
+        "&:hover": {
+          ".comment-icon": {
+            display: "block",
+          },
+        },
 
         "&.MuiTableCell-alignRight": {
           fontFamily: "Work Sans",
@@ -392,6 +396,7 @@ export default function TabsProgramArea({
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell
+                    className="icon-name"
                     component="th"
                     scope="row"
                     onClick={() => handleCommentclick(row)}

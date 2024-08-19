@@ -11,6 +11,8 @@ import { createProfitSchema } from "../../utils/yupSchema";
 import { TextField } from "@mui/material";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import { createBenefit, updateBenefit } from "../../services/benefitServices";
+import StatusModal from "../../components/StatusModal";
+import { useState } from "react";
 
 const DepartmentInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
@@ -151,6 +153,8 @@ const BenefitModal: React.FC<IDepartmentInfo> = ({
   singleCenter,
   setSingleCenter,
 }) => {
+  const [statusData, setStatusData] = useState<any>(null);
+
   console.log(heading);
   const formik = useFormik<any>({
     validateOnBlur: false,
@@ -166,82 +170,101 @@ const BenefitModal: React.FC<IDepartmentInfo> = ({
       try {
         if (heading == "Edit benefit") {
           await updateBenefit(obj, singleCenter?.id);
+          setStatusData({
+            type: "success",
+            message: "Benefit updated successfully!",
+          });
         } else {
           await createBenefit(obj);
+          setStatusData({
+            type: "success",
+            message: "Benefit created successfully!",
+          });
         }
         formik.resetForm();
         setSingleCenter(null);
         handleClose();
-      } catch (error) {}
+      } catch (error: any) {
+        setStatusData({
+          type: "error",
+          message: error.response.data.message,
+        });
+      }
     },
   });
 
   const { values, handleChange, isSubmitting, errors, handleSubmit } = formik;
 
   return (
-    <Modal
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <DepartmentInfoArea>
-        <Box>
-          <Typography variant="h6">{heading}</Typography>
-        </Box>
-        <Box>
-          <Typography className="subtitle">{subheading}</Typography>
-          <Grid container spacing={4}>
-            <Grid item xs={12}>
-              <TextField
-                error={errors.name ? true : false}
-                type="string"
-                variant="standard"
-                label="Benefits"
-                value={values.name}
-                name="name"
-                onChange={handleChange}
-                helperText={errors.name ? errors.name.toString() : ""}
-              />
+    <>
+      <StatusModal
+        statusData={statusData}
+        onClose={() => setStatusData(null)}
+      />
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <DepartmentInfoArea>
+          <Box>
+            <Typography variant="h6">{heading}</Typography>
+          </Box>
+          <Box>
+            <Typography className="subtitle">{subheading}</Typography>
+            <Grid container spacing={4}>
+              <Grid item xs={12}>
+                <TextField
+                  error={errors.name ? true : false}
+                  type="string"
+                  variant="standard"
+                  label="Benefits"
+                  value={values.name}
+                  name="name"
+                  onChange={handleChange}
+                  helperText={errors.name ? errors.name.toString() : ""}
+                />
+              </Grid>
             </Grid>
-          </Grid>
-        </Box>
-        <Stack
-          className="formButtons"
-          direction="row"
-          justifyContent="flex-end"
-          alignItems="center"
-          gap="10px"
-        >
+          </Box>
           <Stack
-            className="actions-btn-holder"
+            className="formButtons"
             direction="row"
             justifyContent="flex-end"
             alignItems="center"
             gap="10px"
           >
-            <Button
-              variant="text"
-              color="inherit"
-              size="medium"
-              startIcon={<Clear />}
-              onClick={handleClose}
+            <Stack
+              className="actions-btn-holder"
+              direction="row"
+              justifyContent="flex-end"
+              alignItems="center"
+              gap="10px"
             >
-              Cancel
-            </Button>
-            <Button
-              variant="outlined"
-              color="primary"
-              size="medium"
-              startIcon={<SaveOutlinedIcon />}
-              onClick={() => handleSubmit()}
-            >
-              {isSubmitting ? "Saving..." : "Save"}
-            </Button>
+              <Button
+                variant="text"
+                color="inherit"
+                size="medium"
+                startIcon={<Clear />}
+                onClick={handleClose}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="outlined"
+                color="primary"
+                size="medium"
+                startIcon={<SaveOutlinedIcon />}
+                onClick={() => handleSubmit()}
+              >
+                {isSubmitting ? "Saving..." : "Save"}
+              </Button>
+            </Stack>
           </Stack>
-        </Stack>
-      </DepartmentInfoArea>
-    </Modal>
+        </DepartmentInfoArea>
+      </Modal>
+    </>
   );
 };
 

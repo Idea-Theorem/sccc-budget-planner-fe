@@ -22,6 +22,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
     position: "relative",
+    paddingTop: "10px",
   },
 
   ".inner-table-holder": {
@@ -63,7 +64,7 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
     borderWidth: "1px 0 0 0 !important",
     borderRadius: "0",
     marginTop: "15px",
-    paddingTop: "5px",
+    paddingTop: "10px",
     "&.MuiDataGrid-footerContainer": {
       border: "none",
     },

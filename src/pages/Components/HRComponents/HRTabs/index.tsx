@@ -41,7 +41,7 @@ const AppHuman = styled(Box)(({ theme }) => ({
     textTransform: "capitalize",
   },
   ".MuiTablePagination-actions": {
-    ".MuiButtonBase-root": {
+    ".MuiButtonBase-root:not(:disabled)": {
       color: "rgba(0, 0, 0, 0.56) !important",
     },
   },
