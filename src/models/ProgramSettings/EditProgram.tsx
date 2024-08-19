@@ -131,15 +131,6 @@ const EditProgramModal: React.FC<IHrAddEmployee> = ({
                 receiveDate={receiveToDate}
               />
             </Grid>
-            {/* <Grid item xs={6}>
-             <TextFields variant="standard" label="Department" name="department" onChange={formik?.handleChange} value={formik?.values?.department_id}/> 
-            <SelectDepartments
-                    title="Department"
-                    value={formik?.values?.department_id}
-                    list={departmentList}
-                    receiveValue={handleDepartmentChange}
-                  />
-          </Grid> */}
           </Grid>
         </Box>
         <Stack
@@ -159,13 +150,14 @@ const EditProgramModal: React.FC<IHrAddEmployee> = ({
             Cancel
           </Button>
           <Button
+            disabled={formik?.isSubmitting}
             variant="outlined"
             color="primary"
             size="medium"
             startIcon={<Save />}
             onClick={() => formik?.handleSubmit()}
           >
-            Save
+            {formik?.isSubmitting ? "Saving..." : "Save"}
           </Button>
         </Stack>
       </EmployeeInfoArea>

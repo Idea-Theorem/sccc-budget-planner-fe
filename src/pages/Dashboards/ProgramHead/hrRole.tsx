@@ -13,6 +13,7 @@ import RoleModal from "../../../models/RoleModal";
 import moment from "moment";
 import DeleteModal from "../../../models/DeleteModal";
 import InputSearch from "../../../components/Input";
+import StatusModal from "../../../components/StatusModal";
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
@@ -168,6 +169,7 @@ const HRRole = () => {
   const [centerHeading, setCenterHeading] = useState<string>("");
   const [open, setOpen] = React.useState(false);
   const [rowData, setRowData] = React.useState<any>(null);
+  const [statusData, setStatusData] = useState<any>(null);
 
   const fetchCenters = async (name: string) => {
     try {
@@ -196,10 +198,18 @@ const HRRole = () => {
       setLoading(true);
       await deleteRole(rowData?.id);
       closeModel();
+      setStatusData({
+        type: "success",
+        message: "Title deleted successfully!",
+      });
       fetchCenters("");
       setLoading(false);
-    } catch (error) {
+    } catch (error: any) {
       setLoading(false);
+      setStatusData({
+        type: "error",
+        message: error.response?.data?.message,
+      });
     }
   };
 
@@ -317,6 +327,10 @@ const HRRole = () => {
           )}
         </div>
       </StyledBox>
+      <StatusModal
+        statusData={statusData}
+        onClose={() => setStatusData(null)}
+      />
       <RoleModal
         open={isCommunityOpen}
         handleClose={handleCloseCommunityModal}

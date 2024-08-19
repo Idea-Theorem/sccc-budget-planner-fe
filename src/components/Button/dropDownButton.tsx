@@ -11,7 +11,7 @@ const MenuItemList = styled(Box)({});
 interface DropdownButtonProps {
   title?: string;
   array?: any;
-  handleUpdate?: any
+  handleUpdate?: any;
   onSelect?: (selectedOption: string) => void;
 }
 const DropdownButton = (props: DropdownButtonProps) => {
@@ -20,7 +20,6 @@ const DropdownButton = (props: DropdownButtonProps) => {
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
     setIsOpen((prev) => !prev);
-    console.log()
   };
 
   const handleClose = () => {
@@ -29,10 +28,10 @@ const DropdownButton = (props: DropdownButtonProps) => {
   };
   const handleOptionSelect = (selectedOption: string) => {
     if (props.onSelect) {
-      props.onSelect(selectedOption)
+      props.onSelect(selectedOption);
     }
     handleClose();
-    props?.handleUpdate(selectedOption.toUpperCase()) 
+    props?.handleUpdate(selectedOption.toUpperCase());
   };
   return (
     <MenuItemList>
@@ -52,8 +51,13 @@ const DropdownButton = (props: DropdownButtonProps) => {
         onClose={handleClose}
       >
         {props?.array?.map((item: any) => (
-          <MenuItem onClick={() => handleOptionSelect(item.text)} style={{ width: "109px" }}>{item?.text}</MenuItem>
-          ))}
+          <MenuItem
+            onClick={() => handleOptionSelect(item.text)}
+            style={{ width: "109px" }}
+          >
+            {item?.text}
+          </MenuItem>
+        ))}
       </Menu>
     </MenuItemList>
   );

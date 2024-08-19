@@ -124,6 +124,8 @@ const MainSection = ({
   });
   const formikSubmit = async () => {
     let obj: any = {};
+    let toastMessage = "";
+
     if (values?.supply_expense.length == 0) {
       obj = {
         ...values,
@@ -148,15 +150,19 @@ const MainSection = ({
     try {
       if (singleProgram?.id) {
         await programUpdate(obj, singleProgram?.id);
+        toastMessage = "Program status updated successfully!";
       } else {
         await createProgram(obj);
+        toastMessage = "Program created successfully!";
       }
       formik.resetForm();
       dispatch(storeIncomeList([]));
       dispatch(storeSupplyList([]));
       dispatch(storeSalaryList([]));
       dispatch(storeSingleProgram(null));
-      navigate("/program-head/program");
+      navigate("/program-head/program", {
+        state: { message: toastMessage, type: "success" },
+      });
     } catch (error: any) {
       setStatusData({
         type: "error",
@@ -268,6 +274,7 @@ const MainSection = ({
   const handleSave = async () => {
     try {
       let obj: any = {};
+      let toastMessage = "";
       if (values?.supply_expense.length == 0) {
         obj = {
           ...values,
@@ -295,15 +302,19 @@ const MainSection = ({
       }));
       if (singleProgram?.id) {
         await programUpdate(obj, singleProgram?.id);
+        toastMessage = "Program status updated successfully!";
       } else {
         await createProgram(obj);
+        toastMessage = "Program created successfully!";
       }
       formik.resetForm();
       dispatch(storeIncomeList([]));
       dispatch(storeSupplyList([]));
       dispatch(storeSalaryList([]));
       dispatch(storeSingleProgram(null));
-      navigate("/program-head/program");
+      navigate("/program-head/draft", {
+        state: { message: toastMessage, type: "success" },
+      });
     } catch (error: any) {
       setStatusData({
         type: "error",

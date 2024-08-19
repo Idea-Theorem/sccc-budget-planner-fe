@@ -13,6 +13,7 @@ import InputSearch from "../../../components/Input";
 import { deleteCenter, getAllCenters } from "../../../services/centersServices";
 import CommunityModal from "../../../models/CommunityModal";
 import moment from "moment";
+import StatusModal from "../../../components/StatusModal";
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
@@ -166,6 +167,7 @@ const Center = () => {
   const [centerHeading, setCenterHeading] = useState<string>("");
   const [isCommunityOpen, setCommunityModal] = useState(false);
   const [singleCenter, setSingleCenter] = useState<any>(null);
+  const [statusData, setStatusData] = useState<any>(null);
 
   const [center, setCenter] = useState<any>(null);
 
@@ -198,6 +200,10 @@ const Center = () => {
       setLoading(true);
       await deleteCenter(rowData?.id);
       closeModel();
+      setStatusData({
+        type: "success",
+        message: "Center deleted Successfully",
+      });
       setLoading(false);
       handleCloseCommunityModal();
     } catch (error) {
@@ -318,6 +324,10 @@ const Center = () => {
             />
           )}
         </div>
+        <StatusModal
+          statusData={statusData}
+          onClose={() => setStatusData(null)}
+        />
         <DeleteModal
           open={isOpen}
           handleOK={() => handleDelete()}

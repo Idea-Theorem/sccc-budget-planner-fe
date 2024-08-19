@@ -2,7 +2,7 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MainHeaderComponent from "../../../components/MainHeader";
 import TabsArea from "../../../components/Tabs";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   storeProgramFromStatus,
   storeSingleProgram,
@@ -26,6 +26,7 @@ import {
   transformString,
 } from "../../../utils";
 import moment from "moment";
+import StatusModal from "../../../components/StatusModal";
 
 const StyledBox = styled(Box)(() => ({
   "&.appContainer": {
@@ -41,6 +42,8 @@ const PHProgramsScreen = () => {
   const [programListing, setprogramListing] = useState<any>([]);
   const [selectedRowdelete, setSelectedDelete] = useState<any>(null);
   const [deleteModalOpen, setDeleteModal] = useState<any>(false);
+  const [statusData, setStatusData] = useState<any>(null);
+
   const [tabsTitleArray, setTabsTitleArray] = React.useState([
     { title: "Pending" },
     { title: "Approved" },
@@ -48,6 +51,21 @@ const PHProgramsScreen = () => {
     { title: "Drafts" },
     { title: "History" },
   ]);
+
+  useEffect(() => {
+    removeDot(tabstatus);
+  }, [tabsTitleArray]);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state) {
+      const { message, type } = location.state;
+      setStatusData({
+        type: type,
+        message: message,
+      });
+    }
+  }, [location.state]);
   useEffect(() => {
     removeDot(tabstatus);
     fetchProgramList(tabstatus, "");
@@ -595,6 +613,10 @@ const PHProgramsScreen = () => {
         open={deleteModalOpen}
         handleClose={() => setDeleteModal(false)}
         handleOK={() => handleDeleteConfirmation()}
+      />
+      <StatusModal
+        statusData={statusData}
+        onClose={() => setStatusData(null)}
       />
     </StyledBox>
   );

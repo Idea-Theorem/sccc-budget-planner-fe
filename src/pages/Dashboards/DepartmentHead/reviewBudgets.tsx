@@ -11,6 +11,7 @@ import SelectDemo from "../../../components/Select";
 import {
   departmentCount,
   getAllDepartments,
+  getAllDepartmentsByUser,
   getSingleDepartments,
 } from "../../../services/departmentServices";
 import StatusModal from "../../../components/StatusModal";
@@ -355,7 +356,7 @@ const DHReviewBudgets = () => {
     try {
       setLoading(true);
 
-      const response = await getAllDepartments("");
+      const response = await getAllDepartmentsByUser();
       await receiveDepartment(response?.data?.departments[0]?.id, true, "");
       setDepartmentID(response?.data?.departments[0]?.id);
       setActiveDepartment(response?.data?.departments[0]?.name);
@@ -417,12 +418,23 @@ const DHReviewBudgets = () => {
     setSelectedRows(data);
   };
   const handleUpdate = async () => {
-    const data = {
-      progamIds: selectedRows,
-      status: status,
-    };
-    const response = await updateProgram(data);
-    setUpdateprogram(response?.data);
+    try {
+      const data = {
+        progamIds: selectedRows,
+        status: status,
+      };
+      const response = await updateProgram(data);
+      setUpdateprogram(response?.data);
+      setStatusData({
+        type: "success",
+        message: "Program status updated successfully!",
+      });
+    } catch (error: any) {
+      setStatusData({
+        type: "error",
+        message: error.response?.data?.message,
+      });
+    }
   };
 
   const handleSumbit = async () => {

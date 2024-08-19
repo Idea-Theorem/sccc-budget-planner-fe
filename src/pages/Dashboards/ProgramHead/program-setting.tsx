@@ -18,6 +18,7 @@ import {
 } from "../../../services/programServices";
 import { useFormik } from "formik";
 import DeleteModal from "../../../models/DeleteModal";
+import StatusModal from "../../../components/StatusModal";
 
 const StyledBox = styled(Box)(({}) => ({
   "&.mainTableBlock": {
@@ -234,6 +235,7 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
   const [selectedRowdelete, setSelectedDelete] = useState<any>(null);
   const [deleteModalOpen, setDeleteModal] = useState<any>(false);
   const [editModalOpen, setEditModal] = useState(false);
+  const [statusData, setStatusData] = useState<any>(null);
 
   const formik = useFormik<any>({
     validateOnBlur: false,
@@ -251,7 +253,16 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
         await programUpdate(values, selectedRow?.id);
         fetchProgramList(Status.DRAFTED, "");
         setEditModal(false);
-      } catch (error) {}
+        setStatusData({
+          type: "success",
+          message: "Program updated successfully!",
+        });
+      } catch (error: any) {
+        setStatusData({
+          type: "error",
+          message: error.response?.data?.message,
+        });
+      }
     },
   });
   React.useEffect(() => {
@@ -285,8 +296,15 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
         await deleteProgram(selectedRowdelete);
         fetchProgramList(Status.DRAFTED, "");
         setDeleteModal(false);
-      } catch (error) {
-        console.error("Error deleting record:", error);
+        setStatusData({
+          type: "success",
+          message: "Program deleted successfully!",
+        });
+      } catch (error: any) {
+        setStatusData({
+          type: "error",
+          message: error.response?.data?.message,
+        });
       }
     }
   };
@@ -327,6 +345,10 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
         open={editModalOpen}
         handleClose={() => setEditModal(false)}
         formik={formik}
+      />
+      <StatusModal
+        statusData={statusData}
+        onClose={() => setStatusData(null)}
       />
     </StyledBox>
   );

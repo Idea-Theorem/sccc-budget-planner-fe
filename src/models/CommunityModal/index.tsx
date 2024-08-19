@@ -167,8 +167,16 @@ const CommunityModal: React.FC<IDepartmentInfo> = ({
       try {
         if (heading == "Edit center") {
           await updateCenter(values, singleCenter?.id);
+          setStatusData({
+            type: "success",
+            message: "Center updated successfully",
+          });
         } else {
           await createCenters(values);
+          setStatusData({
+            type: "success",
+            message: "Center created Successfully",
+          });
         }
         formik.resetForm();
         setSingleCenter(null);
@@ -189,72 +197,74 @@ const CommunityModal: React.FC<IDepartmentInfo> = ({
     handleClose();
   };
   return (
-    <Modal
-      open={open}
-      onClose={handlemodalclose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <DepartmentInfoArea>
-        <Box>
-          <Typography variant="h6">{heading}</Typography>
-        </Box>
-        <Box>
-          <Typography className="subtitle">{subheading}</Typography>
-          <Grid container spacing={4}>
-            <Grid item xs={12}>
-              <TextField
-                error={errors?.name ? true : false}
-                variant="standard"
-                label="Center Name"
-                value={values.name}
-                name="name"
-                onChange={handleChange}
-                helperText={errors.name ? errors.name.toString() : ""}
-              />
+    <>
+      <StatusModal
+        statusData={statusData}
+        onClose={() => setStatusData(null)}
+      />
+      <Modal
+        open={open}
+        onClose={handlemodalclose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <DepartmentInfoArea>
+          <Box>
+            <Typography variant="h6">{heading}</Typography>
+          </Box>
+          <Box>
+            <Typography className="subtitle">{subheading}</Typography>
+            <Grid container spacing={4}>
+              <Grid item xs={12}>
+                <TextField
+                  error={errors?.name ? true : false}
+                  variant="standard"
+                  label="Center Name"
+                  value={values.name}
+                  name="name"
+                  onChange={handleChange}
+                  helperText={errors.name ? errors.name.toString() : ""}
+                />
+              </Grid>
             </Grid>
-          </Grid>
-        </Box>
-        <Stack
-          className="formButtons"
-          direction="row"
-          justifyContent="flex-end"
-          alignItems="center"
-          gap="10px"
-        >
+          </Box>
           <Stack
-            className="actions-btn-holder"
+            className="formButtons"
             direction="row"
             justifyContent="flex-end"
             alignItems="center"
             gap="10px"
           >
-            <Button
-              variant="text"
-              color="inherit"
-              size="medium"
-              startIcon={<Clear />}
-              onClick={handleClose}
+            <Stack
+              className="actions-btn-holder"
+              direction="row"
+              justifyContent="flex-end"
+              alignItems="center"
+              gap="10px"
             >
-              Cancel
-            </Button>
-            <Button
-              variant="outlined"
-              color="primary"
-              size="medium"
-              startIcon={<SaveOutlinedIcon />}
-              onClick={() => handleSubmit()}
-            >
-              {isSubmitting ? "Saving..." : "Save"}
-            </Button>
+              <Button
+                variant="text"
+                color="inherit"
+                size="medium"
+                startIcon={<Clear />}
+                onClick={handleClose}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="outlined"
+                color="primary"
+                size="medium"
+                startIcon={<SaveOutlinedIcon />}
+                onClick={() => handleSubmit()}
+              >
+                {isSubmitting ? "Saving..." : "Save"}
+              </Button>
+            </Stack>
           </Stack>
-        </Stack>
-        <StatusModal
-          statusData={statusData}
-          onClose={() => setStatusData(null)}
-        />
-      </DepartmentInfoArea>
-    </Modal>
+        </DepartmentInfoArea>
+      </Modal>
+    </>
   );
 };
 

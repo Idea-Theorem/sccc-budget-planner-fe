@@ -18,6 +18,7 @@ import AttentionModal from "../../../models/AttentionModal";
 import { capitalizeFirstLetter, formatNumber } from "../../../utils";
 import { Stack } from "@mui/material";
 import moment from "moment";
+import StatusModal from "../../../components/StatusModal";
 const StyledBox = styled(Box)(() => ({
   "& .dashboardCards": {
     display: "flex",
@@ -277,6 +278,7 @@ const ReviewBudgetScreen = () => {
   const [selectedRows, setSelectedRows] = React.useState<any>([]);
   const [attentionModal, setAttentionModal] = useState<any>(false);
   const [totalBudget, setTotalBudget] = useState<any>("");
+  const [statusData, setStatusData] = useState<any>(null);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -303,12 +305,23 @@ const ReviewBudgetScreen = () => {
     setSelectedRows(data);
   };
   const handleUpdate = async () => {
-    const data = {
-      departmentIds: selectedRows,
-      status: status,
-    };
-    const response = await getSingleDepartments(data);
-    setUpdateprogram(response?.data);
+    try {
+      const data = {
+        departmentIds: selectedRows,
+        status: status,
+      };
+      const response = await getSingleDepartments(data);
+      setUpdateprogram(response?.data);
+      setStatusData({
+        type: "success",
+        message: "Department status updated successfully!",
+      });
+    } catch (error: any) {
+      setStatusData({
+        type: "error",
+        message: error.response?.data?.message,
+      });
+    }
   };
   const onRowClick = async (data: any) => {
     if (data) {
@@ -355,6 +368,10 @@ const ReviewBudgetScreen = () => {
         onRowClick={onRowClick}
         checkout={true}
         receiveProgramSearch={receiveProgramSearch}
+      />
+      <StatusModal
+        statusData={statusData}
+        onClose={() => setStatusData(null)}
       />
       <AttentionModal
         open={attentionModal}
