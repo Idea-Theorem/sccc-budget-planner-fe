@@ -21,6 +21,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
     width: "100%",
     position: "relative",
     paddingTop: "10px",
+    borderTop: "1px solid rgba(224, 224, 224, 1)",
   },
 
   ".MuiTypography-h3": {
@@ -50,7 +51,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
 const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
   width: "100%",
   "&.MuiDataGrid-root": {
-    borderWidth: "1px 0 0 !important",
+    borderWidth: "0 !important",
     "&.MuiDataGrid-footerContainer": {
       border: "none",
     },
@@ -195,6 +196,7 @@ const HRTableComponent: React.FC<HRTableProps> = ({}) => {
           <Button
             variant="outlined"
             size="small"
+            color="primary"
             startIcon={<EditNoteIcon />}
             // onClick={onEdit}
             onClick={() => handleEditClick(params.row)}

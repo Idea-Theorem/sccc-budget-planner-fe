@@ -38,7 +38,7 @@ export const SIDEBARACTIONS: SidebarAction[] = [
     path: "/hr/role",
     more: [
       { title: "Title", path: "/hr/role" },
-      { title: "Benefit Percentage", path: "/hr/benefits" },
+      { title: "Benefit %", path: "/hr/benefits" },
       { title: "Department", path: "/hr/departments" },
     ],
   },
@@ -49,7 +49,7 @@ export const SIDEBARACTIONS: SidebarAction[] = [
     path: "/hr",
     more: [
       { title: "Title", path: "/hr/role" },
-      { title: "Benefit Percentage", path: "/hr/benefits" },
+      { title: "Benefit %", path: "/hr/benefits" },
       { title: "Department", path: "/hr/departments" },
       { title: "Centers", path: "/hr/centers" },
     ],
@@ -73,7 +73,7 @@ export const SIDEBARACTIONS: SidebarAction[] = [
     path: "/hr/role",
     more: [
       { title: "Title", path: "/hr/role" },
-      { title: "Benefit Percentage", path: "/hr/benefits" },
+      { title: "Benefit %", path: "/hr/benefits" },
       { title: "Department", path: "/hr/departments" },
       { title: "Centers", path: "/hr/centers" },
     ],

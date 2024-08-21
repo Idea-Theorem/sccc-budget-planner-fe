@@ -34,7 +34,10 @@ const SideArea = styled(Box)(({ theme }) => ({
 
     ".MuiSvgIcon-root": {
       color: "#fff",
-      top: "calc(50% - 14px)",
+      top: "calc(50% - 15px)",
+      width: "30px",
+      height: "30px",
+      right: "-4px",
     },
 
     ".MuiFormLabel-root": {
@@ -221,6 +224,12 @@ const SideArea = styled(Box)(({ theme }) => ({
   },
   ".list-item": {
     padding: "0px",
+
+    ".MuiListItem-root": {
+      ".MuiSvgIcon-root ": {
+        marginRight: "15px",
+      },
+    },
   },
 }));
 
