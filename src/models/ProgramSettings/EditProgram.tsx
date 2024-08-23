@@ -73,6 +73,11 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
       textTransform: "capitalize",
     },
   },
+
+  ".small-label": {
+    fontSize: "12px",
+    color: "rgba(0, 0, 0, 0.7)",
+  },
 }));
 
 interface IHrAddEmployee {
@@ -137,7 +142,7 @@ const EditProgramModal: React.FC<IHrAddEmployee> = ({
               />
             </Grid>
             <Grid item xs={6}>
-              <Typography>Durations</Typography>
+              <Typography className="small-label">Durations</Typography>
               <ProgramDatePicker
                 disabled={disabled}
                 singleEmployeeData={selectedRow?.from_date}

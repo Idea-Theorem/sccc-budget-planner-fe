@@ -58,7 +58,7 @@ const SuperReviewBudget = () => {
         renderCell: (params: any) => {
           return (
             <Stack>
-              <Box>{formatNumber(params?.row?.totalIncomeSum)}</Box>
+              <Box>${formatNumber(params?.row?.totalIncomeSum)}</Box>
             </Stack>
           );
         },

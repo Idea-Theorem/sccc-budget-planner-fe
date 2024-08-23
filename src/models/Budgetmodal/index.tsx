@@ -8,7 +8,6 @@ import Grid from "@mui/material/Grid"; // Import Grid component from MUI
 import Modal from "@mui/material/Modal";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { TextField } from "@mui/material";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import {
   // addTotalbudget,
@@ -16,6 +15,7 @@ import {
 } from "../../services/adminServices";
 import { useState } from "react";
 import StatusModal from "../../components/StatusModal";
+import TextFields from "../../components/Input/textfield";
 const DepartmentInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
   width: "100%",
@@ -170,15 +170,20 @@ const BudgetModal: React.FC<IDepartmentInfo> = ({
   const createBudgetSchema = yup.object().shape({
     value: yup
       .number()
+      .transform((value) => parseFloat(value.toFixed(2)))
       .min(approvedBudget, `Value must be at least ${approvedBudget}`)
-      .required("Amount is required!"),
+      .required("Amount is required!")
+      .typeError("Value must be a valid number!"),
   });
+
   const formik = useFormik<any>({
     validateOnBlur: false,
     validationSchema: createBudgetSchema,
     enableReinitialize: true,
     initialValues: {
-      value: totalBudget?.total_value ? totalBudget?.total_value : "",
+      value: totalBudget?.total_value
+        ? parseFloat(totalBudget?.total_value).toFixed(2)
+        : "",
     },
     onSubmit: async (values) => {
       if (totalBudget?.total_value) {
@@ -223,13 +228,15 @@ const BudgetModal: React.FC<IDepartmentInfo> = ({
             <Typography className="subtitle">{subheading}</Typography>
             <Grid container spacing={4}>
               <Grid item xs={12}>
-                <TextField
+                <TextFields
                   variant="standard"
                   label={placeholder}
                   value={values.value}
                   name="value"
                   onChange={handleChange}
                   helperText={errors.value ? errors.value.toString() : ""}
+                  error={errors.value ? true : false}
+                  isSignShow={true}
                 />
               </Grid>
             </Grid>

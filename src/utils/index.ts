@@ -88,8 +88,8 @@ export const getCapitalizedFirstLetters = (str1: any, str2: any) => {
 };
 
 export const formatNumber = (input: any) => {
-  if (!input) {
-    return 0;
+  if (!input || Number(input) == 0) {
+    return "0.00";
   }
   let number = parseFloat(input);
 

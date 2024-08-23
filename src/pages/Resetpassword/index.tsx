@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import LogoImg from "../../assets/logo.png";
 import Buttons from "../../components/Button";
 import { useAuth } from "../../contexts/AuthContext";
-import {  useFormik } from "formik";
+import { useFormik } from "formik";
 import * as yup from "yup";
 import { useLocation } from "react-router-dom";
 
@@ -114,20 +114,20 @@ const LoginArea = styled(Box)(({ theme }) => ({
 }));
 
 const validationSchema = yup.object().shape({
-    newPassword: yup.string()
-    .required('New Password is required'),
-  confirmPassword: yup.string()
-    .oneOf([yup.ref('newPassword'), undefined], 'Passwords must match')
-    .required('Confirm Password is required'),
+  newPassword: yup.string().required("New Password is required"),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("newPassword"), undefined], "Passwords must match")
+    .required("Confirm Password is required"),
 });
 
 const ResetPasswordScreen = () => {
-  const { handleResetPassword, resetLoading} = useAuth();
+  const { handleResetPassword, resetLoading } = useAuth();
   const location = useLocation();
 
   // Extract the token from the URL
   const queryParams = new URLSearchParams(location.search);
-  const token = queryParams.get('token');
+  const token = queryParams.get("token");
   const formik: any = useFormik<any>({
     validateOnBlur: false,
     validateOnChange: false,
@@ -136,7 +136,7 @@ const ResetPasswordScreen = () => {
       newPassword: "",
     },
     onSubmit: async (values) => {
-      const data = {...values,resetToken:token}
+      const data = { ...values, resetToken: token };
       handleResetPassword(data);
     },
   });
@@ -149,7 +149,9 @@ const ResetPasswordScreen = () => {
         <Box className="siteLogo">
           <img src={LogoImg} alt="Description image" />
         </Box>
-        <Typography variant="h5">Please Enter Email To Reset Password</Typography>
+        <Typography variant="h5">
+          Please Enter Email To Reset Password
+        </Typography>
         <form noValidate autoComplete="off" onSubmit={handleSubmit}>
           <FormControl className="loginFormItem">
             <TextField
@@ -160,12 +162,13 @@ const ResetPasswordScreen = () => {
               value={values.newPassword}
               name="newPassword"
               onChange={handleChange}
-              helperText={errors.newPassword ? errors.newPassword : touched.newPassword}
+              helperText={
+                errors.newPassword ? errors.newPassword : touched.newPassword
+              }
             />
-           
           </FormControl>
           <FormControl className="loginFormItem">
-          <TextField
+            <TextField
               error={errors.confirmPassword ? true : false}
               label="Confirm Password"
               variant="outlined"
@@ -173,12 +176,16 @@ const ResetPasswordScreen = () => {
               value={values.confirmPassword}
               name="confirmPassword"
               onChange={handleChange}
-              helperText={errors.confirmPassword ? errors.confirmPassword : touched.confirmPassword}
+              helperText={
+                errors.confirmPassword
+                  ? errors.confirmPassword
+                  : touched.confirmPassword
+              }
             />
-            </FormControl>
+          </FormControl>
           <Buttons
             loading={resetLoading}
-            btntext="Action"
+            btntext="Reset"
             variant="contained"
             size="large"
             fullWidth
@@ -186,16 +193,10 @@ const ResetPasswordScreen = () => {
             // onClick={() => handleSubmit()}
           />
         </form>
-        <Box>
-        
-        </Box>
+        <Box></Box>
       </Box>
     </LoginArea>
   );
 };
 
 export default ResetPasswordScreen;
-
-
-
-

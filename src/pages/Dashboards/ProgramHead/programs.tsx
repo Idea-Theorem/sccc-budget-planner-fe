@@ -33,6 +33,33 @@ const StyledBox = styled(Box)(() => ({
     ".appHeader": {
       paddingBottom: "9px",
     },
+
+    ".actions-btn-holder": {
+      ".MuiButton-textPrimary:not(:hover)": {
+        color: "rgba(48, 48, 48, 1)",
+      },
+      ".MuiButton-outlinedPrimary": {
+        color: "#048071",
+
+        "&:hover": {
+          background: "#048071",
+          color: "#fff",
+        },
+      },
+
+      ".MuiButtonBase-root": {
+        textTransform: "capitalize",
+      },
+    },
+
+    ".mainTableBlock": {
+      paddingTop: "10px",
+      marginTop: "-10px",
+
+      ".MuiDataGrid-main": {
+        paddingTop: "2px",
+      },
+    }
   },
 }));
 const PHProgramsScreen = () => {
@@ -560,6 +587,7 @@ const PHProgramsScreen = () => {
             <Button
               variant="outlined"
               size="small"
+              color="primary"
               startIcon={<EditNoteIcon />}
               onClick={() => handleEdithistoryRecord(params.row)}
             >

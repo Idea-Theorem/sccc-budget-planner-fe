@@ -43,6 +43,7 @@ const StyledBox = styled(Box)(() => ({
     ".breadcrumbs-item": {
       fontSize: "14px",
       lineHeight: "21px",
+      cursor: "pointer",
 
       "&.previous-item": {
         cursor: "pointer",
@@ -137,7 +138,7 @@ const RecreationAndCultureScreen = ({}: any) => {
         renderCell: (params: any) => {
           return (
             <Stack>
-              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+              <Box>${formatNumber(params?.row?.programBudget)}</Box>
             </Stack>
           );
         },
@@ -219,7 +220,7 @@ const RecreationAndCultureScreen = ({}: any) => {
         renderCell: (params: any) => {
           return (
             <Stack>
-              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+              <Box>${formatNumber(params?.row?.programBudget)}</Box>
             </Stack>
           );
         },
@@ -301,7 +302,7 @@ const RecreationAndCultureScreen = ({}: any) => {
         renderCell: (params: any) => {
           return (
             <Stack>
-              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+              <Box>${formatNumber(params?.row?.programBudget)}</Box>
             </Stack>
           );
         },
