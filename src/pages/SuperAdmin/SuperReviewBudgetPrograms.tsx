@@ -41,6 +41,7 @@ const StyledBox = styled(Box)(() => ({
     ".breadcrumbs-item": {
       fontSize: "14px",
       lineHeight: "21px",
+      cursor: "pointer",
       "&.previous-item": {
         cursor: "pointer",
         color: "#1E88E5",
@@ -102,7 +103,7 @@ const SuperReviewBudgetPrograms = () => {
         renderCell: (params: any) => {
           return (
             <Stack>
-              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+              <Box>${formatNumber(params?.row?.programBudget)}</Box>
             </Stack>
           );
         },
@@ -175,7 +176,7 @@ const SuperReviewBudgetPrograms = () => {
         renderCell: (params: any) => {
           return (
             <Stack>
-              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+              <Box>${formatNumber(params?.row?.programBudget)}</Box>
             </Stack>
           );
         },
@@ -246,7 +247,7 @@ const SuperReviewBudgetPrograms = () => {
         renderCell: (params: any) => {
           return (
             <Stack>
-              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+              <Box>${formatNumber(params?.row?.programBudget)}</Box>
             </Stack>
           );
         },

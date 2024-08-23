@@ -63,7 +63,7 @@ const ReviewBudgetScreen = () => {
         renderCell: (params: any) => {
           return (
             <Stack>
-              <Box>{formatNumber(params?.row?.totalBudget)}</Box>
+              <Box>${formatNumber(params?.row?.totalBudget)}</Box>
             </Stack>
           );
         },
@@ -143,7 +143,7 @@ const ReviewBudgetScreen = () => {
         renderCell: (params: any) => {
           return (
             <Stack>
-              <Box>{formatNumber(params?.row?.totalBudget)}</Box>
+              <Box>${formatNumber(params?.row?.totalBudget)}</Box>
             </Stack>
           );
         },
@@ -223,7 +223,7 @@ const ReviewBudgetScreen = () => {
         renderCell: (params: any) => {
           return (
             <Stack>
-              <Box>{formatNumber(params?.row?.totalBudget)}</Box>
+              <Box>${formatNumber(params?.row?.totalBudget)}</Box>
             </Stack>
           );
         },

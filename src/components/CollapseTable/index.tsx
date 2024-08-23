@@ -207,7 +207,6 @@ function createData(
 function Row(props: { row: ReturnType<typeof createData> }) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
-console.log("row::::::", row)
   return (
     <React.Fragment>
       <TableRow>
@@ -251,11 +250,12 @@ console.log("row::::::", row)
                       <TableCell component="th" scope="row">
                         {historyRow.name || historyRow?.name_second}
                       </TableCell>
-                      <TableCell>{formatNumber(historyRow.value)}</TableCell>
+                      <TableCell>${formatNumber(historyRow.value)}</TableCell>
                       <TableCell>
-                        {formatNumber(historyRow?.value_second)}
+                        ${formatNumber(historyRow?.value_second)}
                       </TableCell>
                       <TableCell>
+                        $
                         {formatNumber(
                           Number(historyRow.value ? historyRow.value : 0) +
                             Number(historyRow?.value_second)
@@ -327,14 +327,14 @@ export default function CollapsibleTable() {
                 )}
               </TableCell>
               <TableCell>
+                $
                 {formatNumber(
                   calculateExpensesSumFirstHalf(record?.firstHalf) +
                     calculateExpensesSumSecondHalf(record?.firstHalf)
                 )}
               </TableCell>
             </TableRow>
-            <TableRow className="totalRow">
-            </TableRow>
+            <TableRow className="totalRow"></TableRow>
             <TableRow className="totalRow last">
               <TableCell>&nbsp;</TableCell>
               <TableCell>Profit</TableCell>

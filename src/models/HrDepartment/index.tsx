@@ -24,7 +24,7 @@ const DepartmentInfoArea = styled(Box)(({ theme }) => ({
   width: "100%",
   padding: "27px 40px",
   boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-  maxWidth: "502px",
+  maxWidth: "948px",
   margin: "0 auto",
   maxHeight: "655px",
   overflow: "auto",
@@ -131,7 +131,18 @@ const DepartmentInfoArea = styled(Box)(({ theme }) => ({
         marginTop: "0",
       },
     },
+
+    ".MuiFormControl-root": {
+      padding: "0",
+
+      ".MuiFormLabel-root": {
+        fontSize: "12px",
+        color: "rgba(0, 0, 0, 0.7)",
+        margin: "0",
+      },
+    },
   },
+  
   ".actions-btn-holder": {
     ".MuiButton-textPrimary:not(:hover)": {
       color: "rgba(48, 48, 48, 1)",
@@ -265,7 +276,7 @@ const DepartmentInfo: React.FC<IDepartmentInfo> = ({
           <Box>
             <Typography className="subtitle">{subheading}</Typography>
             <Grid container spacing={4}>
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   variant="standard"
                   label="Department Name"
@@ -276,7 +287,7 @@ const DepartmentInfo: React.FC<IDepartmentInfo> = ({
                   error={errors.name ? true : false}
                 />
               </Grid>
-              <Grid item xs={12} className="community-area">
+              <Grid item xs={12} sm={6} className="community-area">
                 <SelectDemo
                   title="Community Center"
                   value={activecenter}
@@ -313,7 +324,7 @@ const DepartmentInfo: React.FC<IDepartmentInfo> = ({
               <Button
                 disabled={isSubmitting}
                 onClick={() => handleSubmit()}
-                variant="outlined"
+                variant="contained"
                 color="primary"
                 size="medium"
                 startIcon={<SaveOutlinedIcon />}

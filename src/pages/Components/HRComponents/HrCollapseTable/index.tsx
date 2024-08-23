@@ -206,6 +206,10 @@ function Row(props: {
   const [titles, setTitles] = React.useState<any>([]);
   const [currentRow, setCurrentRow] = React.useState<any>("");
 
+  React.useEffect(() => {
+    setOpen(false);
+  }, [row]);
+
   const closeModel = () => {
     setIsOpen(false);
   };
@@ -252,7 +256,7 @@ function Row(props: {
 
   return (
     <React.Fragment>
-      <TableRow className={`${open ? "bg-gray": "bg-default"}`}>
+      <TableRow className={`${open ? "bg-gray" : "bg-default"}`}>
         <TableCell padding="none" size="small">
           <IconButton
             aria-label="expand row"
@@ -268,6 +272,7 @@ function Row(props: {
         <TableCell>
           {roleSort(row?.roles)?.[0]?.name?.replace(/_/g, " ")}
         </TableCell>
+        <TableCell>{row?.email}</TableCell>
         <TableCell style={{ textTransform: "capitalize" }}>
           {row?.department?.name}
         </TableCell>
@@ -445,6 +450,7 @@ export default function HrCollapsibleTable({
                 <TableCell>&nbsp;</TableCell>
                 <TableCell>Employee Name</TableCell>
                 <TableCell>Roles</TableCell>
+                <TableCell>Email</TableCell>
                 <TableCell></TableCell>
                 <TableCell>Hire date</TableCell>
               </TableRow>

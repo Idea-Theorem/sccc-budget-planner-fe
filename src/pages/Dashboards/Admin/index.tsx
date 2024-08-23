@@ -63,7 +63,7 @@ const AdminScreen = () => {
   const handleModalClose = () => {
     setIsOpen(false);
   };
-//
+  //
   return (
     <StyledBox className="appContainer">
       <MainHeaderComponent

@@ -181,7 +181,7 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
 
     "+.info-lists-wrap": {
       paddingTop: "20px",
-    }
+    },
   },
 
   ".delete-icon": {
@@ -194,7 +194,7 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
     padding: "0 !important",
     zIndex: "3",
 
-    "span": {
+    span: {
       display: "block",
       width: "100%",
       height: "100%",
@@ -471,10 +471,12 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
     try {
       const response = await getAllBenefit("");
       setBenefit(
-        response?.data?.centers?.map((center: any) => ({
-          ...center,
-          name: `${center?.name}%`,
-        }))
+        response?.data?.centers
+          ?.map((center: any) => ({
+            ...center,
+            name: `${center?.name}%`,
+          }))
+          .sort((a: any, b: any) => parseInt(a.name) - parseInt(b.name))
       );
     } catch (error) {}
   };

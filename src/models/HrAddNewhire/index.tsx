@@ -412,10 +412,12 @@ const HrAddNewHire: React.FC<IHrAddEmployee> = ({
     try {
       const response = await getAllBenefit("");
       setBenefit(
-        response?.data?.centers?.map((center: any) => ({
-          ...center,
-          name: `${center?.name}%`,
-        }))
+        response?.data?.centers
+          ?.map((center: any) => ({
+            ...center,
+            name: `${center?.name}%`,
+          }))
+          .sort((a: any, b: any) => parseInt(a.name) - parseInt(b.name))
       );
     } catch (error) {}
   };

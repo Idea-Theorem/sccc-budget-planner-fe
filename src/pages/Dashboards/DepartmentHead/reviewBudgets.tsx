@@ -109,7 +109,7 @@ const DHReviewBudgets = () => {
         renderCell: (params: any) => {
           return (
             <Stack>
-              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+              <Box>${formatNumber(params?.row?.programBudget)}</Box>
             </Stack>
           );
         },
@@ -197,7 +197,7 @@ const DHReviewBudgets = () => {
         renderCell: (params: any) => {
           return (
             <Stack>
-              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+              <Box>${formatNumber(params?.row?.programBudget)}</Box>
             </Stack>
           );
         },
@@ -286,7 +286,7 @@ const DHReviewBudgets = () => {
         renderCell: (params: any) => {
           return (
             <Stack>
-              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+              <Box>${formatNumber(params?.row?.programBudget)}</Box>
             </Stack>
           );
         },
@@ -373,6 +373,7 @@ const DHReviewBudgets = () => {
 
       let id = init ? value : filteredID?.id;
       const res = await getProgramInDepartmentBystatus(id, tabstatus, name);
+      console.log("res::::::", res);
       setPrograms(res?.data?.programs);
       settotalBudget(res?.data?.totalBudget);
       if (init) {
