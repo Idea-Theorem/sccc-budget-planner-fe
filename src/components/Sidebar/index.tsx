@@ -227,7 +227,7 @@ const SideArea = styled(Box)(({ theme }) => ({
 
     ".MuiListItem-root": {
       ".MuiSvgIcon-root ": {
-        marginRight: "15px",
+        marginRight: "16px",
       },
     },
   },

@@ -310,30 +310,30 @@ function Row(props: {
         </TableCell>
       </TableRow>
       <TableRow className="bg-gray">
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box>
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell style={{ paddingLeft: "62px" }}>
+                    <TableCell style={{ paddingLeft: "72px", width: "21.5%" }}>
                       Department
                     </TableCell>
-                    <TableCell>Title</TableCell>
-                    <TableCell>Hourly Rate</TableCell>
+                    <TableCell style={{width: "14.5%" }}>Title</TableCell>
+                    <TableCell style={{width: "28.3%"}}>Hourly Rate</TableCell>
                     <TableCell>Benefit %</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {row?.employeDepartments?.map((element: any) => (
                     <TableRow key={row.id}>
-                      <TableCell style={{ paddingLeft: "62px" }}>
+                      <TableCell style={{ paddingLeft: "72px", width: "21.5%" }}>
                         {element?.department?.name}
                       </TableCell>
-                      <TableCell style={{ textTransform: "capitalize" }}>
+                      <TableCell style={{ textTransform: "capitalize", width: "14.5%" }}>
                         {fetchTitleName(element?.title)}
                       </TableCell>
-                      <TableCell style={{ textTransform: "capitalize" }}>
+                      <TableCell style={{ textTransform: "capitalize", width: "28.3%" }}>
                         {element?.hourlyRate?.toLowerCase()}
                       </TableCell>
                       <TableCell style={{ textTransform: "capitalize" }}>

@@ -436,6 +436,7 @@ const MainSection = ({
                 <TextFields
                   disabled={disable || fromParentDisabled}
                   autoFocus
+                  className="program-field"
                   type="text"
                   placeholder="Enter Program Name"
                   value={formik.values.name}
@@ -449,7 +450,7 @@ const MainSection = ({
                 <Stack
                   className="actions-btn-holder"
                   direction={"row"}
-                  gap={"20px"}
+                  gap={"8px"}
                 >
                   {programFromStatus == Status.CREATED ? (
                     <>
