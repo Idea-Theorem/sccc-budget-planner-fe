@@ -260,6 +260,14 @@ export const updateEmployeeData = (receivedArray: any) => {
   }));
 };
 
+export const updateHrData = (receivedArray: any) => {
+  return receivedArray.map((employee: any) => ({
+    ...employee,
+    hourlyRate: `$${employee.hourlyRate}`,
+  
+  }));
+};
+
 export const calculateExpensesSumSecondHalf = (data: any) => {
   let sum = 0;
 
