@@ -72,6 +72,10 @@
     letter-spacing: 0.25px;
 }
 
+.createProgramContentHead .program-field  {
+    min-width: 400px;
+}
+
 .createProgramContentHead input::placeholder {
     opacity: 0.6;
     color: #000;
@@ -82,8 +86,9 @@
     position: relative;
 }*/
 
-.amount_field {
+.amount_field:not(.total_amount) {
     width: 90px;
+    margin-right: 15px;
 }
 
 .amount_field input {
@@ -111,4 +116,13 @@
 .MuiModal-root .formButtons .MuiButtonBase-root  {
     font-size: 13px;
     text-transform: capitalize !important;
+}
+
+
+.MuiInputBase-root:hover:not(.Mui-disabled, .Mui-error):before {
+    border-color: #048071;
+}
+
+.createFormCalendarFields .MuiBox-root .MuiTextField-root:hover .MuiOutlinedInput-notchedOutline {
+    border-color: #048071 !important;
 }

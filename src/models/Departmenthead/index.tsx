@@ -17,15 +17,11 @@ const DepartmentModalArea = styled(Box)(({ theme }) => ({
   ".comment-area": {
     background: theme.palette.background.default,
     width: "100%",
-    padding: "16px 16px",
-    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+    // boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
     maxWidth: "260px",
     margin: "0 auto",
     overflow: "auto",
     position: "relative",
-    display: "flex",
-    flexDirection: "column",
-    gap: "20px",
 
     "&:empty": {
       padding: "0",
@@ -35,16 +31,27 @@ const DepartmentModalArea = styled(Box)(({ theme }) => ({
       display: "block",
       margin: "0 auto",
     },
+
+    ">div": {
+      padding: "16px 16px",
+      borderBottom: "2px solid #BFBFBF",
+      margin: "0",
+    },
   },
 
   ".custom-label": {
-    background: theme.palette.background.default,
+    // background: theme.palette.background.default,
+    background: "#FAFAFA",
     width: "100%",
     padding: "10px 16px",
-    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+    // boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
     maxWidth: "260px",
     margin: "0 auto",
     overflow: "auto",
+
+    ".MuiInputBase-input": {
+      background: "#fff",
+    },
   },
 
   "& .MuiTypography-h6": {
@@ -146,7 +153,7 @@ const DepartmentHeadModal: React.FC<IHrAddEmployee> = ({
       aria-describedby="modal-modal-description"
     >
       <DepartmentModalArea>
-        <Stack direction="column" gap="1px">
+        <Stack direction="column">
           <Box className="comment-area">
             {deleteLoading ? (
               <CircularProgress />
