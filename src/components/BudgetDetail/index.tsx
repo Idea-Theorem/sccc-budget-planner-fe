@@ -225,6 +225,12 @@ const StyledBox = styled(Box)(({ theme }) => ({
           borderLeft: "0",
           borderRight: "0",
         },
+
+        "&:hover": {
+          ".MuiOutlinedInput-notchedOutline": {
+            borderWidth: "2px",
+          },
+        },
       },
 
       "& .MuiOutlinedInput-input": {
