@@ -35,7 +35,7 @@ export const SIDEBARACTIONS: SidebarAction[] = [
     email: "admin@gmail.com",
     role: "Admin",
     title: "HR",
-    path: "/hr/role",
+    path: "/hr",
     more: [
       { title: "Title", path: "/hr/role" },
       { title: "Benefit Percentage", path: "/hr/benefits" },
@@ -70,7 +70,7 @@ export const SIDEBARACTIONS: SidebarAction[] = [
     email: "suparadmin@gmail.com",
     role: "Super_Admin",
     title: "HR",
-    path: "/hr/role",
+    path: "/hr",
     more: [
       { title: "Title", path: "/hr/role" },
       { title: "Benefit Percentage", path: "/hr/benefits" },

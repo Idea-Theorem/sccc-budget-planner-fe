@@ -202,7 +202,7 @@ const SideArea = styled(Box)(({ theme }) => ({
         ".MuiTypography-root": {
           color: "#303030 !important",
           fontWeight: "600",
-        }
+        },
       },
     },
 
@@ -249,10 +249,10 @@ export default function ResponsiveDrawer(props: Props) {
   const useActiveClass = (item: any) => {
     const isActive =
       location.pathname === item.path ||
+      location.pathname == "/hr/role" ||
       location.pathname === "/hr/benefits" ||
       location.pathname === "/hr/departments" ||
       location.pathname === "/hr/centers" ||
-      item?.path === "/hr" ||
       item?.path === "/program-head/program";
 
     return isActive ? "active" : "";

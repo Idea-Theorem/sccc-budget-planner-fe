@@ -16,6 +16,7 @@ import {
 } from "../../services/adminServices";
 import StatusModal from "../../components/StatusModal";
 import { useState } from "react";
+import TextFields from "../../components/Input/textfield";
 
 const DepartmentInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
@@ -171,15 +172,19 @@ const SuperAdminBudgetModal: React.FC<IDepartmentInfo> = ({
   const createBudgetSchema = yup.object().shape({
     value: yup
       .number()
+      .transform((value) => parseFloat(value.toFixed(2)))
       .min(approvedBudget, `Value must be at least ${approvedBudget}`)
-      .required("Amount is required!"),
+      .required("Amount is required!")
+      .typeError("Value must be a valid number!"),
   });
   const formik = useFormik<any>({
     validateOnBlur: false,
     validationSchema: createBudgetSchema,
     enableReinitialize: true,
     initialValues: {
-      value: totalBudget?.total_value ? totalBudget?.total_value : "",
+      value: totalBudget?.total_value
+        ? parseFloat(totalBudget?.total_value).toFixed(2)
+        : "",
     },
     onSubmit: async (values) => {
       if (totalBudget?.total_value) {
@@ -225,7 +230,7 @@ const SuperAdminBudgetModal: React.FC<IDepartmentInfo> = ({
             <Typography className="subtitle">{subheading}</Typography>
             <Grid container spacing={4}>
               <Grid item xs={12}>
-                <TextField
+                <TextFields
                   error={errors.value ? true : false}
                   variant="standard"
                   label={placeholder}
@@ -233,6 +238,7 @@ const SuperAdminBudgetModal: React.FC<IDepartmentInfo> = ({
                   name="value"
                   onChange={handleChange}
                   helperText={errors.value ? errors.value.toString() : ""}
+                  isSignShow={true}
                 />
               </Grid>
             </Grid>

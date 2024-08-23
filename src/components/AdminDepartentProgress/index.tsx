@@ -6,7 +6,11 @@ import ProgramProgress from "./programProgress";
 import DepartmentButton from "./departmentButton";
 import React, { useEffect } from "react";
 import { getDepartmentInCenters } from "../../services/centersServices";
-import { calculatePercentage, calculateTotalAmountForAdmin } from "../../utils";
+import {
+  calculatePercentage,
+  calculateTotalAmountForAdmin,
+  formatNumber,
+} from "../../utils";
 import { getProgramInDepartments } from "../../services/departmentServices";
 import { CircularProgress, LinearProgress, Stack } from "@mui/material";
 
@@ -216,9 +220,14 @@ const AdminDepartmentProgress = ({
         {from == "super-admin" ? (
           <>
             <Box className="dashboardGraphsList">
-              <Stack direction={"row"} justifyContent="space-between" mb={2} className="dashboardGraphsList-title">
+              <Stack
+                direction={"row"}
+                justifyContent="space-between"
+                mb={2}
+                className="dashboardGraphsList-title"
+              >
                 <Box>Departments</Box>
-                <strong>${totalDepartment}</strong>
+                <strong>${formatNumber(totalDepartment)}</strong>
               </Stack>
 
               {departmentInCenterLoading && departmentInCenter?.length == 0 ? (
@@ -233,7 +242,7 @@ const AdminDepartmentProgress = ({
                   >
                     <ProgramProgress
                       title={e?.name}
-                      amount={e?.totalAmount}
+                      amount={formatNumber(e?.totalAmount)}
                       value={calculatePercentage(
                         e?.totalAmount,
                         totalDepartment
@@ -252,7 +261,7 @@ const AdminDepartmentProgress = ({
                 <Box>
                   <strong>Programs</strong>
                 </Box>
-                <strong>{totalPrograms}</strong>
+                <strong>$ {formatNumber(totalPrograms)}</strong>
               </Stack>
               {rowDataLoading && rowData?.length == 0 ? (
                 <Box className="loaderContainer">
@@ -263,7 +272,7 @@ const AdminDepartmentProgress = ({
                   <Box color={currentProgram?.color} className="progress-wrap">
                     <ProgramProgress
                       title={e?.name}
-                      amount={e?.programBudget}
+                      amount={formatNumber(e?.programBudget)}
                       value={calculatePercentage(
                         e?.programBudget,
                         totalPrograms

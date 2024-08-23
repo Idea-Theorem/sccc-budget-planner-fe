@@ -100,6 +100,7 @@ const EditProgramCodesModal: React.FC<IHrAddEmployee> = ({
           <Grid container spacing={4}>
             <Grid item xs={6}>
               <TextFields
+                disabled={true}
                 variant="standard"
                 label="Program Name"
                 value={formik?.values?.name}

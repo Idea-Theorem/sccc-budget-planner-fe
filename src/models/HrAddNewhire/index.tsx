@@ -404,7 +404,10 @@ const HrAddNewHire: React.FC<IHrAddEmployee> = ({
   const fetchBenefits = async () => {
     try {
       const response = await getAllBenefit("");
-      setBenefit(response?.data?.centers);
+      const sortedCenters = response?.data?.centers.sort(
+        (a: any, b: any) => parseInt(a.name) - parseInt(b.name)
+      );
+      setBenefit(sortedCenters);
     } catch (error) {}
   };
 
