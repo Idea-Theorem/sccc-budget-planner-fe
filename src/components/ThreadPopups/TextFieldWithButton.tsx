@@ -1,7 +1,7 @@
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
-import SendIcon from "@mui/icons-material/Send";
+import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 import { styled } from "@mui/material/styles";
 import Box  from "@mui/material/Box";
 import { CircularProgress } from "@mui/material";
@@ -32,7 +32,7 @@ const TextFieldWithButton = (props: Props) => {
       <Stack direction="row" alignItems="center" gap="10px">
         <TextField value={props?.commenttext} onChange={(e) => props?.setcommentText(e.target.value)} placeholder={props?.placeholder} />
         
-        {props?.isBtn && <Button disabled={props?.commentLoading} onClick={() => props?.handleAddcomment()} endIcon={props?.commentLoading ? <CircularProgress size={30} />:  <SendIcon />} />}
+        {props?.isBtn && <Button disabled={props?.commentLoading} onClick={() => props?.handleAddcomment()} endIcon={props?.commentLoading ? <CircularProgress size={30} />:  <SendOutlinedIcon />} />}
       </Stack>
     </LabelField>
   );
