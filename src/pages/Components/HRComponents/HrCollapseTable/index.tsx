@@ -329,10 +329,10 @@ function Row(props: {
                         {fetchTitleName(element?.title)}
                       </TableCell>
                       <TableCell style={{ textTransform: "capitalize" }}>
-                        {element?.hourlyRate?.toLowerCase()}
+                        ${Number(element?.hourlyRate?.toLowerCase()).toFixed(2)}
                       </TableCell>
                       <TableCell style={{ textTransform: "capitalize" }}>
-                        {findBenefitName(element?.salaryRate)}
+                        {findBenefitName(element?.salaryRate)}%
                       </TableCell>
                     </TableRow>
                   ))}

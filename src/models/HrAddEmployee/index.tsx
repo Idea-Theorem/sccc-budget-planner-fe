@@ -33,7 +33,7 @@ import SelectDepartments from "../../components/SelectDepartment";
 import { getAllBenefit } from "../../services/benefitServices";
 import { getAllRole } from "../../services/roleServices";
 import { RemoveCircleOutline } from "@mui/icons-material";
-import { validateArray } from "../../utils";
+import { updateHrData, validateArray } from "../../utils";
 
 const EmployeeInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
@@ -311,7 +311,8 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
       try {
         if (heading == "Edit Employee") {
           delete values.password;
-          values.employeDepartments = data;
+          let modifyData = cleanFormDataForFormik(data)
+          values.employeDepartments = modifyData;
           await updateEmployee(values, singleEmployeeData?.id);
           setStatusData({
             type: "success",
@@ -329,8 +330,9 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
 
           let obj = {
             ...values,
-            employeDepartments: data,
+            employeDepartments:  cleanFormDataForFormik(data),
           };
+
           await createEmployee(obj);
           setStatusData({
             type: "success",
@@ -359,6 +361,14 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
       }
     },
   });
+
+  const cleanFormDataForFormik = (data: any) => {
+    return data.map((item: any) => ({
+      ...item,
+      hourlyRate: item.hourlyRate.replace("$", ""),
+   
+    }));
+  };
   const {
     values,
     handleChange,
@@ -403,7 +413,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
         };
         modifyArray.push(obj);
       });
-      setData(modifyArray);
+      setData(updateHrData(modifyArray));
       let array: any = [];
       singleEmployeeData?.roles.map((item: any) => {
         array.push(item.name);
@@ -460,7 +470,12 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
   const fetchBenefits = async () => {
     try {
       const response = await getAllBenefit("");
-      setBenefit(response?.data?.centers);
+      setBenefit(
+        response?.data?.centers?.map((center: any) => ({
+          ...center,
+          name: `${center?.name}%`,
+        }))
+      );
     } catch (error) {}
   };
 
@@ -519,7 +534,26 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
   };
 
   const handleInputChange = (index: any, event: any) => {
-    const { name, value } = event.target;
+    let { name, value } = event.target;
+    if (event?.nativeEvent?.inputType === "deleteContentBackward") {
+      if (name === "hourlyRate" && value.endsWith("$")) {
+        value = value.slice(0, -1);
+      }  else {
+        if (
+          name === "hourlyRate" &&
+          !value.startsWith("$") &&
+          !/^\d*$/.test(value)
+        ) {
+          value = "";
+        }
+      }
+    } else {
+      if (name === "hourlyRate") {
+        if (!value.startsWith("$")) {
+          value = "$" + value;
+        }
+      }
+    }
     const newData: any = [...data];
     newData[index][name] = value;
     setData(newData);
@@ -664,7 +698,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
             className="secondaryRow"
             style={{
               display: "flex",
-              alignItems: "center",
+              alignItems: "center", 
               justifyContent: "space-between",
             }}
           >
@@ -674,13 +708,6 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
             >
               Department Works For
             </Typography>
-            {/* <Button
-              onClick={() => handleAddObject()}
-              variant="outlined"
-              startIcon={<Add />}
-            >
-              Add
-            </Button> */}
           </Box>
 
           <Grid container spacing={4}>
@@ -710,18 +737,11 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                       handleTitleChange(index, value)
                     }
                   />
-                  {/* <TextFields
-                    variant="standard"
-                    label="Title"
-                    value={item.title} 
-                    name="title"
-                    onChange={(e: any) => handleInputChange(index, e)}
-                  /> */}
-                </Grid>
+                                </Grid>
                 <Grid className="item-role-area" item xs={3}>
                   <TextFields
                     variant="standard"
-                    label="Hourly Rate"
+                    label="Hourly Rate" 
                     value={item.hourlyRate}
                     name="hourlyRate"
                     onChange={(e: any) => handleInputChange(index, e)}

@@ -92,6 +92,13 @@ const LoginArea = styled(Box)(({ theme }) => ({
       fontFamily: "Work Sans",
     },
   },
+  ".reset-heading":{
+    marginTop: "5px",
+    fontSize:"16px",
+    marginBottom:"15px",
+    fontWeight: "normal"
+
+  },
 
   "& .textLink": {
     color: theme.palette.info.main,
@@ -149,7 +156,8 @@ const ResetPasswordScreen = () => {
         <Box className="siteLogo">
           <img src={LogoImg} alt="Description image" />
         </Box>
-        <Typography variant="h5">Please Enter Email To Reset Password</Typography>
+        <Typography  variant="h5">Reset Account Password</Typography>
+        <Typography className="reset-heading" variant="h6">Enter a new password</Typography>
         <form noValidate autoComplete="off" onSubmit={handleSubmit}>
           <FormControl className="loginFormItem">
             <TextField
