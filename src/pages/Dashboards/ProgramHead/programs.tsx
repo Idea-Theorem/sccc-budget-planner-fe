@@ -59,7 +59,7 @@ const StyledBox = styled(Box)(() => ({
       ".MuiDataGrid-main": {
         paddingTop: "2px",
       },
-    }
+    },
   },
 }));
 const PHProgramsScreen = () => {
@@ -217,7 +217,7 @@ const PHProgramsScreen = () => {
         renderCell: (params: any) => {
           return (
             <Stack>
-              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+              <Box>${formatNumber(params?.row?.programBudget)}</Box>
             </Stack>
           );
         },
@@ -299,7 +299,7 @@ const PHProgramsScreen = () => {
         renderCell: (params: any) => {
           return (
             <Stack>
-              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+              <Box>${formatNumber(params?.row?.programBudget)}</Box>
             </Stack>
           );
         },
@@ -380,7 +380,7 @@ const PHProgramsScreen = () => {
         renderCell: (params: any) => {
           return (
             <Stack>
-              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+              <Box>${formatNumber(params?.row?.programBudget)}</Box>
             </Stack>
           );
         },
@@ -461,7 +461,7 @@ const PHProgramsScreen = () => {
         renderCell: (params: any) => {
           return (
             <Stack>
-              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+              <Box>${formatNumber(params?.row?.programBudget)}</Box>
             </Stack>
           );
         },
@@ -541,7 +541,7 @@ const PHProgramsScreen = () => {
         renderCell: (params: any) => {
           return (
             <Stack>
-              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+              <Box>${formatNumber(params?.row?.programBudget)}</Box>
             </Stack>
           );
         },
