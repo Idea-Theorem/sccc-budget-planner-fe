@@ -49,7 +49,7 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
     ".comment-icon": {
       position: "absolute",
       left: "-30px",
-      top: "22px",
+      top: "14px",
       color: "#048071",
       cursor: "pointer",
     },
