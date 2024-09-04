@@ -288,7 +288,7 @@ const HrAddNewHire: React.FC<IHrAddEmployee> = ({
       try {
         let obj = {
           ...values,
-          employeDepartments: data,
+          employeDepartments: cleanFormDataForFormik(data),
         };
         await createEmployee(obj);
 
@@ -319,6 +319,13 @@ const HrAddNewHire: React.FC<IHrAddEmployee> = ({
       }
     },
   });
+  const cleanFormDataForFormik = (data: any) => {
+    return data.map((item: any) => ({
+      ...item,
+      hourlyRate: item.hourlyRate.replace("$", ""),
+   
+    }));
+  };
   const {
     values,
     handleChange,
@@ -404,10 +411,14 @@ const HrAddNewHire: React.FC<IHrAddEmployee> = ({
   const fetchBenefits = async () => {
     try {
       const response = await getAllBenefit("");
-      const sortedCenters = response?.data?.centers.sort(
-        (a: any, b: any) => parseInt(a.name) - parseInt(b.name)
+      setBenefit(
+        response?.data?.centers
+          ?.map((center: any) => ({
+            ...center,
+            name: `${center?.name}%`,
+          }))
+          .sort((a: any, b: any) => parseInt(a.name) - parseInt(b.name))
       );
-      setBenefit(sortedCenters);
     } catch (error) {}
   };
 
@@ -466,7 +477,26 @@ const HrAddNewHire: React.FC<IHrAddEmployee> = ({
   };
 
   const handleInputChange = (index: any, event: any) => {
-    const { name, value } = event.target;
+    let { name, value } = event.target;
+    if (event?.nativeEvent?.inputType === "deleteContentBackward") {
+      if (name === "hourlyRate" && value.endsWith("$")) {
+        value = value.slice(0, -1);
+      }  else {
+        if (
+          name === "hourlyRate" &&
+          !value.startsWith("$") &&
+          !/^\d*$/.test(value)
+        ) {
+          value = "";
+        }
+      }
+    } else {
+      if (name === "hourlyRate") {
+        if (!value.startsWith("$")) {
+          value = "$" + value;
+        }
+      }
+    }
     const newData: any = [...data];
     newData[index][name] = value;
     setData(newData);

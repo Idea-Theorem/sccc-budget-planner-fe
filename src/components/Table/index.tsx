@@ -124,6 +124,11 @@ const StyleDataGrid = styled(DataGrid)(() => ({
   "& .MuiButtonBase-root:not(:disabled)": {
     // color: "rgba(0, 0, 0, 0.56) !important",
   },
+
+  ".custom-filter-dropdown .MuiDataGrid-filterForm": {
+  backgroundColor: "transparent",/* Set the background color to transparent or your desired color */
+}
+
 }));
 
 interface TableColumn {
@@ -268,6 +273,7 @@ const TableComponent = (props: ColumnnsProps) => {
               }
               return "";
             }}
+        
           />
         </Box>
       </StyledBox>
