@@ -77,14 +77,27 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
         paddingBottom: "7px !important",
       },
 
+      ".MuiTableRow-root": {
+        "&:hover": {
+          ".MuiTableCell-body": {
+            background: "#DBF0FF",
+          },
+        },
+      },
+
       "& .MuiTableCell-body": {
         border: "0",
         color: "#303030",
         fontFamily: "Work Sans",
         fontSize: "14px",
         fontWeight: "500",
-        padding: "16px 0 0 15px",
+        padding: "8px 0 8px 15px",
         cursor: "pointer",
+        borderRadius: "0 4px 4px 0",
+
+        "&:first-child": {
+          borderRadius: "4px 0 0 4px",
+        },
 
         "&.MuiTableCell-alignRight": {
           fontFamily: "Work Sans",
@@ -99,7 +112,7 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
       "& .MuiTableRow-root": {
         "&:nth-last-child(2)": {
           "& .MuiTableCell-body": {
-            paddingBottom: "22px",
+            // paddingBottom: "22px",
           },
         },
 
