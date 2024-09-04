@@ -52,7 +52,6 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
       top: "22px",
       color: "#048071",
       cursor: "pointer",
-      display: "none",
     },
   },
   ".MuiTabs-flexContainer": {
@@ -86,12 +85,6 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
         fontWeight: "500",
         padding: "16px 0 0 15px",
         cursor: "pointer",
-
-        "&:hover": {
-          ".comment-icon": {
-            display: "block",
-          },
-        },
 
         "&.MuiTableCell-alignRight": {
           fontFamily: "Work Sans",
