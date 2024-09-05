@@ -16,7 +16,11 @@ import { fetchAllRecord } from "../../services/adminServices";
 import {
   calculateBudgetDetailAmount,
   calculateBudgetDetailAmountMidyear,
+  calculateExpensesSumFirstHalf,
+  calculateExpensesSumSecondHalf,
   formatNumber,
+  profitFirstHalf,
+  profitSecondHalf,
 } from "../../utils";
 
 // Define StyledInputSearch using styled component
@@ -203,7 +207,6 @@ function createData(
 function Row(props: { row: ReturnType<typeof createData> }) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
-
   return (
     <React.Fragment>
       <TableRow>
@@ -247,13 +250,14 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                       <TableCell component="th" scope="row">
                         {historyRow.name || historyRow?.name_second}
                       </TableCell>
-                      <TableCell>{formatNumber(historyRow.value)}</TableCell>
+                      <TableCell>${formatNumber(historyRow.value)}</TableCell>
                       <TableCell>
-                        {formatNumber(historyRow?.value_second)}
+                        ${formatNumber(historyRow?.value_second)}
                       </TableCell>
                       <TableCell>
+                        $
                         {formatNumber(
-                          Number(historyRow.value) +
+                          Number(historyRow.value ? historyRow.value : 0) +
                             Number(historyRow?.value_second)
                         )}
                       </TableCell>
@@ -282,6 +286,12 @@ export default function CollapsibleTable() {
     } catch (error) {}
   };
 
+  const sumFinalProfitBudget = (a: number, b: number, c: number, d: number) => {
+    let profit = a + b;
+    let suspense = c + d;
+
+    return profit - suspense;
+  };
   return (
     <CollapseableTable className="dashboardTable">
       <TableContainer component={Paper}>
@@ -306,23 +316,53 @@ export default function CollapsibleTable() {
             <TableRow className="totalRow">
               <TableCell>&nbsp;</TableCell>
               <TableCell>Total Supplies & Services</TableCell>
-              <TableCell>$00,000.00</TableCell>
-              <TableCell>$00,000.00</TableCell>
-              <TableCell>$00,000.00</TableCell>
+              <TableCell>
+                $
+                {formatNumber(calculateExpensesSumFirstHalf(record?.firstHalf))}
+              </TableCell>
+              <TableCell>
+                $
+                {formatNumber(
+                  calculateExpensesSumSecondHalf(record?.firstHalf)
+                )}
+              </TableCell>
+              <TableCell>
+                $
+                {formatNumber(
+                  calculateExpensesSumFirstHalf(record?.firstHalf) +
+                    calculateExpensesSumSecondHalf(record?.firstHalf)
+                )}
+              </TableCell>
             </TableRow>
-            <TableRow className="totalRow">
-              <TableCell>&nbsp;</TableCell>
-              <TableCell>Total Salaries</TableCell>
-              <TableCell>$00,000.00</TableCell>
-              <TableCell>$00,000.00</TableCell>
-              <TableCell>$00,000.00</TableCell>
-            </TableRow>
+            <TableRow className="totalRow"></TableRow>
             <TableRow className="totalRow last">
               <TableCell>&nbsp;</TableCell>
               <TableCell>Profit</TableCell>
-              <TableCell>$00,000.00</TableCell>
-              <TableCell>$00,000.00</TableCell>
-              <TableCell>$00,000.00</TableCell>
+              <TableCell>
+                $
+                {formatNumber(
+                  profitFirstHalf(record?.firstHalf) -
+                    calculateExpensesSumFirstHalf(record?.firstHalf)
+                )}
+              </TableCell>
+              <TableCell>
+                $
+                {formatNumber(
+                  profitSecondHalf(record?.firstHalf) -
+                    calculateExpensesSumSecondHalf(record?.firstHalf)
+                )}
+              </TableCell>
+              <TableCell>
+                $
+                {formatNumber(
+                  sumFinalProfitBudget(
+                    profitFirstHalf(record?.firstHalf),
+                    profitSecondHalf(record?.firstHalf),
+                    calculateExpensesSumFirstHalf(record?.firstHalf),
+                    calculateExpensesSumSecondHalf(record?.firstHalf)
+                  )
+                )}
+              </TableCell>
             </TableRow>
           </TableBody>
         </Table>

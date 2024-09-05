@@ -13,7 +13,7 @@ import ProgramDatePicker from "../../components/ProgramDatePicker";
 const EmployeeInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
   width: "100%",
-  padding: "40px 50px",
+  padding: "26px 40px",
   boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
   maxWidth: "956px",
   margin: "0 auto",
@@ -29,7 +29,7 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
     fontSize: "20px",
     fontWeight: "600",
     margin: "0 0 25px",
-    padding: "20px 0 0",
+    // padding: "20px 0 0",
   },
 
   "& .subtitle": {
@@ -55,6 +55,28 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
 
   "& .formButtons": {
     marginTop: "25px",
+  },
+  ".actions-btn-holder": {
+    ".MuiButton-textPrimary:not(:hover)": {
+      color: "rgba(48, 48, 48, 1)",
+    },
+    ".MuiButton-outlinedPrimary": {
+      color: "#048071",
+
+      "&:hover": {
+        background: "#048071",
+        color: "#fff",
+      },
+    },
+
+    ".MuiButtonBase-root": {
+      textTransform: "capitalize",
+    },
+  },
+
+  ".small-label": {
+    fontSize: "12px",
+    color: "rgba(0, 0, 0, 0.7)",
   },
 }));
 
@@ -82,9 +104,11 @@ const EditProgramModal: React.FC<IHrAddEmployee> = ({
     formik.setFieldValue("to_date", value);
   };
 
-  // const handleDepartmentChange = (value: any) => {
-  //   formik.setFieldValue("department_id", value);
-  // };
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+    }
+  };
   return (
     <Modal
       open={open}
@@ -93,6 +117,7 @@ const EditProgramModal: React.FC<IHrAddEmployee> = ({
       aria-describedby="modal-modal-description"
     >
       <EmployeeInfoArea>
+        <form onKeyDown={handleKeyDown}>
         <Box>
           <Typography variant="h6">Edit Program</Typography>
         </Box>
@@ -117,7 +142,7 @@ const EditProgramModal: React.FC<IHrAddEmployee> = ({
               />
             </Grid>
             <Grid item xs={6}>
-              <Typography>Durations</Typography>
+              <Typography className="small-label">Durations</Typography>
               <ProgramDatePicker
                 disabled={disabled}
                 singleEmployeeData={selectedRow?.from_date}
@@ -131,19 +156,10 @@ const EditProgramModal: React.FC<IHrAddEmployee> = ({
                 receiveDate={receiveToDate}
               />
             </Grid>
-            {/* <Grid item xs={6}>
-             <TextFields variant="standard" label="Department" name="department" onChange={formik?.handleChange} value={formik?.values?.department_id}/> 
-            <SelectDepartments
-                    title="Department"
-                    value={formik?.values?.department_id}
-                    list={departmentList}
-                    receiveValue={handleDepartmentChange}
-                  />
-          </Grid> */}
           </Grid>
         </Box>
         <Stack
-          className="formButtons"
+          className="formButtons actions-btn-holder"
           direction="row"
           justifyContent="flex-end"
           alignItems="center"
@@ -151,7 +167,7 @@ const EditProgramModal: React.FC<IHrAddEmployee> = ({
         >
           <Button
             variant="text"
-            color="error"
+            color="inherit"
             size="medium"
             startIcon={<Clear />}
             onClick={handleClose}
@@ -159,15 +175,17 @@ const EditProgramModal: React.FC<IHrAddEmployee> = ({
             Cancel
           </Button>
           <Button
+            disabled={formik?.isSubmitting}
             variant="outlined"
             color="primary"
             size="medium"
             startIcon={<Save />}
             onClick={() => formik?.handleSubmit()}
           >
-            Save
+            {formik?.isSubmitting ? "Saving..." : "Save"}
           </Button>
         </Stack>
+        </form>
       </EmployeeInfoArea>
     </Modal>
   );

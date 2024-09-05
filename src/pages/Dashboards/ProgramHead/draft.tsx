@@ -2,15 +2,19 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MainHeaderComponent from "../../../components/MainHeader";
 import TabsArea from "../../../components/Tabs";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   storeProgramFromStatus,
   storeSingleProgram,
 } from "../../../store/reducers/programSlice";
 import Status from "../../../utils/dumpData";
 import { useDispatch } from "react-redux";
-import React, { useState } from "react";
-import { getAllProgramsViaStatus } from "../../../services/programServices";
+import React, { useEffect, useState } from "react";
+import { getAllProgramsByUsers } from "../../../services/programServices";
+import StatusModal from "../../../components/StatusModal";
+import { Stack } from "@mui/material";
+import { capitalizeFirstLetter, formatNumber } from "../../../utils";
+import moment from "moment";
 const StyledBox = styled(Box)(() => ({
   "&.appContainer": {
     ".appHeader": {
@@ -21,7 +25,10 @@ const StyledBox = styled(Box)(() => ({
 const ProgramsDraftScreen = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-const [program, setPrograms] = useState([])
+  const [program, setPrograms] = useState([]);
+  const [statusData, setStatusData] = useState<any>(null);
+  const location = useLocation();
+
   const tableColumnsTitleArray = [
     [
       {
@@ -30,6 +37,15 @@ const [program, setPrograms] = useState([])
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{params?.row?.code + "-" + params?.row?.name}</Box>
+            </Stack>
+          );
+        },
+        valueGetter: (params: any) =>
+          params?.row?.code + "-" + params?.row?.name,
       },
       {
         field: "status",
@@ -37,55 +53,91 @@ const [program, setPrograms] = useState([])
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{capitalizeFirstLetter(params?.row?.status)}</Box>
+            </Stack>
+          );
+        },
+        valueGetter: (params: any) =>
+          capitalizeFirstLetter(params?.row?.status),
       },
       {
-        field: "budget",
+        field: "programBudget",
         headerName: "Budget",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+            </Stack>
+          );
+        },
+        valueGetter: (params: any) => formatNumber(params?.row?.programBudget),
       },
-      {
-        field: "lYearBudget",
-        headerName: "Previous Year Budget",
-        sortable: false,
-        editable: false,
-        flex: 1,
-      },
+
       {
         field: "created_at",
         headerName: "Submission Date",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{moment(params?.row?.created_at).format("D-MMM YYYY")}</Box>
+            </Stack>
+          );
+        },
+        valueGetter: (params: any) =>
+          moment(params.row?.created_at).format("D-MMM YYYY"),
       },
+
       {
         field: "comments",
         headerName: "Comments",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{params?.row?._count?.Comment}</Box>
+            </Stack>
+          );
+        },
+        valueGetter: (params: any) => params?.row?._count?.Comment,
       },
     ],
   ];
-
-  React.useEffect(() => { 
-    fetchProgramList();
-  }, []);
-  const fetchProgramList = async () => {
-    try {
-      const response = await getAllProgramsViaStatus(Status.DRAFTED, "");
-      setPrograms(response?.data?.programs)
-    } catch (error) {
+  useEffect(() => {
+    if (location.state) {
+      const { message, type } = location.state;
+      setStatusData({
+        type: type,
+        message: message,
+      });
     }
-  };
+  }, [location.state]);
 
+  React.useEffect(() => {
+    fetchProgramList(Status.DRAFTED, "");
+  }, []);
+  const fetchProgramList = async (status: string, Searchvalue: string) => {
+    try {
+      const response = await getAllProgramsByUsers(status, Searchvalue);
+      setPrograms(response?.data?.programs);
+    } catch (error) {}
+  };
 
   const onRowClick = (rowData: any) => {
     dispatch(storeSingleProgram(rowData));
     dispatch(storeProgramFromStatus(Status.DRAFTED));
     navigate("/program-head/create");
-  }
+  };
   return (
     <StyledBox className="appContainer">
       <MainHeaderComponent
@@ -102,6 +154,11 @@ const [program, setPrograms] = useState([])
         table={tableColumnsTitleArray}
         row={program}
         onRowClick={onRowClick}
+        showCursor={true}
+      />
+      <StatusModal
+        statusData={statusData}
+        onClose={() => setStatusData(null)}
       />
     </StyledBox>
   );

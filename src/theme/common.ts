@@ -438,7 +438,7 @@ export const commonTypography = {
 
   buttonLarge: {
     fontStyle: "normal",
-    fontFamily: "Roboto, sans-serif",
+    fontFamily: "Work Sans",
     fontWeight: 500,
     fontSize: "15px",
     letterSpacing: "0.46px",
@@ -448,7 +448,7 @@ export const commonTypography = {
   },
   buttonMedium: {
     fontStyle: "normal",
-    fontFamily: "Roboto, sans-serif",
+    fontFamily: "Work Sans",
     fontWeight: 500,
     fontSize: "14px",
     letterSpacing: "0.4px",
@@ -458,7 +458,7 @@ export const commonTypography = {
   },
   buttonSmall: {
     fontStyle: "normal",
-    fontFamily: "Roboto, sans-serif",
+    fontFamily: "Work Sans",
     fontWeight: 500,
     fontSize: "13px",
     letterSpacing: "0.46px",
@@ -468,7 +468,7 @@ export const commonTypography = {
   },
   inputLabel: {
     fontStyle: "normal",
-    fontFamily: "Roboto, sans-serif",
+    fontFamily: "Work Sans",
     fontWeight: 400,
     fontSize: "12px",
     letterSpacing: "0.15px",
@@ -478,7 +478,7 @@ export const commonTypography = {
   },
   inputText: {
     fontStyle: "normal",
-    fontFamily: "Roboto, sans-serif",
+    fontFamily: "Work Sans",
     fontWeight: 400,
     fontSize: "16px",
     textDecoration: "none",
@@ -487,7 +487,7 @@ export const commonTypography = {
   },
   tooltip: {
     fontStyle: "normal",
-    fontFamily: "Roboto, sans-serif",
+    fontFamily: "Work Sans",
     fontWeight: 600,
     fontSize: "10px",
     letterSpacing: "0px",
@@ -497,7 +497,7 @@ export const commonTypography = {
   },
   tab: {
     fontStyle: "normal",
-    fontFamily: "Roboto, sans-serif",
+    fontFamily: "Work Sans",
     fontWeight: 500,
     fontSize: "14px",
     letterSpacing: "0px",
@@ -507,7 +507,7 @@ export const commonTypography = {
   },
   tabSelected: {
     fontStyle: "normal",
-    fontFamily: "Roboto, sans-serif",
+    fontFamily: "Work Sans",
     fontWeight: 500,
     fontSize: "14px",
     letterSpacing: "0px",
@@ -537,7 +537,7 @@ export const commonTypography = {
   },
   menuItem: {
     fontStyle: "normal",
-    fontFamily: "Roboto, sans-serif",
+    fontFamily: "Work Sans",
     fontWeight: 400,
     fontSize: "14px",
     letterSpacing: "0px",
@@ -577,7 +577,7 @@ export const commonTypography = {
   },
   selectLabel: {
     fontStyle: "normal",
-    fontFamily: "Roboto, sans-serif",
+    fontFamily: "Work Sans",
     fontWeight: 400,
     fontSize: "12px",
     letterSpacing: "0px",
@@ -587,7 +587,7 @@ export const commonTypography = {
   },
   selectValue: {
     fontStyle: "normal",
-    fontFamily: "Roboto, sans-serif",
+    fontFamily: "Work Sans",
     fontWeight: 400,
     fontSize: "16px",
     letterSpacing: "0.15px",

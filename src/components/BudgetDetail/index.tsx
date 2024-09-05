@@ -6,6 +6,7 @@ import { BudgetDetailProps } from "../../types/common";
 import Back from "./Back";
 import LeftSection from "./LeftSection";
 import MainSection from "./MainSection";
+import { useNavigate } from "react-router-dom";
 
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.appContainer": {
@@ -110,6 +111,24 @@ const StyledBox = styled(Box)(({ theme }) => ({
     marginBottom: "28px",
   },
 
+  ".actions-btn-holder": {
+    ".MuiButton-textPrimary:not(:hover)": {
+      color: "rgba(48, 48, 48, 1)",
+    },
+    ".MuiButton-outlinedPrimary": {
+      color: "#048071",
+
+      "&:hover": {
+        background: "#048071",
+        color: "#fff",
+      },
+    },
+
+    ".MuiButtonBase-root": {
+      textTransform: "capitalize",
+    },
+  },
+
   "& .createFormFields": {
     display: "flex",
     alignItems: "center",
@@ -207,6 +226,12 @@ const StyledBox = styled(Box)(({ theme }) => ({
           borderLeft: "0",
           borderRight: "0",
         },
+
+        "&:hover": {
+          ".MuiOutlinedInput-notchedOutline": {
+            borderWidth: "2px",
+          },
+        },
       },
 
       "& .MuiOutlinedInput-input": {
@@ -230,7 +255,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
       "& .MuiTab-root": {
         flexGrow: "1",
         textTransform: "capitalize",
-        fontWeight: "600",
+        fontWeight: "500",
         letterSpacing: "0.4px",
         maxWidth: "100%",
         color: theme.palette.common.blackshades["12p"],
@@ -245,13 +270,13 @@ const StyledBox = styled(Box)(({ theme }) => ({
 // .
 const BudgetDetail: FC<BudgetDetailProps> = ({
   actions,
-  clickBack,
   fromParentDisabled,
 }) => {
+  const navigate = useNavigate();
   return (
     <StyledBox className="appContainer bgGray">
       <Grid container spacing={2}>
-        <Back onClick={clickBack} />
+        <Back onClick={() => navigate(-1)} />
         <LeftSection />
         <MainSection
           actions={actions}

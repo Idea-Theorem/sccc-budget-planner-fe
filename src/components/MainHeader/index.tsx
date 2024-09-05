@@ -3,17 +3,14 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import AddIcon from "@mui/icons-material/Add";
-// import DropdownButton from "../Button/dropDownButton";
 import Buttons from "../Button";
 import DropdownButton from "../Button/dropDownButton";
 
 const AppHeader = styled(Box)(({ theme }) => ({
   "&.appHeader": {
     width: "100%",
-    // paddingBottom: "40px",
     "& .appHeaderHolder": {
       display: "flex",
-      alignItems: "center",
       justifyContent: "space-between",
       flexDirection: "row",
     },
@@ -47,15 +44,14 @@ const AppHeader = styled(Box)(({ theme }) => ({
     "& .appSubHead": {
       display: "flex",
       alignItems: "center",
-      padding: "4px 0 0",
-      marginBottom: "20px",
+      padding: "9px 0 0",
+      marginBottom: "5px",
 
       "& .welcomeText": {
-        fontSize: "20px",
+        fontSize: "16px",
         lineHeight: "1.3",
         fontWeight: "500",
         letterSpacing: "0.25px",
-        color: theme.palette.text.primary,
         margin: "0 13px 0 0",
       },
       "& .welcomeDate ": {
@@ -67,22 +63,29 @@ const AppHeader = styled(Box)(({ theme }) => ({
       },
     },
     "& .headerDropdownButton": {
-      background: theme.palette.primary.main,
+      background: "#048071",
       color: theme.palette.background.default,
       minWidth: "113px",
       height: "36px",
       fontSize: "14px",
-      fontWeight: "500",
+      fontWeight: "600",
       textTransform: "capitalize",
       fontFamily: "Work Sans",
       letterSpacing: "0.4px",
     },
     "& .title": {
-      fontWeight: "400",
-      fontSize: "19px",
+      fontWeight: "500",
+      fontSize: "14px",
+      marginBottom: "20px",
     },
-    "& .sub": {
+    "& .sub-heading4": {
       fontWeight: "600",
+      marginBottom: "10px",
+      fontSize: "26px",
+    },
+    "& .sub-heading6": {
+      fontWeight: "600",
+      paddingTop: "15px",
     },
   },
 }));
@@ -100,7 +103,7 @@ interface MainHeaderProps {
   subdes?: string;
   classname?: string;
   onClick?: any;
-  step?: any;
+  subheading?: string;
 }
 
 const MainHeaderComponent = (props: MainHeaderProps) => {
@@ -110,18 +113,23 @@ const MainHeaderComponent = (props: MainHeaderProps) => {
   };
   return (
     <AppHeader className={`${classname} appHeader`}>
-      <Stack className="appHeaderHolder">
+      <Stack className="appHeaderHolder" alignItems={"start"}>
         <Box>
-          <Typography
-            className={props.step == "0" ? "" : "title"}
-            variant="h3"
-            onClick={() => onClick(props.title)}
-          >
-            {props.title}
-          </Typography>
-          <Typography className="sub" variant="h6">
-            {props.subdes}
-          </Typography>
+          {props.title && (
+            <Typography variant="h3" onClick={() => onClick(props.title)}>
+              {props.title}
+            </Typography>
+          )}
+          {props.subheading && (
+            <Typography className="sub-heading4" variant="h4">
+              {props.subheading}
+            </Typography>
+          )}
+          {props.subdes && (
+            <Typography className="sub-heading6" variant="h6">
+              {props.subdes}
+            </Typography>
+          )}
         </Box>
         {props?.action ? (
           <DropdownButton
@@ -131,11 +139,6 @@ const MainHeaderComponent = (props: MainHeaderProps) => {
             handleUpdate={props?.handleUpdate}
           />
         ) : (
-          // <Buttons
-          //   startIcon={<IosShareIcon />}
-          //   btntext="Export"
-          //   variant="contained"
-          // />
           <Buttons
             startIcon={<AddIcon />}
             onClick={props?.onClick}

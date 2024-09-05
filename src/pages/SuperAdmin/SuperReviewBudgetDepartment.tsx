@@ -2,19 +2,18 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MainHeaderComponent from "../../components/MainHeader";
 import TabsArea from "../../components/Tabs";
-import {
-  getAllCenters,
-  getDepartmentInCenters,
-} from "../../services/centersServices";
+import { getDepartmentInCenters } from "../../services/centersServices";
 import React, { useEffect, useState } from "react";
 import Status from "../../utils/dumpData";
-import { getPrograms } from "../../services/adminServices";
 import { capitalizeFirstLetter, formatNumber } from "../../utils";
-import { Stack } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import moment from "moment";
-import { storeCurrentCenter } from "../../store/reducers/programSlice";
-import { useDispatch } from "react-redux";
+import { storeCurrentDepartment } from "../../store/reducers/programSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "../../store";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+
 const StyledBox = styled(Box)(() => ({
   "& .dashboardCards": {
     display: "flex",
@@ -29,26 +28,58 @@ const StyledBox = styled(Box)(() => ({
       fontSize: "14px",
     },
   },
+
+  ".breadcrumbs": {
+    display: "flex",
+    alignItems: "center",
+    gap: "12px",
+    marginBottom: "16px",
+
+    ".breadcrumbs-item": {
+      fontSize: "14px",
+      lineHeight: "21px",
+      cursor: "pointer",
+      "&.previous-item": {
+        cursor: "pointer",
+        color: "#1E88E5",
+      },
+    },
+
+    ".right-arrow": {
+      width: "9px",
+      height: "auto",
+    },
+  },
 }));
 
-const SuperReviewBudget = () => {
+const SuperReviewBudgetDepartment = () => {
   const [center, setCenters] = useState([]);
   const [totalBudget, settotalBudget] = useState("");
   const [tabstatus, setTabstatus] = React.useState(Status.PENDING);
+  const { currentCenter } = useSelector((state: RootState) => state.program);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   console.log(tabstatus);
 
-  const tableColumnsCenter = [
+  const tableColumnsDepartment = [
     [
       {
         field: "name",
-        headerName: "Center Name",
+        headerName: "Department Name",
         sortable: false,
         editable: false,
         flex: 1,
       },
+
+      {
+        field: "status",
+        headerName: "Status",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
+
       {
         field: "totalIncomeSum",
         headerName: "Budget",
@@ -64,23 +95,20 @@ const SuperReviewBudget = () => {
         },
         valueGetter: (params: any) => formatNumber(params?.row?.totalIncomeSum),
       },
-
       {
         field: "nPrograms",
-        headerName: "No. Dept.",
-
+        headerName: "No. Programs",
         sortable: false,
         editable: false,
         flex: 1,
         renderCell: (params: any) => {
           return (
             <Stack>
-              <Box>{params?.row?.Department?.length}</Box>
+              <Box>{params?.row?._count?.Program}</Box>
             </Stack>
           );
         },
-        valueGetter: (params: any) =>
-          formatNumber(params?.row?.Department?.length),
+        valueGetter: (params: any) => params?.row?._count?.Program,
       },
       {
         field: "created_at",
@@ -97,6 +125,13 @@ const SuperReviewBudget = () => {
         },
         valueGetter: (params: any) =>
           moment(params?.row?.created_at).format("D-MMM YYYY"),
+      },
+      {
+        field: "totalComments",
+        headerName: "Comments",
+        sortable: false,
+        editable: false,
+        flex: 1,
       },
     ],
     [
@@ -125,11 +160,19 @@ const SuperReviewBudget = () => {
       },
 
       {
-        field: "budget",
+        field: "totalIncomeSum",
         headerName: "Budget",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>${formatNumber(params?.row?.totalIncomeSum)}</Box>
+            </Stack>
+          );
+        },
+        valueGetter: (params: any) => formatNumber(params?.row?.totalIncomeSum),
       },
 
       {
@@ -180,11 +223,19 @@ const SuperReviewBudget = () => {
       },
 
       {
-        field: "budget",
+        field: "totalIncomeSum",
         headerName: "Budget",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>${formatNumber(params?.row?.totalIncomeSum)}</Box>
+            </Stack>
+          );
+        },
+        valueGetter: (params: any) => formatNumber(params?.row?.totalIncomeSum),
       },
 
       {
@@ -221,42 +272,44 @@ const SuperReviewBudget = () => {
   ];
 
   const array = [{ text: "Approve" }, { text: "Reject" }];
-
-  const fetchCenter = async (value: string) => {
-    try {
-      const response = await getAllCenters(value);
-      const res = await getPrograms();
-      settotalBudget(res?.data?.totalApprovedProgrambudget);
-      setCenters(response?.data?.centers);
-    } catch (error) {}
-  };
-  const handleSingleRow = async (row: any) => {
-    try {
-      dispatch(storeCurrentCenter(row));
-      navigate("/super-admin/review-budgets-departments");
-      const res = await getDepartmentInCenters(row?.id);
-      setCenters(res?.data?.center?.department);
-      settotalBudget(res?.data?.center?.totalDepartmentBudget);
-    } catch (error) {}
-  };
-
   useEffect(() => {
-    fetchCenter("");
-  }, []);
+    if (currentCenter?.id) {
+      fetchDepartmentInCenter(currentCenter?.id);
+    }
+  }, [currentCenter]);
+
+  const fetchDepartmentInCenter = async (id: any) => {
+    const res = await getDepartmentInCenters(id);
+    setCenters(res?.data?.center?.department);
+    settotalBudget(res?.data?.center?.totalDepartmentBudget);
+  };
+
+  const handleSingleRow = async (row: any) => {
+    dispatch(storeCurrentDepartment(row));
+    navigate("/super-admin/review-budgets-program ");
+  };
 
   const handleBackFunctionality = () => {};
 
-  const receiveProgramSearch = async (value: string) => {
-    await fetchCenter(value);
-  };
-
   return (
     <StyledBox className="appContainer">
+      <Box className="breadcrumbs">
+        <Typography className="breadcrumbs-item previous-item">
+          Review Budgets
+        </Typography>
+        <ArrowForwardIosIcon className="right-arrow" />
+        <Typography
+          onClick={() => navigate("/super-admin/review-budgets")}
+          className="breadcrumbs-item"
+        >
+          Centre
+        </Typography>
+      </Box>
       <MainHeaderComponent
         array={array}
         action={true}
         title={""}
-        subdes={""}
+        subdes={currentCenter?.name}
         subheading="Review Budgets"
         btnTitle="Actions"
         subHeader={true}
@@ -271,13 +324,12 @@ const SuperReviewBudget = () => {
           { title: "Approved" },
           { title: "Rejected" },
         ]}
-        table={tableColumnsCenter}
+        table={tableColumnsDepartment}
         row={center}
         onRowClick={handleSingleRow}
-        receiveProgramSearch={receiveProgramSearch}
       />
     </StyledBox>
   );
 };
 
-export default SuperReviewBudget;
+export default SuperReviewBudgetDepartment;

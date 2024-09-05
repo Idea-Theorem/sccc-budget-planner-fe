@@ -11,7 +11,6 @@ import { filterSidebarActionsWithMore } from "../../utils/filterSideBarActios";
 import { SIDEBARACTIONS } from "../../utils/sideBarActions";
 import { useNavigate, useLocation } from "react-router-dom";
 import LogoImg from "../../assets/logo.png";
-// import { SidebarAction } from "../../types/common";
 import { useAuth } from "../../contexts/AuthContext";
 import { Button, Collapse, Grid } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
@@ -19,7 +18,6 @@ import { getCapitalizedFirstLetters, handleRole } from "../../utils";
 import { useDispatch } from "react-redux";
 import { storeSideBarCheck } from "../../store/reducers/programSlice";
 import SidebarSelect from "../SidebarSelect";
-// import SelectDemo from "../Select";
 
 const SideArea = styled(Box)(({ theme }) => ({
   background: theme.palette.primary.main,
@@ -36,7 +34,10 @@ const SideArea = styled(Box)(({ theme }) => ({
 
     ".MuiSvgIcon-root": {
       color: "#fff",
-      top: "calc(50% - 14px)",
+      top: "calc(50% - 15px)",
+      width: "30px",
+      height: "30px",
+      right: "-4px",
     },
 
     ".MuiFormLabel-root": {
@@ -66,7 +67,7 @@ const SideArea = styled(Box)(({ theme }) => ({
   },
 
   "& .MuiPaper-root": {
-    background: `${theme.palette.primary.main} !important`,
+    background: "#048071 !important",
     width: "208px",
     border: "none",
   },
@@ -98,9 +99,15 @@ const SideArea = styled(Box)(({ theme }) => ({
 
   "& .active": {
     background: theme.palette.background.DarkGray,
+    padding: "2px 3px",
+    color: "#fff",
 
     ".MuiButtonBase-root": {
       color: "#fff",
+    },
+
+    ".MuiTypography-root ": {
+      fontWeight: "500",
     },
   },
 
@@ -126,10 +133,25 @@ const SideArea = styled(Box)(({ theme }) => ({
     padding: "8px 0 !important",
   },
 
+  ".MuiCollapse-wrapperInner": {
+    ".MuiListItemText-root": {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+
+      ".MuiTypography-root": {
+        minWidth: "120px",
+        display: "inline-block",
+        verticalAlign: "top",
+        padding: "0",
+      },
+    },
+  },
+
   ".MuiButtonBase-root": {
     // color: "#303030",
     color: "#fff",
-    padding: "8px 19px",
+    padding: "0px 19px",
 
     "&:hover": {
       color: "#fff",
@@ -143,7 +165,7 @@ const SideArea = styled(Box)(({ theme }) => ({
   },
 
   ".MuiCollapse-root": {
-    background: "#fafafa",
+    background: "#EDEDED",
 
     "& .MuiListItem-root": {
       textAlign: "center",
@@ -170,12 +192,43 @@ const SideArea = styled(Box)(({ theme }) => ({
       },
     },
 
+    ".MuiCollapse-wrapperInner ": {
+      ".MuiListItem-root.active-inner, .MuiListItem-root:hover": {
+        background: "#fff !important",
+        color: "#303030 !important",
+
+        ".MuiButtonBase-root": {
+          background: "#fff !important",
+          color: "#303030 !important",
+        },
+
+        ".MuiTypography-root": {
+          color: "#303030 !important",
+          fontWeight: "600",
+        },
+      },
+    },
+
     ".MuiTypography-root": {
       fontSize: "14px",
       lineHeight: "20.02px",
       fontWeight: "400",
-      fontFamily: "Roboto, sans-serif",
-      textAlign: "center",
+      fontFamily: "Work Sans,sans-serif",
+      textAlign: "left",
+      paddingLeft: "19px",
+    },
+  },
+
+  ".sidebardropdown": {
+    padding: "6px 19px",
+  },
+  ".list-item": {
+    padding: "0px",
+
+    ".MuiListItem-root": {
+      ".MuiSvgIcon-root ": {
+        marginRight: "16px",
+      },
     },
   },
 }));
@@ -197,12 +250,28 @@ export default function ResponsiveDrawer(props: Props) {
     navigate(path);
   };
   const { withMore } = filterSidebarActionsWithMore(SIDEBARACTIONS);
+
   const dispatch = useDispatch();
   const handleDrawerClose = () => {
     setMobileOpen(false);
   };
 
+  const useActiveClass = (item: any) => {
+    const isActive =
+      location.pathname === item.path ||
+      location.pathname == "/hr/role" ||
+      location.pathname === "/hr/benefits" ||
+      location.pathname === "/hr/departments" ||
+      location.pathname === "/hr/centers" ||
+      item?.path === "/program-head/program";
+
+    return isActive ? "active" : "";
+  };
+
   const handleReceive = (item: any) => {
+    if (item == "/department-head/review-budgets") {
+      return;
+    }
     if (item == "Super_Admin") {
       dispatch(storeSideBarCheck("superAdmin"));
       localStorage.setItem("sidebarCheck", "superAdmin");
@@ -211,12 +280,13 @@ export default function ResponsiveDrawer(props: Props) {
       localStorage.setItem("sidebarCheck", "admin");
     }
     localStorage.setItem("currentRole", item);
+    setOpenHR(false);
     setCurrentRole(item);
   };
   React.useEffect(() => {
     switch (currentRole) {
-      case "Program_Head":
-        navigate("/program-head");
+      case "Coordinator":
+        navigate("/program-head/program");
         break;
       case "Admin":
         navigate("/admin");
@@ -261,6 +331,18 @@ export default function ResponsiveDrawer(props: Props) {
     navigate("/");
   };
 
+  const isActive = (itemPath: string, currentPath: string) => {
+    return (
+      currentPath === itemPath ||
+      (itemPath === "/super-admin/review-budgets" &&
+        (currentPath === "/super-admin/review-budgets" ||
+          currentPath === "/super-admin/review-budgets-departments" ||
+          currentPath === "/super-admin/review-budgets-program")) ||
+      (itemPath === "/admin/review-budget" &&
+        currentPath === "/admin/recreation")
+    );
+  };
+
   const drawer = (
     <Box>
       <Box className="siteLogo">
@@ -279,17 +361,20 @@ export default function ResponsiveDrawer(props: Props) {
           receiveValue={handleReceive}
         />
       </Grid>
-      <List>
+      <List className="list-item">
         {withMore?.map((item: any, index: any) => (
           <React.Fragment key={index}>
             {item.role === handleRole(currentRole) && item.more ? (
               <>
                 <ListItem
                   disablePadding
-                  button
+                  className={useActiveClass(item)}
                   onClick={() => handleToggleHR(item?.path)}
                 >
-                  <ListItemText primary={item.title} />
+                  <ListItemText
+                    primary={item.title}
+                    className="sidebardropdown"
+                  />
                   {openHR ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
                 <Collapse in={openHR} timeout="auto" unmountOnExit>
@@ -302,7 +387,9 @@ export default function ResponsiveDrawer(props: Props) {
                         navigate(nestedItem.path ?? "");
                       }}
                       className={
-                        location.pathname === nestedItem.path ? "active" : ""
+                        location.pathname === nestedItem.path
+                          ? "active-inner"
+                          : ""
                       }
                     >
                       <ListItemButton>
@@ -317,10 +404,13 @@ export default function ResponsiveDrawer(props: Props) {
                 disablePadding
                 button
                 onClick={() => {
+                  setOpenHR(false);
                   handleReceive(item?.path);
                   navigate(item.path ?? "");
                 }}
-                className={location.pathname === item.path ? "active" : ""}
+                className={
+                  isActive(item.path, location.pathname) ? "active" : ""
+                }
               >
                 <ListItemButton>
                   <ListItemText primary={item.title} />

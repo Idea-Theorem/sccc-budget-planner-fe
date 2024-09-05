@@ -24,7 +24,7 @@ const DepartmentInfoArea = styled(Box)(({ theme }) => ({
   width: "100%",
   padding: "27px 40px",
   boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-  maxWidth: "502px",
+  maxWidth: "948px",
   margin: "0 auto",
   maxHeight: "655px",
   overflow: "auto",
@@ -98,7 +98,7 @@ const DepartmentInfoArea = styled(Box)(({ theme }) => ({
     display: "inline-block",
     fontSize: "16px",
     lineHeight: "1.2",
-    fontFamily: "Roboto",
+    fontFamily: "Work Sans",
 
     "& + .MuiInputBase-root": {
       marginTop: "15px",
@@ -130,6 +130,34 @@ const DepartmentInfoArea = styled(Box)(({ theme }) => ({
       "& + .MuiInputBase-root": {
         marginTop: "0",
       },
+    },
+
+    ".MuiFormControl-root": {
+      padding: "0",
+
+      ".MuiFormLabel-root": {
+        fontSize: "12px",
+        color: "rgba(0, 0, 0, 0.7)",
+        margin: "0",
+      },
+    },
+  },
+  
+  ".actions-btn-holder": {
+    ".MuiButton-textPrimary:not(:hover)": {
+      color: "rgba(48, 48, 48, 1)",
+    },
+    ".MuiButton-outlinedPrimary": {
+      color: "#048071",
+
+      "&:hover": {
+        background: "#048071",
+        color: "#fff",
+      },
+    },
+
+    ".MuiButtonBase-root": {
+      textTransform: "capitalize",
     },
   },
 }));
@@ -172,13 +200,13 @@ const DepartmentInfo: React.FC<IDepartmentInfo> = ({
           await updateDepartment(values, singleDepartments?.id);
           setStatusData({
             type: "success",
-            message: "Department Update Successfully",
+            message: "Department Updated Successfully",
           });
         } else {
           await createDepartment(values);
           setStatusData({
             type: "success",
-            message: "Department Create Successfully",
+            message: "Department Created Successfully",
           });
         }
         formik.resetForm();
@@ -248,7 +276,7 @@ const DepartmentInfo: React.FC<IDepartmentInfo> = ({
           <Box>
             <Typography className="subtitle">{subheading}</Typography>
             <Grid container spacing={4}>
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   variant="standard"
                   label="Department Name"
@@ -259,7 +287,7 @@ const DepartmentInfo: React.FC<IDepartmentInfo> = ({
                   error={errors.name ? true : false}
                 />
               </Grid>
-              <Grid item xs={12} className="community-area">
+              <Grid item xs={12} sm={6} className="community-area">
                 <SelectDemo
                   title="Community Center"
                   value={activecenter}
@@ -278,7 +306,7 @@ const DepartmentInfo: React.FC<IDepartmentInfo> = ({
             gap="10px"
           >
             <Stack
-              className="formButtons"
+              className="actions-btn-holder"
               direction="row"
               justifyContent="flex-end"
               alignItems="center"
@@ -286,7 +314,7 @@ const DepartmentInfo: React.FC<IDepartmentInfo> = ({
             >
               <Button
                 variant="text"
-                color="error"
+                color="inherit"
                 size="medium"
                 startIcon={<Clear />}
                 onClick={handleClose}
@@ -296,7 +324,7 @@ const DepartmentInfo: React.FC<IDepartmentInfo> = ({
               <Button
                 disabled={isSubmitting}
                 onClick={() => handleSubmit()}
-                variant="outlined"
+                variant="contained"
                 color="primary"
                 size="medium"
                 startIcon={<SaveOutlinedIcon />}

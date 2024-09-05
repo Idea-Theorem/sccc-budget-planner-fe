@@ -2,7 +2,7 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MainHeaderComponent from "../../../components/MainHeader";
 import TabsArea from "../../../components/Tabs";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   storeProgramFromStatus,
   storeSingleProgram,
@@ -26,11 +26,39 @@ import {
   transformString,
 } from "../../../utils";
 import moment from "moment";
+import StatusModal from "../../../components/StatusModal";
 
 const StyledBox = styled(Box)(() => ({
   "&.appContainer": {
     ".appHeader": {
       paddingBottom: "9px",
+    },
+
+    ".actions-btn-holder": {
+      ".MuiButton-textPrimary:not(:hover)": {
+        color: "rgba(48, 48, 48, 1)",
+      },
+      ".MuiButton-outlinedPrimary": {
+        color: "#048071",
+
+        "&:hover": {
+          background: "#048071",
+          color: "#fff",
+        },
+      },
+
+      ".MuiButtonBase-root": {
+        textTransform: "capitalize",
+      },
+    },
+
+    ".mainTableBlock": {
+      paddingTop: "10px",
+      marginTop: "-10px",
+
+      ".MuiDataGrid-main": {
+        paddingTop: "2px",
+      },
     },
   },
 }));
@@ -41,6 +69,8 @@ const PHProgramsScreen = () => {
   const [programListing, setprogramListing] = useState<any>([]);
   const [selectedRowdelete, setSelectedDelete] = useState<any>(null);
   const [deleteModalOpen, setDeleteModal] = useState<any>(false);
+  const [statusData, setStatusData] = useState<any>(null);
+
   const [tabsTitleArray, setTabsTitleArray] = React.useState([
     { title: "Pending" },
     { title: "Approved" },
@@ -48,6 +78,21 @@ const PHProgramsScreen = () => {
     { title: "Drafts" },
     { title: "History" },
   ]);
+
+  useEffect(() => {
+    removeDot(tabstatus);
+  }, [tabsTitleArray]);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state) {
+      const { message, type } = location.state;
+      setStatusData({
+        type: type,
+        message: message,
+      });
+    }
+  }, [location.state]);
   useEffect(() => {
     removeDot(tabstatus);
     fetchProgramList(tabstatus, "");
@@ -107,15 +152,9 @@ const PHProgramsScreen = () => {
 
   const fetchProgramList = async (status: string, Searchvalue: string) => {
     try {
-      // setLoading(true);
-
       const response = await getAllProgramsByUsers(status, Searchvalue);
       setprogramListing(response?.data?.programs);
-      // dispatch(storeProgramList(response?.data?.programs));
-      // setLoading(false);
-    } catch (error) {
-      // setLoading(false);
-    }
+    } catch (error) {}
   };
 
   const handleDelete = (rowData: any) => {
@@ -150,6 +189,8 @@ const PHProgramsScreen = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          params?.row?.code + "-" + params?.row?.name,
       },
       {
         field: "status",
@@ -164,6 +205,8 @@ const PHProgramsScreen = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          capitalizeFirstLetter(params?.row?.status),
       },
       {
         field: "programBudget",
@@ -174,18 +217,13 @@ const PHProgramsScreen = () => {
         renderCell: (params: any) => {
           return (
             <Stack>
-              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+              <Box>${formatNumber(params?.row?.programBudget)}</Box>
             </Stack>
           );
         },
+        valueGetter: (params: any) => formatNumber(params?.row?.programBudget),
       },
-      {
-        field: "lYearBudget",
-        headerName: "Previous Year Budget",
-        sortable: false,
-        editable: false,
-        flex: 1,
-      },
+
       {
         field: "created_at",
         headerName: "Submission Date",
@@ -199,6 +237,8 @@ const PHProgramsScreen = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          moment(params.row?.created_at).format("D-MMM YYYY"),
       },
 
       {
@@ -214,6 +254,7 @@ const PHProgramsScreen = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) => params?.row?._count?.Comment,
       },
     ],
     [
@@ -230,6 +271,8 @@ const PHProgramsScreen = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          params?.row?.code + "-" + params?.row?.name,
       },
       {
         field: "status",
@@ -244,6 +287,8 @@ const PHProgramsScreen = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          capitalizeFirstLetter(params?.row?.status),
       },
       {
         field: "programBudget",
@@ -254,18 +299,13 @@ const PHProgramsScreen = () => {
         renderCell: (params: any) => {
           return (
             <Stack>
-              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+              <Box>${formatNumber(params?.row?.programBudget)}</Box>
             </Stack>
           );
         },
+        valueGetter: (params: any) => formatNumber(params?.row?.programBudget),
       },
-      {
-        field: "lYearBudget",
-        headerName: "Previous Year Budget",
-        sortable: false,
-        editable: false,
-        flex: 1,
-      },
+
       {
         field: "created_at",
         headerName: "Submission Date",
@@ -279,6 +319,8 @@ const PHProgramsScreen = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          moment(params.row?.created_at).format("D-MMM YYYY"),
       },
       {
         field: "comments",
@@ -293,6 +335,7 @@ const PHProgramsScreen = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) => params?.row?._count?.Comment,
       },
     ],
     [
@@ -309,6 +352,8 @@ const PHProgramsScreen = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          params?.row?.code + "-" + params?.row?.name,
       },
       {
         field: "status",
@@ -323,6 +368,8 @@ const PHProgramsScreen = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          capitalizeFirstLetter(params?.row?.status),
       },
       {
         field: "programBudget",
@@ -333,18 +380,13 @@ const PHProgramsScreen = () => {
         renderCell: (params: any) => {
           return (
             <Stack>
-              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+              <Box>${formatNumber(params?.row?.programBudget)}</Box>
             </Stack>
           );
         },
+        valueGetter: (params: any) => formatNumber(params?.row?.programBudget),
       },
-      {
-        field: "lYearBudget",
-        headerName: "Previous Year Budget",
-        sortable: false,
-        editable: false,
-        flex: 1,
-      },
+
       {
         field: "created_at",
         headerName: "Submission Date",
@@ -358,6 +400,8 @@ const PHProgramsScreen = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          moment(params.row?.created_at).format("D-MMM YYYY"),
       },
       {
         field: "comments",
@@ -372,6 +416,7 @@ const PHProgramsScreen = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) => params?.row?._count?.Comment,
       },
     ],
     [
@@ -388,6 +433,8 @@ const PHProgramsScreen = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          params?.row?.code + "-" + params?.row?.name,
       },
       {
         field: "status",
@@ -402,6 +449,8 @@ const PHProgramsScreen = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          capitalizeFirstLetter(params?.row?.status),
       },
       {
         field: "programBudget",
@@ -412,17 +461,11 @@ const PHProgramsScreen = () => {
         renderCell: (params: any) => {
           return (
             <Stack>
-              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+              <Box>${formatNumber(params?.row?.programBudget)}</Box>
             </Stack>
           );
         },
-      },
-      {
-        field: "lYearBudget",
-        headerName: "Previous Year Budget",
-        sortable: false,
-        editable: false,
-        flex: 1,
+        valueGetter: (params: any) => formatNumber(params?.row?.programBudget),
       },
       {
         field: "created_at",
@@ -437,6 +480,8 @@ const PHProgramsScreen = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          moment(params?.row?.created_at).format("D-MMM YYYY"),
       },
       {
         field: "comments",
@@ -451,6 +496,7 @@ const PHProgramsScreen = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) => params?.row?._count?.Comment,
       },
     ],
     [
@@ -467,6 +513,8 @@ const PHProgramsScreen = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          params?.row?.code + "-" + params?.row?.name,
       },
       {
         field: "status",
@@ -481,6 +529,8 @@ const PHProgramsScreen = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          capitalizeFirstLetter(params?.row?.status),
       },
       {
         field: "programBudget",
@@ -491,18 +541,13 @@ const PHProgramsScreen = () => {
         renderCell: (params: any) => {
           return (
             <Stack>
-              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+              <Box>${formatNumber(params?.row?.programBudget)}</Box>
             </Stack>
           );
         },
+        valueGetter: (params: any) => formatNumber(params?.row?.programBudget),
       },
-      {
-        field: "lYearBudget",
-        headerName: "Previous Year Budget",
-        sortable: false,
-        editable: false,
-        flex: 1,
-      },
+
       {
         field: "created_at",
         headerName: "Submission Date",
@@ -516,9 +561,11 @@ const PHProgramsScreen = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          moment(params?.row?.created_at).format("D-MMM YYYY"),
       },
       {
-        field: "buttonsColumn",
+        field: "",
         headerName: "",
         flex: 1,
         renderCell: (params: any) => (
@@ -540,6 +587,7 @@ const PHProgramsScreen = () => {
             <Button
               variant="outlined"
               size="small"
+              color="primary"
               startIcon={<EditNoteIcon />}
               onClick={() => handleEdithistoryRecord(params.row)}
             >
@@ -587,13 +635,16 @@ const PHProgramsScreen = () => {
         row={programListing}
         checkout={false}
         fetchProgramList={fetchProgramList}
-        // onRowClick={onRowClick}
       />
       <DeleteModal
         heading="Are you sure you want to delete?"
         open={deleteModalOpen}
         handleClose={() => setDeleteModal(false)}
         handleOK={() => handleDeleteConfirmation()}
+      />
+      <StatusModal
+        statusData={statusData}
+        onClose={() => setStatusData(null)}
       />
     </StyledBox>
   );

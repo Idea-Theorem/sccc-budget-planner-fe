@@ -6,7 +6,11 @@ import ProgramProgress from "./programProgress";
 import DepartmentButton from "./departmentButton";
 import React, { useEffect } from "react";
 import { getDepartmentInCenters } from "../../services/centersServices";
-import { calculatePercentage, calculateTotalAmountForAdmin } from "../../utils";
+import {
+  calculatePercentage,
+  calculateTotalAmountForAdmin,
+  formatNumber,
+} from "../../utils";
 import { getProgramInDepartments } from "../../services/departmentServices";
 import { CircularProgress, LinearProgress, Stack } from "@mui/material";
 
@@ -66,6 +70,15 @@ const StyledBox = styled(Box)(() => ({
       overflowY: "auto",
       minWidth: "0",
       paddingRight: "10px",
+    },
+
+    ".dashboardGraphsList-title": {
+      fontSize: "14px",
+      lineHeight: "20px",
+      fontWeight: "600",
+      color: "#303030",
+      padding: "0 0 5px",
+      borderBottom: "1px solid #BFBFBF",
     },
 
     "& .MuiLinearProgress-root ": {
@@ -207,11 +220,14 @@ const AdminDepartmentProgress = ({
         {from == "super-admin" ? (
           <>
             <Box className="dashboardGraphsList">
-              <Stack direction={"row"} justifyContent="space-between" mb={2}>
-                <Box>
-                  <strong>Departments</strong>
-                </Box>
-                <strong>{totalDepartment}</strong>
+              <Stack
+                direction={"row"}
+                justifyContent="space-between"
+                mb={2}
+                className="dashboardGraphsList-title"
+              >
+                <Box>{departmentInCenter?.length} Departments</Box>
+                <strong> ${formatNumber(totalDepartment)} </strong>
               </Stack>
 
               {departmentInCenterLoading && departmentInCenter?.length == 0 ? (
@@ -226,7 +242,7 @@ const AdminDepartmentProgress = ({
                   >
                     <ProgramProgress
                       title={e?.name}
-                      amount={e?.totalAmount}
+                      amount={formatNumber(e?.totalAmount)}
                       value={calculatePercentage(
                         e?.totalAmount,
                         totalDepartment
@@ -243,9 +259,9 @@ const AdminDepartmentProgress = ({
             <Box className="dashboardGraphsList">
               <Stack direction={"row"} justifyContent="space-between" mb={2}>
                 <Box>
-                  <strong>Programs</strong>
+                  <strong>{rowData?.length} Programs</strong>
                 </Box>
-                <strong>{totalPrograms}</strong>
+                <strong>$ {formatNumber(totalPrograms)}</strong>
               </Stack>
               {rowDataLoading && rowData?.length == 0 ? (
                 <Box className="loaderContainer">
@@ -256,7 +272,7 @@ const AdminDepartmentProgress = ({
                   <Box color={currentProgram?.color} className="progress-wrap">
                     <ProgramProgress
                       title={e?.name}
-                      amount={e?.programBudget}
+                      amount={formatNumber(e?.programBudget)}
                       value={calculatePercentage(
                         e?.programBudget,
                         totalPrograms

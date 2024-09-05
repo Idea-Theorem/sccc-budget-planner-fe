@@ -22,6 +22,7 @@ export const EmployeeInfoArea = styled(Box)(() => ({
 
     tbody: {
       tr: {
+        verticalAlign: "top",
         "&:only-child": {
           td: {
             paddingBottom: "16px",
@@ -76,7 +77,6 @@ export const EmployeeInfoArea = styled(Box)(() => ({
 
     ".MuiFormControl-root ": {
       width: "100%",
-      // maxWidth: "76px",
     },
 
     ".select-holder ": {
@@ -102,6 +102,21 @@ export const EmployeeInfoArea = styled(Box)(() => ({
           display: "flex",
           alignItems: "center",
           textTransform: "capitalize",
+
+          "&.Mui-error": {
+            "&:before": {
+              display: "block",
+            },
+          },
+
+          "&:before": {
+            position: "absolute",
+            inset: "-1px",
+            borderRadius: "4px",
+            content: `""`,
+            border: "1px solid rgba(211, 47, 47, 1)",
+            display: "none",
+          },
         },
       },
 
@@ -124,6 +139,7 @@ export const EmployeeInfoArea = styled(Box)(() => ({
       color: "#048071",
       cursor: "pointer",
       width: "24px",
+      padding: "0",
 
       svg: {
         width: "100%",

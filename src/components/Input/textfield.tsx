@@ -1,3 +1,4 @@
+import { InputAdornment } from "@mui/material";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 
@@ -19,6 +20,7 @@ interface ITextFields {
   onBlur?: any;
   autoFocus?: boolean;
   className?: string;
+  isSignShow?: boolean;
 }
 
 const TextFields: React.FC<ITextFields> = ({
@@ -36,11 +38,13 @@ const TextFields: React.FC<ITextFields> = ({
   error,
   onBlur,
   autoFocus,
-  className="",
+  className = "",
+  isSignShow = false,
 }) => {
   return (
     <Box component="form" noValidate autoComplete="off">
-      <TextField className={className}
+      <TextField
+        className={className}
         type={type}
         id="standard-basic"
         label={label}
@@ -56,6 +60,17 @@ const TextFields: React.FC<ITextFields> = ({
         error={error && error}
         onBlur={onBlur}
         autoFocus={autoFocus}
+        InputProps={
+          isSignShow && value
+            ? {
+                startAdornment: (
+                  <InputAdornment position="start">
+                    {/* <AccountBalanceWalletIcon /> */}$
+                  </InputAdornment>
+                ),
+              }
+            : {}
+        }
       />
     </Box>
   );

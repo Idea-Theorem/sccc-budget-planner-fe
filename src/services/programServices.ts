@@ -14,6 +14,16 @@ const getAllProgramsViaStatus = async (status: any, Searchvalue: string) => {
 const getAllProgramsByUser = async () => {
   return await HTTP_CLIENT.get(`/program/all-programs`);
 };
+
+const fetchEmployeeInfo = async (user_id: string, department_id?: string) => {
+  return await HTTP_CLIENT.get(
+    `/program/employee-info?user_id=${user_id}&department_id=${department_id}`
+  );
+};
+
+const checkUserProgram = async () => {
+  return await HTTP_CLIENT.get(`/program/check-user-program`);
+};
 const getAllProgramsByUsers = async (status: any, Searchvalue: string) => {
   return await HTTP_CLIENT.get(
     `/program/fetchProgramByUser/?status=${status}&name=${
@@ -22,9 +32,10 @@ const getAllProgramsByUsers = async (status: any, Searchvalue: string) => {
   );
 };
 
-// const getEmployee = async () => {
-//     return await HTTP_CLIENT.get("/user");
-//   };
+const resolvedComment = async (id: string) => {
+  return await HTTP_CLIENT.put(`/program/resolve/${id}`);
+};
+
 const getProgram = async (status: any) => {
   return await HTTP_CLIENT.get(`/program/?status=${status}`);
 };
@@ -46,6 +57,7 @@ const deleteProgram = async (id: string) => {
 const deleteComment = async (id: string) => {
   return await HTTP_CLIENT.delete(`/program/comment/${id}`);
 };
+
 const getDepartmentOnRowCLick = async (id: string) => {
   return await HTTP_CLIENT.get(`/department/programs/${id}`);
 };
@@ -75,4 +87,7 @@ export {
   updatecomment,
   getAllProgramsByUsers,
   getAllProgramsByUser,
+  resolvedComment,
+  fetchEmployeeInfo,
+  checkUserProgram,
 };

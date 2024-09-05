@@ -18,11 +18,11 @@ const StyledBox = styled(Box)(() => ({
   "& .dashboardCards": {
     display: "flex",
     justifyContent: "space-between",
-    margin: "0 -6px 0 -12px",
+    margin: "36px -6px 0 -12px",
   },
 }));
 const AdminScreen = () => {
-  const array = [{ text: "Export" }, { text: "Reset" }];
+  const array = [{ text: "Export" }];
   const [programs, setPrograms] = React.useState<any>({});
   const [department, setDepartment] = React.useState<any>([]);
   const [departmentLoading, setDepartmentLoading] = React.useState<any>(false);
@@ -63,7 +63,7 @@ const AdminScreen = () => {
   const handleModalClose = () => {
     setIsOpen(false);
   };
-
+  //
   return (
     <StyledBox className="appContainer">
       <MainHeaderComponent

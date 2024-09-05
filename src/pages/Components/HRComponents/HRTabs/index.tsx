@@ -41,7 +41,7 @@ const AppHuman = styled(Box)(({ theme }) => ({
     textTransform: "capitalize",
   },
   ".MuiTablePagination-actions": {
-    ".MuiButtonBase-root": {
+    ".MuiButtonBase-root:not(:disabled)": {
       color: "rgba(0, 0, 0, 0.56) !important",
     },
   },
@@ -79,7 +79,7 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
 
   const fetchBenefits = async () => {
     try {
-      const response = await getAllBenefit();
+      const response = await getAllBenefit("");
       setBenefit(response?.data?.centers);
     } catch (error) {}
   };

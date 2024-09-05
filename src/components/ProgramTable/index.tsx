@@ -22,9 +22,14 @@ import { RootState } from "../../store";
 import {
   addComments,
   deleteComment,
+  resolvedComment,
   updatecomment,
 } from "../../services/programServices";
-import { attachCommentsToProgram } from "../../utils";
+import {
+  attachCommentsToProgram,
+  checkIfAllResolved,
+  formatNumber,
+} from "../../utils";
 import CommentIcon from "@mui/icons-material/Comment";
 import Status from "../../utils/dumpData";
 
@@ -48,13 +53,9 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
     ".comment-icon": {
       position: "absolute",
       left: "-30px",
-      top: "30px",
+      top: "14px",
       color: "#048071",
       cursor: "pointer",
-
-      svg: {
-        display: "block",
-      },
     },
   },
   ".MuiTabs-flexContainer": {
@@ -80,36 +81,50 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
         paddingBottom: "7px !important",
       },
 
+      ".MuiTableRow-root": {
+        "&:hover": {
+          ".MuiTableCell-body": {
+            background: "#DBF0FF",
+          },
+        },
+      },
+
       "& .MuiTableCell-body": {
         border: "0",
         color: "#303030",
         fontFamily: "Work Sans",
         fontSize: "14px",
         fontWeight: "500",
-        padding: "16px 0 0 15px",
+        padding: "8px 0 8px 15px",
+        cursor: "pointer",
+        borderRadius: "0 4px 4px 0",
+
+        "&:first-child": {
+          borderRadius: "4px 0 0 4px",
+        },
 
         "&.MuiTableCell-alignRight": {
-          fontFamily: "Roboto",
+          fontFamily: "Work Sans",
           fontWeight: "400",
         },
 
         ".MuiInputBase-input ": {
-          fontSize: '14px',
+          fontSize: "14px",
         },
       },
 
       "& .MuiTableRow-root": {
         "&:nth-last-child(2)": {
           "& .MuiTableCell-body": {
-            paddingBottom: "22px",
+            // paddingBottom: "22px",
           },
         },
 
         "&:last-child": {
           "& .MuiTableCell-body": {
             borderTop: "1px solid #494949",
-            color: "#000",
-            // fontWeight: "600",
+            // color: "#000",
+            fontWeight: "600",
             letterSpacing: "0.4px",
           },
 
@@ -118,15 +133,23 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
           },
 
           ".MuiInputBase-input ": {
-            paddingTop: '0',
-            paddingBottom: '0',
-            height: '20px',
-            color: "#000",
-            fontWeight: 700,
+            paddingTop: "0",
+            paddingBottom: "0",
+            height: "20px",
+            // color: "#000",
+            fontWeight: 600,
+
+            "&.Mui-disabled": {
+              color: "#303030",
+              textFillColor: "#303030",
+            },
           },
         },
       },
     },
+  },
+  "& .total_amount": {
+    width: "300px",
   },
 }));
 
@@ -195,6 +218,8 @@ export default function TabsProgramArea({
   const [commenttext, setcommentText] = useState<any>("");
   const [currentExpense, setcurrentExpense] = useState<any>("");
   const [currentComment, setcurrentComment] = useState<any>("");
+  const [input, setInput] = useState(false);
+  const [editingRowIndex, setEditingRowIndex] = useState<number | null>(null); // State to track the editing row
   const dispatch = useAppDispatch();
 
   const {
@@ -206,17 +231,20 @@ export default function TabsProgramArea({
   } = useSelector((state: RootState) => state.program);
 
   const handleInputChange = (key: string, value: number) => {
+    if (isNaN(value)) {
+      return;
+    }
     if (title == "income") {
       const newIncomeArray: any = [...incomeList];
-      newIncomeArray[key] = { ...newIncomeArray[key], amount: Number(value) };
+      newIncomeArray[key] = { ...newIncomeArray[key], amount: String(value) };
       dispatch(storeIncomeList(newIncomeArray));
     } else if (title == "supply-expense") {
       const newSupplyArray: any = [...supplyList];
-      newSupplyArray[key] = { ...newSupplyArray[key], amount: Number(value) };
+      newSupplyArray[key] = { ...newSupplyArray[key], amount: String(value) };
       dispatch(storeSupplyList(newSupplyArray));
     } else if (title == "salary-expense") {
       const newSalaryArray: any = [...salaryList];
-      newSalaryArray[key] = { ...newSalaryArray[key], amount: Number(value) };
+      newSalaryArray[key] = { ...newSalaryArray[key], amount: String(value) };
       dispatch(storeSalaryList(newSalaryArray));
     }
   };
@@ -229,6 +257,7 @@ export default function TabsProgramArea({
       dispatch(storeSalaryList(res?.salary_expense));
     }
   }, [allComments]);
+
   useEffect(() => {
     if (title == "income") {
       handleReceived(incomeList);
@@ -265,11 +294,13 @@ export default function TabsProgramArea({
   };
 
   function getTotalAmount() {
-    let total = 0;
-    for (let i = 0; i < entities?.length; i++) {
-      total += entities[i].amount;
-    }
-    return String(total);
+    const total = entities?.reduce((accumulator: any, entity: any) => {
+      // Convert the amount to a number, treating empty strings as 0
+      const amount = parseFloat(entity.amount) || 0;
+      return accumulator + amount;
+    }, 0);
+
+    return formatNumber(total);
   }
 
   function capitalizeFirstLetter(str: string | any) {
@@ -314,6 +345,19 @@ export default function TabsProgramArea({
     }
   };
 
+  const handleResolved = async (data: any) => {
+    try {
+      setdeleteLoading(true);
+      await resolvedComment(data?.id);
+      await fetchComments();
+      setcurrentComment("");
+      setdeleteLoading(false);
+      setIsOpen(false);
+    } catch (error) {
+      setdeleteLoading(false);
+    }
+  };
+
   function removeCommentById(commentId: any) {
     setcurrentExpense((prevArray: any) => {
       const updatedComments = prevArray.comments.filter(
@@ -326,14 +370,23 @@ export default function TabsProgramArea({
     if (
       programFromStatus == Status.CREATED ||
       programFromStatus == Status.DRAFTED ||
-      programFromStatus == Status.REJECTED ||
-      programFromStatus == Status.REVISED
+      programFromStatus == Status.REJECTED
+      // programFromStatus == Status.REVISED
     ) {
       return;
     }
     setIsOpen(true);
     setcurrentExpense(data);
   };
+
+  useEffect(() => {
+    const res = checkIfAllResolved(currentExpense?.comments);
+    if (res) {
+      setInput(true);
+    } else {
+      setInput(false);
+    }
+  }, [currentExpense, isOpen]);
 
   return (
     <>
@@ -358,6 +411,7 @@ export default function TabsProgramArea({
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell
+                    className="icon-name"
                     component="th"
                     scope="row"
                     onClick={() => handleCommentclick(row)}
@@ -372,19 +426,26 @@ export default function TabsProgramArea({
                     {row.name}
                   </TableCell>
                   <TableCell align="right" className="input-border">
-                    <TextFields
-                      className="amount_field"
-                      autoFocus={false}
-                      disabled={disabled}
-                      variant="standard"
-                      type="text"
-                      placeholder="$00,000.00"
-                      value={row.amount || ""} // Set value from state
-                      onChange={(e: any) =>
-                        handleInputChange(index, e.target.value)
-                      } // Update state on change
-                    />
-                    {/* {row.amount} */}
+                    {editingRowIndex === index ? (
+                      <TextFields
+                        isSignShow={true}
+                        className="amount_field"
+                        autoFocus={true}
+                        disabled={disabled}
+                        variant="standard"
+                        type="text"
+                        placeholder="$00,000.00"
+                        value={row.amount || ""}
+                        onChange={(e: any) =>
+                          handleInputChange(index, e.target.value)
+                        }
+                        onBlur={() => setEditingRowIndex(null)} // Reset editing state on blur
+                      />
+                    ) : (
+                      <div onClick={() => setEditingRowIndex(index)}>
+                        ${formatNumber(row.amount) || "$00,000.00"}
+                      </div>
+                    )}
                   </TableCell>
                 </TableRow>
               ))}
@@ -397,7 +458,7 @@ export default function TabsProgramArea({
                 </TableCell>
                 <TableCell align="right">
                   <TextFields
-                    className="amount_field"
+                    className="amount_field total_amount"
                     disabled={true}
                     type="text"
                     placeholder="$00,000.00"
@@ -421,6 +482,8 @@ export default function TabsProgramArea({
         setcommentText={setcommentText}
         open={isOpen}
         handleClose={closeModal}
+        handleResolved={handleResolved}
+        input={input}
       />
     </>
   );

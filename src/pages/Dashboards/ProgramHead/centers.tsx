@@ -1,19 +1,41 @@
 import { styled } from "@mui/material/styles";
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
-import InputSearch from "../../../../components/Input";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteIcon from "@mui/icons-material/EditNote";
-import { Button, Stack } from "@mui/material";
-import { deleteCenter } from "../../../../services/centersServices";
-import React, { useState } from "react";
-import DeleteModal from "../../../../models/DeleteModal";
+import { Button, Stack, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import AddIcon from "@mui/icons-material/Add";
+import Buttons from "../../../components/Button";
+
+import DeleteModal from "../../../models/DeleteModal";
+import InputSearch from "../../../components/Input";
+import { deleteCenter, getAllCenters } from "../../../services/centersServices";
+import CommunityModal from "../../../models/CommunityModal";
+import moment from "moment";
+import StatusModal from "../../../components/StatusModal";
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
     position: "relative",
-    borderTop: "1px solid rgba(224, 224, 224, 1)",
     paddingTop: "10px",
+  },
+
+  ".inner-table-holder": {
+    position: "relative",
+    minHeight: "80px",
+  },
+
+  ".page-subheader": {
+    display: "flex",
+    alignItems: "flex-start",
+    justifyContent: "space-between",
+
+    h4: {
+      fontSize: "20px",
+      lineHeight: "1.2",
+      marginBottom: "16px",
+    },
   },
 
   "& .MuiDataGrid-toolbarContainer": {
@@ -35,8 +57,10 @@ const StyledBox = styled(Box)(({ theme }) => ({
 const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
   width: "100%",
   "&.MuiDataGrid-root": {
-    borderWidth: "0 !important",
-    borderStyle: "none",
+    borderWidth: "1px 0 0 0 !important",
+    borderRadius: "0",
+    marginTop: "15px",
+    paddingTop: "10px",
     "&.MuiDataGrid-footerContainer": {
       border: "none",
     },
@@ -137,37 +161,60 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
   },
 }));
 
-interface HRTableProps {
-  onCommunityEdit?: any;
-  row?: any;
-  refresh?: any;
-  onChange?: any;
-}
-const CommunityTableComponent: React.FC<HRTableProps> = ({
-  onCommunityEdit,
-  row,
-  refresh,
-  onChange,
-}) => {
+const Center = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [isOpen, setIsOpen] = React.useState<any>(false);
   const [rowData, setRowData] = React.useState<any>(false);
+  const [centerHeading, setCenterHeading] = useState<string>("");
+  const [isCommunityOpen, setCommunityModal] = useState(false);
+  const [singleCenter, setSingleCenter] = useState<any>(null);
+  const [statusData, setStatusData] = useState<any>(null);
 
+  const [center, setCenter] = useState<any>(null);
+
+  const fetchCenters = async (value: string) => {
+    try {
+      const response = await getAllCenters(value);
+      setCenter(response?.data?.centers);
+    } catch (error) {}
+  };
+  const handleCloseCommunityModal = () => {
+    fetchCenters("");
+    setCommunityModal(false);
+  };
   const closeModel = () => {
     setIsOpen(false);
   };
-  console.log(loading);
 
+  console.log(loading);
+  const onCommunityEdit = (data: any) => {
+    setSingleCenter(data.row);
+    setCommunityModal(true);
+    setCenterHeading("Edit center");
+  };
+
+  useEffect(() => {
+    fetchCenters("");
+  }, []);
   const handleDelete = async () => {
     try {
       setLoading(true);
       await deleteCenter(rowData?.id);
       closeModel();
+      setStatusData({
+        type: "success",
+        message: "Center deleted Successfully",
+      });
       setLoading(false);
-      refresh();
+      handleCloseCommunityModal();
     } catch (error) {
       setLoading(false);
     }
+  };
+
+  const handleClick = () => {
+    setCommunityModal(true);
+    setCenterHeading("Add New Center");
   };
 
   const columns: GridColDef[] = [
@@ -179,15 +226,26 @@ const CommunityTableComponent: React.FC<HRTableProps> = ({
       flex: 1,
     },
 
+    //   flex: 1,
+    // },
     {
       field: "created_at",
       headerName: "Date Created",
       sortable: false,
       editable: false,
       flex: 1,
+      renderCell: (params: any) => {
+        return (
+          <Stack>
+            <Box>{moment(params?.row?.created_at).format("D-MMM YYYY")}</Box>
+          </Stack>
+        );
+      },
+      valueGetter: (params: any) =>
+        moment(params.row?.created_at).format("D-MMM YYYY"),
     },
     {
-      field: "buttonsColumn",
+      field: "",
       headerName: "",
       sortable: false,
       flex: 0.5,
@@ -227,18 +285,49 @@ const CommunityTableComponent: React.FC<HRTableProps> = ({
   return (
     <>
       <StyledBox className="mainTableBlock">
-        <InputSearch placeholder="Search..." onChange={onChange} />
-        <StyleDataGrid
-          rows={row}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 5 },
-            },
-          }}
-          pageSizeOptions={[5, 10, 15]}
-          disableRowSelectionOnClick
-          slots={{ toolbar: GridToolbar }}
+        <Typography className="page-title" variant="h3">
+          HR (Human Resources)
+        </Typography>
+        <Box className="page-subheader">
+          <Typography className="page-title" variant="h4">
+            Community Centers
+          </Typography>
+
+          <Buttons
+            variant="contained"
+            color="primary"
+            size="medium"
+            btntext="Add New Center"
+            startIcon={<AddIcon />}
+            onClick={handleClick}
+            className="btn-add-title"
+          />
+        </Box>
+        <div className="inner-table-holder">
+          <InputSearch
+            onChange={(e: any) => fetchCenters(e.target.value)}
+            placeholder="Search..."
+          />
+          {center?.length == 0 ? (
+            ""
+          ) : (
+            <StyleDataGrid
+              rows={typeof center == "undefined" || !center ? [] : center}
+              columns={columns}
+              initialState={{
+                pagination: {
+                  paginationModel: { page: 0, pageSize: 5 },
+                },
+              }}
+              pageSizeOptions={[5, 10, 15]}
+              disableRowSelectionOnClick
+              slots={{ toolbar: GridToolbar }}
+            />
+          )}
+        </div>
+        <StatusModal
+          statusData={statusData}
+          onClose={() => setStatusData(null)}
         />
         <DeleteModal
           open={isOpen}
@@ -247,8 +336,16 @@ const CommunityTableComponent: React.FC<HRTableProps> = ({
           loading={loading}
           heading="Are you sure you want to delete?"
         />
+        <CommunityModal
+          open={isCommunityOpen}
+          handleClose={handleCloseCommunityModal}
+          heading={centerHeading}
+          subheading="Center Information"
+          singleCenter={singleCenter}
+          setSingleCenter={setSingleCenter}
+        />
       </StyledBox>
     </>
   );
 };
-export default CommunityTableComponent;
+export default Center;

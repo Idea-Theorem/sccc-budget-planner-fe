@@ -5,9 +5,9 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Status from "../../../utils/dumpData";
 import React, { useEffect, useState } from "react";
+import UploadFileIcon from "@mui/icons-material/UploadFile";
 import { getPrograms } from "../../../services/adminServices";
 import { getProgram } from "../../../services/programServices";
-import { AddIcCallOutlined } from "@mui/icons-material";
 import AttentionModal from "../../../models/AttentionModal";
 
 const StyledBox = styled(Box)(({ theme }) => ({
@@ -28,6 +28,7 @@ const ApprovedProgram = ({
   count,
   totalCount,
   handleClick,
+  activeWholeDepartment,
 }: any) => {
   const [programs, setPrograms] = React.useState<any>({});
   const [attentionModal, setAttentionModal] = useState<any>(false);
@@ -70,11 +71,17 @@ const ApprovedProgram = ({
         {tabstatus == Status.APPROVED && (
           <Stack>
             <Button
-              disabled={count !== totalCount ? true : false}
+              disabled={
+                count !== totalCount ||
+                (count == 0 && totalCount == 0) ||
+                activeWholeDepartment?.status == Status.PENDING
+                  ? true
+                  : false
+              }
               variant="contained"
               color="primary"
               size="medium"
-              startIcon={<AddIcCallOutlined />}
+              startIcon={<UploadFileIcon />}
               onClick={() => setAttentionModal(true)}
             >
               Submit

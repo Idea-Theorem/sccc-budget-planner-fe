@@ -5,24 +5,31 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { Button, Stack, Typography } from "@mui/material";
 import InputSearch from "../../../components/Input";
-import { deleteProgram, getAllProgramsViaStatus, programUpdate } from "../../../services/programServices";
+import {
+  deleteProgram,
+  getAllProgramsByUsers,
+  programUpdate,
+} from "../../../services/programServices";
 import React, { useState } from "react";
 import Status from "../../../utils/dumpData";
 import DeleteModal from "../../../models/DeleteModal";
 import EditProgramCodesModal from "../../../models/ProgramSettings/EditProgramCodes";
 import { useFormik } from "formik";
+import StatusModal from "../../../components/StatusModal";
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
     position: "relative",
+    paddingTop: "10px",
+    borderTop: "1px solid rgba(224, 224, 224, 1)",
   },
 
   ".MuiTypography-h3": {
-    margin: " 0 0 33px",
+    margin: " 0 0 20px",
   },
 
   ".MuiTypography-h6": {
-    margin: " 0 0 23px",
+    margin: " 0 0 15px",
   },
 
   "& .MuiDataGrid-toolbarContainer": {
@@ -33,6 +40,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
       fontSize: "13px",
       letterSpacing: "0.8px",
       marginRight: "-1px",
+      fontFamily: "Work Sans",
 
       "&:hover": {
         color: `${theme.palette.primary.main} !important`,
@@ -44,7 +52,6 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
   width: "100%",
   "&.MuiDataGrid-root": {
     borderWidth: "0 !important",
-    borderStyle: "none",
     "&.MuiDataGrid-footerContainer": {
       border: "none",
     },
@@ -71,10 +78,10 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
     letterSpacing: "0.17px",
   },
   "& .MuiButtonBase-root.Mui-checked": {
-    color: "rgba(42, 157, 143, 1) !important",
+    color: "#048071 !important",
   },
   "& .Mui-selected .MuiCheckbox-root": {
-    color: "rgba(42, 157, 143, 1) !important",
+    color: "#048071 !important",
   },
   "& .MuiDataGrid-menuIcon": {
     display: "none",
@@ -92,7 +99,7 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
     fontSize: "12px",
     lineHeight: "20px",
     fontWeight: "400",
-    fontFamily: "Roboto, sans-serif",
+    fontFamily: "Work Sans",
     letterSpacing: "0.4px",
   },
   "& .MuiTablePagination-input": {
@@ -132,10 +139,10 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
       color: "rgba(48, 48, 48, 1)",
     },
     ".MuiButton-outlinedPrimary": {
-      color: "rgba(4, 128, 113, 1)",
+      color: "#048071",
 
       "&:hover": {
-        background: "rgba(4, 128, 113, 1)",
+        background: "#048071",
         color: "#fff",
       },
     },
@@ -149,7 +156,7 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
 interface HRTableProps {
   onEdit?: any;
 }
-const HRTableComponent: React.FC<HRTableProps> = ({  }) => {
+const HRTableComponent: React.FC<HRTableProps> = ({}) => {
   const columns: GridColDef[] = [
     {
       field: "name",
@@ -168,6 +175,7 @@ const HRTableComponent: React.FC<HRTableProps> = ({  }) => {
     {
       field: "buttonsColumn",
       headerName: "",
+      sortable: false,
       flex: 0.4,
       renderCell: (params: any) => (
         <Stack
@@ -188,6 +196,7 @@ const HRTableComponent: React.FC<HRTableProps> = ({  }) => {
           <Button
             variant="outlined"
             size="small"
+            color="primary"
             startIcon={<EditNoteIcon />}
             // onClick={onEdit}
             onClick={() => handleEditClick(params.row)}
@@ -199,14 +208,15 @@ const HRTableComponent: React.FC<HRTableProps> = ({  }) => {
     },
   ];
   const [selectedRow, setSelectedRow] = useState<any>(null);
-  const [codeData, setCodeData] = React.useState([])
+  const [codeData, setCodeData] = React.useState([]);
   const [selectedRowdelete, setSelectedDelete] = useState<any>(null);
   const [deleteModalOpen, setDeleteModal] = useState<any>(false);
-  const [editModalOpen, setEditModal] = useState(false); 
+  const [editModalOpen, setEditModal] = useState(false);
+  const [statusData, setStatusData] = useState<any>(null);
 
   const formik = useFormik<any>({
     validateOnBlur: false,
-    // validationSchema: programSchema, 
+    // validationSchema: programSchema,
     enableReinitialize: true,
     initialValues: {
       name: selectedRow ? selectedRow?.name : "",
@@ -215,40 +225,54 @@ const HRTableComponent: React.FC<HRTableProps> = ({  }) => {
     },
     onSubmit: async (values: any) => {
       try {
-        await programUpdate(values , selectedRow?.id)
-        fetchProgramList(Status.DRAFTED)
-        setEditModal(false)
-      } catch (error) {
+        await programUpdate(values, selectedRow?.id);
+        fetchProgramList(Status.DRAFTED);
+        setEditModal(false);
+        setStatusData({
+          type: "success",
+          message: "Program code deleted successfully!",
+        });
+      } catch (error: any) {
+        setStatusData({
+          type: "error",
+          message: error.response?.data?.message,
+        });
       }
     },
   });
-  React.useEffect(() => { 
+  React.useEffect(() => {
     fetchProgramList(Status.DRAFTED);
   }, []);
   const fetchProgramList = async (status: string) => {
     try {
-      const response = await getAllProgramsViaStatus(status, ""); 
-      setCodeData(response?.data?.programs)
-    } catch (error) {
-    }
+      const response = await getAllProgramsByUsers(status, "");
+      setCodeData(response?.data?.programs);
+    } catch (error) {}
   };
-    const handleEditClick = (rowData: any) => {
-      setSelectedRow(rowData); 
-      setEditModal(true)
-    };
-    
-  const handleDelete = (rowData: any)=>{
+  const handleEditClick = (rowData: any) => {
+    setSelectedRow(rowData);
+    setEditModal(true);
+  };
+
+  const handleDelete = (rowData: any) => {
     setSelectedDelete(rowData?.id);
     setDeleteModal(true);
-  }
+  };
   const handleDeleteConfirmation = async () => {
-    if(selectedRowdelete){
+    if (selectedRowdelete) {
       try {
         await deleteProgram(selectedRowdelete);
-        fetchProgramList(Status.DRAFTED)
-        setDeleteModal(false) 
-      } catch (error) {
-        console.error('Error deleting record:', error);
+        fetchProgramList(Status.DRAFTED);
+        setDeleteModal(false);
+        setStatusData({
+          type: "success",
+          message: "Program deleted successfully!",
+        });
+      } catch (error: any) {
+        setStatusData({
+          type: "error",
+          message: error.response?.data?.message,
+        });
       }
     }
   };
@@ -275,8 +299,21 @@ const HRTableComponent: React.FC<HRTableProps> = ({  }) => {
           slots={{ toolbar: GridToolbar }}
         />
       </StyledBox>
-      <DeleteModal heading="Are you sure you want to delete?" open={deleteModalOpen} handleClose={()=>setDeleteModal(false)} handleOK={()=> handleDeleteConfirmation()}/>
-      <EditProgramCodesModal open={editModalOpen} handleClose={()=> setEditModal(false)} formik={formik}/>
+      <DeleteModal
+        heading="Are you sure you want to delete?"
+        open={deleteModalOpen}
+        handleClose={() => setDeleteModal(false)}
+        handleOK={() => handleDeleteConfirmation()}
+      />
+      <EditProgramCodesModal
+        open={editModalOpen}
+        handleClose={() => setEditModal(false)}
+        formik={formik}
+      />
+      <StatusModal
+        statusData={statusData}
+        onClose={() => setStatusData(null)}
+      />
     </StyledBox>
   );
 };
