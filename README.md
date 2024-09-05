@@ -1,30 +1,41 @@
-# React + TypeScript + Vite
+# Budget Planner
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Installation
+Follow these steps to clone and run the project on your local machine.
 
-Currently, two official plugins are available:
+### Prerequisites
+Make sure you have NodeJS and Yarn installed on your machine.
+- NodeJs: [Download](https://nodejs.org)
+- Yarn: `npm install -g yarn`
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+### Clone the repository
+```bash
+git clone -b dev https://IdeaTheorem-dev@dev.azure.com/IdeaTheorem-dev/budget-planner-fe/_git/budget-planner-fe
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Navigate to project directory
+```bash
+cd budget-planner-fe
+```
+
+### Install dependencies
+```bash
+yarn install
+```
+
+## Usage
+After installing the dependencies, you can start the development server using the following command:
+```bash
+yarn dev
+```
+This will run your project in development mode. Open your browser and visit [http://localhost:5173](http://localhost:5173) to see the application.
+
+## Build
+To build the project for production, run the following command:
+```bash
+yarn build
+```
+This will generate optimized production-ready files in the 'dist' directory.
+
+## Deployment
+Make any changes in required files and push them to dev branch. Pipelines are setup to ship and deploy changes to server.

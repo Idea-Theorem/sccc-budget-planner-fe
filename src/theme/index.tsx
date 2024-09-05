@@ -22,7 +22,6 @@ export default function ThemeProvider({ children }: IThemeProvider) {
     themeDirection: "ltr",
     themeMode: "light",
   });
-  // console.log("theme", theme);
   return (
     <StyledEngineProvider injectFirst>
       <MUIThemeProvider theme={theme}>

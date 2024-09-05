@@ -1,0 +1,13 @@
+.MuiButton-containedPrimary:not(:hover):not(:disabled) {
+    background: #048071;
+}
+
+.MuiButton-outlinedPrimary:not(:hover):not(:disabled) {
+    border-color: #048071;
+}
+
+.MuiButtonBase-root:disabled {
+    color: rgba(0, 0, 0, 0.26) !important;
+    background: rgba(0, 0, 0, 0.12) !important;;
+    box-shadow: none !important;
+}

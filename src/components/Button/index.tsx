@@ -1,80 +1,42 @@
-import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
-import { ReactElement, ReactNode } from "react";
+import { styled } from "@mui/material/styles";
+import { ButtonProps } from "@mui/material/Button";
+import { CircularProgress } from "@mui/material";
 
-interface StyledButtonProps {
-  variant?: "contained" | "outlined";
-  color?: "success" | "error";
-  size?: "small" | "medium" | "large";
-  children?: React.ReactNode;
-  btntext1?: string;
-  btntext2?: string;
-  btntext3?: string;
-  startIcon?: ReactNode | ReactElement;
-  endIcon?: ReactNode | ReactElement;
+interface StyledButtonProps extends ButtonProps {
+  btntext?: string;
+  loading?: any;
+  onClick?: any;
 }
 
 const StyledButton = styled(Button)<StyledButtonProps>(
-  ({ theme, variant, color }) => ({
-    backgroundColor:
-      variant === "outlined" ? "white" : theme.palette.primary.main,
-    color:
-      variant === "outlined"
-        ? theme.palette[color!].light
-        : theme.palette[color!].darker,
-    border:
-      variant === "outlined"
-        ? `1px solid ${theme.palette[color!].light}`
-        : theme.palette[color!].darker,
+  ({ theme, variant }) => ({
+    letterSpacing: "0.46px",
+    textTransform: "none",
     "&:hover": {
       backgroundColor:
-        variant === "outlined"
-          ? theme.palette.action.hover
-          : theme.palette.secondary.light,
+        variant === "outlined" || variant === "text"
+          ? "transparent"
+          : theme.palette.primary.main,
+      boxShadow: `
+            0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+            0px 4px 5px 0px rgba(0, 0, 0, 0.14),
+            0px 1px 10px 0px rgba(0, 0, 0, 0.12)
+          `,
     },
   })
 );
 
-const Buttons = ({
-  btntext1,
-  btntext2,
-  btntext3,
-  startIcon,
-  endIcon,
+const Buttons: React.FC<StyledButtonProps> = ({
+  btntext,
+  loading,
   onClick,
-}: any) => {
+  ...props
+}) => {
   return (
-    <Stack direction="row" spacing={2}>
-      {btntext1 && (
-        <StyledButton size="large" variant="outlined" color="success">
-          {btntext1}
-        </StyledButton>
-      )}
-      {btntext2 && (
-        <StyledButton
-          size="medium"
-          variant="outlined"
-          color="error"
-          startIcon={startIcon}
-          endIcon={endIcon}
-        >
-          {btntext2}
-        </StyledButton>
-      )}
-      {btntext3 && (
-        <StyledButton
-          size="small"
-          variant="contained"
-          color="success"
-          endIcon={endIcon}
-          startIcon={startIcon}
-          onClick={onClick}
-        >
-          {btntext3}
-        </StyledButton>
-      )}
-    </Stack>
+    <StyledButton {...props} onClick={onClick}>
+      {loading ? <CircularProgress size={24} color="inherit" /> : btntext}
+    </StyledButton>
   );
 };
 

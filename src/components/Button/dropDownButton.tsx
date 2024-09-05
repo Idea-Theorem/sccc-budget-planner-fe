@@ -1,14 +1,22 @@
-import React, { useState } from 'react';
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem  from '@mui/material/MenuItem';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import React, { useState } from "react";
+import { styled } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
-const DropdownButton: React.FC = () => {
+const MenuItemList = styled(Box)({});
+interface DropdownButtonProps {
+  title?: string;
+  array?: any;
+  handleUpdate?: any;
+  onSelect?: (selectedOption: string) => void;
+}
+const DropdownButton = (props: DropdownButtonProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [isOpen, setIsOpen] = useState(false);
-
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
     setIsOpen((prev) => !prev);
@@ -18,17 +26,23 @@ const DropdownButton: React.FC = () => {
     setAnchorEl(null);
     setIsOpen(false);
   };
-
+  const handleOptionSelect = (selectedOption: string) => {
+    if (props.onSelect) {
+      props.onSelect(selectedOption);
+    }
+    handleClose();
+    props?.handleUpdate(selectedOption.toUpperCase());
+  };
   return (
-    <>
-      <Button 
-      
+    <MenuItemList>
+      <Button
+        className="headerDropdownButton"
         aria-controls="dropdown-menu"
         aria-haspopup="true"
         onClick={handleClick}
-        startIcon={isOpen ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
+        startIcon={isOpen ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
       >
-        Dropdown
+        {props?.title}
       </Button>
       <Menu
         id="dropdown-menu"
@@ -36,11 +50,16 @@ const DropdownButton: React.FC = () => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>Option 1</MenuItem>
-        <MenuItem onClick={handleClose}>Option 2</MenuItem>
-        <MenuItem onClick={handleClose}>Option 3</MenuItem>
+        {props?.array?.map((item: any) => (
+          <MenuItem
+            onClick={() => handleOptionSelect(item.text)}
+            style={{ width: "109px" }}
+          >
+            {item?.text}
+          </MenuItem>
+        ))}
       </Menu>
-    </>
+    </MenuItemList>
   );
 };
 

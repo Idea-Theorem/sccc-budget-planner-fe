@@ -4,26 +4,32 @@ import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 
 import LinearWithValueLabel from "../ProgressBar";
+import { LinearProgressProps } from "@mui/material";
+import { calculatePercentage } from "../../utils";
 interface AdminDataCardProps {
   title?: string;
   edit?: boolean;
   detail?: string;
-  total?: string;
-  done?: string;
+  total?: string | number;
+  done?: string | number;
   showProgress?: boolean;
+  handleAddclick?: any
+  showDollarSign?: boolean
+  color?: LinearProgressProps["color"]; // Ensure the color prop matches the type defined in LinearProgressProps
 }
 const StyledBox = styled(Box)(({ theme }) => ({
-  "&.dashboardStatsCard":{
+  "&.dashboardStatsCard": {
     width: "calc(41.841% - 24px)",
-    padding: "25px 30px",
+    padding: "21px 24px",
     marginLeft: "12px",
     marginRight: "12px",
     marginBottom: "24px",
-    boxShadow: "0 1.85px 6.25px 0 rgba(0, 0, 0, 0.19), 0 0.5px 1.75px 0 rgba(0, 0, 0, 0.04)",
+    boxShadow:
+      "0 1.85px 6.25px 0 rgba(0, 0, 0, 0.19), 0 0.5px 1.75px 0 rgba(0, 0, 0, 0.04)",
 
     "&:first-child": {
       "& .textRange": {
-        margin: "0 0 5px",
+        margin: "0 0 8px",
       },
 
       "& .textFull": {
@@ -33,10 +39,13 @@ const StyledBox = styled(Box)(({ theme }) => ({
 
       "& .textValue": {
         fontSize: "16px",
+        paddingBottom: "2px",
+        letterSpacing: "0",
       },
 
       "& .divider": {
         fontSize: "16px",
+        paddingBottom: "0",
       },
     },
 
@@ -71,10 +80,11 @@ const StyledBox = styled(Box)(({ theme }) => ({
       lineHeight: "1.3",
       letterSpacing: "0.46px",
       cursor: "pointer",
+      margin: "6px 7px 0 0",
 
       "&:hover": {
-        color: theme.palette.secondary.main,
-      }
+        color: theme.palette.primary.main,
+      },
     },
 
     "& .textNote": {
@@ -83,13 +93,14 @@ const StyledBox = styled(Box)(({ theme }) => ({
       fontSize: "14px",
       fontWeight: "400",
       lineHeight: "1.3",
-      marginBottom: "15px",
+      marginBottom: "13px",
+      letterSpacing: "0",
     },
 
     "& .textRange": {
-      margin: "20px 0 0",
+      margin: "12px 0 0",
       display: "flex",
-      alignItems: "center",
+      alignItems: "flex-end",
       flexDirection: "row",
     },
 
@@ -107,46 +118,41 @@ const StyledBox = styled(Box)(({ theme }) => ({
       fontFamily: "Work Sans",
       fontWeight: "400",
       lineHeight: "1.3",
+      paddingBottom: "5px",
     },
 
     "& .divider": {
       margin: "0 5px",
       fontSize: "22px",
+      paddingBottom: "5px",
     },
 
     "& .cardProgressBar": {
-      marginBottom: "-18px",
-    
-      "& .MuiLinearProgress-determinate": {
-        background: theme.palette.secondary.mainLight,
-
-        "& .MuiLinearProgress-bar1Determinate": {
-          background: theme.palette.secondary.main,
-        },
-      },
+      marginBottom: "-14px",
     },
   },
-  // Color: theme.palette.secondary.light,
 }));
 const AdminDataCard = (props: AdminDataCardProps) => {
   return (
     <StyledBox className="dashboardStatsCard">
-      <Box className="dashboardStatsCardHead">
+      <Box className="dashboardStatsCardHead" onClick={() => props?.handleAddclick()}>
         <Typography variant="h3">{props?.title}</Typography>
-        {props?.edit && <Typography className="linkEdit">edit</Typography>}
+        {props?.edit && <Typography className="linkEdit">Edit</Typography>}
       </Box>
-      {props?.detail && <Typography className="textNote">{props?.detail}</Typography>}
+      {props?.detail && (
+        <Typography className="textNote">{props?.detail}</Typography>
+      )}
 
       <Stack className="textRange">
-        <Typography className="textFull">{props?.done}</Typography>
+        <Typography className="textFull">{props?.showDollarSign ? "$" : ""}{props?.done ? props?.done : 0} </Typography>
         <Typography className="divider">/</Typography>
-        <Typography className="textValue">{props?.total}</Typography>
+        <Typography className="textValue">{props?.showDollarSign ? "$" : ""}{props?.total ? props?.total : 0 }</Typography>
       </Stack>
-      {props?.showProgress && 
+      {props?.showProgress && (
         <Box className="cardProgressBar">
-          <LinearWithValueLabel />
+          <LinearWithValueLabel value={calculatePercentage(props?.done ? props?.done : 0, props?.total ? props?.total : 0)} color={props?.color} />
         </Box>
-      }
+      )}
     </StyledBox>
   );
 };

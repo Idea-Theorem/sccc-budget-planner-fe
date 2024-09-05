@@ -1,29 +1,34 @@
-import * as React from 'react';
-import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import LinearProgress, {
+  LinearProgressProps,
+} from "@mui/material/LinearProgress";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
 
-function LinearProgressWithLabel(props: LinearProgressProps & { value: number }) {
+function LinearProgressWithLabel(
+  props: LinearProgressProps & { value: number }
+) {
+  const { value, ...otherProps } = props; // Destructure value from props
+
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <Box sx={{ width: '100%', mr: 1 }}>
-        <LinearProgress variant="determinate" {...props} />
+    <Stack alignItems="center" direction="row" gap="10px">
+      <Box width="100%">
+        <LinearProgress variant="determinate" value={value} {...otherProps} />
       </Box>
-      <Box sx={{ minWidth: 35 }}>
-        <Typography variant="body2" color="text.secondary">{`${Math.round(
-          props.value,
-        )}%`}</Typography>
-      </Box>
-    </Box>
+      <Typography variant="body2" color="text.secondary">{`${Math.round(
+        value
+      )}%`}</Typography>
+    </Stack>
   );
 }
 
-export default function LinearWithValueLabel() {
+interface Props {
+  value?: number;
+  color?: LinearProgressProps["color"];
+}
 
-
+export default function LinearWithValueLabel(props: Props) {
   return (
-    <Box sx={{ width: '100%' }}>
-      <LinearProgressWithLabel value={20} />
-    </Box>
+    <LinearProgressWithLabel value={props.value || 0} color={props.color} />
   );
 }

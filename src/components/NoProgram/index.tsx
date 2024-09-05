@@ -1,12 +1,19 @@
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import Status from "../../utils/dumpData";
+import {
+  storeProgramFromStatus,
+  storeSingleProgram,
+} from "../../store/reducers/programSlice";
 
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.programsEmptyBox": {
     minHeight: "281px",
     display: "flex",
+    marginTop: "25px",
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",
@@ -21,7 +28,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
       fontWeight: "500",
       lineHeight: "1.5",
       letterSpacing: "0.15px",
-      marginBottom: "15px"
+      marginBottom: "15px",
     },
 
     "& .linkCreate": {
@@ -31,24 +38,38 @@ const StyledBox = styled(Box)(({ theme }) => ({
       fontWeight: "500",
       lineHeight: "150%",
       letterSpacing: "0.15px",
-      color: theme.palette.secondary.main,
+      color: theme.palette.info.main,
+      textDecorationColor: theme.palette.secondary.shades?.["4p"],
       transition: "250ms cubic-bezier(0.4, 0, 0.2, 1)",
 
       "&:hover": {
-        color: theme.palette.primary.main,
-      }
+        textDecorationColor: theme.palette.info.main,
+      },
     },
   },
-  // Color: theme.palette.secondary.light,
 }));
 
 const NoProgramExistComponent = () => {
+  const navigate: any = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleRedirect = () => {
+    dispatch(storeProgramFromStatus(Status.CREATED));
+    dispatch(storeSingleProgram(null));
+
+    navigate("/program-head/create");
+  };
   return (
     <StyledBox className="programsEmptyBox">
       <Typography variant="h6">No existing programs</Typography>
-      <Box>
-        <Link className="linkCreate" color="primary" href="#" underline="always" variant="subtitle2">
-          Create new program
+      <Box onClick={handleRedirect}>
+        <Link
+          className="linkCreate"
+          to="#"
+          // underline="always"
+          // variant="subtitle2"
+        >
+          Create New Program
         </Link>
       </Box>
     </StyledBox>

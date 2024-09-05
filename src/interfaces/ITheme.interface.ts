@@ -54,22 +54,19 @@ type OtherPaletteProperties = {
 };
 declare module "@mui/material/styles" {
   interface Theme {
-    // status: {
-    //   danger: React.CSSProperties["color"];
-    // };
     customShadows: CustomShadowType;
   }
   interface TypographyVariants {
     muted: React.CSSProperties;
     article: React.CSSProperties;
   }
-  // allow configuration using `createTheme`
   interface TypographyVariantsOptions {
     muted?: React.CSSProperties;
     article?: React.CSSProperties;
   }
   interface TypeBackground {
     DarkGray: TypeBackground["default"];
+    lightGray: TypeBackground["default"];
     neutral: TypeBackground["default"];
     GFBackground: TypeBackground["default"];
     GFForeground: TypeBackground["default"];
@@ -114,11 +111,9 @@ declare module "@mui/material/styles" {
   }
 
   interface Palette {
-    // neutral: Palette["primary"];
-    // darker?: Palette["grey"];
-    // lighter?: Palette["grey"];
     other?: OtherPaletteProperties;
     gfGrey: Partial<Color> & {
+      textGray: string;
       GF50: string;
       GF75: string;
       GF100: string;
@@ -172,18 +167,13 @@ declare module "@mui/material/styles" {
     blueGray: Partial<Color>;
     commonbg: Partial<Color>;
   }
-  interface PaletteOptions {
-    // neutral: PaletteOptions["primary"];
-    // darker?: Palette["grey"];
-    // lighter?: Palette["grey"];
-    // grey: Partial<Color> & { GF50: string };
-  }
+  interface PaletteOptions {}
 
   interface PaletteColor {
-    // remove it after words
     darker?: string;
     lighter?: string;
     shades?: ColorShades;
+    mainLight?: string;
   }
   interface CommonColors {
     blackshades: Pick<CommonColorShades, "4p" | "12p" | "30p" | "100p">;
@@ -200,14 +190,8 @@ declare module "@mui/material/styles" {
   }
   interface TypographyVariants extends ExtraTypography {}
 
-  // allow configuration using `createTheme`
   interface TypographyVariantsOptions extends ExtraTypography {}
-  // interface grey extends Color {
-  //   GF50?: string;
-  //   GF100?: string;
-  // }
 }
-// Update the Typography's variant prop options
 declare module "@mui/material/Typography" {
   interface TypographyPropsVariantOverrides {
     muted: true;
@@ -233,7 +217,6 @@ declare module "@mui/material/Typography" {
     tabSelected: true;
     selectLabel: true;
     selectValue: true;
-    // h3: false;
   }
 }
 
@@ -241,4 +224,13 @@ declare module "@mui/material/AvatarGroup" {
   interface ButtonPropsVariantOverrides {
     dashed: true;
   }
+}
+
+export default interface LoginState {
+  email: string;
+  password: string;
+}
+
+export default interface Resetstate {
+  email: string;
 }

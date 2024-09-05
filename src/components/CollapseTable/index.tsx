@@ -12,6 +12,16 @@ import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { styled } from "@mui/system";
+import { fetchAllRecord } from "../../services/adminServices";
+import {
+  calculateBudgetDetailAmount,
+  calculateBudgetDetailAmountMidyear,
+  calculateExpensesSumFirstHalf,
+  calculateExpensesSumSecondHalf,
+  formatNumber,
+  profitFirstHalf,
+  profitSecondHalf,
+} from "../../utils";
 
 // Define StyledInputSearch using styled component
 const CollapseableTable = styled(Box)(({ theme }) => ({
@@ -21,8 +31,9 @@ const CollapseableTable = styled(Box)(({ theme }) => ({
   },
 
   "&.dashboardTable": {
-    padding: "30px",
-    boxShadow: "0 1.85px 6.25px 0 rgba(0, 0, 0, 0.19), 0 0.5px 1.75px 0 rgba(0, 0, 0, 0.04)",
+    padding: "10px 44px 19px 40px",
+    boxShadow:
+      "0 1.85px 6.25px 0 rgba(0, 0, 0, 0.19), 0 0.5px 1.75px 0 rgba(0, 0, 0, 0.04)",
 
     "& .MuiPaper-rounded": {
       borderRadius: "0",
@@ -46,6 +57,7 @@ const CollapseableTable = styled(Box)(({ theme }) => ({
         fontSize: "16px",
         fontWeight: "600",
         lineHeight: "1.3",
+        padding: "15px 0 9px 0",
         borderBottom: "1px solid theme.palette.text.primary",
 
         "& span": {
@@ -54,25 +66,26 @@ const CollapseableTable = styled(Box)(({ theme }) => ({
         },
 
         "&:first-child": {
-          width: "5% !important",
+          width: "1% !important",
+          padding: "0",
         },
 
         "&:nth-child(2)": {
-          width: "50%",
+          width: "44%",
         },
 
         "&:nth-child(3)": {
-          width: "15%",
+          width: "19.333%",
           textAlign: "right",
         },
 
         "&:nth-child(4)": {
-          width: "15%",
+          width: "19.333%",
           textAlign: "right",
         },
 
         "&:nth-child(5)": {
-          width: "15%",
+          width: "15.333%",
           textAlign: "right",
         },
       },
@@ -83,28 +96,39 @@ const CollapseableTable = styled(Box)(({ theme }) => ({
         fontWeight: "600",
         lineHeight: "1.3",
         color: "#303030",
+        padding: "0",
 
         "&:first-child": {
-          width: "5% !important",
+          width: "1% !important",
         },
 
         "&:nth-child(2)": {
-          width: "50%",
+          width: "44%",
+          padding: "18px 6px",
         },
 
         "&:nth-child(3)": {
-          width: "15%",
+          width: "19.333%",
           textAlign: "right",
         },
 
         "&:nth-child(4)": {
-          width: "15%",
+          width: "19.333%",
           textAlign: "right",
         },
 
         "&:nth-child(5)": {
-          width: "15%",
+          width: "15.333%",
           textAlign: "right",
+        },
+
+        "& .MuiIconButton-root": {
+          padding: "0",
+
+          "& svg": {
+            width: "0.8em",
+            height: "0.8em",
+          },
         },
       },
 
@@ -123,20 +147,19 @@ const CollapseableTable = styled(Box)(({ theme }) => ({
           fontWeight: "500",
           lineHeight: "1.3",
           color: "#303030",
+          paddingTop: "8px",
+          paddingBottom: "14px",
         },
       },
     },
   },
+  ".icon": {
+    ".MuiSvgIcon-root": {
+      transfrom: "rotate(180deg) !important",
+    },
+  },
 }));
 
-// Custom styled component for bottom table cells
-const StyledBottomTableCell = styled(TableCell)(({ theme }) => ({
-  background: "none",
-  border: "none",
-  fontWeight: "bold",
-}));
-
-// Rest of your code remains the same
 function createData(
   name?: string,
   calories?: string,
@@ -184,7 +207,6 @@ function createData(
 function Row(props: { row: ReturnType<typeof createData> }) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
-
   return (
     <React.Fragment>
       <TableRow>
@@ -193,6 +215,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
             aria-label="expand row"
             size="small"
             onClick={() => setOpen(!open)}
+            className="icon"
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
@@ -200,9 +223,19 @@ function Row(props: { row: ReturnType<typeof createData> }) {
         <TableCell component="th" scope="row">
           {row.name}
         </TableCell>
-        <TableCell>{row.calories}</TableCell>
-        <TableCell>{row.fat}</TableCell>
-        <TableCell>{row.carbs}</TableCell>
+        <TableCell>
+          ${formatNumber(calculateBudgetDetailAmount(row.history))}
+        </TableCell>
+        <TableCell>
+          ${formatNumber(calculateBudgetDetailAmountMidyear(row.history))}
+        </TableCell>
+        <TableCell>
+          $
+          {formatNumber(
+            Number(calculateBudgetDetailAmount(row.history)) +
+              Number(calculateBudgetDetailAmountMidyear(row.history))
+          )}
+        </TableCell>
         {/* <TableCell>{row.protein}</TableCell> */}
       </TableRow>
       <TableRow>
@@ -211,15 +244,23 @@ function Row(props: { row: ReturnType<typeof createData> }) {
             <Box sx={{ margin: 1 }}>
               <Table size="small" aria-label="purchases">
                 <TableBody>
-                  {row.history.map((historyRow) => (
+                  {row?.history?.map((historyRow: any) => (
                     <TableRow key={historyRow.date}>
                       <TableCell>&nbsp;</TableCell>
                       <TableCell component="th" scope="row">
-                        {historyRow.date}
+                        {historyRow.name || historyRow?.name_second}
                       </TableCell>
-                      <TableCell>{historyRow.customerId}</TableCell>
-                      <TableCell>{historyRow.amount}</TableCell>
-                      <TableCell>{historyRow.yearend}</TableCell>
+                      <TableCell>${formatNumber(historyRow.value)}</TableCell>
+                      <TableCell>
+                        ${formatNumber(historyRow?.value_second)}
+                      </TableCell>
+                      <TableCell>
+                        $
+                        {formatNumber(
+                          Number(historyRow.value ? historyRow.value : 0) +
+                            Number(historyRow?.value_second)
+                        )}
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -232,18 +273,25 @@ function Row(props: { row: ReturnType<typeof createData> }) {
   );
 }
 
-const rows = [
-  createData("Income", "$00,000.00", "$00,000.00", "$00,000.00"),
-  createData(
-    "Expense (Supplies & Services)",
-    "$00,000.00",
-    "$00,000.00",
-    "$00,000.00"
-  ),
-  createData("Expense (Salaries)", "$00,000.00", "$00,000.00", "$00,000.00"),
-];
-
 export default function CollapsibleTable() {
+  const [record, setAllRecord] = React.useState<any>([]);
+  React.useEffect(() => {
+    getAllRecord();
+  }, []);
+
+  const getAllRecord = async () => {
+    try {
+      const response = await fetchAllRecord();
+      setAllRecord(response?.data);
+    } catch (error) {}
+  };
+
+  const sumFinalProfitBudget = (a: number, b: number, c: number, d: number) => {
+    let profit = a + b;
+    let suspense = c + d;
+
+    return profit - suspense;
+  };
   return (
     <CollapseableTable className="dashboardTable">
       <TableContainer component={Paper}>
@@ -252,35 +300,69 @@ export default function CollapsibleTable() {
             <TableRow>
               <TableCell>&nbsp;</TableCell>
               <TableCell>Item</TableCell>
-              <TableCell>Projection <span>(Jan-Jun)</span></TableCell>
-              <TableCell>Mid-year <span>(July-Dec)</span></TableCell>
+              <TableCell>
+                Projection <span>(Jan-Jun)</span>
+              </TableCell>
+              <TableCell>
+                Mid-year <span>(July-Dec)</span>
+              </TableCell>
               <TableCell>Year-end</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {record?.firstHalf?.map((row: any) => (
               <Row key={row.name} row={row} />
             ))}
             <TableRow className="totalRow">
               <TableCell>&nbsp;</TableCell>
               <TableCell>Total Supplies & Services</TableCell>
-              <TableCell>$00,000.00</TableCell>
-              <TableCell>$00,000.00</TableCell>
-              <TableCell>$00,000.00</TableCell>
+              <TableCell>
+                $
+                {formatNumber(calculateExpensesSumFirstHalf(record?.firstHalf))}
+              </TableCell>
+              <TableCell>
+                $
+                {formatNumber(
+                  calculateExpensesSumSecondHalf(record?.firstHalf)
+                )}
+              </TableCell>
+              <TableCell>
+                $
+                {formatNumber(
+                  calculateExpensesSumFirstHalf(record?.firstHalf) +
+                    calculateExpensesSumSecondHalf(record?.firstHalf)
+                )}
+              </TableCell>
             </TableRow>
-            <TableRow className="totalRow">
-              <TableCell>&nbsp;</TableCell>
-              <TableCell>Total Salaries</TableCell>
-              <TableCell>$00,000.00</TableCell>
-              <TableCell>$00,000.00</TableCell>
-              <TableCell>$00,000.00</TableCell>
-            </TableRow>
+            <TableRow className="totalRow"></TableRow>
             <TableRow className="totalRow last">
               <TableCell>&nbsp;</TableCell>
               <TableCell>Profit</TableCell>
-              <TableCell>$00,000.00</TableCell>
-              <TableCell>$00,000.00</TableCell>
-              <TableCell>$00,000.00</TableCell>
+              <TableCell>
+                $
+                {formatNumber(
+                  profitFirstHalf(record?.firstHalf) -
+                    calculateExpensesSumFirstHalf(record?.firstHalf)
+                )}
+              </TableCell>
+              <TableCell>
+                $
+                {formatNumber(
+                  profitSecondHalf(record?.firstHalf) -
+                    calculateExpensesSumSecondHalf(record?.firstHalf)
+                )}
+              </TableCell>
+              <TableCell>
+                $
+                {formatNumber(
+                  sumFinalProfitBudget(
+                    profitFirstHalf(record?.firstHalf),
+                    profitSecondHalf(record?.firstHalf),
+                    calculateExpensesSumFirstHalf(record?.firstHalf),
+                    calculateExpensesSumSecondHalf(record?.firstHalf)
+                  )
+                )}
+              </TableCell>
             </TableRow>
           </TableBody>
         </Table>

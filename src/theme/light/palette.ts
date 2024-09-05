@@ -12,10 +12,10 @@ export const lightPallete: any = {
   mode: "light",
   primary: {
     // ...defaultPalette.primary,
-    main: "rgba(42, 157, 143, 1)",
-    light: "rgba(151, 78, 65, 1)",
+    main: "#048071",
+    light: "#048071",
 
-    contrastText: "rgba(255, 255, 255, 1)",
+    // contrastText: "rgba(0, 0, 0, 0.12)",
     shades: {
       "4p": "rgba(140, 59, 45, 0.04)",
       "8p": "rgba(140, 59, 45, 0.08)",
@@ -26,13 +26,13 @@ export const lightPallete: any = {
   },
   secondary: {
     // ...defaultPalette.secondary,
-    main: "rgba(33, 150, 243, 1)",
-    light: "rgba(64, 135, 222, 1)",
-    mainLight: "rgba(33, 150, 243, 0.4)",
+    main: "rgba(231, 111, 81, 1)",
+    light: "rgba(231, 111, 81, 1)",
+    mainLight: "rgba(231, 111, 81, 1)",
 
-    contrastText: "rgba(66, 66, 66, 1)",
+    // contrastText: "rgba(0, 0, 0, 0.12)",
     shades: {
-      "4p": "rgba(10, 140, 164, 0.04)",
+      "4p": "rgba(33, 150, 243, 0.4)",
       "8p": "rgba(10, 140, 164, 0.08)",
       "12p": "rgba(10, 140, 164, 0.12)",
       "30p": "rgba(10, 140, 164, 0.3)",
@@ -41,9 +41,9 @@ export const lightPallete: any = {
   },
   error: {
     // ...defaultPalette.error,
-    main: "rgba(211, 47, 175, 1)",
-    light: "rgba(218, 94, 192, 1)",
-    contrastText: "rgba(255, 255, 255, 1)",
+    main: "rgba(211, 47, 47, 1)",
+    light: "rgba(198, 40, 40, 1)",
+    // contrastText: "rgba(0, 0, 0, 0.12)",
     shades: {
       "4p": "rgba(211, 47, 175, 0.04)",
       "12p": "rgba(211, 47, 175, 0.12)",
@@ -56,12 +56,12 @@ export const lightPallete: any = {
 
   warning: {
     // ...defaultPalette.warning,
-    main: "rgba(161, 146, 5, 1)",
-    light: "rgba(180, 169, 63, 1)",
+    main: "rgba(239, 108, 0, 1)",
+    light: "rgba(198, 40, 40, 1)",
 
-    contrastText: "rgba(255, 255, 255, 1)",
+    // contrastText: "rgba(0, 0, 0, 0.12)",
     shades: {
-      "4p": "rgba(161, 146, 5, 0.04)",
+      "4p": "rgba(239, 108, 0, 1)",
       "12p": "rgba(161, 146, 5, 0.12)",
       "30p": "rgba(161, 146, 5, 0.3)",
       "50p": "rgba(161, 146, 5, 0.5)",
@@ -71,12 +71,12 @@ export const lightPallete: any = {
   },
   success: {
     // ...defaultPalette.success,
-    main: "rgba(18, 166, 25, 1)",
-    light: "rgba(72, 184, 78, 1)",
+    main: "rgba(46, 125, 50, 1)",
+    light: "rgba(27, 94, 32, 1)",
 
-    contrastText: "rgba(255, 255, 255, 1)",
+    // contrastText: "rgba(0, 0, 0, 0.12)",
     shades: {
-      "4p": "rgba(18, 166, 25, 0.04)",
+      "4p": "rgba(46, 125, 50, 1)",
       "12p": "rgba(18, 166, 25, 0.12)",
       "30p": "rgba(18, 166, 25, 0.3)",
       "50p": "rgba(18, 166, 25, 0.5)",
@@ -87,12 +87,12 @@ export const lightPallete: any = {
 
   info: {
     // ...defaultPalette.info,
-    main: "rgba(59, 0, 237, 1)",
-    light: "rgba(34, 151, 173, 1)",
+    main: "rgba(2, 136, 209, 1)",
+    light: "rgba(1, 87, 155, 1)",
 
-    contrastText: "rgba(255, 255, 255, 1)",
+    // contrastText: "rgba(0, 0, 0, 0.12)",
     shades: {
-      "4p": "rgba(10, 140, 164, 0.04)",
+      "4p": "rgba(2, 136, 209, 1)",
       "12p": "rgba(10, 140, 164, 0.12)",
       "30p": "rgba(10, 140, 164, 0.3)",
       "50p": "rgba(10, 140, 164, 0.5)",
@@ -112,15 +112,15 @@ export const lightPallete: any = {
     // ...defaultPalette.action,
     active: "rgba(0, 0, 0, 0.54)",
     hover: "rgba(255, 255, 255, 0.08)",
-    selected: "rgba(0, 0, 0, 0.08)",
+    selected: "rgba(0, 0, 0, 0.6)",
     disabled: "rgba(0, 0, 0, 0.26)",
-    disabledBackground: "rgba(0, 0, 0, 0.12)",
+    disabledBackground: "rgba(0, 0, 0, 1)",
     focus: "rgba(0, 0, 0, 0.12)",
-    inputPlaceholder: "rgba(0, 0, 0, 0.6)",
   },
   background: {
     // ...defaultPalette.background,
-    DarkGray: "#414158",
+    DarkGray: "rgba(65, 65, 88, 1)",
+    lightGray: "rgba(65, 65, 88, 0.8)",
     default: "rgba(255, 255, 255, 1)",
     paper: "rgba(255, 255, 255, 1)",
     GFBackground: "rgba(29, 26, 38, 1)",
@@ -168,8 +168,8 @@ export const lightPallete: any = {
     // ...defaultPalette.common,
     // Need to confirm shades
     blackshades: {
-      "4p": "rgba(0, 0, 0, 0.04)",
-      "12p": "rgba(0, 0, 0, 0.12)",
+      "4p": "rgba(0, 0, 0, 0.87)",
+      "12p": "rgba(0, 0, 0, 0.6)",
       "30p": "rgba(0, 0, 0, 0.3)",
       "100p": "rgba(0, 0, 0, 1)",
     },

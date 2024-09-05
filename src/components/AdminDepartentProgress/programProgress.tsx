@@ -3,15 +3,23 @@ import Box from "@mui/material/Box";
 import LinearWithValueLabel from "../ProgressBar";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
+import { LinearProgressProps } from "@mui/material";
 
 interface ProgramProgressProps {
   title?: string;
-  amount?: string;
+  amount?: string | any;
+  value?: number;
+  color?: LinearProgressProps["color"];
 }
 
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.progressStatusWidget": {
     width: "100%",
+    marginBottom: "21px",
+
+    "&:last-child": {
+      marginBottom: "8px",
+    },
 
     "& .textInfo": {
       display: "flex",
@@ -22,10 +30,10 @@ const StyledBox = styled(Box)(({ theme }) => ({
       "& .MuiTypography-body1": {
         fontSize: "14px",
         lineHeight: "1.5",
-        fontFamily: "Roboto",
-        color: theme.palette.action.inputPlaceholder,
+        // fontFamily: "Work Sans",
+        color: theme.palette.action.selected,
         fontWeight: "400",
-        letterSpacing: "0.5px",
+        letterSpacing: "1px",
         margin: "0 0 6px",
       },
     },
@@ -50,17 +58,22 @@ const StyledBox = styled(Box)(({ theme }) => ({
       },
     },
   },
-  // Color: theme.palette.secondary.light,
+
+  ".progressStatusBar": {
+    ".MuiTypography-root": {
+      display: "none",
+    },
+  },
 }));
 const ProgramProgress = (props: ProgramProgressProps) => {
   return (
     <StyledBox className="progressStatusWidget">
       <Stack className="textInfo">
         <Typography>{props?.title}</Typography>
-        <Typography>{props?.amount}</Typography>
+        <Typography>${props?.amount}</Typography>
       </Stack>
       <Box className="progressStatusBar">
-        <LinearWithValueLabel />
+        <LinearWithValueLabel value={props?.value} color={props?.color} />
       </Box>
     </StyledBox>
   );
