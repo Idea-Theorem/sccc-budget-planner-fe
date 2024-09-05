@@ -28,21 +28,19 @@ const StyledBox = styled(Box)(({ theme }) => ({
   },
 
   "& .headerDropdownButton": {
-    background: theme.palette.primary.main + " !important",
+    background: "#048071 !important",
     color: theme.palette.background.default,
     minWidth: "113px",
     height: "36px",
     fontSize: "14px",
-    fontWeight: "500",
+    fontWeight: "600",
     textTransform: "capitalize",
     fontFamily: "Work Sans",
     letterSpacing: "0.4px",
     positon: "relative",
     zIndex: 2,
 
-    "&:hover": {
-      // background: theme.palette.secondary.main,
-    },
+    "&:hover": {},
   },
 }));
 

@@ -4,36 +4,30 @@ import TabsArea from "../../../components/Tabs";
 import Typography from "@mui/material/Typography";
 import SubHeader from "../../../components/SubHeader";
 import ApprovedProgram from "../ProgramHead/approvedProgram";
-import {
-  getAllProgramsViaStatus,
-  updateProgram,
-} from "../../../services/programServices";
+import { updateProgram } from "../../../services/programServices";
 import React, { useEffect, useState } from "react";
 import Status from "../../../utils/dumpData";
-import { useDispatch, useSelector } from "react-redux";
-import { storeProgramList } from "../../../store/reducers/programSlice";
-import { RootState } from "../../../store";
 import SelectDemo from "../../../components/Select";
 import {
   departmentCount,
-  getAllDepartments,
+  getAllDepartmentsByUser,
   getSingleDepartments,
 } from "../../../services/departmentServices";
 import StatusModal from "../../../components/StatusModal";
 import AttentionModal from "../../../models/AttentionModal";
-import { getProgramInDepartment } from "../../../services/centersServices";
+import { getProgramInDepartmentBystatus } from "../../../services/centersServices";
 import { capitalizeFirstLetter, formatNumber } from "../../../utils";
 import { CircularProgress, Stack } from "@mui/material";
 import { useLocation } from "react-router-dom";
 import moment from "moment";
 const StyledBox = styled(Box)(() => ({
   "& .reviewBudgetHead": {
-    marginBottom: "0",
+    marginBottom: "15px",
     position: "relative",
   },
 
   "& .totalBudgetText": {
-    fontSize: "20px",
+    fontSize: "16px",
     fontWeight: "400",
     marginTop: "5px",
     marginBottom: "8px",
@@ -87,6 +81,8 @@ const DHReviewBudgets = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          params?.row?.code + "-" + params?.row?.name,
       },
       {
         field: "status",
@@ -101,6 +97,8 @@ const DHReviewBudgets = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          capitalizeFirstLetter(params?.row?.status),
       },
       {
         field: "programBudget",
@@ -111,32 +109,12 @@ const DHReviewBudgets = () => {
         renderCell: (params: any) => {
           return (
             <Stack>
-              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+              <Box>${formatNumber(params?.row?.programBudget)}</Box>
             </Stack>
           );
         },
+        valueGetter: (params: any) => formatNumber(params?.row?.programBudget),
       },
-      // {
-      //   field: "lYearBudget",
-      //   headerName: "Previous Year Budget",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
-      // {
-      //   field: "profit",
-      //   headerName: "Profit",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
-      // {
-      //   field: "nPrograms",
-      //   headerName: "No. Programs",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
       {
         field: "created_at",
         headerName: "Submission Date",
@@ -150,13 +128,30 @@ const DHReviewBudgets = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          moment(params?.row?.created_at).format("D-MMM YYYY"),
       },
       {
-        field: "comments",
+        field: "commentCount",
         headerName: "Comments",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>
+                {params?.row?.commentCount
+                  ? params?.row?.commentCount
+                  : params?.row?._count?.Comment}
+              </Box>
+            </Stack>
+          );
+        },
+        valueGetter: (params: any) =>
+          params?.row?.commentCount
+            ? params?.row?.commentCount
+            : params?.row?._count?.Comment,
       },
     ],
     [
@@ -173,6 +168,8 @@ const DHReviewBudgets = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          params?.row?.code + "-" + params?.row?.name,
       },
       {
         field: "status",
@@ -187,14 +184,10 @@ const DHReviewBudgets = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          capitalizeFirstLetter(params?.row?.status),
       },
-      // {
-      //   field: "lYearBudget",
-      //   headerName: "Last Year Budget",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "programBudget",
         headerName: "Budget",
@@ -204,25 +197,13 @@ const DHReviewBudgets = () => {
         renderCell: (params: any) => {
           return (
             <Stack>
-              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+              <Box>${formatNumber(params?.row?.programBudget)}</Box>
             </Stack>
           );
         },
+        valueGetter: (params: any) => formatNumber(params?.row?.programBudget),
       },
-      // {
-      //   field: "profit",
-      //   headerName: "Profit",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
-      // {
-      //   field: "nPrograms",
-      //   headerName: "No. Programs",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "created_at",
         headerName: "Submission Date",
@@ -236,13 +217,30 @@ const DHReviewBudgets = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          moment(params?.row?.created_at).format("D-MMM YYYY"),
       },
       {
-        field: "comments",
+        field: "commentCount",
         headerName: "Comments",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>
+                {params?.row?.commentCount
+                  ? params?.row?.commentCount
+                  : params?.row?._count?.Comment}
+              </Box>
+            </Stack>
+          );
+        },
+        valueGetter: (params: any) =>
+          params?.row?.commentCount
+            ? params?.row?.commentCount
+            : params?.row?._count?.Comment,
       },
     ],
     [
@@ -259,6 +257,8 @@ const DHReviewBudgets = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          params?.row?.code + "-" + params?.row?.name,
       },
       {
         field: "status",
@@ -273,14 +273,10 @@ const DHReviewBudgets = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          capitalizeFirstLetter(params?.row?.status),
       },
-      // {
-      //   field: "lYearBudget",
-      //   headerName: "Last Year Budget",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "programBudget",
         headerName: "Budget",
@@ -290,25 +286,13 @@ const DHReviewBudgets = () => {
         renderCell: (params: any) => {
           return (
             <Stack>
-              <Box>{formatNumber(params?.row?.programBudget)}</Box>
+              <Box>${formatNumber(params?.row?.programBudget)}</Box>
             </Stack>
           );
         },
+        valueGetter: (params: any) => formatNumber(params?.row?.programBudget),
       },
-      // {
-      //   field: "profit",
-      //   headerName: "Profit",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
-      // {
-      //   field: "nPrograms",
-      //   headerName: "No. Programs",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "created_at",
         headerName: "Submission Date",
@@ -322,32 +306,45 @@ const DHReviewBudgets = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          moment(params?.row?.created_at).format("D-MMM YYYY"),
       },
       {
-        field: "comments",
+        field: "commentCount",
         headerName: "Comments",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>
+                {params?.row?.commentCount
+                  ? params?.row?.commentCount
+                  : params?.row?._count?.Comment}
+              </Box>
+            </Stack>
+          );
+        },
+        valueGetter: (params: any) =>
+          params?.row?.commentCount
+            ? params?.row?.commentCount
+            : params?.row?._count?.Comment,
       },
     ],
   ];
-  const { programList } = useSelector((state: RootState) => state.program);
-  const dispatch = useDispatch();
   const [status, setStatus] = useState<string>("");
-  const [tabstatus, setTabstatus] = React.useState(Status.PENDING);
+  const [tabstatus, setTabstatus] = React.useState<any>(Status.PENDING);
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
   const [updateprogram, setUpdateprogram] = useState<string[]>([]);
+  const [programs, setPrograms] = useState<string[]>([]);
   const [departments, setDepartments] = useState<any>([]);
   const [count, setCount] = useState<any>(null);
   const [departmentId, setDepartmentID] = useState<any>(null);
   const [totalCount, setTotalCount] = useState<any>(null);
-  // const [programListing, setprogramListing] = useState<any>([]);
-  // console.log(programListing);
-  const [filteredProgramListing, setFilteredProgramListing] = useState<any>([]);
   const [attentionModal, setAttentionModal] = useState<any>(false);
-  dispatch(storeProgramList(filteredProgramListing));
   const [activeDepartment, setActiveDepartment] = useState<any>("");
+  const [activeWholeDepartment, setActiveWholeDepartment] = useState<any>("");
   const [statusData, setStatusData] = useState<any>(null);
   const [totalBudget, settotalBudget] = useState("");
   const [loading, setLoading] = useState(false);
@@ -357,38 +354,52 @@ const DHReviewBudgets = () => {
   }, []);
   const fetchDepartments = async () => {
     try {
-      const response = await getAllDepartments("");
-      response?.data?.departments.find(
-        (item: any) => item?.name === activeDepartment
-      );
+      setLoading(true);
+
+      const response = await getAllDepartmentsByUser();
+      await receiveDepartment(response?.data?.departments[0]?.id, true, "");
       setDepartmentID(response?.data?.departments[0]?.id);
       setActiveDepartment(response?.data?.departments[0]?.name);
+      setActiveWholeDepartment(response?.data?.departments[0]);
       settotalBudget(response?.data?.departments[0]?.value);
-
       setDepartments(response?.data?.departments);
-    } catch (error) {}
-  };
-  useEffect(() => {
-    if (departmentId) {
-      getDepartmentCount(departmentId);
-    }
-  }, [tabstatus]);
-
-  const receiveDepartment = async (value: any) => {
-    try {
-      setLoading(true);
-      const filteredID = departments.find((item: any) => item?.name === value);
-      setActiveDepartment(filteredID?.name);
-      setDepartmentID(filteredID?.id);
-      const res = await getProgramInDepartment(filteredID?.id);
-      settotalBudget(res?.data?.totalBudget);
-      dispatch(storeProgramList(res?.data?.programs));
-      getDepartmentCount(filteredID?.id);
       setLoading(false);
     } catch (error) {
       setLoading(false);
     }
   };
+
+  const receiveDepartment = async (value: any, init = false, name: string) => {
+    try {
+      const filteredID = departments?.find((item: any) => item?.name === value);
+
+      let id = init ? value : filteredID?.id;
+      const res = await getProgramInDepartmentBystatus(id, tabstatus, name);
+      setPrograms(res?.data?.programs);
+      settotalBudget(res?.data?.totalBudget);
+      if (init) {
+        setActiveDepartment(activeDepartment);
+        setActiveWholeDepartment(activeWholeDepartment);
+        setDepartmentID(value);
+      } else {
+        setActiveDepartment(filteredID?.name);
+        setActiveWholeDepartment(filteredID);
+
+        setDepartmentID(filteredID?.id);
+      }
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    receiveDepartment(departmentId, true, "");
+  }, [tabstatus, updateprogram]);
+
+  useEffect(() => {
+    if (tabstatus == Status.APPROVED) {
+      getDepartmentCount(departmentId);
+    }
+  }, [tabstatus, departmentId, activeDepartment]);
+
   const getDepartmentCount = async (id: any) => {
     try {
       const response = await departmentCount(id);
@@ -399,20 +410,6 @@ const DHReviewBudgets = () => {
     } catch (error) {}
   };
 
-  useEffect(() => {
-    fetchProgram("");
-  }, [updateprogram, activeDepartment, tabstatus]);
-  const fetchProgram = async (value: string) => {
-    try {
-      const response = await getAllProgramsViaStatus(tabstatus, value);
-      const newArray = response?.data?.programs?.filter(
-        (item: any) => item?.department?.id === departmentId
-      );
-      setFilteredProgramListing(newArray);
-
-      // setprogramListing(response?.data?.programs);
-    } catch (error) {}
-  };
   const handleStatusChange = (selectedStatus: any) => {
     if (selectedStatus === "Approve") {
       setStatus("APPROVED");
@@ -425,12 +422,23 @@ const DHReviewBudgets = () => {
     setSelectedRows(data);
   };
   const handleUpdate = async () => {
-    const data = {
-      progamIds: selectedRows,
-      status: status,
-    };
-    const response = await updateProgram(data);
-    setUpdateprogram(response?.data);
+    try {
+      const data = {
+        progamIds: selectedRows,
+        status: status,
+      };
+      const response = await updateProgram(data);
+      setUpdateprogram(response?.data);
+      setStatusData({
+        type: "success",
+        message: "Program status updated successfully!",
+      });
+    } catch (error: any) {
+      setStatusData({
+        type: "error",
+        message: error.response?.data?.message,
+      });
+    }
   };
 
   const handleSumbit = async () => {
@@ -440,6 +448,8 @@ const DHReviewBudgets = () => {
     };
     try {
       await getSingleDepartments(obj);
+      await fetchDepartments();
+      setTabstatus(Status.PENDING);
       setStatusData({
         type: "success",
         message: "Department Status Updated Successfully",
@@ -453,7 +463,7 @@ const DHReviewBudgets = () => {
   };
 
   const receiveProgramSearch = async (value: string) => {
-    await fetchProgram(value);
+    await receiveDepartment(departmentId, true, value);
   };
   const handleOK = async () => {
     await handleUpdate();
@@ -472,11 +482,7 @@ const DHReviewBudgets = () => {
       <Box className="reviewBudgetHead">
         <Typography variant="h3">Review Budgets</Typography>
       </Box>
-      <SubHeader
-        // handleUpdate={handleUpdate}
-        title=""
-        onStatusChange={handleStatusChange}
-      />
+      <SubHeader title="" onStatusChange={handleStatusChange} />
       <Box className="block-selection">
         <SelectDemo
           parentClass="departmentSelect"
@@ -502,6 +508,7 @@ const DHReviewBudgets = () => {
           {tabstatus == Status.APPROVED && (
             <Box className="approvedProgramBlock">
               <ApprovedProgram
+                activeWholeDepartment={activeWholeDepartment}
                 tabstatus={tabstatus}
                 count={count}
                 totalCount={totalCount}
@@ -510,13 +517,14 @@ const DHReviewBudgets = () => {
             </Box>
           )}
           <TabsArea
+            showCursor={true}
             tabsTitleArray={[
               { title: "Pending" },
               { title: "Approved" },
               { title: "Rejected" },
             ]}
             setTabstatus={setTabstatus}
-            row={programList}
+            row={programs}
             table={tableColumnsTitleArray}
             currentStatus={status}
             handleActionReieve={handleActionReieve}
@@ -535,7 +543,6 @@ const DHReviewBudgets = () => {
         open={attentionModal}
         handleClose={() => setAttentionModal(false)}
         handleOK={handleOK}
-        // loading={isSubmitting}
         heading="Attention"
         text="You are changing the status of the program"
       />

@@ -18,13 +18,15 @@ import EditNoteIcon from "@mui/icons-material/EditNote";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { DeleteNewhire } from "../../../../services/employeeServices";
-import { SaveAlt, Search } from "@mui/icons-material";
-import * as XLSX from "xlsx";
+
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import StatusModal from "../../../../components/StatusModal";
 import DeleteModal from "../../../../models/DeleteModal";
 import { getAllRole } from "../../../../services/roleServices";
+import moment from "moment";
+import NewHireCsv from "../../../../components/NewHireCsv";
+import { Search } from "@mui/icons-material";
 
 const HrCollapseableTable = styled(Box)(({ theme }) => ({
   ".MuiTableCell-root": {
@@ -32,20 +34,31 @@ const HrCollapseableTable = styled(Box)(({ theme }) => ({
     border: "none",
   },
 
+  ".MuiTableBody-root ": {
+    ">.MuiTableRow-root:nth-child(odd)": {
+      ">.MuiTableCell-root": {
+        borderTop: "1px solid rgba(224, 224, 224, 1)",
+      },
+    },
+  },
+
+  ".bg-gray": {
+    background: "#FAFAFA",
+  },
+
   "&.dashboardTable": {
     padding: "30px",
 
     "&.pt-0": {
-      paddingTop: "0",
+      padding: "0 0 30px",
+      margin: "-7px 0 0",
     },
 
     "& .MuiPaper-rounded": {
       borderRadius: "0",
       boxShadow: "none",
 
-      "& .MuiTableHead-root": {
-        borderBottom: "1px solid rgba(191, 191, 191, 1)",
-      },
+      "& .MuiTableHead-root": {},
 
       "& .totalRow": {
         borderTop: "1px solid #d9d9d9",
@@ -95,6 +108,38 @@ const HrCollapseableTable = styled(Box)(({ theme }) => ({
         },
       },
     },
+
+    "& .MuiButton-root": {
+      color: "#979797",
+      fontSize: "14px",
+      lineHeight: "24px",
+      "&:hover": {
+        background: "none",
+      },
+    },
+    ".MuiStack-root": {
+      "&.MuiButtonBase-root": {
+        color: theme.palette.text.primary,
+      },
+    },
+
+    ".actions-btn-holder": {
+      ".MuiButton-textPrimary:not(:hover)": {
+        color: "rgba(48, 48, 48, 1)",
+      },
+      ".MuiButton-outlinedPrimary": {
+        color: "#048071",
+
+        "&:hover": {
+          background: "#048071",
+          color: "#fff",
+        },
+      },
+
+      ".MuiButtonBase-root": {
+        textTransform: "capitalize",
+      },
+    },
   },
 }));
 
@@ -133,48 +178,66 @@ function Row(props: {
   row: ReturnType<typeof createData> | any;
   handleClick: any;
   employeeData?: any;
-  handleDelete?: any;
-  setIsOpen?: any
-  isOpen?: any
-  loading?: any
+  setIsOpen?: any;
+  isOpen?: any;
+  refresh?: any;
 }) {
-  const { row, handleClick, handleDelete, isOpen ,setIsOpen, loading} = props;
+  const { row, handleClick, refresh } = props;
   const [open, setOpen] = React.useState(false);
-  // const [isOpen, setIsOpen] = React.useState<any>(false);
+  const [isOpen, setIsOpen] = React.useState<any>(false);
   const [currentRow, setCurrentRow] = React.useState<any>("");
   const [titles, setTitles] = React.useState<any>([]);
-
-
+  const [statusData, setStatusData] = React.useState<any>(null);
+  const [loading, setLoading] = React.useState<any>(false);
 
   const closeModel = () => {
     setIsOpen(false);
   };
 
   React.useEffect(() => {
-    fetchTitle()
-  }, [])
+    fetchTitle();
+  }, []);
 
   const fetchTitle = async () => {
     try {
-      const response = await getAllRole();
+      const response = await getAllRole("");
       setTitles(response?.data?.role);
     } catch (error) {}
   };
 
   const fetchTitleName = (id: any) => {
     const findtitle = titles.find((item: any) => item.id === id);
-    return findtitle?.name
-  }
+    return findtitle?.name;
+  };
+
+  const handleDelete = async (data: any) => {
+    try {
+      setLoading(true);
+      await DeleteNewhire(data?.otherinfo?.program_id, data?.emp_id);
+
+      await refresh();
+      setLoading(false);
+      setIsOpen(false);
+      setStatusData({
+        type: "success",
+        message: "New hires Deleted Successfully",
+      });
+    } catch (error: any) {
+      setStatusData({
+        type: "error",
+        message: error.response.data.message,
+      });
+      setLoading(false);
+    }
+  };
   return (
     <React.Fragment>
-      <TableRow>
+      <TableRow className={`${open ? "bg-gray": "bg-default"}`}>
         <TableCell padding="none" size="small">
           <IconButton
             aria-label="expand row"
             size="small"
-            onClick={() => setOpen(!open)
-              
-            }
+            onClick={() => setOpen(!open)}
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
@@ -186,7 +249,9 @@ function Row(props: {
         <TableCell style={{ textTransform: "capitalize" }}>
           {row?.otherinfo?.department?.name}
         </TableCell>
-        <TableCell>{row?.otherinfo?.hire_date}</TableCell>
+        <TableCell>
+          {moment(row?.otherinfo?.hire_date).format("D-MMM YYYY")}
+        </TableCell>
         <TableCell>
           <Stack
             direction="row"
@@ -194,16 +259,15 @@ function Row(props: {
             alignItems="center"
             justifyContent="flex-end"
             width="100%"
+            className="actions-btn-holder"
           >
             <Button
               variant="text"
-              color="error"
               size="small"
               startIcon={<DeleteOutlineIcon />}
-              onClick={() =>{ 
-                setCurrentRow(row)
+              onClick={() => {
+                setCurrentRow(row);
                 setIsOpen(true);
-
               }}
             >
               Delete
@@ -220,15 +284,16 @@ function Row(props: {
           </Stack>
         </TableCell>
       </TableRow>
-      <TableRow>
+      <TableRow className="bg-gray">
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box>
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                  
-                    <TableCell style={{ paddingLeft: "62px" }}>Email Address</TableCell>
+                    <TableCell style={{ paddingLeft: "62px" }}>
+                      Email Address
+                    </TableCell>
                     <TableCell>Hourly Rate</TableCell>
                     <TableCell>Benefit %</TableCell>
                   </TableRow>
@@ -237,7 +302,7 @@ function Row(props: {
                   {row?.employeDepartments?.map((element: any) => (
                     <TableRow key={row.id}>
                       <TableCell style={{ paddingLeft: "62px" }}>
-                      {element?.department?.name.toLowerCase()}
+                        {element?.department?.name.toLowerCase()}
                       </TableCell>
                       <TableCell style={{ textTransform: "capitalize" }}>
                         {fetchTitleName(element?.title)}
@@ -246,9 +311,7 @@ function Row(props: {
                         {element?.hourlyRate?.toLowerCase()}
                       </TableCell>
                       <TableCell style={{ textTransform: "capitalize" }}>
-                        {element?.salaryRate
-                          ?.toLowerCase()
-                          ?.replace(/_/g, " ")}
+                        {element?.salaryRate?.toLowerCase()?.replace(/_/g, " ")}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -265,36 +328,24 @@ function Row(props: {
         loading={loading}
         heading="Are you sure you want to delete?"
       />
+      <StatusModal
+        statusData={statusData}
+        onClose={() => setStatusData(null)}
+      />
     </React.Fragment>
   );
 }
-
-// const rows = [
-//   createData(
-//     "Tomohiro Komase",
-//     "Program Head",
-//     "Recreation & Culture",
-//     "02-Mar-2024"
-//   ),
-//   createData(
-//     "Vishesh Thind",
-//     "Department Head",
-//     "Recreation & Culture",
-//     "02-Mar-2024"
-//   ),
-// ];
 
 export default function NewHiresCollapsibleTable({
   handleClick,
   employeeData,
   refresh,
-  onChange
+  onChange,
 }: any) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [statusData, setStatusData] = React.useState<any>(null);
   const [isOpen, setIsOpen] = React.useState<any>(false);
-  const [loading, setLoading] = React.useState<any>(false);
 
   const handleChangePage = (_: unknown, newPage: number) => {
     setPage(newPage);
@@ -307,33 +358,6 @@ export default function NewHiresCollapsibleTable({
     setPage(0);
   };
 
-  const handleDelete = async (data: any) => {
-    try {
-      setLoading(true)
-     await DeleteNewhire(data?.otherinfo?.program_id, data?.emp_id)
-     
-     await refresh();
-      setLoading(false)
-      setIsOpen(false)
-      setStatusData({
-        type: "success",
-        message: "New hires Deleted Successfully",
-      });
-    } catch (error: any) {
-      setStatusData({
-        type: "error",
-        message: error.response.data.message,
-      });
-      setLoading(false)
-    }
-  };
-
-  const exportToExcel = () => {
-    const worksheet = XLSX.utils.json_to_sheet(employeeData);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Data");
-    XLSX.writeFile(workbook, "data.xlsx");
-  };
   return (
     <>
       <HrCollapseableTable className="dashboardTable pt-0">
@@ -342,11 +366,10 @@ export default function NewHiresCollapsibleTable({
           alignItems="center"
           justifyContent="space-between"
         >
-          <IconButton aria-label="export" onClick={exportToExcel}>
-            <SaveAlt />
-          </IconButton>
+          <NewHireCsv data={employeeData} />
+
           <TextField
-            id="input-with-icon-textfield" 
+            id="input-with-icon-textfield"
             placeholder="Search..."
             InputProps={{
               startAdornment: (
@@ -379,10 +402,9 @@ export default function NewHiresCollapsibleTable({
                     row={row}
                     handleClick={handleClick}
                     employeeData={employeeData}
-                    handleDelete={handleDelete}
                     setIsOpen={setIsOpen}
                     isOpen={isOpen}
-                    loading={loading}
+                    refresh={refresh}
                   />
                 ))}
             </TableBody>

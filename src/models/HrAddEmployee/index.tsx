@@ -33,7 +33,7 @@ import SelectDepartments from "../../components/SelectDepartment";
 import { getAllBenefit } from "../../services/benefitServices";
 import { getAllRole } from "../../services/roleServices";
 import { RemoveCircleOutline } from "@mui/icons-material";
-import { validateArray } from "../../utils";
+import { updateHrData, validateArray } from "../../utils";
 
 const EmployeeInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
@@ -119,7 +119,7 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
     display: "inline-block",
     fontSize: "16px",
     lineHeight: "1.2",
-    fontFamily: "Roboto",
+    fontFamily: "Work Sans",
 
     "& + .MuiInputBase-root": {
       marginTop: "15px",
@@ -127,13 +127,13 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
   },
 
   "& .MuiInputBase-input": {
-    fontFamily: "Roboto, sans-serif",
+    fontFamily: "Work Sans",
     fontSize: "16px",
     color: theme.palette.common.blackshades["4p"],
   },
 
   "& .secondaryRow": {
-    paddingTop: "29px",
+    paddingTop: "14px",
     position: "relative",
     zIndex: "20",
   },
@@ -151,6 +151,7 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
       marginLeft: "-14px",
       fontSize: "14px",
       LineHeight: "1",
+      top: "11px",
     },
   },
   ".multiselectgrid": {
@@ -174,18 +175,30 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
     },
   },
   ".info-lists-wrap": {
-    padding: "50px 44px 0 33px",
+    padding: "16px 44px 0 33px",
     position: "relative",
     // pointerEvents: "none",
+
+    "+.info-lists-wrap": {
+      paddingTop: "20px",
+    },
   },
 
   ".delete-icon": {
     position: "absolute",
-    top: "73px",
-    right: "25px",
-    width: "16.67px",
-    height: "16.67px",
+    bottom: "0",
+    right: "0",
+    width: "24px",
+    height: "24px",
     cursor: "pointer",
+    padding: "0 !important",
+    zIndex: "3",
+
+    span: {
+      display: "block",
+      width: "100%",
+      height: "100%",
+    },
 
     button: {
       // border: "1px solid #303030",
@@ -298,7 +311,8 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
       try {
         if (heading == "Edit Employee") {
           delete values.password;
-          values.employeDepartments = data;
+          let modifyData = cleanFormDataForFormik(data)
+          values.employeDepartments = modifyData;
           await updateEmployee(values, singleEmployeeData?.id);
           setStatusData({
             type: "success",
@@ -316,8 +330,9 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
 
           let obj = {
             ...values,
-            employeDepartments: data,
+            employeDepartments:  cleanFormDataForFormik(data),
           };
+
           await createEmployee(obj);
           setStatusData({
             type: "success",
@@ -346,6 +361,14 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
       }
     },
   });
+
+  const cleanFormDataForFormik = (data: any) => {
+    return data.map((item: any) => ({
+      ...item,
+      hourlyRate: item.hourlyRate.replace("$", ""),
+   
+    }));
+  };
   const {
     values,
     handleChange,
@@ -364,6 +387,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
         salaryRate: "",
       },
     ]);
+    setPersonName([]);
     formik.resetForm();
     handleClose();
   };
@@ -389,7 +413,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
         };
         modifyArray.push(obj);
       });
-      setData(modifyArray);
+      setData(updateHrData(modifyArray));
       let array: any = [];
       singleEmployeeData?.roles.map((item: any) => {
         array.push(item.name);
@@ -445,8 +469,15 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
 
   const fetchBenefits = async () => {
     try {
-      const response = await getAllBenefit();
-      setBenefit(response?.data?.centers);
+      const response = await getAllBenefit("");
+      setBenefit(
+        response?.data?.centers
+          ?.map((center: any) => ({
+            ...center,
+            name: `${center?.name}%`,
+          }))
+          .sort((a: any, b: any) => parseInt(a.name) - parseInt(b.name))
+      );
     } catch (error) {}
   };
 
@@ -459,7 +490,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
 
   const fetchTitle = async () => {
     try {
-      const response = await getAllRole();
+      const response = await getAllRole("");
       setTitles(response?.data?.role);
     } catch (error) {}
   };
@@ -505,7 +536,26 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
   };
 
   const handleInputChange = (index: any, event: any) => {
-    const { name, value } = event.target;
+    let { name, value } = event.target;
+    if (event?.nativeEvent?.inputType === "deleteContentBackward") {
+      if (name === "hourlyRate" && value.endsWith("$")) {
+        value = value.slice(0, -1);
+      }  else {
+        if (
+          name === "hourlyRate" &&
+          !value.startsWith("$") &&
+          !/^\d*$/.test(value)
+        ) {
+          value = "";
+        }
+      }
+    } else {
+      if (name === "hourlyRate") {
+        if (!value.startsWith("$")) {
+          value = "$" + value;
+        }
+      }
+    }
     const newData: any = [...data];
     newData[index][name] = value;
     setData(newData);
@@ -517,11 +567,6 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
     setData(newData);
   };
 
-  const handleModalClose = () => {
-    formik.resetForm();
-    handleClose();
-  };
-
   return (
     <>
       <StatusModal
@@ -530,7 +575,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
       />
       <Modal
         open={open}
-        onClose={handleModalClose}
+        onClose={handleClear}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -541,7 +586,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
           <Box>
             <Typography
               className="body1"
-              style={{ color: "#303030", fontSize: "16px", fontWeight: "500" }}
+              style={{ color: "#303030", fontSize: "16px", fontWeight: "600" }}
             >
               Employee Information
             </Typography>
@@ -594,24 +639,6 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                   error={errors.password ? true : false}
                 />
               </Grid>
-              {/* <Grid className="selectGrid" item xs={6}>
-                <SelectDemo
-                  title="Department"
-                  value={activeDepartment}
-                  list={departments}
-                  receiveValue={receiveDepartments}
-                  error={errors.department_id ? true : false}
-                />
-                <Typography
-                  style={{
-                    color: "rgba(211, 47, 47, 1)",
-                    fontSize: "12px",
-                    fontWeight: "400",
-                  }}
-                >
-                  {errors.department_id ? errors.department_id.toString() : ""}
-                </Typography>
-              </Grid> */}
               <Grid className="selectGrid multiselectgrid" item xs={6}>
                 <InputLabel
                   id="demo-multiple-checkbox-label"
@@ -673,23 +700,16 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
             className="secondaryRow"
             style={{
               display: "flex",
-              alignItems: "center",
+              alignItems: "center", 
               justifyContent: "space-between",
             }}
           >
             <Typography
               className="subtitle"
-              style={{ color: "#303030", fontSize: "16px", fontWeight: "500" }}
+              style={{ color: "#303030", fontSize: "16px", fontWeight: "600" }}
             >
               Department Works For
             </Typography>
-            {/* <Button
-              onClick={() => handleAddObject()}
-              variant="outlined"
-              startIcon={<Add />}
-            >
-              Add
-            </Button> */}
           </Box>
 
           <Grid container spacing={4}>
@@ -719,18 +739,11 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                       handleTitleChange(index, value)
                     }
                   />
-                  {/* <TextFields
-                    variant="standard"
-                    label="Title"
-                    value={item.title} 
-                    name="title"
-                    onChange={(e: any) => handleInputChange(index, e)}
-                  /> */}
-                </Grid>
+                                </Grid>
                 <Grid className="item-role-area" item xs={3}>
                   <TextFields
                     variant="standard"
-                    label="Hourly Rate"
+                    label="Hourly Rate" 
                     value={item.hourlyRate}
                     name="hourlyRate"
                     onChange={(e: any) => handleInputChange(index, e)}

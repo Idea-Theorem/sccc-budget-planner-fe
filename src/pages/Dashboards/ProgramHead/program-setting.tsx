@@ -12,19 +12,20 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import {
   deleteProgram,
-  getAllProgramsViaStatus,
+  getAllProgramsByUsers,
   getDepartments,
   programUpdate,
 } from "../../../services/programServices";
 import { useFormik } from "formik";
 import DeleteModal from "../../../models/DeleteModal";
+import StatusModal from "../../../components/StatusModal";
 
 const StyledBox = styled(Box)(({}) => ({
   "&.mainTableBlock": {
     width: "100%",
     position: "relative",
-    marginTop: '-10px',
-    paddingTop: '10px',
+    marginTop: "-10px",
+    paddingTop: "10px",
     borderTop: "1px solid #e8e8e8",
   },
 
@@ -34,10 +35,11 @@ const StyledBox = styled(Box)(({}) => ({
     "& .MuiButtonBase-root": {
       fontSize: "13px",
       letterSpacing: "1",
+      fontFamily: "Work Sans",
     },
   },
   ".MuiTypography-h3": {
-    margin: " 0 0 33px",
+    margin: " 0 0 20px",
   },
 
   ".MuiTypography-h6": {
@@ -82,15 +84,15 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
     color: "rgba(0, 0, 0, 0.87)",
     fontSize: "14px",
     lineHeight: "24px",
-    fontWeight: "500",
+    fontWeight: "600",
     fontFamily: "Work Sans, sans-serif",
     letterSpacing: "0.17px",
   },
   "& .MuiButtonBase-root.Mui-checked": {
-    color: "rgba(42, 157, 143, 1) !important",
+    color: "#048071 !important",
   },
   "& .Mui-selected .MuiCheckbox-root": {
-    color: "rgba(42, 157, 143, 1) !important",
+    color: "#048071 !important",
   },
   "& .MuiDataGrid-menuIcon": {
     display: "none",
@@ -108,7 +110,7 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
     fontSize: "12px",
     lineHeight: "20px",
     fontWeight: "400",
-    fontFamily: "Roboto, sans-serif",
+    fontFamily: "Work Sans",
     letterSpacing: "0.4px",
   },
   "& .MuiTablePagination-input": {
@@ -117,7 +119,7 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
       fontSize: "12px",
       lineHeight: "20px",
       fontWeight: "400",
-      fontFamily: "Roboto, sans-serif",
+      fontFamily: "Work Sans",
       letterSpacing: "0.4px",
     },
   },
@@ -138,10 +140,10 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
       color: "rgba(48, 48, 48, 1)",
     },
     ".MuiButton-outlinedPrimary": {
-      color: "rgba(4, 128, 113, 1)",
+      color: "#048071",
 
       "&:hover": {
-        background: "rgba(4, 128, 113, 1)",
+        background: "#048071",
         color: "#fff",
       },
     },
@@ -152,43 +154,6 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
   },
 }));
 
-// const rows = [
-//   {
-//     id: 1,
-//     departmentName: "Youth Swimming Class",
-//     status: "1505",
-//     lYearBudget: "01-Jan-2022-2024",
-//     depart: "Recreation & Culture",
-//   },
-//   {
-//     id: 2,
-//     departmentName: "Youth Tablle Tennis Class",
-//     status: "1220",
-//     lYearBudget: "01-Jan-2022-2024",
-//     depart: "Recreation & Culture",
-//   },
-//   {
-//     id: 3,
-//     departmentName: "Youth Hockey Class",
-//     status: "2230",
-//     lYearBudget: "01-Jan-2022-2024",
-//     depart: "Recreation & Culture",
-//   },
-//   {
-//     id: 4,
-//     departmentName: "Youth Basketball Class",
-//     status: "4500",
-//     lYearBudget: "01-Jan-2022-2024",
-//     depart: "Recreation & Culture",
-//   },
-//   {
-//     id: 5,
-//     departmentName: "Finance literature",
-//     status: "New",
-//     lYearBudget: "15-Mar-2022-2024",
-//     depart: "Finance",
-//   },
-// ];
 interface HRTableProps {}
 const ProgramSetting: React.FC<HRTableProps> = ({}) => {
   const columns: GridColDef[] = [
@@ -233,6 +198,7 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
     {
       field: "buttonsColumn",
       headerName: "",
+      sortable: false,
       flex: 1,
       renderCell: (params: any) => (
         <Stack
@@ -262,13 +228,6 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
         </Stack>
       ),
     },
-    // {
-    //   field: "",
-    //   headerName: "",
-    //   sortable: false,
-    //   editable: false,
-    //   flex: 1,
-    // },
   ];
   const [settingData, setSettingData] = React.useState([]);
   const [departmentList, setDepartmentList] = React.useState([]);
@@ -276,6 +235,7 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
   const [selectedRowdelete, setSelectedDelete] = useState<any>(null);
   const [deleteModalOpen, setDeleteModal] = useState<any>(false);
   const [editModalOpen, setEditModal] = useState(false);
+  const [statusData, setStatusData] = useState<any>(null);
 
   const formik = useFormik<any>({
     validateOnBlur: false,
@@ -293,7 +253,16 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
         await programUpdate(values, selectedRow?.id);
         fetchProgramList(Status.DRAFTED, "");
         setEditModal(false);
-      } catch (error) {}
+        setStatusData({
+          type: "success",
+          message: "Program updated successfully!",
+        });
+      } catch (error: any) {
+        setStatusData({
+          type: "error",
+          message: error.response?.data?.message,
+        });
+      }
     },
   });
   React.useEffect(() => {
@@ -302,7 +271,7 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
   }, []);
   const fetchProgramList = async (status: string, Searchvalue: string) => {
     try {
-      const response = await getAllProgramsViaStatus(status, Searchvalue);
+      const response = await getAllProgramsByUsers(status, Searchvalue);
       setSettingData(response?.data?.programs);
     } catch (error) {}
   };
@@ -327,8 +296,15 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
         await deleteProgram(selectedRowdelete);
         fetchProgramList(Status.DRAFTED, "");
         setDeleteModal(false);
-      } catch (error) {
-        console.error("Error deleting record:", error);
+        setStatusData({
+          type: "success",
+          message: "Program deleted successfully!",
+        });
+      } catch (error: any) {
+        setStatusData({
+          type: "error",
+          message: error.response?.data?.message,
+        });
       }
     }
   };
@@ -369,6 +345,10 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
         open={editModalOpen}
         handleClose={() => setEditModal(false)}
         formik={formik}
+      />
+      <StatusModal
+        statusData={statusData}
+        onClose={() => setStatusData(null)}
       />
     </StyledBox>
   );

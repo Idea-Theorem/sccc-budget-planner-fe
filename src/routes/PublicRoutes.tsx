@@ -1,5 +1,4 @@
 import { Navigate, RouteObject } from "react-router-dom";
-
 import SecureLayout from "../layouts/SecureLayout";
 import SideBarLayout from "../layouts/SideBar";
 import Layout from "../layouts/SimpleLayout";
@@ -33,8 +32,11 @@ import Benefit from "../pages/Dashboards/ProgramHead/benefit";
 import ForgotPasswordScreen from "../pages/Forgotpassword";
 import ResetPasswordScreen from "../pages/Resetpassword";
 import ExpiredProgram from "../pages/Dashboards/ProgramHead/expireProgram";
-import HRDepartment from "../pages/Dashboards/SuperAdmin/HRDepartment";
-import HRCenters from "../pages/Dashboards/SuperAdmin/HRCenters";
+
+import Center from "../pages/Dashboards/ProgramHead/centers";
+import Departments from "../pages/Dashboards/ProgramHead/departments";
+import SuperReviewBudgetDepartment from "../pages/SuperAdmin/SuperReviewBudgetDepartment";
+import SuperReviewBudgetPrograms from "../pages/SuperAdmin/SuperReviewBudgetPrograms";
 
 const authRoutes: RouteObject = {
   path: "*",
@@ -109,6 +111,15 @@ const superAdminRoute: RouteObject = {
           ],
         },
         { path: "super-department", element: <SuperDepartmentDetail /> },
+        {
+          path: "review-budgets-departments",
+          element: <SuperReviewBudgetDepartment />,
+        },
+        {
+          path: "review-budgets-program",
+          element: <SuperReviewBudgetPrograms />,
+        },
+
         { path: "program", element: <SuperAdminProgramScreen /> },
       ],
     },
@@ -127,7 +138,6 @@ const programHeadRoute: RouteObject = {
           <SecureLayout />
         </SideBarLayout>
       ),
-      // element: <ProgramHeadScreen />,
       children: [
         { index: true, element: <ProgramHeadScreen /> },
         { path: "program", element: <PHProgramsScreen /> },
@@ -153,9 +163,7 @@ const hrRoute: RouteObject = {
           <SecureLayout />
         </SideBarLayout>
       ),
-      // element: <AdminScreen />,
       children: [
-        // { index: true, element: <SuperAdminMain name="raoof" /> },
         { index: true, element: <HREmployees name="HR (Human Resources)" /> },
         {
           path: "employees",
@@ -167,8 +175,8 @@ const hrRoute: RouteObject = {
         { path: "settings", element: <HRSettings /> },
         { path: "role", element: <HRRole /> },
         { path: "benefits", element: <Benefit /> },
-        { path: "departments", element: <HRDepartment name="Departments" /> },
-        { path: "centers", element: <HRCenters name="Centers" /> },
+        { path: "departments", element: <Departments /> },
+        { path: "centers", element: <Center /> },
       ],
     },
   ],
@@ -186,7 +194,6 @@ const departmentHeadRoute: RouteObject = {
           <SecureLayout />
         </SideBarLayout>
       ),
-      // element: <ProgramHeadScreen />,
       children: [
         {
           index: true,

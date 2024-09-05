@@ -13,7 +13,8 @@ const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
     position: "relative",
-    borderTop: '1px solid rgba(224, 224, 224, 1)',
+    borderTop: "1px solid rgba(224, 224, 224, 1)",
+    paddingTop: "10px",
   },
 
   "& .MuiDataGrid-toolbarContainer": {
@@ -24,6 +25,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
       fontSize: "13px",
       letterSpacing: "0.8px",
       marginRight: "-1px",
+      fontFamily: "Work Sans",
 
       "&:hover": {
         color: `${theme.palette.primary.main} !important`,
@@ -70,10 +72,10 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
     letterSpacing: "0.17px",
   },
   "& .MuiButtonBase-root.Mui-checked": {
-    color: "rgba(42, 157, 143, 1) !important",
+    color: "#048071 !important",
   },
   "& .Mui-selected .MuiCheckbox-root": {
-    color: "rgba(42, 157, 143, 1) !important",
+    color: "#048071 !important",
   },
   "& .MuiDataGrid-menuIcon": {
     display: "none",
@@ -91,7 +93,7 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
     fontSize: "12px",
     lineHeight: "20px",
     fontWeight: "400",
-    fontFamily: "Roboto, sans-serif",
+    fontFamily: "Work Sans",
     letterSpacing: "0.4px",
   },
   "& .MuiTablePagination-input": {
@@ -122,10 +124,10 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
       color: "rgba(48, 48, 48, 1)",
     },
     ".MuiButton-outlinedPrimary": {
-      color: "rgba(4, 128, 113, 1)",
+      color: "#048071",
 
       "&:hover": {
-        background: "rgba(4, 128, 113, 1)",
+        background: "#048071",
         color: "#fff",
       },
     },
@@ -136,28 +138,20 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
   },
 }));
 
-// const rows = [
-//   {
-//     id: 1,
-//     name: "Recreation & Culture",
-//     // status: "5",
-//     lYearBudget: "02-Mar-2024",
-//   },
-//   {
-//     id: 2,
-//     name: "HR",
-//     // status: "5",
-//     lYearBudget: "02-Mar-2024",
-//   },
-// ];
 interface HRTableProps {
   onEdit?: any;
   row?: any;
   refresh?: any;
-  onChange?: any
-  departmentsLoading?: any
+  onChange?: any;
+  departmentsLoading?: any;
 }
-const HRTableComponent: React.FC<HRTableProps> = ({ onEdit, row, refresh, onChange, departmentsLoading }) => {
+const HRTableComponent: React.FC<HRTableProps> = ({
+  onEdit,
+  row,
+  refresh,
+  onChange,
+  departmentsLoading,
+}) => {
   const [deleteRow, setDeleteRow] = useState<any>(false);
   const [loading, setLoading] = useState<any>(false);
   const [statusData, setStatusData] = useState<any>(null);
@@ -170,13 +164,20 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit, row, refresh, onChan
       editable: false,
       flex: 1,
     },
-    // {
-    //   field: "status",
-    //   headerName: "Employee Count",
-    //   sortable: false,
-    //   editable: false,
-    //   flex: 1,
-    // },
+    {
+      field: "status",
+      headerName: "Employee Count",
+      sortable: false,
+      editable: false,
+      flex: 1,
+      renderCell: (params: any) => {
+        return (
+          <Stack>
+            <Box>{params?.row?._count?.EmployeeDepartment}</Box>
+          </Stack>
+        );
+      },
+    },
     {
       field: "created_at",
       headerName: "Date Created",
@@ -187,6 +188,7 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit, row, refresh, onChan
     {
       field: "buttonsColumn",
       headerName: "",
+      sortable: false,
       flex: 0.5,
       renderCell: (data?: any) => (
         <Stack
@@ -251,7 +253,7 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit, row, refresh, onChan
       <StyledBox className="mainTableBlock">
         <InputSearch placeholder="Search..." onChange={onChange} />
         <StyleDataGrid
-         loading={departmentsLoading}
+          loading={departmentsLoading}
           rows={row || []}
           columns={columns}
           initialState={{

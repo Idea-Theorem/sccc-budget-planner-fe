@@ -10,6 +10,7 @@ import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { v4 as uuidv4 } from "uuid";
 import { calculateAmount, calculateTotalAmount } from "../../utils";
 import { EmployeeInfoArea } from "./style";
+import { fetchEmployeeInfo } from "../../services/programServices";
 
 export default function TabsNewHire({ employee, formik }: any) {
   const [benefit, setBenefit] = useState<any>([]);
@@ -20,9 +21,18 @@ export default function TabsNewHire({ employee, formik }: any) {
 
   const fetchAllBenefit = async () => {
     try {
-      const response = await getAllBenefit();
-      setBenefit(response?.data?.centers);
-    } catch (error) {}
+      const response = await getAllBenefit("");
+      setBenefit(
+        response?.data?.centers
+          ?.map((center: any) => ({
+            ...center,
+            name: `${center?.name}%`,
+          }))
+          .sort((a: any, b: any) => parseInt(a.name) - parseInt(b.name))
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleAddRecord = () => {
@@ -46,26 +56,96 @@ export default function TabsNewHire({ employee, formik }: any) {
     formik.setFieldValue("employee", newFormData);
   };
 
-  const handleInputChange = (index: any, name: any, value: any) => {
-    if (name === "hourlyRate") {
-      if (!value.startsWith("$")) {
-        value = "$" + value;
+  const handleInputChange = async (
+    index: any,
+    name: any,
+    value: any,
+    event: any
+  ) => {
+    if (event?.nativeEvent?.inputType === "deleteContentBackward") {
+      if (name === "hourlyRate" && value.endsWith("$")) {
+        value = value.slice(0, -1);
+      } else if (name === "hoursPerWeek" && value.endsWith("h")) {
+        value = value.slice(0, -1);
+      } else if (name === "workingWeeks" && value.endsWith("w")) {
+        value = value.slice(0, -1);
+      } else {
+        if (
+          name === "hourlyRate" &&
+          !value.startsWith("$") &&
+          !/^\d*$/.test(value)
+        ) {
+          value = "";
+        } else if (
+          name === "hoursPerWeek" &&
+          !value.endsWith("h") &&
+          !/^\d*$/.test(value)
+        ) {
+          value = "";
+        } else if (
+          name === "workingWeeks" &&
+          !value.endsWith("w") &&
+          !/^\d*$/.test(value)
+        ) {
+          value = "";
+        }
       }
-    } else if (name === "hoursPerWeek") {
-      value = value.replace(/h/g, "") + "h";
-    } else if (name === "workingWeeks") {
-      value = value.replace(/w/g, "") + "w";
+    } else {
+      if (name === "hourlyRate") {
+        if (!value.startsWith("$")) {
+          value = "$" + value;
+        }
+      } else if (name === "hoursPerWeek") {
+        if (!value.endsWith("h")) {
+          value = value.replace(/h/g, "") + "h";
+        }
+      } else if (name === "workingWeeks") {
+        if (!value.endsWith("w")) {
+          value = value.replace(/w/g, "") + "w";
+        }
+      }
     }
 
     const newFormData = formik.values.employee.map((employee: any) => ({
       ...employee,
     }));
 
+    if (name == "employee") {
+      const res: any = await getEmployeeInfo(
+        value,
+        formik?.values?.department_id
+      );
+      if (
+        typeof res?.hours == "undefined" &&
+        typeof res?.benefit == "undefined"
+      ) {
+        newFormData[index]["hourlyRate"] = "";
+        newFormData[index]["benefit"] = "";
+      } else {
+        newFormData[index]["hourlyRate"] = "$" + res?.hours;
+        newFormData[index]["benefit"] = res?.benefit;
+      }
+    }
+
     newFormData[index][name] = value;
     const response = calculateAmount(newFormData);
     formik.setFieldValue("employee", response);
   };
-  console.log("🚀 ~ handleInputChange ~ formik:", formik);
+  const getEmployeeInfo = async (user_id?: any, depatment_id?: any) => {
+    try {
+      const response = await fetchEmployeeInfo(user_id, depatment_id);
+
+      const empBenefit = benefit.find(
+        (item: any) => item?.id == response?.data?.programs?.salaryRate
+      );
+      let obj = {
+        hours: response?.data?.programs?.hourlyRate,
+        benefit: empBenefit?.name,
+      };
+
+      return obj;
+    } catch (error) {}
+  };
 
   return (
     <EmployeeInfoArea>
@@ -106,7 +186,7 @@ export default function TabsNewHire({ employee, formik }: any) {
                     }
                     errorMessage={formik.errors?.employee?.[index]?.employee}
                     receiveValue={(value: any) =>
-                      handleInputChange(index, "employee", value)
+                      handleInputChange(index, "employee", value, "")
                     }
                   />
                 </Box>
@@ -118,7 +198,7 @@ export default function TabsNewHire({ employee, formik }: any) {
                   name={`employee[${index}].hourlyRate`}
                   value={record.hourlyRate}
                   onChange={(e: any) =>
-                    handleInputChange(index, "hourlyRate", e.target.value)
+                    handleInputChange(index, "hourlyRate", e.target.value, e)
                   }
                   error={
                     formik.errors?.employee?.[index]?.hourlyRate ? true : false
@@ -129,11 +209,11 @@ export default function TabsNewHire({ employee, formik }: any) {
               <td>
                 <TextFields
                   variant="outlined"
-                  name={`employee[${index}].hoursPerWeek`}
                   size="small"
+                  name={`employee[${index}].hoursPerWeek`}
                   value={record.hoursPerWeek}
                   onChange={(e: any) =>
-                    handleInputChange(index, "hoursPerWeek", e.target.value)
+                    handleInputChange(index, "hoursPerWeek", e.target.value, e)
                   }
                   error={
                     formik.errors?.employee?.[index]?.hoursPerWeek
@@ -146,11 +226,11 @@ export default function TabsNewHire({ employee, formik }: any) {
               <td>
                 <TextFields
                   variant="outlined"
-                  name={`employee[${index}].workingWeeks`}
                   size="small"
+                  name={`employee[${index}].workingWeeks`}
                   value={record.workingWeeks}
                   onChange={(e: any) =>
-                    handleInputChange(index, "workingWeeks", e.target.value)
+                    handleInputChange(index, "workingWeeks", e.target.value, e)
                   }
                   error={
                     formik.errors?.employee?.[index]?.workingWeeks
@@ -166,7 +246,7 @@ export default function TabsNewHire({ employee, formik }: any) {
                     value={record.benefit}
                     list={benefit}
                     receiveValue={(value: any) =>
-                      handleInputChange(index, "benefit", value)
+                      handleInputChange(index, "benefit", value, "")
                     }
                     error={
                       formik.errors?.employee?.[index]?.benefit ? true : false

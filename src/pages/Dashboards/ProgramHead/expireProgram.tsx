@@ -200,6 +200,12 @@ const StyledBox = styled(Box)(({ theme }) => ({
           borderLeft: "0",
           borderRight: "0",
         },
+
+        "&:hover": {
+          ".MuiOutlinedInput-notchedOutline": {
+            borderWidth: "2px",
+          },
+        },
       },
 
       "& .MuiOutlinedInput-input": {
@@ -336,16 +342,6 @@ const ExpiredProgram = () => {
                         startIcon={<EditNote />}
                         btntext="Resubmit"
                       />
-                      {/* <Button
-                        variant="contained"
-                        color="primary"
-                        size="medium"
-                        startIcon={<EditNote />}
-                      >
-                        Resubmit
-                      </Button> */}
-                      {/* <Buttons startIcon={<Save />} btntext1="Save" />
-                      <Buttons startIcon={<EditNote />} btntext3="ReSubmit" /> */}
                     </Stack>
                   </Stack>
                 </Grid>

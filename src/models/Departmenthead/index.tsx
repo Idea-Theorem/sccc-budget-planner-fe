@@ -4,7 +4,7 @@ import TextFieldWithButton from "../../components/ThreadPopups/TextFieldWithButt
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
-import {  useState } from "react";
+import { useState } from "react";
 import moment from "moment";
 import { getCapitalizedFirstLetters } from "../../utils";
 import { CircularProgress } from "@mui/material";
@@ -17,27 +17,41 @@ const DepartmentModalArea = styled(Box)(({ theme }) => ({
   ".comment-area": {
     background: theme.palette.background.default,
     width: "100%",
-    padding: "16px 16px",
-    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+    // boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
     maxWidth: "260px",
     margin: "0 auto",
     overflow: "auto",
     position: "relative",
 
+    "&:empty": {
+      padding: "0",
+    },
+
     ".MuiCircularProgress-root": {
       display: "block",
       margin: "0 auto",
     },
+
+    ">div": {
+      padding: "16px 16px",
+      borderBottom: "2px solid #BFBFBF",
+      margin: "0",
+    },
   },
 
   ".custom-label": {
-    background: theme.palette.background.default,
+    // background: theme.palette.background.default,
+    background: "#FAFAFA",
     width: "100%",
     padding: "10px 16px",
-    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+    // boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
     maxWidth: "260px",
     margin: "0 auto",
     overflow: "auto",
+
+    ".MuiInputBase-input": {
+      background: "#fff",
+    },
   },
 
   "& .MuiTypography-h6": {
@@ -97,15 +111,17 @@ const DepartmentModalArea = styled(Box)(({ theme }) => ({
 interface IHrAddEmployee {
   handleClose?: () => void;
   open?: boolean;
-  setcommentText?: any
-  commenttext?: any
-  handleAddcomment?: any
-  currentExpense?: any
-  commentLoading?: any
-  handleDelete?: any
-  deleteLoading?: any
-  currentComment?: any
-  setcurrentComment?: any
+  setcommentText?: any;
+  commenttext?: any;
+  handleAddcomment?: any;
+  currentExpense?: any;
+  commentLoading?: any;
+  handleDelete?: any;
+  deleteLoading?: any;
+  currentComment?: any;
+  setcurrentComment?: any;
+  handleResolved?: any;
+  input?: any;
 }
 
 const DepartmentHeadModal: React.FC<IHrAddEmployee> = ({
@@ -119,9 +135,12 @@ const DepartmentHeadModal: React.FC<IHrAddEmployee> = ({
   handleDelete,
   deleteLoading,
   currentComment,
-  setcurrentComment
+  setcurrentComment,
+  handleResolved,
+  input,
 }) => {
   const [dropdown, setDropdown] = useState(false);
+
   const handleDropdown = () => {
     setDropdown(!dropdown);
   };
@@ -134,28 +153,47 @@ const DepartmentHeadModal: React.FC<IHrAddEmployee> = ({
       aria-describedby="modal-modal-description"
     >
       <DepartmentModalArea>
-        <Stack direction="column" gap="1px">
+        <Stack direction="column">
           <Box className="comment-area">
-            {deleteLoading ? <CircularProgress/> :  currentExpense?.comments?.map((item: any) => (
-              <ThreadHeader
-              setcurrentComment={setcurrentComment}
-              item={item}
-                handleDelete={() => handleDelete(currentComment)}
-                setcommentText={() => setcommentText(currentComment?.comment?.text)}
-                dropdown={dropdown}
-                setDropdown={handleDropdown}
-                title={item?.user?.firstname + ' ' + item.user.lastname}
-                name={getCapitalizedFirstLetters(item?.user?.firstname, item?.user?.lastname)}
-                date={moment(item?.comment?.created_at).format("D-MMM YYYY")}
-                subtitle={
-                  item?.comment?.text
-                }
+            {deleteLoading ? (
+              <CircularProgress />
+            ) : (
+              currentExpense?.comments?.map((item: any) => (
+                <ThreadHeader
+                  setcurrentComment={setcurrentComment}
+                  item={item}
+                  handleDelete={() => handleDelete(currentComment)}
+                  setcommentText={() =>
+                    setcommentText(currentComment?.comment?.text)
+                  }
+                  handleResolved={() => handleResolved(currentComment)}
+                  dropdown={dropdown}
+                  setDropdown={handleDropdown}
+                  title={item?.user?.firstname + " " + item.user.lastname}
+                  name={getCapitalizedFirstLetters(
+                    item?.user?.firstname,
+                    item?.user?.lastname
+                  )}
+                  date={moment(item?.comment?.created_at).format("D-MMM YYYY")}
+                  subtitle={item?.comment?.text}
+                />
+              ))
+            )}
+          </Box>
+          {!input ? (
+            <Box className="custom-label">
+              <TextFieldWithButton
+                commentLoading={commentLoading}
+                handleAddcomment={handleAddcomment}
+                commenttext={commenttext}
+                placeholder="Label"
+                isBtn={true}
+                setcommentText={setcommentText}
               />
-            ))}
-          </Box>
-          <Box className="custom-label">
-            <TextFieldWithButton commentLoading={commentLoading} handleAddcomment={handleAddcomment} commenttext={commenttext} placeholder="Label" isBtn={true} setcommentText={setcommentText}/>
-          </Box>
+            </Box>
+          ) : (
+            ""
+          )}
         </Stack>
       </DepartmentModalArea>
     </Modal>

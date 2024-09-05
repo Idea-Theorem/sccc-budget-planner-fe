@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import LogoImg from "../../assets/logo.png";
 import Buttons from "../../components/Button";
 import { useAuth } from "../../contexts/AuthContext";
-import {  useFormik } from "formik";
+import { useFormik } from "formik";
 import * as yup from "yup";
 
 const LoginArea = styled(Box)(({ theme }) => ({
@@ -34,7 +34,7 @@ const LoginArea = styled(Box)(({ theme }) => ({
   },
 
   "& .MuiTypography-h5": {
-    fontFamily: "Roboto",
+    fontFamily: "Work Sans",
     fontWeight: "400",
     fontSize: "24px",
     lineHeight: "1.3",
@@ -44,7 +44,7 @@ const LoginArea = styled(Box)(({ theme }) => ({
 
   ".MuiFormLabel-root": {
     color: theme.palette.common.blackshades["12p"],
-    fontFamily: "Roboto",
+    fontFamily: "Work Sans",
   },
 
   ".MuiButtonBase-root": {
@@ -62,7 +62,7 @@ const LoginArea = styled(Box)(({ theme }) => ({
 
     "& .MuiOutlinedInput-input": {
       width: "100%",
-      fontFamily: "Roboto",
+      fontFamily: "Work Sans",
       fontWeight: "400",
       color: theme.palette.common.blackshades["12p"],
 
@@ -83,18 +83,18 @@ const LoginArea = styled(Box)(({ theme }) => ({
       marginBottom: "16px",
       fontSize: "15px",
       fontWeight: "500",
-      fontFamily: "Roboto",
+      fontFamily: "Work Sans",
       letterSpacing: "0.46px",
     },
 
     "& legend": {
-      fontFamily: "Roboto",
+      fontFamily: "Work Sans",
     },
   },
 
   "& .textLink": {
     color: theme.palette.info.main,
-    fontFamily: "Roboto",
+    fontFamily: "Work Sans",
     fontWeight: "400",
     fontSize: "14px",
     lineHeight: "20px",
@@ -120,7 +120,7 @@ const validationSchema = yup.object().shape({
 });
 
 const ForgotPasswordScreen = () => {
-  const { handleForgotPassword, resetLoading} = useAuth();
+  const { handleForgotPassword, resetLoading } = useAuth();
 
   const formik: any = useFormik<any>({
     validateOnBlur: false,
@@ -142,7 +142,9 @@ const ForgotPasswordScreen = () => {
         <Box className="siteLogo">
           <img src={LogoImg} alt="Description image" />
         </Box>
-        <Typography variant="h5">Please Enter Email To Reset Password</Typography>
+        <Typography variant="h5">
+          Please Enter Email To Reset Password
+        </Typography>
         <form noValidate autoComplete="off" onSubmit={handleSubmit}>
           <FormControl className="loginFormItem">
             <TextField
@@ -158,7 +160,7 @@ const ForgotPasswordScreen = () => {
           </FormControl>
           <Buttons
             loading={resetLoading}
-            btntext="Action"
+            btntext="Reset"
             variant="contained"
             size="large"
             fullWidth
@@ -166,9 +168,7 @@ const ForgotPasswordScreen = () => {
             // onClick={() => handleSubmit()}
           />
         </form>
-        <Box>
-        
-        </Box>
+        <Box></Box>
       </Box>
     </LoginArea>
   );

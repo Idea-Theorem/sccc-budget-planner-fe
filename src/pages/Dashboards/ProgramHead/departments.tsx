@@ -4,17 +4,20 @@ import Box from "@mui/material/Box";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { Button, Stack, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import Buttons from "../../../components/Button";
-import BenefitModal from "../../../models/BenefitModal";
-import {
-  deleteBenefit,
-  getAllBenefit,
-} from "../../../services/benefitServices";
+
 import DeleteModal from "../../../models/DeleteModal";
 import InputSearch from "../../../components/Input";
+
+import {
+  deleteDepartment,
+  getAllDepartments,
+} from "../../../services/departmentServices";
+import DepartmentInfo from "../../../models/HrDepartment";
 import StatusModal from "../../../components/StatusModal";
+import moment from "moment";
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
@@ -162,84 +165,115 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
   },
 }));
 
-const Benefit = () => {
-  const [loading, setLoading] = useState<boolean>(false);
-  console.log(loading);
-  const [singleCenter, setSingleCenter] = useState<any>(null);
-  const [center, setCenter] = useState<any>([]);
-  const [isCommunityOpen, setCommunityModal] = useState(false);
-  const [centerHeading, setCenterHeading] = useState<string>("");
-  const [isOpen, setIsOpen] = React.useState<any>(false);
-  const [rowData, setRowData] = React.useState<any>(false);
+const Departments = () => {
   const [statusData, setStatusData] = useState<any>(null);
-
-  const fetchCenters = async (name: string) => {
-    try {
-      const response = await getAllBenefit(name);
-      const newData = response?.data?.centers.map((item: any) => {
-        return {
-          ...item,
-          name: item.name + " " + "%",
-        };
-      });
-      setCenter(newData);
-    } catch (error) {}
-  };
+  const [singleDepartments, setDingleDepartments] = useState<any>(null);
+  const [isDepartOpen, setIsDepartopen] = useState(false);
+  const [departments, setDepartments] = useState<any>(null);
+  const [departmentsLoading, setDepartmentsLoading] = useState<any>(false);
+  const [departHeading, setDepartHeading] = useState<string>("");
+  const [isOpen, setIsOpen] = useState<any>(false);
+  const [deleteRow, setDeleteRow] = useState<any>(false);
+  const [loading, setLoading] = useState<any>(false);
 
   useEffect(() => {
-    fetchCenters("");
+    fetchDepartments("");
   }, []);
 
-  const handleCloseCommunityModal = () => {
-    fetchCenters("");
-    setCommunityModal(false);
+  const fetchDepartments = async (value: string) => {
+    try {
+      setDepartmentsLoading(true);
+      const response = await getAllDepartments(value);
+      setDepartmentsLoading(false);
+      closeModel();
+      setDepartments(response?.data?.departments);
+    } catch (error) {
+      setDepartmentsLoading(false);
+    }
   };
-
-  const onCommunityEdit = (data: any) => {
-    setSingleCenter(data.row);
-    setCommunityModal(true);
-    setCenterHeading("Edit benefit");
+  const handleCloseDepartmentModal = () => {
+    fetchDepartments("");
+    setIsDepartopen(false);
+  };
+  const onEdit = (data: any) => {
+    setDingleDepartments(data?.row);
+    setIsDepartopen(true);
+    setDepartHeading("Edit Department");
   };
 
   const handleDelete = async () => {
     try {
       setLoading(true);
-      await deleteBenefit(rowData?.id);
-      fetchCenters("");
-      closeModel();
+      await deleteDepartment(deleteRow?.id);
+      setLoading(false);
       setStatusData({
         type: "success",
-        message: "Benefit deleted successfully!",
+        message: "Department Deleted Successfully",
       });
-      setLoading(false);
-    } catch (error) {
+      handleCloseDepartmentModal();
+      handleCloseDepartmentModal();
+    } catch (error: any) {
+      setStatusData({
+        type: "error",
+        message: error.response.data.message,
+      });
       setLoading(false);
     }
   };
-
   const handleClick = () => {
-    setCommunityModal(true);
-    setCenterHeading("Add New benefit");
+    setIsDepartopen(true);
+    setDepartHeading("Add New Department");
   };
-
-  const closeModel = () => {
-    setIsOpen(false);
+  const handleDepartmentCenters = async (e: any) => {
+    const { value } = e.target;
+    await fetchDepartments(value);
   };
   const columns: GridColDef[] = [
     {
       field: "name",
-      headerName: "Benefit Percentage",
+      headerName: "Department Name",
       sortable: false,
       editable: false,
       flex: 1,
     },
-
+    {
+      field: "Employee Count",
+      headerName: "Employee Count",
+      sortable: false,
+      editable: false,
+      flex: 1,
+      renderCell: (params: any) => {
+        return (
+          <Stack>
+            <Box>{params?.row?._count?.EmployeeDepartment}</Box>
+          </Stack>
+        );
+      },
+      valueGetter: (params: any) => params.row?._count?.EmployeeDepartment,
+    },
+    {
+      field: "Date Created",
+      headerName: "Date Created",
+      sortable: false,
+      editable: false,
+      flex: 1,
+      renderCell: (params: any) => {
+        return (
+          <Stack>
+            <Box>{moment(params?.row?.created_at).format("D-MMM YYYY")}</Box>
+          </Stack>
+        );
+      },
+      valueGetter: (params: any) =>
+        moment(params.row?.created_at).format("D-MMM YYYY"),
+    },
     {
       field: "",
       headerName: "",
       sortable: false,
+
       flex: 0.5,
-      renderCell: (data: any) => (
+      renderCell: (data?: any) => (
         <Stack
           direction="row"
           gap="10px"
@@ -254,7 +288,7 @@ const Benefit = () => {
             startIcon={<DeleteOutlineIcon />}
             onClick={() => {
               setIsOpen(true);
-              setRowData(data);
+              setDeleteRow(data);
             }}
           >
             Delete
@@ -264,7 +298,7 @@ const Benefit = () => {
             color="primary"
             size="small"
             startIcon={<EditNoteIcon />}
-            onClick={() => onCommunityEdit(data)}
+            onClick={() => onEdit(data)}
           >
             Edit
           </Button>
@@ -272,6 +306,9 @@ const Benefit = () => {
       ),
     },
   ];
+  const closeModel = () => {
+    setIsOpen(false);
+  };
   return (
     <>
       <StyledBox className="mainTableBlock">
@@ -280,30 +317,34 @@ const Benefit = () => {
         </Typography>
         <Box className="page-subheader">
           <Typography className="page-title" variant="h4">
-            Benefit Percentage
+            Departments
           </Typography>
 
           <Buttons
             variant="contained"
             color="primary"
             size="medium"
-            btntext="Add New benefit"
+            btntext="Add New Department"
             startIcon={<AddIcon />}
             onClick={handleClick}
             className="btn-add-title"
           />
         </Box>
-
         <div className="inner-table-holder">
           <InputSearch
-            onChange={(e: any) => fetchCenters(e.target.value)}
+            onChange={(e: any) => handleDepartmentCenters(e)}
             placeholder="Search..."
           />
-          {center.length == 0 ? (
+          {departments?.length == 0 ? (
             ""
           ) : (
             <StyleDataGrid
-              rows={center.length == 0 ? [] : center}
+              loading={departmentsLoading}
+              rows={
+                typeof departments == "undefined" || !departments
+                  ? []
+                  : departments
+              }
               columns={columns}
               initialState={{
                 pagination: {
@@ -316,27 +357,27 @@ const Benefit = () => {
             />
           )}
         </div>
+        <DeleteModal
+          open={isOpen}
+          handleOK={() => handleDelete()}
+          handleClose={closeModel}
+          loading={loading}
+          heading="Are you sure you want to delete?"
+        />
+        <DepartmentInfo
+          open={isDepartOpen}
+          handleClose={handleCloseDepartmentModal}
+          heading={departHeading}
+          subheading="Department Information"
+          singleDepartments={singleDepartments}
+          setDingleDepartments={setDingleDepartments}
+        />
+        <StatusModal
+          statusData={statusData}
+          onClose={() => setStatusData(null)}
+        />
       </StyledBox>
-      <StatusModal
-        statusData={statusData}
-        onClose={() => setStatusData(null)}
-      />
-      <BenefitModal
-        open={isCommunityOpen}
-        handleClose={handleCloseCommunityModal}
-        heading={centerHeading}
-        subheading="Benefits Information"
-        singleCenter={singleCenter}
-        setSingleCenter={setSingleCenter}
-      />
-      <DeleteModal
-        open={isOpen}
-        handleOK={() => handleDelete()}
-        handleClose={closeModel}
-        loading={loading}
-        heading="Are you sure you want to delete?"
-      />
     </>
   );
 };
-export default Benefit;
+export default Departments;

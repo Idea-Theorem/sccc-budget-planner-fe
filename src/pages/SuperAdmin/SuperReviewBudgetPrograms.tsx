@@ -1,37 +1,35 @@
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import TabsArea from "../../../components/Tabs";
-import Status from "../../../utils/dumpData";
-import { Stack, Typography } from "@mui/material";
+import MainHeaderComponent from "../../components/MainHeader";
+import TabsArea from "../../components/Tabs";
+import { getProgramInDepartment } from "../../services/centersServices";
 import React, { useEffect, useState } from "react";
-import { RootState } from "../../../store";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { capitalizeFirstLetter, formatNumber } from "../../../utils";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import Status from "../../utils/dumpData";
+import { capitalizeFirstLetter, formatNumber } from "../../utils";
+import { Stack, Typography } from "@mui/material";
 import moment from "moment";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+
 import {
   storeProgramFromStatus,
   storeSingleProgram,
-} from "../../../store/reducers/programSlice";
-import SelectDemo from "../../../components/Select";
-import { getAllDepartments } from "../../../services/departmentServices";
-import { getProgramInDepartment } from "../../../services/centersServices";
+} from "../../store/reducers/programSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { RootState } from "../../store";
 const StyledBox = styled(Box)(() => ({
   "& .dashboardCards": {
     display: "flex",
     justifyContent: "space-between",
     margin: "0 -12px",
   },
-  // Color: theme.palette.secondary.light,
-  "& .back": {
-    display: "flex",
-    alignItems: "center",
-    fontSize: "15px",
-    lineHeight: "26px",
-    color: "#303030",
-    fontWeight: "500",
-    gap: "10px",
+  ".appHeader": {
+    paddingBottom: "5px",
+
+    "& .title": {
+      fontWeight: "500",
+      fontSize: "14px",
+    },
   },
 
   ".breadcrumbs": {
@@ -44,7 +42,6 @@ const StyledBox = styled(Box)(() => ({
       fontSize: "14px",
       lineHeight: "21px",
       cursor: "pointer",
-
       "&.previous-item": {
         cursor: "pointer",
         color: "#1E88E5",
@@ -56,45 +53,21 @@ const StyledBox = styled(Box)(() => ({
       height: "auto",
     },
   },
-
-  ".departmentSelect ": {
-    padding: "20px 0 8px",
-
-    ".input-wrap": {
-      ".MuiInputBase-root": {
-        minWidth: "300px",
-      },
-
-      ".MuiSelect-select": {
-        fontWeight: "500",
-      },
-    },
-  },
-
-  "& .right-arrow": {
-    width: "15px",
-    height: "15px",
-  },
-
-  "& .name": {
-    fontSize: "20px",
-    lineHeight: "24.7px",
-    color: "#000000DE",
-    margin: "0 0 10px",
-    fontWeight: "600",
-    padding: "20px 0 0",
-  },
-
-  "& .amount-text": {
-    fontSize: "16px",
-    lineHeight: "20px",
-    color: "#000000DE",
-    margin: "0 0 10px",
-    fontWeight: "400",
-  },
 }));
-const RecreationAndCultureScreen = ({}: any) => {
-  const tableColumnsTitleArray = [
+
+const SuperReviewBudgetPrograms = () => {
+  const [center, setCenters] = useState([]);
+  const [totalBudget, settotalBudget] = useState("");
+  const [tabstatus, setTabstatus] = React.useState(Status.PENDING);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  console.log(tabstatus);
+  const { currentDepartment } = useSelector(
+    (state: RootState) => state.program
+  );
+
+  const tableColumnsProgram = [
     [
       {
         field: "name",
@@ -112,21 +85,13 @@ const RecreationAndCultureScreen = ({}: any) => {
         valueGetter: (params: any) =>
           params?.row?.code + "-" + params?.row?.name,
       },
+
       {
         field: "status",
         headerName: "Status",
         sortable: false,
         editable: false,
         flex: 1,
-        renderCell: (params: any) => {
-          return (
-            <Stack>
-              <Box>{capitalizeFirstLetter(params?.row?.status)}</Box>
-            </Stack>
-          );
-        },
-        valueGetter: (params: any) =>
-          capitalizeFirstLetter(params?.row?.status),
       },
 
       {
@@ -180,19 +145,10 @@ const RecreationAndCultureScreen = ({}: any) => {
     [
       {
         field: "name",
-        headerName: "Program Name",
+        headerName: "Center Name",
         sortable: false,
         editable: false,
         flex: 1,
-        renderCell: (params: any) => {
-          return (
-            <Stack>
-              <Box>{params?.row?.code + "-" + params?.row?.name}</Box>
-            </Stack>
-          );
-        },
-        valueGetter: (params: any) =>
-          params?.row?.code + "-" + params?.row?.name,
       },
       {
         field: "status",
@@ -227,6 +183,13 @@ const RecreationAndCultureScreen = ({}: any) => {
         valueGetter: (params: any) => formatNumber(params?.row?.programBudget),
       },
 
+      {
+        field: "nPrograms",
+        headerName: "No. Dept.",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
       {
         field: "created_at",
         headerName: "Submission Date",
@@ -262,19 +225,10 @@ const RecreationAndCultureScreen = ({}: any) => {
     [
       {
         field: "name",
-        headerName: "Program Name",
+        headerName: "Center Name",
         sortable: false,
         editable: false,
         flex: 1,
-        renderCell: (params: any) => {
-          return (
-            <Stack>
-              <Box>{params?.row?.code + "-" + params?.row?.name}</Box>
-            </Stack>
-          );
-        },
-        valueGetter: (params: any) =>
-          params?.row?.code + "-" + params?.row?.name,
       },
       {
         field: "status",
@@ -282,15 +236,6 @@ const RecreationAndCultureScreen = ({}: any) => {
         sortable: false,
         editable: false,
         flex: 1,
-        renderCell: (params: any) => {
-          return (
-            <Stack>
-              <Box>{capitalizeFirstLetter(params?.row?.status)}</Box>
-            </Stack>
-          );
-        },
-        valueGetter: (params: any) =>
-          capitalizeFirstLetter(params?.row?.status),
       },
 
       {
@@ -309,6 +254,13 @@ const RecreationAndCultureScreen = ({}: any) => {
         valueGetter: (params: any) => formatNumber(params?.row?.programBudget),
       },
 
+      {
+        field: "nPrograms",
+        headerName: "No. Dept.",
+        sortable: false,
+        editable: false,
+        flex: 1,
+      },
       {
         field: "created_at",
         headerName: "Submission Date",
@@ -334,114 +286,73 @@ const RecreationAndCultureScreen = ({}: any) => {
         renderCell: (params: any) => {
           return (
             <Stack>
-              <Box>{params?.row?._count?.Comment}</Box>
+              <Box>{formatNumber(params?.row?._count?.Comment)}</Box>
             </Stack>
           );
         },
-        valueGetter: (params: any) => params?.row?._count?.Comment,
+        valueGetter: (params: any) =>
+          formatNumber(params?.row?._count?.Comment),
       },
     ],
   ];
-  const { singleDepartName } = useSelector((state: RootState) => state.program);
-  const [tabstatus, setTabstatus] = React.useState(Status.PENDING);
-  const [clonedProgram, setClonedProgram] = React.useState<any>([]);
-  const [programInDepartment, setProgramInDepartment] = React.useState<any>([]);
-  const [departments, setDepartments] = useState<any>([]);
-  const [activeDepartment, setActiveDepartment] = useState<any>("");
-  const [totalBudget, settotalBudget] = useState("");
-
-  const dispatch = useDispatch();
-  console.log(tabstatus);
-  const [status, setStatus] = React.useState<string>("");
-  const navigate = useNavigate();
-  const goBack = () => {
-    navigate("/admin/review-budget");
-  };
-
+  const array = [{ text: "Approve" }, { text: "Reject" }];
   useEffect(() => {
-    fetchDepartments();
-  }, []);
-  const fetchDepartments = async () => {
-    try {
-      const response = await getAllDepartments("");
-      const matchDepartment = response?.data?.departments.find(
-        (item: any) => item?.name === singleDepartName?.name
-      );
-      setActiveDepartment(matchDepartment?.name);
-      settotalBudget(matchDepartment?.value);
-      setDepartments(response?.data?.departments);
-    } catch (error) {}
-  };
-
-  const receiveDepartment = async (value: any) => {
-    try {
-      const filteredID = departments.find((item: any) => item?.name === value);
-      setActiveDepartment(filteredID?.name);
-      const res = await getProgramInDepartment(filteredID?.id);
-      settotalBudget(res?.data?.totalBudget);
-      setClonedProgram(res?.data?.programs);
-      const filteredArray = res?.data?.programs?.filter(
-        (item: any) => item?.status?.toLowerCase() == tabstatus?.toLowerCase()
-      );
-      setProgramInDepartment(filteredArray);
-    } catch (error) {}
-  };
-
-  useEffect(() => {
-    if (departments?.length > 0) {
-      receiveDepartment(activeDepartment);
+    if (currentDepartment?.id) {
+      fetchProgramInDepartment(currentDepartment?.id);
     }
-  }, [departments]);
+  }, [currentDepartment]);
 
-  useEffect(() => {
-    const filteredArray = clonedProgram.filter(
-      (item: any) => item?.status?.toLowerCase() == tabstatus?.toLowerCase()
-    );
-    setProgramInDepartment(filteredArray);
-    if (false) {
-      setStatus("");
-    }
-  }, [tabstatus, departments]);
-
-  const onRowClick = (data: any) => {
-    dispatch(storeSingleProgram(data));
+  const handleSingleRow = async (row: any) => {
+    dispatch(storeSingleProgram(row));
     dispatch(storeProgramFromStatus(Status.DEFAULT));
     navigate("/program-head/create");
   };
 
-  const receiveProgramSearch = (value: string) => {
-    const filteredArray = clonedProgram.filter((item: any) =>
-      item?.name?.toLowerCase().includes(value.toLowerCase())
-    );
-    setProgramInDepartment(filteredArray);
+  const fetchProgramInDepartment = async (id: string) => {
+    try {
+      const res = await getProgramInDepartment(id);
+      setCenters(res?.data?.programs);
+      settotalBudget(res?.data?.totalBudget);
+    } catch (error) {}
   };
+
+  const handleBackFunctionality = () => {};
 
   return (
     <StyledBox className="appContainer">
       <Box className="breadcrumbs">
         <Typography
-          onClick={() => goBack()}
           className="breadcrumbs-item previous-item"
+          onClick={() => navigate("/super-admin/review-budgets")}
         >
-          Review Budgets
+          Review Budgets Centre
         </Typography>
         <ArrowForwardIosIcon className="right-arrow" />
-        <Typography onClick={() => goBack()} className="breadcrumbs-item">
-          Departments
+        <Typography
+          className="breadcrumbs-item previous-item"
+          onClick={() => navigate("/super-admin/review-budgets")}
+        >
+          Centre
+        </Typography>
+        <ArrowForwardIosIcon className="right-arrow" />
+        <Typography
+          className="breadcrumbs-item"
+          onClick={() => navigate("/super-admin/review-budgets-departments")}
+        >
+          Department
         </Typography>
       </Box>
-      <Typography variant="h3">Review Budget</Typography>
-      <SelectDemo
-        parentClass="departmentSelect"
-        title=""
-        receiveValue={receiveDepartment}
-        list={departments}
-        value={activeDepartment}
-        placeholder="Please Select"
+      <MainHeaderComponent
+        array={array}
+        action={true}
+        title={""}
+        subdes={currentDepartment.name}
+        subheading="Review Budgets"
+        btnTitle="Actions"
+        subHeader={true}
+        subTitle={`Total Budget: $${formatNumber(totalBudget)}`}
+        onClick={handleBackFunctionality}
       />
-      <Typography className="amount-text">
-        Total Budget: ${formatNumber(totalBudget)}
-      </Typography>
       <TabsArea
         showCursor={true}
         setTabstatus={setTabstatus}
@@ -450,14 +361,12 @@ const RecreationAndCultureScreen = ({}: any) => {
           { title: "Approved" },
           { title: "Rejected" },
         ]}
-        table={tableColumnsTitleArray}
-        row={programInDepartment}
-        currentStatus={status}
-        onRowClick={onRowClick}
-        receiveProgramSearch={receiveProgramSearch}
+        table={tableColumnsProgram}
+        row={center}
+        onRowClick={handleSingleRow}
       />
     </StyledBox>
   );
 };
 
-export default RecreationAndCultureScreen;
+export default SuperReviewBudgetPrograms;

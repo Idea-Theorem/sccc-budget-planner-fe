@@ -18,6 +18,7 @@ import AttentionModal from "../../../models/AttentionModal";
 import { capitalizeFirstLetter, formatNumber } from "../../../utils";
 import { Stack } from "@mui/material";
 import moment from "moment";
+import StatusModal from "../../../components/StatusModal";
 const StyledBox = styled(Box)(() => ({
   "& .dashboardCards": {
     display: "flex",
@@ -49,34 +50,40 @@ const ReviewBudgetScreen = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          capitalizeFirstLetter(params?.row?.status),
       },
-      // {
-      //   field: "lYearBudget",
-      //   headerName: "Last Year Budget",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "budget",
         headerName: "Budget",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>${formatNumber(params?.row?.totalBudget)}</Box>
+            </Stack>
+          );
+        },
+        valueGetter: (params: any) => formatNumber(params?.row?.totalBudget),
       },
-      // {
-      //   field: "profit",
-      //   headerName: "Profit",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "nPrograms",
         headerName: "No. Programs",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{params?.row?._count?.Program}</Box>
+            </Stack>
+          );
+        },
+        valueGetter: (params: any) => params?.row?._count?.Program,
       },
       {
         field: "created_at",
@@ -91,9 +98,11 @@ const ReviewBudgetScreen = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          moment(params?.row?.created_at).format("D-MMM YYYY"),
       },
       {
-        field: "comments",
+        field: "totalComments",
         headerName: "Comments",
         sortable: false,
         editable: false,
@@ -121,34 +130,40 @@ const ReviewBudgetScreen = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          capitalizeFirstLetter(params?.row?.status),
       },
-      // {
-      //   field: "lYearBudget",
-      //   headerName: "Last Year Budget",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "budget",
         headerName: "Budget",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>${formatNumber(params?.row?.totalBudget)}</Box>
+            </Stack>
+          );
+        },
+        valueGetter: (params: any) => formatNumber(params?.row?.totalBudget),
       },
-      // {
-      //   field: "profit",
-      //   headerName: "Profit",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "nPrograms",
         headerName: "No. Programs",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{params?.row?._count?.Program}</Box>
+            </Stack>
+          );
+        },
+        valueGetter: (params: any) => params?.row?._count?.Program,
       },
       {
         field: "created_at",
@@ -163,9 +178,11 @@ const ReviewBudgetScreen = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          moment(params?.row?.created_at).format("D-MMM YYYY"),
       },
       {
-        field: "comments",
+        field: "totalComments",
         headerName: "Comments",
         sortable: false,
         editable: false,
@@ -193,34 +210,40 @@ const ReviewBudgetScreen = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          capitalizeFirstLetter(params?.row?.status),
       },
-      // {
-      //   field: "lYearBudget",
-      //   headerName: "Last Year Budget",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "budget",
         headerName: "Budget",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>${formatNumber(params?.row?.totalBudget)}</Box>
+            </Stack>
+          );
+        },
+        valueGetter: (params: any) => formatNumber(params?.row?.totalBudget),
       },
-      // {
-      //   field: "profit",
-      //   headerName: "Profit",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "nPrograms",
         headerName: "No. Programs",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>{params?.row?._count?.Program}</Box>
+            </Stack>
+          );
+        },
+        valueGetter: (params: any) => params?.row?._count?.Program,
       },
       {
         field: "created_at",
@@ -235,9 +258,11 @@ const ReviewBudgetScreen = () => {
             </Stack>
           );
         },
+        valueGetter: (params: any) =>
+          moment(params?.row?.created_at).format("D-MMM YYYY"),
       },
       {
-        field: "comments",
+        field: "totalComments",
         headerName: "Comments",
         sortable: false,
         editable: false,
@@ -245,7 +270,7 @@ const ReviewBudgetScreen = () => {
       },
     ],
   ];
-  const array = [{ text: "Approved" }, { text: "Rejected" }];
+  const array = [{ text: "Approve" }, { text: "Reject" }];
 
   const [tabstatus, setTabstatus] = React.useState(Status.PENDING);
   const [departmentList, setDepartmentList] = React.useState<any>([]);
@@ -253,6 +278,7 @@ const ReviewBudgetScreen = () => {
   const [selectedRows, setSelectedRows] = React.useState<any>([]);
   const [attentionModal, setAttentionModal] = useState<any>(false);
   const [totalBudget, setTotalBudget] = useState<any>("");
+  const [statusData, setStatusData] = useState<any>(null);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -268,9 +294,9 @@ const ReviewBudgetScreen = () => {
     } catch (error) {}
   };
   const handleStatusChange = (selectedStatus: any) => {
-    if (selectedStatus === "Approved") {
+    if (selectedStatus === "Approve") {
       setStatus("APPROVED");
-    } else if (selectedStatus === "Rejected") {
+    } else if (selectedStatus === "Reject") {
       setStatus("REJECTED");
     }
     setAttentionModal(true);
@@ -279,12 +305,23 @@ const ReviewBudgetScreen = () => {
     setSelectedRows(data);
   };
   const handleUpdate = async () => {
-    const data = {
-      departmentIds: selectedRows,
-      status: status,
-    };
-    const response = await getSingleDepartments(data);
-    setUpdateprogram(response?.data);
+    try {
+      const data = {
+        departmentIds: selectedRows,
+        status: status,
+      };
+      const response = await getSingleDepartments(data);
+      setUpdateprogram(response?.data);
+      setStatusData({
+        type: "success",
+        message: "Department status updated successfully!",
+      });
+    } catch (error: any) {
+      setStatusData({
+        type: "error",
+        message: error.response?.data?.message,
+      });
+    }
   };
   const onRowClick = async (data: any) => {
     if (data) {
@@ -313,19 +350,16 @@ const ReviewBudgetScreen = () => {
         title="Review Budgets"
         btnTitle="Actions"
         subTitle={`Total Budget: $${formatNumber(totalBudget)}`}
-        // subTitle={`Total Budget: 0`}
         onStatusChange={handleStatusChange}
         subHeader={true}
-        // handleUpdate={handleUpdate}
       />
       <TabsArea
+        showCursor={true}
         setTabstatus={setTabstatus}
         tabsTitleArray={[
           { title: "Pending" },
           { title: "Approved" },
           { title: "Rejected" },
-          // { title: "Drafts" },
-          // { title: "History" },
         ]}
         table={tableColumnsTitleArray}
         row={departmentList?.departments}
@@ -335,11 +369,14 @@ const ReviewBudgetScreen = () => {
         checkout={true}
         receiveProgramSearch={receiveProgramSearch}
       />
+      <StatusModal
+        statusData={statusData}
+        onClose={() => setStatusData(null)}
+      />
       <AttentionModal
         open={attentionModal}
         handleClose={() => setAttentionModal(false)}
         handleOK={handleOK}
-        // loading={isSubmitting}
         heading="Attention"
         text="You are changing the status of the program"
       />

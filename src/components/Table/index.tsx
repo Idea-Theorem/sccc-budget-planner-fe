@@ -6,6 +6,10 @@ const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
     position: "relative",
+
+    ".MuiDataGrid-footerContainer": {
+      border: "none",
+    },
   },
 
   "& .MuiDataGrid-toolbarContainer": {
@@ -16,6 +20,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
       fontSize: "13px",
       letterSpacing: "0.8px",
       marginRight: "-1px",
+      fontFamily: "Work Sans",
 
       "&:hover": {
         color: `${theme.palette.primary.main} !important`,
@@ -25,10 +30,14 @@ const StyledBox = styled(Box)(({ theme }) => ({
   ".MuiDataGrid-virtualScroller": {
     overflowY: "auto",
     overflowX: "hidden",
-  }
+  },
 }));
 const StyleDataGrid = styled(DataGrid)(() => ({
   width: "100%",
+
+  ".MuiDataGrid-iconButtonContainer ": {
+    display: "none !important",
+  },
 
   ".pointer-cursor": {
     cursor: "pointer",
@@ -70,10 +79,10 @@ const StyleDataGrid = styled(DataGrid)(() => ({
     letterSpacing: "0.17px",
   },
   "& .MuiButtonBase-root.Mui-checked": {
-    color: "rgba(42, 157, 143, 1) !important",
+    color: "#048071 !important",
   },
   "& .Mui-selected .MuiCheckbox-root": {
-    color: "rgba(42, 157, 143, 1) !important",
+    color: "#048071 !important",
   },
   "& .MuiDataGrid-menuIcon": {
     display: "none",
@@ -83,7 +92,7 @@ const StyleDataGrid = styled(DataGrid)(() => ({
       outline: "none",
     },
   },
-  "& .MuiDataGrid-columnSeparator": {
+  "& .MuiDataGrid-columnSeparator , .MuiDataGrid-iconButtonContainer ": {
     visibility: "hidden !important",
   },
   "& .MuiTablePagination-selectLabel": {
@@ -91,7 +100,7 @@ const StyleDataGrid = styled(DataGrid)(() => ({
     fontSize: "12px",
     lineHeight: "20px",
     fontWeight: "400",
-    fontFamily: "Roboto, sans-serif",
+    fontFamily: "Work Sans",
     letterSpacing: "0.4px",
   },
   "& .MuiTablePagination-input": {
@@ -112,9 +121,14 @@ const StyleDataGrid = styled(DataGrid)(() => ({
   ".MuiDataGrid-cell": {
     overflow: "visible !important",
   },
-  "& .MuiButtonBase-root": {
-    color: "rgba(0, 0, 0, 0.56) !important",
+  "& .MuiButtonBase-root:not(:disabled)": {
+    // color: "rgba(0, 0, 0, 0.56) !important",
   },
+
+  ".custom-filter-dropdown .MuiDataGrid-filterForm": {
+  backgroundColor: "transparent",/* Set the background color to transparent or your desired color */
+}
+
 }));
 
 interface TableColumn {
@@ -133,9 +147,10 @@ interface ColumnnsProps {
   handleActionReieve?: any;
   loading: boolean;
   currentTab?: any;
-  checkout?: boolean | any
-  handleProgramSearch?: any
+  checkout?: boolean | any;
+  handleProgramSearch?: any;
   approveTabAcriveClass?: boolean | any;
+  showCursor?: boolean;
 }
 const TableComponent = (props: ColumnnsProps) => {
   const handleSelectionChange = (selection: any) => {
@@ -212,19 +227,24 @@ const TableComponent = (props: ColumnnsProps) => {
             </g>
           </g>
         </svg>
-        <Box sx={{ mt: 1 }}>No Rows</Box>
+        {/* <Box>No Rows</Box> */}
       </StyledGridOverlay>
     );
   }
   return (
     <>
-      <StyledBox className={`mainTableBlock ${props.currentTab == "APPROVED" && props?.approveTabAcriveClass ? "approveActiveTab" : "" }`}>
-        <InputSearch placeholder="Search..." onChange={(e: any) => props?.handleProgramSearch(e?.target?.value)} />
-        {/* {props.loading && 
-        
-        <LinearProgress color="success" />
-        } */}
-        <Box style={{ height: props.loading ? 300 : "", minHeight: 300  }}>
+      <StyledBox
+        className={`mainTableBlock ${
+          props.currentTab == "APPROVED" && props?.approveTabAcriveClass
+            ? "approveActiveTab"
+            : ""
+        }`}
+      >
+        <InputSearch
+          placeholder="Search..."
+          onChange={(e: any) => props?.handleProgramSearch(e?.target?.value)}
+        />
+        <Box style={{ height: props.loading ? 300 : "", minHeight: 300 }}>
           <StyleDataGrid
             rows={props.loading ? [] : props.row}
             columns={props?.columns}
@@ -238,7 +258,6 @@ const TableComponent = (props: ColumnnsProps) => {
             disableRowSelectionOnClick
             slots={{
               toolbar: GridToolbar,
-              // loadingOverlay: LinearProgress as any["loadingOverlay"],
               noRowsOverlay: CustomNoRowsOverlay,
             }}
             onRowClick={handleRowClick}
@@ -247,12 +266,14 @@ const TableComponent = (props: ColumnnsProps) => {
             getRowClassName={() => {
               if (
                 props.currentTab == "REJECTED" ||
-                props.currentTab == "DRAFTED"
+                props.currentTab == "DRAFTED" ||
+                props?.showCursor
               ) {
                 return "pointer-cursor";
               }
-              return ""; // Return empty string if condition is not met
+              return "";
             }}
+        
           />
         </Box>
       </StyledBox>

@@ -14,11 +14,12 @@ const StyledBox = styled(Box)(() => ({
   "& .dashboardCards": {
     display: "flex",
     justifyContent: "space-between",
-    margin: "0 -6px 0 -12px",
+    margin: "36px -6px 0 -12px",
   },
+  
 }));
 const SuperAdminScreen = () => {
-  const array = [{ text: "Export" }, { text: "Reset" }];
+  const array = [{ text: "Export" }];
   const [center, setCenter] = useState([]);
   const [centerLoading, setCenterLoading] = useState<boolean>(false);
   const [isOpen, setIsOpen] = React.useState<any>(false);

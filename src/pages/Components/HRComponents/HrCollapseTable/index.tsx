@@ -18,14 +18,15 @@ import EditNoteIcon from "@mui/icons-material/EditNote";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { deleteEmployee } from "../../../../services/employeeServices";
-import { SaveAlt, Search } from "@mui/icons-material";
-import * as XLSX from "xlsx";
+import { Search } from "@mui/icons-material";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import StatusModal from "../../../../components/StatusModal";
 import DeleteModal from "../../../../models/DeleteModal";
 import { getAllRole } from "../../../../services/roleServices";
 import { roleSort } from "../../../../utils";
+import moment from "moment";
+import ExportCustomeCsv from "../../../../components/ExportcustomCsv";
 
 const HrCollapseableTable = styled(Box)(({ theme }) => ({
   ".MuiTableCell-root": {
@@ -33,11 +34,24 @@ const HrCollapseableTable = styled(Box)(({ theme }) => ({
     border: "none",
   },
 
+  ".bg-gray": {
+    background: "#FAFAFA",
+  },
+
+  ".MuiTableBody-root ": {
+    ">.MuiTableRow-root:nth-child(odd)": {
+      ">.MuiTableCell-root": {
+        borderTop: "1px solid rgba(224, 224, 224, 1)",
+      },
+    },
+  },
+
   "&.dashboardTable": {
     padding: "30px",
 
     "&.pt-0": {
-      paddingTop: "0",
+      padding: "0 0 30px",
+      margin: "-7px 0 0",
     },
 
     "& .MuiPaper-rounded": {
@@ -97,6 +111,38 @@ const HrCollapseableTable = styled(Box)(({ theme }) => ({
       },
     },
   },
+
+  "& .MuiButton-root": {
+    color: "#979797",
+    fontSize: "14px",
+    lineHeight: "24px",
+    "&:hover": {
+      background: "none",
+    },
+  },
+  ".MuiStack-root": {
+    "&.MuiButtonBase-root": {
+      color: theme.palette.text.primary,
+    },
+  },
+
+  ".actions-btn-holder": {
+    ".MuiButton-textPrimary:not(:hover)": {
+      color: "rgba(48, 48, 48, 1)",
+    },
+    ".MuiButton-outlinedPrimary": {
+      color: "#048071",
+
+      "&:hover": {
+        background: "#048071",
+        color: "#fff",
+      },
+    },
+
+    ".MuiButtonBase-root": {
+      textTransform: "capitalize",
+    },
+  },
 }));
 
 function createData(
@@ -140,20 +186,29 @@ function Row(props: {
   isOpen?: any;
   setCurrentRow?: any;
   benefit?: any;
+  setLoading?: any;
+  setStatusData?: any;
+  refresh?: any;
 }) {
   const {
     row,
     handleClick,
-    handleDelete,
-    setCurrentRow,
+
     loading,
-    isOpen,
-    setIsOpen,
+
     benefit,
+    setLoading,
+    setStatusData,
+    refresh,
   } = props;
   const [open, setOpen] = React.useState(false);
-  // const [isOpen, setIsOpen] = React.useState<any>(false);
+  const [isOpen, setIsOpen] = React.useState<any>(false);
   const [titles, setTitles] = React.useState<any>([]);
+  const [currentRow, setCurrentRow] = React.useState<any>("");
+
+  React.useEffect(() => {
+    setOpen(false);
+  }, [row]);
 
   const closeModel = () => {
     setIsOpen(false);
@@ -165,7 +220,7 @@ function Row(props: {
 
   const fetchTitle = async () => {
     try {
-      const response = await getAllRole();
+      const response = await getAllRole("");
       setTitles(response?.data?.role);
     } catch (error) {}
   };
@@ -179,9 +234,29 @@ function Row(props: {
     const findBenefit = benefit?.find((item: any) => item.id === id);
     return findBenefit?.name?.toLowerCase()?.replace(/_/g, " ");
   };
+  const handleDelete = async () => {
+    try {
+      setLoading(true);
+      await deleteEmployee(currentRow?.id);
+      setStatusData({
+        type: "success",
+        message: "Employee Deleted Successfully",
+      });
+      refresh();
+      setLoading(false);
+      setIsOpen(false);
+    } catch (error: any) {
+      setStatusData({
+        type: "error",
+        message: error.response.data.message,
+      });
+      setLoading(false);
+    }
+  };
+
   return (
     <React.Fragment>
-      <TableRow>
+      <TableRow className={`${open ? "bg-gray" : "bg-default"}`}>
         <TableCell padding="none" size="small">
           <IconButton
             aria-label="expand row"
@@ -197,10 +272,11 @@ function Row(props: {
         <TableCell>
           {roleSort(row?.roles)?.[0]?.name?.replace(/_/g, " ")}
         </TableCell>
+        <TableCell>{row?.email}</TableCell>
         <TableCell style={{ textTransform: "capitalize" }}>
           {row?.department?.name}
         </TableCell>
-        <TableCell>{row?.hire_date}</TableCell>
+        <TableCell>{moment(row?.hire_date).format("D-MMM YYYY")}</TableCell>
         <TableCell>
           <Stack
             direction="row"
@@ -208,10 +284,10 @@ function Row(props: {
             alignItems="center"
             justifyContent="flex-end"
             width="100%"
+            className="actions-btn-holder"
           >
             <Button
               variant="text"
-              color="error"
               size="small"
               startIcon={<DeleteOutlineIcon />}
               onClick={() => {
@@ -233,35 +309,35 @@ function Row(props: {
           </Stack>
         </TableCell>
       </TableRow>
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+      <TableRow className="bg-gray">
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box>
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell style={{ paddingLeft: "62px" }}>
+                    <TableCell style={{ paddingLeft: "72px", width: "21.5%" }}>
                       Department
                     </TableCell>
-                    <TableCell>Title</TableCell>
-                    <TableCell>Hourly Rate</TableCell>
+                    <TableCell style={{width: "14.5%" }}>Title</TableCell>
+                    <TableCell style={{width: "28.3%"}}>Hourly Rate</TableCell>
                     <TableCell>Benefit %</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {row?.employeDepartments?.map((element: any) => (
                     <TableRow key={row.id}>
-                      <TableCell style={{ paddingLeft: "62px" }}>
-                        {element?.department?.name.toLowerCase()}
+                      <TableCell style={{ paddingLeft: "72px", width: "21.5%" }}>
+                        {element?.department?.name}
                       </TableCell>
-                      <TableCell style={{ textTransform: "capitalize" }}>
+                      <TableCell style={{ textTransform: "capitalize", width: "14.5%" }}>
                         {fetchTitleName(element?.title)}
                       </TableCell>
-                      <TableCell style={{ textTransform: "capitalize" }}>
-                        {element?.hourlyRate?.toLowerCase()}
+                      <TableCell style={{ textTransform: "capitalize", width: "28.3%" }}>
+                      ${Number(element?.hourlyRate?.toLowerCase()).toFixed(2)}
                       </TableCell>
                       <TableCell style={{ textTransform: "capitalize" }}>
-                        {findBenefitName(element?.salaryRate)}
+                        {findBenefitName(element?.salaryRate)}%
                       </TableCell>
                     </TableRow>
                   ))}
@@ -282,21 +358,6 @@ function Row(props: {
   );
 }
 
-// const rows = [
-//   createData(
-//     "Tomohiro Komase",
-//     "Program Head",
-//     "Recreation & Culture",
-//     "02-Mar-2024"
-//   ),
-//   createData(
-//     "Vishesh Thind",
-//     "Department Head",
-//     "Recreation & Culture",
-//     "02-Mar-2024"
-//   ),
-// ];
-
 export default function HrCollapsibleTable({
   handleClick,
   employeeData,
@@ -310,6 +371,7 @@ export default function HrCollapsibleTable({
   const [loading, setLoading] = React.useState<any>(false);
   const [isOpen, setIsOpen] = React.useState<any>(false);
   const [currentRow, setCurrentRow] = React.useState<any>("");
+  const [titleParent, setTitleParent] = React.useState<any>([]);
 
   const handleChangePage = (_: unknown, newPage: number) => {
     setPage(newPage);
@@ -321,6 +383,17 @@ export default function HrCollapsibleTable({
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  const fetchTitle = async () => {
+    try {
+      const response = await getAllRole("");
+      setTitleParent(response?.data?.role);
+    } catch (error) {}
+  };
+
+  React.useEffect(() => {
+    fetchTitle();
+  }, []);
 
   const handleDelete = async () => {
     try {
@@ -342,13 +415,6 @@ export default function HrCollapsibleTable({
     }
   };
 
-  const exportToExcel = () => {
-    const worksheet = XLSX.utils.json_to_sheet(employeeData);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Data");
-    XLSX.writeFile(workbook, "data.xlsx");
-  };
-
   return (
     <>
       <HrCollapseableTable className="dashboardTable pt-0">
@@ -357,9 +423,12 @@ export default function HrCollapsibleTable({
           alignItems="center"
           justifyContent="space-between"
         >
-          <IconButton aria-label="export" onClick={exportToExcel}>
-            <SaveAlt />
-          </IconButton>
+          <ExportCustomeCsv
+            benefit={benefit}
+            data={employeeData}
+            title={titleParent}
+          />
+
           <TextField
             id="input-with-icon-textfield"
             placeholder="Search..."
@@ -381,6 +450,7 @@ export default function HrCollapsibleTable({
                 <TableCell>&nbsp;</TableCell>
                 <TableCell>Employee Name</TableCell>
                 <TableCell>Roles</TableCell>
+                <TableCell>Email</TableCell>
                 <TableCell></TableCell>
                 <TableCell>Hire date</TableCell>
               </TableRow>
@@ -400,6 +470,9 @@ export default function HrCollapsibleTable({
                     isOpen={isOpen}
                     setCurrentRow={setCurrentRow}
                     benefit={benefit}
+                    setLoading={setLoading}
+                    setStatusData={setStatusData}
+                    refresh={refresh}
                   />
                 ))}
             </TableBody>

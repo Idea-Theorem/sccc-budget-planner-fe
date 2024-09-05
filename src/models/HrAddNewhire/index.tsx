@@ -112,7 +112,7 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
     display: "inline-block",
     fontSize: "16px",
     lineHeight: "1.2",
-    fontFamily: "Roboto",
+    fontFamily: "Work Sans",
 
     "& + .MuiInputBase-root": {
       marginTop: "15px",
@@ -120,7 +120,7 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
   },
 
   "& .MuiInputBase-input": {
-    fontFamily: "Roboto, sans-serif",
+    fontFamily: "Work Sans",
     fontSize: "16px",
     color: theme.palette.common.blackshades["4p"],
   },
@@ -144,6 +144,7 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
       marginLeft: "-14px",
       fontSize: "14px",
       LineHeight: "1",
+      top: "11px",
     },
   },
   ".multiselectgrid": {
@@ -285,22 +286,12 @@ const HrAddNewHire: React.FC<IHrAddEmployee> = ({
     },
     onSubmit: async (values) => {
       try {
-        // if (heading == "Edit Employee") {
-        //   delete values.password;
-
-        //   await updateEmployee(values, singleEmployeeData?.id);
-        //   setStatusData({
-        //     type: "success",
-        //     message: "Employee Update Successfully",
-        //   });
-        // } else {
         let obj = {
           ...values,
-          employeDepartments: data,
+          employeDepartments: cleanFormDataForFormik(data),
         };
         await createEmployee(obj);
 
-        // }
         handleMovedNewhire();
         setStatusData({
           type: "success",
@@ -328,6 +319,13 @@ const HrAddNewHire: React.FC<IHrAddEmployee> = ({
       }
     },
   });
+  const cleanFormDataForFormik = (data: any) => {
+    return data.map((item: any) => ({
+      ...item,
+      hourlyRate: item.hourlyRate.replace("$", ""),
+   
+    }));
+  };
   const {
     values,
     handleChange,
@@ -412,8 +410,15 @@ const HrAddNewHire: React.FC<IHrAddEmployee> = ({
 
   const fetchBenefits = async () => {
     try {
-      const response = await getAllBenefit();
-      setBenefit(response?.data?.centers);
+      const response = await getAllBenefit("");
+      setBenefit(
+        response?.data?.centers
+          ?.map((center: any) => ({
+            ...center,
+            name: `${center?.name}%`,
+          }))
+          .sort((a: any, b: any) => parseInt(a.name) - parseInt(b.name))
+      );
     } catch (error) {}
   };
 
@@ -426,7 +431,7 @@ const HrAddNewHire: React.FC<IHrAddEmployee> = ({
 
   const fetchTitle = async () => {
     try {
-      const response = await getAllRole();
+      const response = await getAllRole("");
       setTitles(response?.data?.role);
     } catch (error) {}
   };
@@ -472,7 +477,26 @@ const HrAddNewHire: React.FC<IHrAddEmployee> = ({
   };
 
   const handleInputChange = (index: any, event: any) => {
-    const { name, value } = event.target;
+    let { name, value } = event.target;
+    if (event?.nativeEvent?.inputType === "deleteContentBackward") {
+      if (name === "hourlyRate" && value.endsWith("$")) {
+        value = value.slice(0, -1);
+      }  else {
+        if (
+          name === "hourlyRate" &&
+          !value.startsWith("$") &&
+          !/^\d*$/.test(value)
+        ) {
+          value = "";
+        }
+      }
+    } else {
+      if (name === "hourlyRate") {
+        if (!value.startsWith("$")) {
+          value = "$" + value;
+        }
+      }
+    }
     const newData: any = [...data];
     newData[index][name] = value;
     setData(newData);
@@ -503,7 +527,7 @@ const HrAddNewHire: React.FC<IHrAddEmployee> = ({
           <Box>
             <Typography
               className="body1"
-              style={{ color: "#303030", fontSize: "16px", fontWeight: "500" }}
+              style={{ color: "#303030", fontSize: "16px", fontWeight: "600" }}
             >
               Employee Information
             </Typography>
@@ -640,7 +664,7 @@ const HrAddNewHire: React.FC<IHrAddEmployee> = ({
           >
             <Typography
               className="subtitle"
-              style={{ color: "#303030", fontSize: "16px", fontWeight: "500" }}
+              style={{ color: "#303030", fontSize: "16px", fontWeight: "600" }}
             >
               Department Works For
             </Typography>

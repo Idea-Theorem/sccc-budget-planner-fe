@@ -12,10 +12,18 @@ import { deleteRole, getAllRole } from "../../../services/roleServices";
 import RoleModal from "../../../models/RoleModal";
 import moment from "moment";
 import DeleteModal from "../../../models/DeleteModal";
+import InputSearch from "../../../components/Input";
+import StatusModal from "../../../components/StatusModal";
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
     position: "relative",
+    paddingTop: "10px",
+  },
+
+  ".inner-table-holder": {
+    position: "relative",
+    minHeight: "80px",
   },
 
   ".page-subheader": {
@@ -26,7 +34,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
     h4: {
       fontSize: "20px",
       lineHeight: "1.2",
-      marginBottom: '0',
+      marginBottom: "16px",
     },
   },
 
@@ -38,6 +46,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
       fontSize: "13px",
       letterSpacing: "0.8px",
       marginRight: "-1px",
+      fontFamily: "Work Sans",
 
       "&:hover": {
         color: `${theme.palette.primary.main} !important`,
@@ -49,9 +58,9 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
   width: "100%",
   "&.MuiDataGrid-root": {
     borderWidth: "1px 0 0 0 !important",
-    borderRadius: '0',
-    marginTop: '15px',
-    paddingTop: '5px',
+    borderRadius: "0",
+    marginTop: "15px",
+    paddingTop: "10px",
     "&.MuiDataGrid-footerContainer": {
       border: "none",
     },
@@ -86,10 +95,10 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
     letterSpacing: "0.17px",
   },
   "& .MuiButtonBase-root.Mui-checked": {
-    color: "rgba(42, 157, 143, 1) !important",
+    color: "#048071 !important",
   },
   "& .Mui-selected .MuiCheckbox-root": {
-    color: "rgba(42, 157, 143, 1) !important",
+    color: "#048071 !important",
   },
   "& .MuiDataGrid-menuIcon": {
     display: "none",
@@ -107,7 +116,7 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
     fontSize: "12px",
     lineHeight: "20px",
     fontWeight: "400",
-    fontFamily: "Roboto, sans-serif",
+    fontFamily: "Work Sans",
     letterSpacing: "0.4px",
   },
   "& .MuiTablePagination-input": {
@@ -138,10 +147,10 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
       color: "rgba(48, 48, 48, 1)",
     },
     ".MuiButton-outlinedPrimary": {
-      color: "rgba(4, 128, 113, 1)",
+      color: "#048071",
 
       "&:hover": {
-        background: "rgba(4, 128, 113, 1)",
+        background: "#048071",
         color: "#fff",
       },
     },
@@ -152,20 +161,6 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
   },
 }));
 
-// const rows = [
-//   {
-//     id: 1,
-//     departmentName: "SCCC",
-//     status: "25",
-//     lYearBudget: "02-Mar-2024",
-//   },
-//   {
-//     id: 2,
-//     departmentName: "ACCC",
-//     status: "20",
-//     lYearBudget: "02-Mar-2024",
-//   },
-// ];
 const HRRole = () => {
   const [loading, setLoading] = useState<boolean>(false);
   console.log(loading);
@@ -175,20 +170,21 @@ const HRRole = () => {
   const [centerHeading, setCenterHeading] = useState<string>("");
   const [open, setOpen] = React.useState(false);
   const [rowData, setRowData] = React.useState<any>(null);
+  const [statusData, setStatusData] = useState<any>(null);
 
-  const fetchCenters = async () => {
+  const fetchCenters = async (name: string) => {
     try {
-      const response = await getAllRole();
+      const response = await getAllRole(name);
       setCenter(response?.data.role);
     } catch (error) {}
   };
 
   useEffect(() => {
-    fetchCenters();
+    fetchCenters("");
   }, []);
 
   const handleCloseCommunityModal = () => {
-    fetchCenters();
+    fetchCenters("");
     setCommunityModal(false);
   };
 
@@ -203,10 +199,18 @@ const HRRole = () => {
       setLoading(true);
       await deleteRole(rowData?.id);
       closeModel();
-      fetchCenters();
+      setStatusData({
+        type: "success",
+        message: "Title deleted successfully!",
+      });
+      fetchCenters("");
       setLoading(false);
-    } catch (error) {
+    } catch (error: any) {
       setLoading(false);
+      setStatusData({
+        type: "error",
+        message: error.response?.data?.message,
+      });
     }
   };
 
@@ -235,8 +239,10 @@ const HRRole = () => {
       flex: 1,
     },
     {
-      field: "buttonsColumn",
+      field: "",
       headerName: "",
+      sortable: false,
+
       flex: 0.5,
       renderCell: (data: any) => (
         <Stack
@@ -291,32 +297,41 @@ const HRRole = () => {
             className="btn-add-title"
           />
         </Box>
-        {/* <InputSearch placeholder="Search..." /> */}
-        {center.length == 0 ? (
-          ""
-        ) : (
-          <StyleDataGrid
-            //  rows={center.length == 0 ? [] : center}
-            rows={
-              center.length === 0
-                ? []
-                : center.map((row: any) => ({
-                    ...row,
-                    created_at: moment(row.created_at).format("D-MMMM-YYYY"),
-                  }))
-            }
-            columns={columns}
-            initialState={{
-              pagination: {
-                paginationModel: { page: 0, pageSize: 5 },
-              },
-            }}
-            pageSizeOptions={[5, 10, 15]}
-            disableRowSelectionOnClick
-            slots={{ toolbar: GridToolbar }}
+
+        <div className="inner-table-holder">
+          <InputSearch
+            onChange={(e: any) => fetchCenters(e.target.value)}
+            placeholder="Search..."
           />
-        )}
+          {center.length == 0 ? (
+            ""
+          ) : (
+            <StyleDataGrid
+              rows={
+                center.length === 0
+                  ? []
+                  : center.map((row: any) => ({
+                      ...row,
+                      created_at: moment(row.created_at).format("D-MMMM-YYYY"),
+                    }))
+              }
+              columns={columns}
+              initialState={{
+                pagination: {
+                  paginationModel: { page: 0, pageSize: 5 },
+                },
+              }}
+              pageSizeOptions={[5, 10, 15]}
+              disableRowSelectionOnClick
+              slots={{ toolbar: GridToolbar }}
+            />
+          )}
+        </div>
       </StyledBox>
+      <StatusModal
+        statusData={statusData}
+        onClose={() => setStatusData(null)}
+      />
       <RoleModal
         open={isCommunityOpen}
         handleClose={handleCloseCommunityModal}

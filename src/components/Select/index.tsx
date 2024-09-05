@@ -19,7 +19,9 @@ const StyledFormControl = styled(FormControl)({
     },
 
     '.MuiSelect-select': {
-      color: "#303030",
+      color: "rgba(0,0,0,0.87)",
+      fontFamily: "Work Sans",
+      fontWeight: "500",
     },
   },
 
@@ -39,14 +41,14 @@ const StyledInputLabel = styled(InputLabel)(({ theme }) => ({
   fontSize: "12px",
   lineHeight: "1",
   fontWeight: "400",
-  fontFamily: "Roboto, sans-serif",
+  fontFamily: "Work Sans",
   color: theme.palette.primary.main,
   position: "static",
   transform: "none",
 }));
 
 const StyledSelect = styled(Select)(({ theme }) => ({
-  fontFamily: "Roboto, sans-serif",
+  fontFamily: "Work Sans",
   fontSize: "16px",
   lineHeight: "1.5",
   fontWeight: "400",

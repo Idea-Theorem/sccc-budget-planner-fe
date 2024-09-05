@@ -1,4 +1,3 @@
-// import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import BasicDatePicker from "../DatePicker";
@@ -10,11 +9,13 @@ import Buttons from "../Button";
 import {
   fetchEmployeeInDepartments,
   getAllDepartmentsByUser,
+  getSingleDepartments,
 } from "../../services/departmentServices";
 import { useEffect, useMemo, useState } from "react";
 import Status, { ProgramCode } from "../../utils/dumpData";
 import { useFormik } from "formik";
 import {
+  checkUserProgram,
   createProgram,
   fetchAllcomments,
   getSingleProgramById,
@@ -65,9 +66,11 @@ const MainSection = ({
   fromParentDisabled = false,
 }: any | { actions: ActionsType[] }) => {
   const [departments, setDepartments] = useState<any>([]);
+
   const [employee, setEmployee] = useState<any>([]);
   const [allComments, setAllComments] = useState<any>([]);
   const [activeDepartment, setActiveDepartment] = useState<any>(null);
+  const [activeWholeDepartment, setActiveWholeDepartment] = useState<any>(null);
   const [attentionModal, setAttentionModal] = useState<any>(false);
   const [actionStatus, setactionStatus] = useState<any>("");
   const [revicedStatus] = useState<any>("");
@@ -125,6 +128,8 @@ const MainSection = ({
   });
   const formikSubmit = async () => {
     let obj: any = {};
+    let toastMessage = "";
+
     if (values?.supply_expense.length == 0) {
       obj = {
         ...values,
@@ -136,18 +141,38 @@ const MainSection = ({
       obj = { ...values };
     }
     obj.employee = cleanFormDataForFormik(obj.employee);
+    obj.income = obj.income.map((item: any) => ({
+      ...item,
+      amount: Number(item.amount),
+    }));
+
+    obj.supply_expense = obj.supply_expense.map((item: any) => ({
+      ...item,
+      amount: Number(item.amount),
+    }));
     try {
+      if (activeWholeDepartment.status === Status.PENDING) {
+        let obj = {
+          departmentIds: [activeWholeDepartment?.id],
+          status: Status.DRAFTED,
+        };
+        await getSingleDepartments(obj);
+      }
       if (singleProgram?.id) {
         await programUpdate(obj, singleProgram?.id);
+        toastMessage = "Program status updated successfully!";
       } else {
         await createProgram(obj);
+        toastMessage = "Program created successfully!";
       }
       formik.resetForm();
       dispatch(storeIncomeList([]));
       dispatch(storeSupplyList([]));
       dispatch(storeSalaryList([]));
       dispatch(storeSingleProgram(null));
-      navigate("/program-head/program");
+      navigate("/program-head/program", {
+        state: { message: toastMessage, type: "success" },
+      });
     } catch (error: any) {
       setStatusData({
         type: "error",
@@ -170,6 +195,7 @@ const MainSection = ({
       dispatch(storeSalaryList(singleProgram?.supply_expense));
       setFieldValue("department_id", singleProgram?.department?.id);
       setActiveDepartment(singleProgram?.department?.name);
+      setActiveWholeDepartment(singleProgram?.department);
       setFieldValue("code", singleProgram?.code);
       fetchEmployeeInDepartment(singleProgram?.department?.id);
       const res = updateEmployeeData(singleProgram?.employee);
@@ -203,6 +229,7 @@ const MainSection = ({
     const filteredID = departments.find((item: any) => item?.name === value);
     setFieldValue("department_id", filteredID?.id);
     setActiveDepartment(filteredID?.name);
+    setActiveWholeDepartment(filteredID);
     const response = await fetchEmployeeInDepartments(filteredID?.id);
     const modifyArray = response?.data?.departments?.map((user: any) => ({
       ...user,
@@ -257,8 +284,10 @@ const MainSection = ({
   };
 
   const handleSave = async () => {
+    let isProgramExist;
     try {
       let obj: any = {};
+      let toastMessage = "";
       if (values?.supply_expense.length == 0) {
         obj = {
           ...values,
@@ -274,18 +303,40 @@ const MainSection = ({
         };
       }
       obj.employee = cleanFormDataForFormik(obj.employee);
+      obj.income = obj.income.map((item: any) => ({
+        ...item,
+        amount: Number(item.amount),
+      }));
+
+      // Convert amount strings to numbers in the supply_expense array
+      obj.supply_expense = obj.supply_expense.map((item: any) => ({
+        ...item,
+        amount: Number(item.amount),
+      }));
       if (singleProgram?.id) {
         await programUpdate(obj, singleProgram?.id);
+        toastMessage = "Program status updated successfully!";
       } else {
+        const chekcUserResponse = await checkUserProgram();
+        isProgramExist = chekcUserResponse?.data?.programs?.exists;
+
         await createProgram(obj);
+        toastMessage = "Program created successfully!";
       }
       formik.resetForm();
       dispatch(storeIncomeList([]));
       dispatch(storeSupplyList([]));
       dispatch(storeSalaryList([]));
       dispatch(storeSingleProgram(null));
-      // navigate("/program-head/draft");
-      navigate("/program-head/program");
+      if (isProgramExist) {
+        navigate("/program-head/program", {
+          state: { message: toastMessage, type: "success" },
+        });
+      } else {
+        navigate("/program-head/draft", {
+          state: { message: toastMessage, type: "success" },
+        });
+      }
     } catch (error: any) {
       setStatusData({
         type: "error",
@@ -320,9 +371,7 @@ const MainSection = ({
     formik.setFieldValue("name", newName);
   };
 
-  const handleBlur = () => {
-    // setIsEditing(false);
-  };
+  const handleBlur = () => {};
 
   const handleStatausSubmit = async (action: any) => {
     let data = {};
@@ -393,181 +442,190 @@ const MainSection = ({
     formik.setFieldValue("status", Status.DRAFTED);
     handleSubmit();
   };
-
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+    }
+  };
   const Save = async () => {};
   return (
-    <Grid item xs={9}>
-      <Grid className="createProgramContent" item xs={12}>
-        <Grid item xs={12}>
-          <Stack className="createProgramContentHead">
-            <TextFields
-              disabled={disable || fromParentDisabled}
-              autoFocus
-              type="text"
-              placeholder="Enter Program Name"
-              value={formik.values.name}
-              onChange={handleChangeEvent}
-              onBlur={handleBlur}
-              variant="standard"
-              error={errors.name ? true : false}
-              helperText={errors.name ? errors.name.toString() : ""}
-            />
+    <>
+      <Grid item xs={9}>
+        <form onKeyDown={handleKeyDown}>
+          <Grid className="createProgramContent" item xs={12}>
+            <Grid item xs={12}>
+              <Stack className="createProgramContentHead">
+                <TextFields
+                  disabled={disable || fromParentDisabled}
+                  autoFocus
+                  className="program-field"
+                  type="text"
+                  placeholder="Enter Program Name"
+                  value={formik.values.name}
+                  onChange={handleChangeEvent}
+                  onBlur={handleBlur}
+                  variant="standard"
+                  error={errors.name ? true : false}
+                  helperText={errors.name ? errors.name.toString() : ""}
+                />
 
-            <Stack direction={"row"} gap={"20px"}>
-              {programFromStatus == Status.CREATED ? (
-                <>
-                  <Buttons
-                    key={0}
-                    btntext="submit"
-                    onClick={(e: any) => handleCustomeSubmit(e)}
-                    variant="outlined"
-                    color="primary"
-                    size="medium"
-                    startIcon={<SaveOutlinedIcon />}
-                  />
-                  <Buttons
-                    key={0}
-                    btntext="Save"
-                    onClick={handleCustomeSave}
-                    variant="outlined"
-                    color="primary"
-                    size="medium"
-                    startIcon={<SaveOutlinedIcon />}
-                  />
-                </>
-              ) : programFromStatus == Status.DRAFTED ||
-                programFromStatus == Status.REVISED ? (
-                <>
-                  <Buttons
-                    key={0}
-                    btntext="Save"
-                    // onClick={() => {
-                    //   setAttentionModal(true);
-                    //   setRevicedStatus("save");
-                    // }}
-                    onClick={handleCustomeSave}
-                    variant="outlined"
-                    color="primary"
-                    size="medium"
-                    startIcon={<SaveOutlinedIcon />}
-                  />
-                  <Buttons
-                    key={0}
-                    btntext={
-                      programFromStatus == Status.REVISED
-                        ? "Resubmit"
-                        : "Submit"
-                    }
-                    onClick={handleSubmit}
-                    variant="contained"
-                    color="primary"
-                    size="medium"
-                    startIcon={<UploadFile />}
-                  />
-                </>
-              ) : programFromStatus == Status.REJECTED ? (
-                <Buttons
-                  key={0}
-                  btntext="Revise"
-                  onClick={() => {
-                    setDisable(false);
-                    dispatch(storeProgramFromStatus(Status.REVISED));
-                  }}
-                  variant="contained"
-                  color="primary"
-                  size="medium"
-                  startIcon={<EditNote />}
-                />
-              ) : programFromStatus == Status.PENDING ? (
-                actions.map((action: ActionsType, index: number) => (
-                  <Buttons
-                    key={index}
-                    btntext={action?.title}
-                    onClick={
-                      action.title == "Reject" || action.title == "Approve"
-                        ? () => handleApproveReject(action.title)
-                        : Save
-                    }
-                    variant={action.variant}
-                    color={action.color}
-                    size={action.size}
-                    startIcon={action.icon}
-                  />
-                ))
-              ) : (
-                ""
-              )}
-            </Stack>
-          </Stack>
-        </Grid>
-        <Grid className="createFormBlock" item xs={10}>
-          <Stack className="createFormFields">
-            <SelectDemo
-              title="Program Code"
-              receiveValue={receiveCode}
-              list={ProgramCode}
-              value={values.code}
-              disabled={disable || fromParentDisabled}
-              placeholder="Please Select"
-              error={errors.code ? true : false}
-              errorMessage={errors.code}
-            />
-            <SelectDemo
-              title="Department"
-              receiveValue={receiveDepartment}
-              list={departments}
-              value={activeDepartment}
-              disabled={disable}
-              placeholder="Please Select"
-              error={errors.department_id ? true : false}
-              errorMessage={errors.department_id}
-            />
-          </Stack>
-          <Stack className="createFormCalendarFields">
-            <Typography variant="h5">Duration</Typography>
-            <Grid container spacing={2} className="datepicker-area">
-              <Grid className="createFormTable" item xs={6}>
-                <BasicDatePicker
-                  disabled={disable}
-                  receiveDate={receiveFromDate}
-                />
-              </Grid>
-              <Grid className="createFormTable" item xs={6}>
-                <BasicDatePicker
-                  disabled={disable}
-                  receiveDate={receiveToDate}
-                />
-              </Grid>
+                <Stack
+                  className="actions-btn-holder"
+                  direction={"row"}
+                  gap={"8px"}
+                >
+                  {programFromStatus == Status.CREATED ? (
+                    <>
+                      <Buttons
+                        key={0}
+                        btntext="Save"
+                        onClick={handleCustomeSave}
+                        variant="outlined"
+                        color="primary"
+                        size="medium"
+                        startIcon={<SaveOutlinedIcon />}
+                      />
+                      <Buttons
+                        key={0}
+                        btntext="submit"
+                        onClick={(e: any) => handleCustomeSubmit(e)}
+                        variant="contained"
+                        color="primary"
+                        size="medium"
+                        startIcon={<SaveOutlinedIcon />}
+                      />
+                    </>
+                  ) : programFromStatus == Status.DRAFTED ||
+                    programFromStatus == Status.REVISED ? (
+                    <>
+                      <Buttons
+                        key={0}
+                        btntext="Save"
+                        onClick={handleCustomeSave}
+                        variant="outlined"
+                        color="primary"
+                        size="medium"
+                        startIcon={<SaveOutlinedIcon />}
+                      />
+                      <Buttons
+                        key={0}
+                        btntext={
+                          programFromStatus == Status.REVISED
+                            ? "Resubmit"
+                            : "Submit"
+                        }
+                        onClick={handleSubmit}
+                        variant="contained"
+                        color="primary"
+                        size="medium"
+                        startIcon={<UploadFile />}
+                      />
+                    </>
+                  ) : programFromStatus == Status.REJECTED ? (
+                    <Buttons
+                      key={0}
+                      btntext="Revise"
+                      onClick={() => {
+                        setDisable(false);
+                        dispatch(storeProgramFromStatus(Status.REVISED));
+                      }}
+                      variant="contained"
+                      color="primary"
+                      size="medium"
+                      startIcon={<EditNote />}
+                    />
+                  ) : programFromStatus == Status.PENDING ? (
+                    actions.map((action: ActionsType, index: number) => (
+                      <Buttons
+                        key={index}
+                        btntext={action?.title}
+                        onClick={
+                          action.title == "Reject" || action.title == "Approve"
+                            ? () => handleApproveReject(action.title)
+                            : Save
+                        }
+                        variant={action.variant}
+                        color={action.color}
+                        size={action.size}
+                        startIcon={action.icon}
+                      />
+                    ))
+                  ) : (
+                    ""
+                  )}
+                </Stack>
+              </Stack>
             </Grid>
-          </Stack>
-        </Grid>
-        <Grid className="createFormTable" item xs={12}>
-          <TabsProgramArea
-            singleProgram={singleProgram}
-            disabled={disable}
-            handleReceived={receiveIncome}
-            handleSupplyExpenseReceived={receiveSupplyExpense}
-            handleSalaryExpenseReceived={receiveSalaryExpense}
-            formik={formik}
-            employee={employee}
-            allComments={allComments}
-            fetchComments={fetchComments}
+            <Grid className="createFormBlock" item xs={10}>
+              <Stack className="createFormFields">
+                <SelectDemo
+                  title="Program Code"
+                  receiveValue={receiveCode}
+                  list={ProgramCode}
+                  value={values.code}
+                  disabled={disable || fromParentDisabled}
+                  placeholder="Please Select"
+                  error={errors.code ? true : false}
+                  errorMessage={errors.code}
+                />
+                <SelectDemo
+                  title="Department"
+                  receiveValue={receiveDepartment}
+                  list={departments}
+                  value={activeDepartment}
+                  disabled={disable}
+                  placeholder="Please Select"
+                  error={errors.department_id ? true : false}
+                  errorMessage={errors.department_id}
+                />
+              </Stack>
+              <Stack className="createFormCalendarFields">
+                <Typography variant="h5">Duration</Typography>
+                <Grid container spacing={2} className="datepicker-area">
+                  <Grid className="createFormTable" item xs={6}>
+                    <BasicDatePicker
+                      disabled={disable}
+                      receiveDate={receiveFromDate}
+                    />
+                  </Grid>
+                  <Grid className="createFormTable" item xs={6}>
+                    <BasicDatePicker
+                      disabled={disable}
+                      receiveDate={receiveToDate}
+                    />
+                  </Grid>
+                </Grid>
+              </Stack>
+            </Grid>
+            <Grid className="createFormTable" item xs={12}>
+              <TabsProgramArea
+                singleProgram={singleProgram}
+                disabled={disable}
+                handleReceived={receiveIncome}
+                handleSupplyExpenseReceived={receiveSupplyExpense}
+                handleSalaryExpenseReceived={receiveSalaryExpense}
+                formik={formik}
+                employee={employee}
+                allComments={allComments}
+                fetchComments={fetchComments}
+              />
+            </Grid>
+            <AttentionModal
+              open={attentionModal}
+              handleClose={() => setAttentionModal(false)}
+              handleOK={handleOK}
+              loading={isSubmitting}
+              heading="Attention"
+              text="Are you sure you want to submit this budget?"
+            />
+          </Grid>
+          <StatusModal
+            statusData={statusData}
+            onClose={() => setStatusData(null)}
           />
-        </Grid>
-        <AttentionModal
-          open={attentionModal}
-          handleClose={() => setAttentionModal(false)}
-          handleOK={handleOK}
-          loading={isSubmitting}
-          heading="Attention"
-          text="Are you sure you want to submit this budget?"
-        />
+        </form>
       </Grid>
-      <StatusModal
-        statusData={statusData}
-        onClose={() => setStatusData(null)}
-      />
-    </Grid>
+    </>
   );
 };
 

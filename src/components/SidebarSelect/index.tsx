@@ -15,31 +15,20 @@ const StyledFormControl = styled(FormControl)({
   ".input-wrap": {
     position: "relative",
   },
-
-  // ".MuiSelect-select": {
-  //   color: "#fff",
-  //   fontWeight: 600,
-  //   textTransform: "capitalize",
-  // },
-
-  // ".MuiSvgIcon-root": {
-  //   color: "#fff",
-  //   top: "calc(50% - 14px)",
-  // },
 });
 
 const StyledInputLabel = styled(InputLabel)(({ theme }) => ({
   fontSize: "12px",
   lineHeight: "1",
   fontWeight: "400",
-  fontFamily: "Roboto, sans-serif",
+  fontFamily: "Work Sans",
   color: theme.palette.primary.main,
   position: "static",
   transform: "none",
 }));
 
 const StyledSelect = styled(Select)(({ theme }) => ({
-  fontFamily: "Roboto, sans-serif",
+  fontFamily: "Work Sans",
   fontSize: "16px",
   lineHeight: "1.5",
   fontWeight: "400",
@@ -71,12 +60,9 @@ export default function SidebarSelect({
     if (typeof inputString === "number") {
       return inputString;
     }
-    // Check if inputString exists
     if (inputString) {
-      // Convert the input string to lowercase and remove underscores
       return inputString.toLowerCase().replace(/_/g, " ");
     } else {
-      // If inputString is undefined or null, return an empty string
       return "";
     }
   }
