@@ -6,6 +6,7 @@ import { BudgetDetailProps } from "../../types/common";
 import Back from "./Back";
 import LeftSection from "./LeftSection";
 import MainSection from "./MainSection";
+import { useNavigate } from "react-router-dom";
 
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.appContainer": {
@@ -269,13 +270,13 @@ const StyledBox = styled(Box)(({ theme }) => ({
 // .
 const BudgetDetail: FC<BudgetDetailProps> = ({
   actions,
-  clickBack,
   fromParentDisabled,
 }) => {
+  const navigate = useNavigate();
   return (
     <StyledBox className="appContainer bgGray">
       <Grid container spacing={2}>
-        <Back onClick={clickBack} />
+        <Back onClick={() => navigate(-1)} />
         <LeftSection />
         <MainSection
           actions={actions}

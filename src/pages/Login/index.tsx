@@ -175,7 +175,7 @@ const Input = () => {
           </FormControl>
           <Buttons
             loading={loginLoading}
-            btntext="Action"
+            btntext="Login"
             variant="contained"
             size="large"
             fullWidth
@@ -184,7 +184,11 @@ const Input = () => {
           />
         </form>
         <Box>
-          <Link className="textLink" href="/forgot-password" variant="subtitle2">
+          <Link
+            className="textLink"
+            href="/forgot-password"
+            variant="subtitle2"
+          >
             Forgot password?
           </Link>
         </Box>

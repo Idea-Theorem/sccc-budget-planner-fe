@@ -226,8 +226,8 @@ const AdminDepartmentProgress = ({
                 mb={2}
                 className="dashboardGraphsList-title"
               >
-                <Box>Departments</Box>
-                <strong>${formatNumber(totalDepartment)}</strong>
+                <Box>{departmentInCenter?.length} Departments</Box>
+                <strong> ${formatNumber(totalDepartment)} </strong>
               </Stack>
 
               {departmentInCenterLoading && departmentInCenter?.length == 0 ? (
@@ -259,7 +259,7 @@ const AdminDepartmentProgress = ({
             <Box className="dashboardGraphsList">
               <Stack direction={"row"} justifyContent="space-between" mb={2}>
                 <Box>
-                  <strong>Programs</strong>
+                  <strong>{rowData?.length} Programs</strong>
                 </Box>
                 <strong>$ {formatNumber(totalPrograms)}</strong>
               </Stack>

@@ -28,6 +28,7 @@ const ApprovedProgram = ({
   count,
   totalCount,
   handleClick,
+  activeWholeDepartment,
 }: any) => {
   const [programs, setPrograms] = React.useState<any>({});
   const [attentionModal, setAttentionModal] = useState<any>(false);
@@ -71,7 +72,9 @@ const ApprovedProgram = ({
           <Stack>
             <Button
               disabled={
-                count !== totalCount || (count == 0 && totalCount == 0)
+                count !== totalCount ||
+                (count == 0 && totalCount == 0) ||
+                activeWholeDepartment?.status == Status.PENDING
                   ? true
                   : false
               }
