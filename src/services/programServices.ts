@@ -20,6 +20,10 @@ const fetchEmployeeInfo = async (user_id: string, department_id?: string) => {
     `/program/employee-info?user_id=${user_id}&department_id=${department_id}`
   );
 };
+
+const checkUserProgram = async () => {
+  return await HTTP_CLIENT.get(`/program/check-user-program`);
+};
 const getAllProgramsByUsers = async (status: any, Searchvalue: string) => {
   return await HTTP_CLIENT.get(
     `/program/fetchProgramByUser/?status=${status}&name=${
@@ -85,4 +89,5 @@ export {
   getAllProgramsByUser,
   resolvedComment,
   fetchEmployeeInfo,
+  checkUserProgram,
 };

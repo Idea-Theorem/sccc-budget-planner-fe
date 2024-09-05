@@ -250,6 +250,7 @@ export default function ResponsiveDrawer(props: Props) {
     navigate(path);
   };
   const { withMore } = filterSidebarActionsWithMore(SIDEBARACTIONS);
+
   const dispatch = useDispatch();
   const handleDrawerClose = () => {
     setMobileOpen(false);
@@ -330,6 +331,18 @@ export default function ResponsiveDrawer(props: Props) {
     navigate("/");
   };
 
+  const isActive = (itemPath: string, currentPath: string) => {
+    return (
+      currentPath === itemPath ||
+      (itemPath === "/super-admin/review-budgets" &&
+        (currentPath === "/super-admin/review-budgets" ||
+          currentPath === "/super-admin/review-budgets-departments" ||
+          currentPath === "/super-admin/review-budgets-program")) ||
+      (itemPath === "/admin/review-budget" &&
+        currentPath === "/admin/recreation")
+    );
+  };
+
   const drawer = (
     <Box>
       <Box className="siteLogo">
@@ -395,7 +408,9 @@ export default function ResponsiveDrawer(props: Props) {
                   handleReceive(item?.path);
                   navigate(item.path ?? "");
                 }}
-                className={location.pathname === item.path ? "active" : ""}
+                className={
+                  isActive(item.path, location.pathname) ? "active" : ""
+                }
               >
                 <ListItemButton>
                   <ListItemText primary={item.title} />

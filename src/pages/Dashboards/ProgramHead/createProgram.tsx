@@ -342,16 +342,6 @@ const CreateProgramScreen = () => {
                         startIcon={<EditNote />}
                         btntext="Resubmit"
                       />
-                      {/* <Button
-                        variant="contained"
-                        color="primary"
-                        size="medium"
-                        startIcon={<EditNote />}
-                      >
-                        Resubmit
-                      </Button> */}
-                      {/* <Buttons startIcon={<Save />} btntext1="Save" />
-                      <Buttons startIcon={<EditNote />} btntext3="ReSubmit" /> */}
                     </Stack>
                   </Stack>
                 </Grid>

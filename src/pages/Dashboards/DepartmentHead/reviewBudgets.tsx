@@ -344,6 +344,7 @@ const DHReviewBudgets = () => {
   const [totalCount, setTotalCount] = useState<any>(null);
   const [attentionModal, setAttentionModal] = useState<any>(false);
   const [activeDepartment, setActiveDepartment] = useState<any>("");
+  const [activeWholeDepartment, setActiveWholeDepartment] = useState<any>("");
   const [statusData, setStatusData] = useState<any>(null);
   const [totalBudget, settotalBudget] = useState("");
   const [loading, setLoading] = useState(false);
@@ -359,6 +360,7 @@ const DHReviewBudgets = () => {
       await receiveDepartment(response?.data?.departments[0]?.id, true, "");
       setDepartmentID(response?.data?.departments[0]?.id);
       setActiveDepartment(response?.data?.departments[0]?.name);
+      setActiveWholeDepartment(response?.data?.departments[0]);
       settotalBudget(response?.data?.departments[0]?.value);
       setDepartments(response?.data?.departments);
       setLoading(false);
@@ -373,14 +375,16 @@ const DHReviewBudgets = () => {
 
       let id = init ? value : filteredID?.id;
       const res = await getProgramInDepartmentBystatus(id, tabstatus, name);
-      console.log("res::::::", res);
       setPrograms(res?.data?.programs);
       settotalBudget(res?.data?.totalBudget);
       if (init) {
         setActiveDepartment(activeDepartment);
+        setActiveWholeDepartment(activeWholeDepartment);
         setDepartmentID(value);
       } else {
         setActiveDepartment(filteredID?.name);
+        setActiveWholeDepartment(filteredID);
+
         setDepartmentID(filteredID?.id);
       }
     } catch (error) {}
@@ -444,6 +448,8 @@ const DHReviewBudgets = () => {
     };
     try {
       await getSingleDepartments(obj);
+      await fetchDepartments();
+      setTabstatus(Status.PENDING);
       setStatusData({
         type: "success",
         message: "Department Status Updated Successfully",
@@ -502,6 +508,7 @@ const DHReviewBudgets = () => {
           {tabstatus == Status.APPROVED && (
             <Box className="approvedProgramBlock">
               <ApprovedProgram
+                activeWholeDepartment={activeWholeDepartment}
                 tabstatus={tabstatus}
                 count={count}
                 totalCount={totalCount}

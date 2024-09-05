@@ -9,11 +9,13 @@ import Buttons from "../Button";
 import {
   fetchEmployeeInDepartments,
   getAllDepartmentsByUser,
+  getSingleDepartments,
 } from "../../services/departmentServices";
 import { useEffect, useMemo, useState } from "react";
 import Status, { ProgramCode } from "../../utils/dumpData";
 import { useFormik } from "formik";
 import {
+  checkUserProgram,
   createProgram,
   fetchAllcomments,
   getSingleProgramById,
@@ -64,9 +66,11 @@ const MainSection = ({
   fromParentDisabled = false,
 }: any | { actions: ActionsType[] }) => {
   const [departments, setDepartments] = useState<any>([]);
+
   const [employee, setEmployee] = useState<any>([]);
   const [allComments, setAllComments] = useState<any>([]);
   const [activeDepartment, setActiveDepartment] = useState<any>(null);
+  const [activeWholeDepartment, setActiveWholeDepartment] = useState<any>(null);
   const [attentionModal, setAttentionModal] = useState<any>(false);
   const [actionStatus, setactionStatus] = useState<any>("");
   const [revicedStatus] = useState<any>("");
@@ -142,12 +146,18 @@ const MainSection = ({
       amount: Number(item.amount),
     }));
 
-    // Convert amount strings to numbers in the supply_expense array
     obj.supply_expense = obj.supply_expense.map((item: any) => ({
       ...item,
       amount: Number(item.amount),
     }));
     try {
+      if (activeWholeDepartment.status === Status.PENDING) {
+        let obj = {
+          departmentIds: [activeWholeDepartment?.id],
+          status: Status.DRAFTED,
+        };
+        await getSingleDepartments(obj);
+      }
       if (singleProgram?.id) {
         await programUpdate(obj, singleProgram?.id);
         toastMessage = "Program status updated successfully!";
@@ -185,6 +195,7 @@ const MainSection = ({
       dispatch(storeSalaryList(singleProgram?.supply_expense));
       setFieldValue("department_id", singleProgram?.department?.id);
       setActiveDepartment(singleProgram?.department?.name);
+      setActiveWholeDepartment(singleProgram?.department);
       setFieldValue("code", singleProgram?.code);
       fetchEmployeeInDepartment(singleProgram?.department?.id);
       const res = updateEmployeeData(singleProgram?.employee);
@@ -218,6 +229,7 @@ const MainSection = ({
     const filteredID = departments.find((item: any) => item?.name === value);
     setFieldValue("department_id", filteredID?.id);
     setActiveDepartment(filteredID?.name);
+    setActiveWholeDepartment(filteredID);
     const response = await fetchEmployeeInDepartments(filteredID?.id);
     const modifyArray = response?.data?.departments?.map((user: any) => ({
       ...user,
@@ -272,6 +284,7 @@ const MainSection = ({
   };
 
   const handleSave = async () => {
+    let isProgramExist;
     try {
       let obj: any = {};
       let toastMessage = "";
@@ -304,6 +317,9 @@ const MainSection = ({
         await programUpdate(obj, singleProgram?.id);
         toastMessage = "Program status updated successfully!";
       } else {
+        const chekcUserResponse = await checkUserProgram();
+        isProgramExist = chekcUserResponse?.data?.programs?.exists;
+
         await createProgram(obj);
         toastMessage = "Program created successfully!";
       }
@@ -312,9 +328,15 @@ const MainSection = ({
       dispatch(storeSupplyList([]));
       dispatch(storeSalaryList([]));
       dispatch(storeSingleProgram(null));
-      navigate("/program-head/draft", {
-        state: { message: toastMessage, type: "success" },
-      });
+      if (isProgramExist) {
+        navigate("/program-head/program", {
+          state: { message: toastMessage, type: "success" },
+        });
+      } else {
+        navigate("/program-head/draft", {
+          state: { message: toastMessage, type: "success" },
+        });
+      }
     } catch (error: any) {
       setStatusData({
         type: "error",
@@ -456,18 +478,18 @@ const MainSection = ({
                     <>
                       <Buttons
                         key={0}
-                        btntext="submit"
-                        onClick={(e: any) => handleCustomeSubmit(e)}
-                        variant="contained"
+                        btntext="Save"
+                        onClick={handleCustomeSave}
+                        variant="outlined"
                         color="primary"
                         size="medium"
                         startIcon={<SaveOutlinedIcon />}
                       />
                       <Buttons
                         key={0}
-                        btntext="Save"
-                        onClick={handleCustomeSave}
-                        variant="outlined"
+                        btntext="submit"
+                        onClick={(e: any) => handleCustomeSubmit(e)}
+                        variant="contained"
                         color="primary"
                         size="medium"
                         startIcon={<SaveOutlinedIcon />}

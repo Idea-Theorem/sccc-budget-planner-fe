@@ -25,7 +25,11 @@ import {
   resolvedComment,
   updatecomment,
 } from "../../services/programServices";
-import { attachCommentsToProgram, checkIfAllResolved } from "../../utils";
+import {
+  attachCommentsToProgram,
+  checkIfAllResolved,
+  formatNumber,
+} from "../../utils";
 import CommentIcon from "@mui/icons-material/Comment";
 import Status from "../../utils/dumpData";
 
@@ -49,10 +53,9 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
     ".comment-icon": {
       position: "absolute",
       left: "-30px",
-      top: "22px",
+      top: "14px",
       color: "#048071",
       cursor: "pointer",
-      display: "none",
     },
   },
   ".MuiTabs-flexContainer": {
@@ -78,19 +81,26 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
         paddingBottom: "7px !important",
       },
 
+      ".MuiTableRow-root": {
+        "&:hover": {
+          ".MuiTableCell-body": {
+            background: "#DBF0FF",
+          },
+        },
+      },
+
       "& .MuiTableCell-body": {
         border: "0",
         color: "#303030",
         fontFamily: "Work Sans",
         fontSize: "14px",
         fontWeight: "500",
-        padding: "16px 0 0 15px",
+        padding: "8px 0 8px 15px",
         cursor: "pointer",
+        borderRadius: "0 4px 4px 0",
 
-        "&:hover": {
-          ".comment-icon": {
-            display: "block",
-          },
+        "&:first-child": {
+          borderRadius: "4px 0 0 4px",
         },
 
         "&.MuiTableCell-alignRight": {
@@ -106,7 +116,7 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
       "& .MuiTableRow-root": {
         "&:nth-last-child(2)": {
           "& .MuiTableCell-body": {
-            paddingBottom: "22px",
+            // paddingBottom: "22px",
           },
         },
 
@@ -132,16 +142,15 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
             "&.Mui-disabled": {
               color: "#303030",
               textFillColor: "#303030",
-            }
+            },
           },
         },
       },
     },
   },
-  "& .total_amount":{
-    width:"300px"
+  "& .total_amount": {
+    width: "300px",
   },
-  
 }));
 
 function createData(name?: string, amount?: number) {
@@ -210,6 +219,7 @@ export default function TabsProgramArea({
   const [currentExpense, setcurrentExpense] = useState<any>("");
   const [currentComment, setcurrentComment] = useState<any>("");
   const [input, setInput] = useState(false);
+  const [editingRowIndex, setEditingRowIndex] = useState<number | null>(null); // State to track the editing row
   const dispatch = useAppDispatch();
 
   const {
@@ -290,8 +300,7 @@ export default function TabsProgramArea({
       return accumulator + amount;
     }, 0);
 
-    const amount = "$ " + total.toFixed(2); // Optional: format to two decimal places
-    return String(amount);
+    return formatNumber(total);
   }
 
   function capitalizeFirstLetter(str: string | any) {
@@ -378,6 +387,7 @@ export default function TabsProgramArea({
       setInput(false);
     }
   }, [currentExpense, isOpen]);
+
   return (
     <>
       <TabsProgramAreas>
@@ -416,19 +426,26 @@ export default function TabsProgramArea({
                     {row.name}
                   </TableCell>
                   <TableCell align="right" className="input-border">
-                    <TextFields
-                      isSignShow={true}
-                      className="amount_field"
-                      autoFocus={false}
-                      disabled={disabled}
-                      variant="standard"
-                      type="text"
-                      placeholder="$00,000.00"
-                      value={row.amount || ""} 
-                      onChange={(e: any) =>
-                        handleInputChange(index, e.target.value)
-                      } 
-                    />
+                    {editingRowIndex === index ? (
+                      <TextFields
+                        isSignShow={true}
+                        className="amount_field"
+                        autoFocus={true}
+                        disabled={disabled}
+                        variant="standard"
+                        type="text"
+                        placeholder="$00,000.00"
+                        value={row.amount || ""}
+                        onChange={(e: any) =>
+                          handleInputChange(index, e.target.value)
+                        }
+                        onBlur={() => setEditingRowIndex(null)} // Reset editing state on blur
+                      />
+                    ) : (
+                      <div onClick={() => setEditingRowIndex(index)}>
+                        ${formatNumber(row.amount) || "$00,000.00"}
+                      </div>
+                    )}
                   </TableCell>
                 </TableRow>
               ))}
@@ -436,7 +453,7 @@ export default function TabsProgramArea({
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 onClick={() => setIsOpen(false)}
               >
-                <TableCell  component="th" scope="row">
+                <TableCell component="th" scope="row">
                   Total {capitalizeFirstLetter(title)}
                 </TableCell>
                 <TableCell align="right">
