@@ -35,7 +35,7 @@ const Buttons: React.FC<StyledButtonProps> = ({
 }) => {
   return (
     <StyledButton {...props} onClick={onClick}>
-      {loading ? <CircularProgress size={24} color="inherit" /> : btntext}
+      {loading ? <CircularProgress size={32} color="inherit" /> : btntext}
     </StyledButton>
   );
 };

@@ -113,17 +113,51 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     // }
   };
 const handleForgotPassword = async (data: any) => {
-try {
-  setResetLoading(true)
-  const response = await forgotPassword(data)
- setStatusData({
-  type: "success",
-  message: response?.data?.message,
-});
-setResetLoading(false)
-} catch (error) {
-  setResetLoading(false)
-}
+  try {
+    setResetLoading(true)
+    await forgotPassword(data)
+    setStatusData({
+      type: "success",
+      message: "Password reset instructions have been sent to your email",
+    });
+    setResetLoading(false)
+  } catch (error: any) {
+    setResetLoading(false)
+    if (error.response) {
+      // Handle specific API error responses
+      switch (error.response.status) {
+        case 404:
+          setStatusData({
+            type: "error",
+            message: "No account found with this email address",
+          });
+          break;
+        case 429:
+          setStatusData({
+            type: "error",
+            message: "Too many attempts. Please try again later",
+          });
+          break;
+        default:
+          setStatusData({
+            type: "error",
+            message: error.response.data?.message || "Failed to process password reset request",
+          });
+      }
+    } else if (error.request) {
+      // Network error
+      setStatusData({
+        type: "error",
+        message: "Network error. Please check your internet connection",
+      });
+    } else {
+      // Other errors
+      setStatusData({
+        type: "error",
+        message: "An unexpected error occurred. Please try again",
+      });
+    }
+  }
 }
 
 const handleResetPassword = async (data: any) => {

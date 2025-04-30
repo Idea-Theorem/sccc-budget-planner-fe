@@ -1,4 +1,4 @@
-import { TextField } from "@mui/material";
+import { Link, TextField } from "@mui/material";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 import { styled } from "@mui/material/styles";
@@ -158,13 +158,15 @@ const ForgotPasswordScreen = () => {
           </FormControl>
           <Buttons
             loading={resetLoading}
-            btntext="Action"
+            btntext="Submit"
             variant="contained"
             size="large"
             fullWidth
             type="submit"
-            // onClick={() => handleSubmit()}
           />
+          <Link className="textLink" href="/login" variant="subtitle2">
+            Back to login
+          </Link>
         </form>
         <Box>
         

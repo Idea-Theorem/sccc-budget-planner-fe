@@ -1,4 +1,4 @@
-import { TextField } from "@mui/material";
+import { Link,TextField } from "@mui/material";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 import { styled } from "@mui/material/styles";
@@ -149,7 +149,7 @@ const ResetPasswordScreen = () => {
         <Box className="siteLogo">
           <img src={LogoImg} alt="Description image" />
         </Box>
-        <Typography variant="h5">Please Enter Email To Reset Password</Typography>
+        <Typography variant="h5">Please enter the new password</Typography>
         <form noValidate autoComplete="off" onSubmit={handleSubmit}>
           <FormControl className="loginFormItem">
             <TextField
@@ -160,6 +160,7 @@ const ResetPasswordScreen = () => {
               value={values.newPassword}
               name="newPassword"
               onChange={handleChange}
+              type="password"
               helperText={errors.newPassword ? errors.newPassword : touched.newPassword}
             />
            
@@ -173,18 +174,21 @@ const ResetPasswordScreen = () => {
               value={values.confirmPassword}
               name="confirmPassword"
               onChange={handleChange}
+              type="password"
               helperText={errors.confirmPassword ? errors.confirmPassword : touched.confirmPassword}
             />
             </FormControl>
           <Buttons
             loading={resetLoading}
-            btntext="Action"
+            btntext="Submit"
             variant="contained"
             size="large"
             fullWidth
             type="submit"
-            // onClick={() => handleSubmit()}
           />
+          <Link className="textLink" href="/login" variant="subtitle2">
+            Back to login
+          </Link>
         </form>
         <Box>
         

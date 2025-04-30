@@ -175,12 +175,11 @@ const Input = () => {
           </FormControl>
           <Buttons
             loading={loginLoading}
-            btntext="Action"
+            btntext="Submit"
             variant="contained"
             size="large"
             fullWidth
             type="submit"
-            // onClick={() => handleSubmit()}
           />
         </form>
         <Box>

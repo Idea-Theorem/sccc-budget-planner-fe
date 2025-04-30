@@ -2,15 +2,15 @@ import { HTTP_CLIENT } from "../utils/axiosClient";
 import LoginState from "../interfaces/ITheme.interface";
 
 const loggedIn = async (params: LoginState) => {
-  return await HTTP_CLIENT.post("user/login", params);
+  return await HTTP_CLIENT.post("auth/login", params);
 };
 
 const forgotPassword = async (params: LoginState) => {
-  return await HTTP_CLIENT.post("user/forgot-password", params);
+  return await HTTP_CLIENT.post("auth/forgot-password", params);
 };
 
 const resetPassword = async (params: LoginState) => {
-  return await HTTP_CLIENT.post("user/reset-password", params);
+  return await HTTP_CLIENT.post("auth/reset-password", params);
 };
 
 const getUserRole = async () => {
