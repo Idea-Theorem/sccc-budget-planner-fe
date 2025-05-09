@@ -158,7 +158,7 @@ const ForgotPasswordScreen = () => {
           </FormControl>
           <Buttons
             loading={resetLoading}
-            btntext="Submit"
+            btntext="Action"
             variant="contained"
             size="large"
             fullWidth

@@ -175,7 +175,7 @@ const Input = () => {
           </FormControl>
           <Buttons
             loading={loginLoading}
-            btntext="Submit"
+            btntext="Action"
             variant="contained"
             size="large"
             fullWidth
