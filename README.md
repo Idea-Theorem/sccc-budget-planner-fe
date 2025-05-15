@@ -38,4 +38,4 @@ yarn build
 This will generate optimized production-ready files in the 'dist' directory.
 
 ## Deployment
-Make any changes in required files and push them to dev branch. Pipelines are setup to ship and deploy changes to server.
+Make any changes in required files and push them to dev branch. Pipelines are setup to ship and deploy changes to server
