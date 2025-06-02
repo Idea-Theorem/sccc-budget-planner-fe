@@ -589,6 +589,7 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
                   disabled={heading == "Edit Employee" ? true : false}
                   value={values.password}
                   name="password"
+                  type="password"
                   onChange={handleChange}
                   helperText={errors.password ? errors.password.toString() : ""}
                   error={errors.password ? true : false}

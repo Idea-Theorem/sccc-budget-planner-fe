@@ -1,7 +1,7 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 const SecureLayout = ({ allowedRoles }: { allowedRoles?: string[] }) => {
-  console.log(allowedRoles);
+  console.log("allowed roles", allowedRoles);
   // const userInfo: any = localStorage.getItem("userInfo");
 
   // const hasRequiredRole = () => {
@@ -13,6 +13,9 @@ const SecureLayout = ({ allowedRoles }: { allowedRoles?: string[] }) => {
   // };
 
   const location = useLocation();
+  // checking for token
+  const token = localStorage.getItem("authToken");
+  const isAuthenticated = !!token;
 
   //const loading = isLoading;
 
@@ -20,7 +23,7 @@ const SecureLayout = ({ allowedRoles }: { allowedRoles?: string[] }) => {
   //   return <div>Loading...</div>;
   // }
 
-  return true ? (
+  return isAuthenticated ? (
     <Outlet />
   ) : (
     <Navigate to="/login" state={{ from: location }} replace />

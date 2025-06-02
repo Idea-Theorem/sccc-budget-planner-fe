@@ -252,7 +252,8 @@ export default function ResponsiveDrawer(props: Props) {
       default:
       // navigate("/hr");
     }
-  }, [currentRole]);
+  }, [currentRole, navigate]);
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("currentRole");
