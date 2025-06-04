@@ -13,7 +13,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
     position: "relative",
-    borderTop: '1px solid rgba(224, 224, 224, 1)',
+    borderTop: "1px solid rgba(224, 224, 224, 1)",
   },
 
   "& .MuiDataGrid-toolbarContainer": {
@@ -136,28 +136,20 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
   },
 }));
 
-// const rows = [
-//   {
-//     id: 1,
-//     name: "Recreation & Culture",
-//     // status: "5",
-//     lYearBudget: "02-Mar-2024",
-//   },
-//   {
-//     id: 2,
-//     name: "HR",
-//     // status: "5",
-//     lYearBudget: "02-Mar-2024",
-//   },
-// ];
 interface HRTableProps {
   onEdit?: any;
   row?: any;
   refresh?: any;
-  onChange?: any
-  departmentsLoading?: any
+  onChange?: any;
+  departmentsLoading?: any;
 }
-const HRTableComponent: React.FC<HRTableProps> = ({ onEdit, row, refresh, onChange, departmentsLoading }) => {
+const HRTableComponent: React.FC<HRTableProps> = ({
+  onEdit,
+  row,
+  refresh,
+  onChange,
+  departmentsLoading,
+}) => {
   const [deleteRow, setDeleteRow] = useState<any>(false);
   const [loading, setLoading] = useState<any>(false);
   const [statusData, setStatusData] = useState<any>(null);
@@ -251,7 +243,7 @@ const HRTableComponent: React.FC<HRTableProps> = ({ onEdit, row, refresh, onChan
       <StyledBox className="mainTableBlock">
         <InputSearch placeholder="Search..." onChange={onChange} />
         <StyleDataGrid
-         loading={departmentsLoading}
+          loading={departmentsLoading}
           rows={row || []}
           columns={columns}
           initialState={{

@@ -22,9 +22,6 @@ const getAllProgramsByUsers = async (status: any, Searchvalue: string) => {
   );
 };
 
-// const getEmployee = async () => {
-//     return await HTTP_CLIENT.get("/user");
-//   };
 const getProgram = async (status: any) => {
   return await HTTP_CLIENT.get(`/program/?status=${status}`);
 };

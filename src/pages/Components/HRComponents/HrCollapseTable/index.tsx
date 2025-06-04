@@ -282,21 +282,6 @@ function Row(props: {
   );
 }
 
-// const rows = [
-//   createData(
-//     "Tomohiro Komase",
-//     "Program Head",
-//     "Recreation & Culture",
-//     "02-Mar-2024"
-//   ),
-//   createData(
-//     "Vishesh Thind",
-//     "Department Head",
-//     "Recreation & Culture",
-//     "02-Mar-2024"
-//   ),
-// ];
-
 export default function HrCollapsibleTable({
   handleClick,
   employeeData,

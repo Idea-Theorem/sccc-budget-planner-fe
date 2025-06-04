@@ -11,7 +11,6 @@ import { filterSidebarActionsWithMore } from "../../utils/filterSideBarActios";
 import { SIDEBARACTIONS } from "../../utils/sideBarActions";
 import { useNavigate, useLocation } from "react-router-dom";
 import LogoImg from "../../assets/logo.png";
-// import { SidebarAction } from "../../types/common";
 import { useAuth } from "../../contexts/AuthContext";
 import { Button, Collapse, Grid } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
@@ -19,7 +18,6 @@ import { getCapitalizedFirstLetters, handleRole } from "../../utils";
 import { useDispatch } from "react-redux";
 import { storeSideBarCheck } from "../../store/reducers/programSlice";
 import SidebarSelect from "../SidebarSelect";
-// import SelectDemo from "../Select";
 
 const SideArea = styled(Box)(({ theme }) => ({
   background: theme.palette.primary.main,

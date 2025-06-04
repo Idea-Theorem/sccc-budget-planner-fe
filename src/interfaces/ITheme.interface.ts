@@ -1,5 +1,5 @@
 import { Color } from "@mui/material";
-import type { } from "@mui/x-date-pickers/themeAugmentation";
+import type {} from "@mui/x-date-pickers/themeAugmentation";
 import { CustomShadowType } from "../theme/shadows";
 type ExtraTypography = {
   buttonLarge: React.CSSProperties;
@@ -201,16 +201,16 @@ declare module "@mui/material/styles" {
     primary_shades?: Partial<TextTypeShades>;
     secondary_shades?: Partial<TextTypeShades>;
   }
-  interface TypographyVariants extends ExtraTypography { }
+  interface TypographyVariants extends ExtraTypography {}
 
   // allow configuration using `createTheme`
-  interface TypographyVariantsOptions extends ExtraTypography { }
+  interface TypographyVariantsOptions extends ExtraTypography {}
   // interface grey extends Color {
   //   GF50?: string;
   //   GF100?: string;
   // }
 }
-// Update the Typography's variant prop options
+
 declare module "@mui/material/Typography" {
   interface TypographyPropsVariantOverrides {
     muted: true;
@@ -246,12 +246,11 @@ declare module "@mui/material/AvatarGroup" {
   }
 }
 
-
 export default interface LoginState {
-  email: string
-  password: string
+  email: string;
+  password: string;
 }
 
 export default interface Resetstate {
-  email: string
+  email: string;
 }

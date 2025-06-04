@@ -1,5 +1,4 @@
 import { ReactNode } from "react";
-// @mui
 
 import {
   StyledEngineProvider,

@@ -6,7 +6,7 @@ import {
 } from "../../theme/common";
 import shadows, { customShadows } from "../../theme/shadows.ts";
 import { defaultLightTheme } from "../palette";
-// const defaultPalette = defaultLightTheme.palette;
+
 export const lightPallete: any = {
   // ...defaultPalette,
   mode: "light",

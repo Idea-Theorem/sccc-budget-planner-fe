@@ -23,8 +23,8 @@ const StyledBox = styled(Box)(({}) => ({
   "&.mainTableBlock": {
     width: "100%",
     position: "relative",
-    marginTop: '-10px',
-    paddingTop: '10px',
+    marginTop: "-10px",
+    paddingTop: "10px",
     borderTop: "1px solid #e8e8e8",
   },
 
@@ -152,43 +152,6 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
   },
 }));
 
-// const rows = [
-//   {
-//     id: 1,
-//     departmentName: "Youth Swimming Class",
-//     status: "1505",
-//     lYearBudget: "01-Jan-2022-2024",
-//     depart: "Recreation & Culture",
-//   },
-//   {
-//     id: 2,
-//     departmentName: "Youth Tablle Tennis Class",
-//     status: "1220",
-//     lYearBudget: "01-Jan-2022-2024",
-//     depart: "Recreation & Culture",
-//   },
-//   {
-//     id: 3,
-//     departmentName: "Youth Hockey Class",
-//     status: "2230",
-//     lYearBudget: "01-Jan-2022-2024",
-//     depart: "Recreation & Culture",
-//   },
-//   {
-//     id: 4,
-//     departmentName: "Youth Basketball Class",
-//     status: "4500",
-//     lYearBudget: "01-Jan-2022-2024",
-//     depart: "Recreation & Culture",
-//   },
-//   {
-//     id: 5,
-//     departmentName: "Finance literature",
-//     status: "New",
-//     lYearBudget: "15-Mar-2022-2024",
-//     depart: "Finance",
-//   },
-// ];
 interface HRTableProps {}
 const ProgramSetting: React.FC<HRTableProps> = ({}) => {
   const columns: GridColDef[] = [

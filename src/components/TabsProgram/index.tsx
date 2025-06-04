@@ -38,7 +38,7 @@ function a11yProps(index: number) {
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
-// .
+
 const TabsProgram = ({
   handleReceived,
   handleSupplyExpenseReceived,

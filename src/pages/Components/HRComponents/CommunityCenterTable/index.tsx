@@ -134,20 +134,6 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
   },
 }));
 
-// const rows = [
-//   {
-//     id: 1,
-//     departmentName: "SCCC",
-//     status: "25",
-//     lYearBudget: "02-Mar-2024",
-//   },
-//   {
-//     id: 2,
-//     departmentName: "ACCC",
-//     status: "20",
-//     lYearBudget: "02-Mar-2024",
-//   },
-// ];
 interface HRTableProps {
   onCommunityEdit?: any;
   row?: any;

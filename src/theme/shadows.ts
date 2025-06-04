@@ -1,8 +1,5 @@
-// @mui
 import { alpha } from "@mui/material/styles";
 //
-
-// ----------------------------------------------------------------------
 
 const LIGHT_MODE = "#000000";
 const createShadow = (color: string) => {

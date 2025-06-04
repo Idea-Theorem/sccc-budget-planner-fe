@@ -1,4 +1,3 @@
-// const lightPallete = lightTheme.palette;
 import Appthemes from "../theme/palette";
 
 export const appThemeModes = [

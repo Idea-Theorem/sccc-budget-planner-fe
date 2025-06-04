@@ -27,14 +27,6 @@ const AuthContext = createContext({
   handleResetPassword: (_: any) => {},
 });
 
-// const users = [
-//   "programhead@gmail.com",
-//   "departmenthead@gmail.com",
-//   "admin@gmail.com",
-//   "hr@gmail.com",
-//   "suparadmin@gmail.com",
-// ];
-
 export const useAuth = () => useContext(AuthContext);
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {

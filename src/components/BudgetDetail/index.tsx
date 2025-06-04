@@ -242,7 +242,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
     },
   },
 }));
-// .
+
 const BudgetDetail: FC<BudgetDetailProps> = ({
   actions,
   clickBack,
