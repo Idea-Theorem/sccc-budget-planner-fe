@@ -82,9 +82,6 @@ const EditProgramModal: React.FC<IHrAddEmployee> = ({
     formik.setFieldValue("to_date", value);
   };
 
-  // const handleDepartmentChange = (value: any) => {
-  //   formik.setFieldValue("department_id", value);
-  // };
   return (
     <Modal
       open={open}

@@ -169,7 +169,6 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
   ".info-lists-wrap": {
     padding: "50px 44px 0 33px",
     position: "relative",
-    // pointerEvents: "none",
   },
 
   ".delete-icon": {
@@ -181,19 +180,11 @@ const EmployeeInfoArea = styled(Box)(({ theme }) => ({
     cursor: "pointer",
 
     button: {
-      // border: "1px solid #303030",
-      // borderRadius: "100%",
-      // background: "#fff",
-      // fontSize: "22px",
       border: "none",
       background: "none",
       padding: "0",
       color: "#303030",
-      // width: "16.67px",
-      // height: "16.67px",
-      // display: "flex",
-      // alignItems: "center",
-      // justifyContent: "center",
+
       cursor: "pointer",
     },
   },
@@ -284,22 +275,12 @@ const HrAddNewHire: React.FC<IHrAddEmployee> = ({
     },
     onSubmit: async (values) => {
       try {
-        // if (heading == "Edit Employee") {
-        //   delete values.password;
-
-        //   await updateEmployee(values, singleEmployeeData?.id);
-        //   setStatusData({
-        //     type: "success",
-        //     message: "Employee Update Successfully",
-        //   });
-        // } else {
         let obj = {
           ...values,
           employeDepartments: data,
         };
         await createEmployee(obj);
 
-        // }
         handleMovedNewhire();
         setStatusData({
           type: "success",
@@ -379,8 +360,6 @@ const HrAddNewHire: React.FC<IHrAddEmployee> = ({
     }
   }, [singleEmployeeData]);
 
-  // const ITEM_HEIGHT = 48;
-  // const ITEM_PADDING_TOP = 8;
   const MenuProps = {
     PaperProps: {
       style: {

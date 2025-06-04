@@ -54,16 +54,13 @@ type OtherPaletteProperties = {
 };
 declare module "@mui/material/styles" {
   interface Theme {
-    // status: {
-    //   danger: React.CSSProperties["color"];
-    // };
     customShadows: CustomShadowType;
   }
   interface TypographyVariants {
     muted: React.CSSProperties;
     article: React.CSSProperties;
   }
-  // allow configuration using `createTheme`
+
   interface TypographyVariantsOptions {
     muted?: React.CSSProperties;
     article?: React.CSSProperties;
@@ -115,9 +112,6 @@ declare module "@mui/material/styles" {
   }
 
   interface Palette {
-    // neutral: Palette["primary"];
-    // darker?: Palette["grey"];
-    // lighter?: Palette["grey"];
     other?: OtherPaletteProperties;
     gfGrey: Partial<Color> & {
       textGray: string;
@@ -174,15 +168,9 @@ declare module "@mui/material/styles" {
     blueGray: Partial<Color>;
     commonbg: Partial<Color>;
   }
-  interface PaletteOptions {
-    // neutral: PaletteOptions["primary"];
-    // darker?: Palette["grey"];
-    // lighter?: Palette["grey"];
-    // grey: Partial<Color> & { GF50: string };
-  }
+  interface PaletteOptions {}
 
   interface PaletteColor {
-    // remove it after words
     darker?: string;
     lighter?: string;
     shades?: ColorShades;
@@ -203,12 +191,7 @@ declare module "@mui/material/styles" {
   }
   interface TypographyVariants extends ExtraTypography {}
 
-  // allow configuration using `createTheme`
   interface TypographyVariantsOptions extends ExtraTypography {}
-  // interface grey extends Color {
-  //   GF50?: string;
-  //   GF100?: string;
-  // }
 }
 
 declare module "@mui/material/Typography" {
@@ -236,7 +219,6 @@ declare module "@mui/material/Typography" {
     tabSelected: true;
     selectLabel: true;
     selectValue: true;
-    // h3: false;
   }
 }
 

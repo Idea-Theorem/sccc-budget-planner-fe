@@ -38,7 +38,6 @@ const StyledBox = styled(Box)(() => ({
     marginTop: "5px",
     marginBottom: "8px",
   },
-  // Color: theme.palette.secondary.light,
 
   "& .approvedTableBlock": {
     position: "relative",
@@ -116,27 +115,7 @@ const DHReviewBudgets = () => {
           );
         },
       },
-      // {
-      //   field: "lYearBudget",
-      //   headerName: "Previous Year Budget",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
-      // {
-      //   field: "profit",
-      //   headerName: "Profit",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
-      // {
-      //   field: "nPrograms",
-      //   headerName: "No. Programs",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "created_at",
         headerName: "Submission Date",
@@ -188,13 +167,7 @@ const DHReviewBudgets = () => {
           );
         },
       },
-      // {
-      //   field: "lYearBudget",
-      //   headerName: "Last Year Budget",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "programBudget",
         headerName: "Budget",
@@ -209,20 +182,7 @@ const DHReviewBudgets = () => {
           );
         },
       },
-      // {
-      //   field: "profit",
-      //   headerName: "Profit",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
-      // {
-      //   field: "nPrograms",
-      //   headerName: "No. Programs",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "created_at",
         headerName: "Submission Date",
@@ -274,13 +234,7 @@ const DHReviewBudgets = () => {
           );
         },
       },
-      // {
-      //   field: "lYearBudget",
-      //   headerName: "Last Year Budget",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "programBudget",
         headerName: "Budget",
@@ -295,20 +249,7 @@ const DHReviewBudgets = () => {
           );
         },
       },
-      // {
-      //   field: "profit",
-      //   headerName: "Profit",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
-      // {
-      //   field: "nPrograms",
-      //   headerName: "No. Programs",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "created_at",
         headerName: "Submission Date",
@@ -342,8 +283,7 @@ const DHReviewBudgets = () => {
   const [count, setCount] = useState<any>(null);
   const [departmentId, setDepartmentID] = useState<any>(null);
   const [totalCount, setTotalCount] = useState<any>(null);
-  // const [programListing, setprogramListing] = useState<any>([]);
-  // ;
+
   const [filteredProgramListing, setFilteredProgramListing] = useState<any>([]);
   const [attentionModal, setAttentionModal] = useState<any>(false);
   dispatch(storeProgramList(filteredProgramListing));
@@ -409,8 +349,6 @@ const DHReviewBudgets = () => {
         (item: any) => item?.department?.id === departmentId
       );
       setFilteredProgramListing(newArray);
-
-      // setprogramListing(response?.data?.programs);
     } catch (error) {}
   };
   const handleStatusChange = (selectedStatus: any) => {
@@ -472,11 +410,7 @@ const DHReviewBudgets = () => {
       <Box className="reviewBudgetHead">
         <Typography variant="h3">Review Budgets</Typography>
       </Box>
-      <SubHeader
-        // handleUpdate={handleUpdate}
-        title=""
-        onStatusChange={handleStatusChange}
-      />
+      <SubHeader title="" onStatusChange={handleStatusChange} />
       <Box className="block-selection">
         <SelectDemo
           parentClass="departmentSelect"
@@ -535,7 +469,6 @@ const DHReviewBudgets = () => {
         open={attentionModal}
         handleClose={() => setAttentionModal(false)}
         handleOK={handleOK}
-        // loading={isSubmitting}
         heading="Attention"
         text="You are changing the status of the program"
       />

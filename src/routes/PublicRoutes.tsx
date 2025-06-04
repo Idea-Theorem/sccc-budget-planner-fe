@@ -127,7 +127,7 @@ const programHeadRoute: RouteObject = {
           <SecureLayout />
         </SideBarLayout>
       ),
-      // element: <ProgramHeadScreen />,
+
       children: [
         { index: true, element: <ProgramHeadScreen /> },
         { path: "program", element: <PHProgramsScreen /> },
@@ -153,9 +153,8 @@ const hrRoute: RouteObject = {
           <SecureLayout />
         </SideBarLayout>
       ),
-      // element: <AdminScreen />,
+
       children: [
-        // { index: true, element: <SuperAdminMain name="raoof" /> },
         { index: true, element: <HREmployees name="HR (Human Resources)" /> },
         {
           path: "employees",
@@ -186,7 +185,7 @@ const departmentHeadRoute: RouteObject = {
           <SecureLayout />
         </SideBarLayout>
       ),
-      // element: <ProgramHeadScreen />,
+
       children: [
         {
           index: true,

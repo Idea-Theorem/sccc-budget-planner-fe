@@ -166,13 +166,7 @@ const CommunityTableComponent: React.FC<HRTableProps> = ({
       editable: false,
       flex: 1,
     },
-    // {
-    //   field: "status",
-    //   headerName: "Employee Count",
-    //   sortable: false,
-    //   editable: false,
-    //   flex: 1,
-    // },
+
     {
       field: "created_at",
       headerName: "Date Created",

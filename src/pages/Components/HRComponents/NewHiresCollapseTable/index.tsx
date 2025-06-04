@@ -140,7 +140,7 @@ function Row(props: {
 }) {
   const { row, handleClick, handleDelete, isOpen, setIsOpen, loading } = props;
   const [open, setOpen] = React.useState(false);
-  // const [isOpen, setIsOpen] = React.useState<any>(false);
+
   const [currentRow, setCurrentRow] = React.useState<any>("");
   const [titles, setTitles] = React.useState<any>([]);
 

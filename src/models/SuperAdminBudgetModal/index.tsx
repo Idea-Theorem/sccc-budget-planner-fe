@@ -10,10 +10,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { TextField } from "@mui/material";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
-import {
-  // addTotalbudget,
-  updateTotalbudget,
-} from "../../services/adminServices";
+import { updateTotalbudget } from "../../services/adminServices";
 
 const DepartmentInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
@@ -160,8 +157,7 @@ const SuperAdminBudgetModal: React.FC<IDepartmentInfo> = ({
       if (totalBudget?.total_value) {
         await updateTotalbudget(values);
       }
-      // await addSuperAdminTotalbudget(values)
-      // await addTotalbudget(values);
+
       fetchTotalbudget();
       handleClose();
       try {

@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import LogoImg from "../../assets/logo.png";
 import Buttons from "../../components/Button";
 import { useAuth } from "../../contexts/AuthContext";
-import {  useFormik } from "formik";
+import { useFormik } from "formik";
 import * as yup from "yup";
 
 const LoginArea = styled(Box)(({ theme }) => ({
@@ -48,7 +48,6 @@ const LoginArea = styled(Box)(({ theme }) => ({
   },
 
   ".MuiButtonBase-root": {
-    // color: theme.palette.common.whiteshades["30p"],
     margin: "0 0 15px",
   },
 
@@ -120,7 +119,7 @@ const validationSchema = yup.object().shape({
 });
 
 const ForgotPasswordScreen = () => {
-  const { handleForgotPassword, resetLoading} = useAuth();
+  const { handleForgotPassword, resetLoading } = useAuth();
 
   const formik: any = useFormik<any>({
     validateOnBlur: false,
@@ -142,7 +141,9 @@ const ForgotPasswordScreen = () => {
         <Box className="siteLogo">
           <img src={LogoImg} alt="Description image" />
         </Box>
-        <Typography variant="h5">Please Enter Email To Reset Password</Typography>
+        <Typography variant="h5">
+          Please Enter Email To Reset Password
+        </Typography>
         <form noValidate autoComplete="off" onSubmit={handleSubmit}>
           <FormControl className="loginFormItem">
             <TextField
@@ -168,9 +169,7 @@ const ForgotPasswordScreen = () => {
             Back to login
           </Link>
         </form>
-        <Box>
-        
-        </Box>
+        <Box></Box>
       </Box>
     </LoginArea>
   );

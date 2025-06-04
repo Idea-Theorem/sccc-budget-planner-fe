@@ -91,21 +91,6 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         message: error.response.data.message,
       });
     }
-
-    // const usr = users.find((user) => user === email);
-    // setUser(usr as string);
-    // localStorage.setItem("user", email);
-    // if (email === "suparadmin@gmail.com") {
-    //   navigate("/admin");
-    // } else if (email === "admin@gmail.com") {
-    //   navigate("/admin");
-    // } else if (email === "departmenthead@gmail.com") {
-    //   navigate("/department-head");
-    // } else if (email === "programhead@gmail.com") {
-    //   navigate("/program-head");
-    // } else {
-    //   navigate("/hr");
-    // }
   };
   const handleForgotPassword = async (data: any) => {
     try {
@@ -119,7 +104,6 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     } catch (error: any) {
       setResetLoading(false);
       if (error.response) {
-        // Handle specific API error responses
         switch (error.response.status) {
           case 404:
             setStatusData({
@@ -142,13 +126,11 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
             });
         }
       } else if (error.request) {
-        // Network error
         setStatusData({
           type: "error",
           message: "Network error. Please check your internet connection",
         });
       } else {
-        // Other errors
         setStatusData({
           type: "error",
           message: "An unexpected error occurred. Please try again",

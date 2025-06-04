@@ -42,7 +42,7 @@ function a11yProps(index: number) {
 const TabsProgram = ({
   handleReceived,
   handleSupplyExpenseReceived,
-  // handleSalaryExpenseReceived,
+
   formik,
   disabled,
   employee,

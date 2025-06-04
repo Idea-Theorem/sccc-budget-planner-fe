@@ -50,7 +50,6 @@ const LoginArea = styled(Box)(({ theme }) => ({
   },
 
   ".MuiButtonBase-root": {
-    // color: theme.palette.common.whiteshades["30p"],
     margin: "0 0 15px",
   },
 
@@ -183,7 +182,11 @@ const Input = () => {
           />
         </form>
         <Box>
-          <Link className="textLink" href="/forgot-password" variant="subtitle2">
+          <Link
+            className="textLink"
+            href="/forgot-password"
+            variant="subtitle2"
+          >
             Forgot password?
           </Link>
         </Box>

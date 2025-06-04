@@ -225,13 +225,6 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
         </Stack>
       ),
     },
-    // {
-    //   field: "",
-    //   headerName: "",
-    //   sortable: false,
-    //   editable: false,
-    //   flex: 1,
-    // },
   ];
   const [settingData, setSettingData] = React.useState([]);
   const [departmentList, setDepartmentList] = React.useState([]);
@@ -242,7 +235,7 @@ const ProgramSetting: React.FC<HRTableProps> = ({}) => {
 
   const formik = useFormik<any>({
     validateOnBlur: false,
-    // validationSchema: programSchema,
+
     enableReinitialize: true,
     initialValues: {
       name: selectedRow ? selectedRow?.name : "",

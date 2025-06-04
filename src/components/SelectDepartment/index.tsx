@@ -51,16 +51,13 @@ export default function SelectDepartments({
     if (typeof inputString === "number") {
       return inputString;
     }
-    // Check if inputString exists
+
     if (inputString) {
-      // Convert the input string to lowercase and remove underscores
       return inputString.toLowerCase().replace(/_/g, " ");
     } else {
-      // If inputString is undefined or null, return an empty string
       return "";
     }
   }
-
 
   return (
     <StyledFormControl size="medium" variant="standard" error={error}>

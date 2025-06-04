@@ -281,7 +281,6 @@ const HRRole = () => {
           ""
         ) : (
           <StyleDataGrid
-            //  rows={center.length == 0 ? [] : center}
             rows={
               center.length === 0
                 ? []

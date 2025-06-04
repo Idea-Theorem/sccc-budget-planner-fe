@@ -62,12 +62,7 @@ const NoProgramExistComponent = () => {
     <StyledBox className="programsEmptyBox">
       <Typography variant="h6">No existing programs</Typography>
       <Box onClick={handleRedirect}>
-        <Link
-          className="linkCreate"
-          to="#"
-          // underline="always"
-          // variant="subtitle2"
-        >
+        <Link className="linkCreate" to="#">
           Create New Program
         </Link>
       </Box>

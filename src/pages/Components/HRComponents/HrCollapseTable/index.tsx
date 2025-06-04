@@ -152,7 +152,7 @@ function Row(props: {
     benefit,
   } = props;
   const [open, setOpen] = React.useState(false);
-  // const [isOpen, setIsOpen] = React.useState<any>(false);
+
   const [titles, setTitles] = React.useState<any>([]);
 
   const closeModel = () => {

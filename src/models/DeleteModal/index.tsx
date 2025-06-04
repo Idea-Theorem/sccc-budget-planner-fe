@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import Check from "@mui/icons-material/Check";
 import Clear from "@mui/icons-material/Clear";
 import Modal from "@mui/material/Modal";
-import WarningAmberOutlinedIcon from '@mui/icons-material/WarningAmberOutlined';
+import WarningAmberOutlinedIcon from "@mui/icons-material/WarningAmberOutlined";
 
 const DepartmentInfoArea = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
@@ -28,10 +28,10 @@ const DepartmentInfoArea = styled(Box)(({ theme }) => ({
     margin: "0 0 25px",
     display: "flex",
     alignItems: "center",
-    gap: '10px',
+    gap: "10px",
   },
 
-  "p": {
+  p: {
     marginBottom: "25px",
   },
 
@@ -54,9 +54,9 @@ interface IDeleteModal {
   subheading?: string;
   handleClose?: () => void;
   open?: boolean;
-  selectRow?: any
-  handleOK?: any
-  loading?: any
+  selectRow?: any;
+  handleOK?: any;
+  loading?: any;
 }
 
 const DeleteModal: React.FC<IDeleteModal> = ({
@@ -64,31 +64,27 @@ const DeleteModal: React.FC<IDeleteModal> = ({
   handleClose,
   open,
   loading,
-  handleOK
+  handleOK,
 }) => {
   const handleCloseModal = async () => {
     if (handleOK) {
-        await handleOK();
+      await handleOK();
     } else {
-        console.error("handleOK is not defined");
+      console.error("handleOK is not defined");
     }
-
-    // if (handleClose) {
-    //     handleClose();
-    // } else {
-    //     console.error("handleClose is not defined");
-    // }
-};
+  };
   return (
     <Modal
-      open={typeof open !== 'undefined' && open}
+      open={typeof open !== "undefined" && open}
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
       <DepartmentInfoArea>
         <Box>
-          <Typography variant="h6"><WarningAmberOutlinedIcon /> Attention</Typography>
+          <Typography variant="h6">
+            <WarningAmberOutlinedIcon /> Attention
+          </Typography>
           <Typography>{heading}</Typography>
         </Box>
         <Stack
@@ -121,7 +117,7 @@ const DeleteModal: React.FC<IDeleteModal> = ({
               startIcon={<Check />}
               onClick={() => handleCloseModal()}
             >
-             {loading ? "Deleting..." : "Ok"} 
+              {loading ? "Deleting..." : "Ok"}
             </Button>
           </Stack>
         </Stack>

@@ -4,7 +4,6 @@ import { lightTheme } from "./light";
 
 export const defualtTheme = (mode: "dark" | "light" = "dark") =>
   createTheme({
-    // spacing: (factor: number) => `${0.25 * factor}rem`,
     palette: {
       mode,
     },

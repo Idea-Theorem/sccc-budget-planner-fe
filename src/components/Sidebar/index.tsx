@@ -72,7 +72,6 @@ const SideArea = styled(Box)(({ theme }) => ({
   "& .MuiListItemButton-root": {
     transition: "0.3s",
     color: theme.palette.background.ContentArea,
-    // padding: "8px 19px",
 
     "&:hover": {
       background: theme.palette.background.lightGray,
@@ -125,7 +124,6 @@ const SideArea = styled(Box)(({ theme }) => ({
   },
 
   ".MuiButtonBase-root": {
-    // color: "#303030",
     color: "#fff",
     padding: "8px 19px",
 
@@ -213,18 +211,13 @@ export default function ResponsiveDrawer(props: Props) {
   };
   React.useEffect(() => {
     switch (currentRole) {
-      // case "Program_Head":
-      //   navigate("/program-head");
-      //   break;
       case "Admin":
         navigate("/admin");
         break;
       case "Super_Admin":
         navigate("/super-admin");
         break;
-      // case "Department_Head":
-      //   navigate("/department-head/review-budgets");
-      //   break;
+
       case "/super-admin/review-budgets":
         navigate("/super-admin/review-budgets");
         break;
@@ -247,7 +240,6 @@ export default function ResponsiveDrawer(props: Props) {
         navigate("/hr/employees");
         break;
       default:
-      // navigate("/hr");
     }
   }, [currentRole, navigate]);
 
@@ -296,7 +288,6 @@ export default function ResponsiveDrawer(props: Props) {
                       key={nestedIndex}
                       disablePadding
                       onClick={() => {
-                        // handleReceive(nestedItem);
                         navigate(nestedItem.path ?? "");
                       }}
                       className={

@@ -76,7 +76,6 @@ export const EmployeeInfoArea = styled(Box)(() => ({
 
     ".MuiFormControl-root ": {
       width: "100%",
-      // maxWidth: "76px",
     },
 
     ".select-holder ": {

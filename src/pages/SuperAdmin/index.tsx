@@ -53,7 +53,6 @@ const SuperAdminScreen = () => {
   };
   const fetchTotalbudget = async () => {
     try {
-      // const response = await getSuperAdminTotalbudget();
       const response = await getTotalbudget();
 
       setTotalBudget(response?.data);
