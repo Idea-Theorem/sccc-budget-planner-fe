@@ -215,18 +215,18 @@ export default function ResponsiveDrawer(props: Props) {
   };
   React.useEffect(() => {
     switch (currentRole) {
-      case "Program_Head":
-        navigate("/program-head");
-        break;
+      // case "Program_Head":
+      //   navigate("/program-head");
+      //   break;
       case "Admin":
         navigate("/admin");
         break;
       case "Super_Admin":
         navigate("/super-admin");
         break;
-      case "Department_Head":
-        navigate("/department-head/review-budgets");
-        break;
+      // case "Department_Head":
+      //   navigate("/department-head/review-budgets");
+      //   break;
       case "/super-admin/review-budgets":
         navigate("/super-admin/review-budgets");
         break;
@@ -245,7 +245,6 @@ export default function ResponsiveDrawer(props: Props) {
       case "/hr/role":
         navigate("/hr/role");
         break;
-
       case "HR":
         navigate("/hr/employees");
         break;

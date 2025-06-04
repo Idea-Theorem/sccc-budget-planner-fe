@@ -41,12 +41,12 @@ export const SIDEBARACTIONS: SidebarAction[] = [
     path: "/admin/review-budget",
     // path:"/department-head/review-budgets",
   },
-  // {
-  //   email: "admin@gmail.com",
-  //   role: "Admin",
-  //   title: "Programs",
-  //   path: "/program-head",
-  // },
+  {
+    email: "admin@gmail.com",
+    role: "Admin",
+    title: "Programs",
+    path: "/program-head",
+  },
   {
     email: "admin@gmail.com",
     role: "Admin",
@@ -96,5 +96,11 @@ export const SIDEBARACTIONS: SidebarAction[] = [
       { title: "Department", path: "/hr/departments" },
       { title: "Centers", path: "/hr/centers" },
     ],
+  },
+  {
+    email: "coordinator@gmail.com",
+    role: "Coordinator",
+    title: "Programs",
+    path: "/program-head",
   },
 ];
