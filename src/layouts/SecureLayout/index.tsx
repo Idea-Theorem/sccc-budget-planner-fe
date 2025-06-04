@@ -1,7 +1,6 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 const SecureLayout = ({ allowedRoles }: { allowedRoles?: string[] }) => {
-  console.log("allowed roles", allowedRoles);
   // const userInfo: any = localStorage.getItem("userInfo");
 
   // const hasRequiredRole = () => {

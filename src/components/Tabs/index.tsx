@@ -76,7 +76,6 @@ const BasicTabs = (props: BasicTabsProps) => {
   const location = useLocation();
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    console.log(event);
     setValue(newValue);
     if (newValue === 0) {
       setStatus(Status.PENDING);

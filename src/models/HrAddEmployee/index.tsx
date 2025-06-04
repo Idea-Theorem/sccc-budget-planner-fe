@@ -265,7 +265,6 @@ const HrAddEmployee: React.FC<IHrAddEmployee> = ({
   const [departments, setDepartments] = useState<any>([]);
   const [titles, setTitles] = useState<any>([]);
   const [activeDepartment, setActiveDepartment] = useState<any>(null);
-  console.log(activeDepartment);
   const [statusData, setStatusData] = useState<any>(null);
 
   const [data, setData] = useState([

@@ -134,7 +134,6 @@ const RoleModal: React.FC<IDepartmentInfo> = ({
   singleCenter,
   setSingleCenter,
 }) => {
-  console.log(heading);
   const formik = useFormik<any>({
     validateOnBlur: false,
     validationSchema: createCentresSchema,

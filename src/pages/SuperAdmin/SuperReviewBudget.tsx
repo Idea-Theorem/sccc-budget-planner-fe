@@ -37,8 +37,6 @@ const SuperReviewBudget = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  console.log(tabstatus);
-
   const [step, setStep] = useState(0);
   const tableColumnsTitleArray = [
     [

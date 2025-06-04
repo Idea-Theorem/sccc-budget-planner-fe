@@ -7,7 +7,11 @@ import {
 } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginState from "../interfaces/ITheme.interface";
-import { forgotPassword, loggedIn, resetPassword } from "../services/authServices";
+import {
+  forgotPassword,
+  loggedIn,
+  resetPassword,
+} from "../services/authServices";
 import StatusModal from "../components/StatusModal";
 
 const AuthContext = createContext({
@@ -17,10 +21,10 @@ const AuthContext = createContext({
   authToken: "",
   loginLoading: "",
   currentRole: "",
-  resetLoading:"",
+  resetLoading: "",
   setCurrentRole: (_: string | boolean) => {},
-  handleForgotPassword:  (_: any) => {},
-  handleResetPassword: (_: any) => {}
+  handleForgotPassword: (_: any) => {},
+  handleResetPassword: (_: any) => {},
 });
 
 // const users = [
@@ -90,7 +94,6 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
     } catch (error: any) {
       setLoginLoading(false);
-      console.log(error);
       setStatusData({
         type: "error",
         message: error.response.data.message,
@@ -112,68 +115,70 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     //   navigate("/hr");
     // }
   };
-const handleForgotPassword = async (data: any) => {
-  try {
-    setResetLoading(true)
-    await forgotPassword(data)
-    setStatusData({
-      type: "success",
-      message: "Password reset instructions have been sent to your email",
-    });
-    setResetLoading(false)
-  } catch (error: any) {
-    setResetLoading(false)
-    if (error.response) {
-      // Handle specific API error responses
-      switch (error.response.status) {
-        case 404:
-          setStatusData({
-            type: "error",
-            message: "No account found with this email address",
-          });
-          break;
-        case 429:
-          setStatusData({
-            type: "error",
-            message: "Too many attempts. Please try again later",
-          });
-          break;
-        default:
-          setStatusData({
-            type: "error",
-            message: error.response.data?.message || "Failed to process password reset request",
-          });
+  const handleForgotPassword = async (data: any) => {
+    try {
+      setResetLoading(true);
+      await forgotPassword(data);
+      setStatusData({
+        type: "success",
+        message: "Password reset instructions have been sent to your email",
+      });
+      setResetLoading(false);
+    } catch (error: any) {
+      setResetLoading(false);
+      if (error.response) {
+        // Handle specific API error responses
+        switch (error.response.status) {
+          case 404:
+            setStatusData({
+              type: "error",
+              message: "No account found with this email address",
+            });
+            break;
+          case 429:
+            setStatusData({
+              type: "error",
+              message: "Too many attempts. Please try again later",
+            });
+            break;
+          default:
+            setStatusData({
+              type: "error",
+              message:
+                error.response.data?.message ||
+                "Failed to process password reset request",
+            });
+        }
+      } else if (error.request) {
+        // Network error
+        setStatusData({
+          type: "error",
+          message: "Network error. Please check your internet connection",
+        });
+      } else {
+        // Other errors
+        setStatusData({
+          type: "error",
+          message: "An unexpected error occurred. Please try again",
+        });
       }
-    } else if (error.request) {
-      // Network error
-      setStatusData({
-        type: "error",
-        message: "Network error. Please check your internet connection",
-      });
-    } else {
-      // Other errors
-      setStatusData({
-        type: "error",
-        message: "An unexpected error occurred. Please try again",
-      });
     }
-  }
-}
+  };
 
-const handleResetPassword = async (data: any) => {
-  try {
-    setResetLoading(true)
-    const response = await resetPassword(data)
-   setStatusData({
-    type: "success",
-    message: response?.data?.message,
-  });
-  navigate("/login");
-  setResetLoading(false)
-  } catch (error) {
-    setResetLoading(false)
-  }
-  }
+  const handleResetPassword = async (data: any) => {
+    try {
+      setResetLoading(true);
+      const response = await resetPassword(data);
+      setStatusData({
+        type: "success",
+        message: response?.data?.message,
+      });
+      navigate("/login");
+      setResetLoading(false);
+    } catch (error) {
+      setResetLoading(false);
+    }
+  };
   const logout = () => {
     setUser(null);
     localStorage.removeItem("user");

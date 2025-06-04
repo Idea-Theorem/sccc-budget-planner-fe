@@ -11,7 +11,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
     position: "relative",
-    borderTop: '1px solid rgba(224, 224, 224, 1)',
+    borderTop: "1px solid rgba(224, 224, 224, 1)",
   },
 
   "& .MuiDataGrid-toolbarContainer": {
@@ -113,7 +113,7 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
   ".MuiStack-root": {
     "&.MuiButtonBase-root": {
       color: theme.palette.text.primary,
-    }
+    },
   },
   ".actions-btn-holder": {
     ".MuiButton-textPrimary:not(:hover)": {
@@ -134,8 +134,6 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
   },
 }));
 
-
-
 // const rows = [
 //   {
 //     id: 1,
@@ -144,7 +142,7 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
 //     lYearBudget: "02-Mar-2024",
 //   },
 //   {
-//     id: 2, 
+//     id: 2,
 //     departmentName: "ACCC",
 //     status: "20",
 //     lYearBudget: "02-Mar-2024",
@@ -152,25 +150,28 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
 // ];
 interface HRTableProps {
   onCommunityEdit?: any;
-  row?: any
-  refresh?: any
-  onChange?: any
+  row?: any;
+  refresh?: any;
+  onChange?: any;
 }
-const CommunityTableComponent: React.FC<HRTableProps> = ({onCommunityEdit, row, refresh, onChange}) => { 
-const [loading, setLoading] = useState<boolean>(false)
-console.log(loading)
+const CommunityTableComponent: React.FC<HRTableProps> = ({
+  onCommunityEdit,
+  row,
+  refresh,
+  onChange,
+}) => {
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleDelete = async (data: any) => {
     try {
-      setLoading(true)
-      await deleteCenter(data?.id)
-      setLoading(false)
-      refresh()
+      setLoading(true);
+      await deleteCenter(data?.id);
+      setLoading(false);
+      refresh();
     } catch (error) {
-      setLoading(false)
-
+      setLoading(false);
     }
-  }
+  };
   const columns: GridColDef[] = [
     {
       field: "name",
@@ -197,8 +198,15 @@ console.log(loading)
       field: "buttonsColumn",
       headerName: "",
       flex: 0.5,
-      renderCell: (data: any ) => (
-        <Stack direction="row" gap="10px" alignItems="center" justifyContent="flex-end" width="100%" className="actions-btn-holder">
+      renderCell: (data: any) => (
+        <Stack
+          direction="row"
+          gap="10px"
+          alignItems="center"
+          justifyContent="flex-end"
+          width="100%"
+          className="actions-btn-holder"
+        >
           <Button
             variant="text"
             size="small"
@@ -223,10 +231,7 @@ console.log(loading)
   return (
     <>
       <StyledBox className="mainTableBlock">
-        <InputSearch placeholder="Search..." 
-          onChange={onChange}
-        
-        /> 
+        <InputSearch placeholder="Search..." onChange={onChange} />
         <StyleDataGrid
           rows={row}
           columns={columns}

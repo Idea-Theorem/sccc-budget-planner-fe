@@ -26,7 +26,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
     h4: {
       fontSize: "20px",
       lineHeight: "1.2",
-      marginBottom: '0',
+      marginBottom: "0",
     },
   },
 
@@ -49,9 +49,9 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
   width: "100%",
   "&.MuiDataGrid-root": {
     borderWidth: "1px 0 0 0 !important",
-    borderRadius: '0',
-    marginTop: '15px',
-    paddingTop: '5px',
+    borderRadius: "0",
+    marginTop: "15px",
+    paddingTop: "5px",
     "&.MuiDataGrid-footerContainer": {
       border: "none",
     },
@@ -168,7 +168,6 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
 // ];
 const HRRole = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  console.log(loading);
   const [singleCenter, setSingleCenter] = useState<any>(null);
   const [center, setCenter] = useState<any>([]);
   const [isCommunityOpen, setCommunityModal] = useState(false);

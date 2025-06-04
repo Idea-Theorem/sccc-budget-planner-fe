@@ -321,7 +321,6 @@ const RecreationAndCultureScreen = ({}: any) => {
   const [tabstatus, setTabstatus] = React.useState(Status.PENDING);
   const [programInDepartment, setProgramInDepartment] = React.useState<any>([]);
   const dispatch = useDispatch();
-  console.log(tabstatus);
   const [status, setStatus] = React.useState<string>("");
   const navigate = useNavigate();
   const goBack = () => {
