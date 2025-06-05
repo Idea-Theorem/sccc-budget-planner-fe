@@ -71,12 +71,11 @@ const BasicTabs = (props: BasicTabsProps) => {
   const [loading, setLoading] = React.useState(false);
   const [status, setStatus] = React.useState(Status.PENDING);
   const dispatch = useDispatch();
-  // const { programList } = useSelector((state: RootState) => state.program);
+
   const navigate: any = useNavigate();
   const location = useLocation();
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    console.log(event);
     setValue(newValue);
     if (newValue === 0) {
       setStatus(Status.PENDING);
@@ -97,15 +96,11 @@ const BasicTabs = (props: BasicTabsProps) => {
   };
   React.useEffect(() => {
     if (location?.pathname == "/program-head/draft") {
-      // setStatus(Status.DRAFTED);
       fetchProgramList(Status.DRAFTED, "");
     }
   }, [location?.pathname]);
 
   React.useEffect(() => {
-    // if (location?.pathname == "/program-head/draft") {
-    //   return
-    // }
     fetchProgramList(status, "");
   }, [status]);
 
@@ -113,7 +108,7 @@ const BasicTabs = (props: BasicTabsProps) => {
     try {
       setLoading(true);
       const response = await getAllProgramsViaStatus(status, Searchvalue);
-      // const modifyArray = modifyCreatedAt(response?.data?.programs);
+
       dispatch(storeProgramList(response?.data?.programs));
       setLoading(false);
     } catch (error) {

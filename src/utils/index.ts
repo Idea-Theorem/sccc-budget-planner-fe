@@ -81,6 +81,10 @@ export const attachCommentsToProgram = (program: any, comments: any) => {
 };
 
 export const getCapitalizedFirstLetters = (str1: any, str2: any) => {
+  if (!str1 && !str2) return "";
+  if (!str1) return str2?.charAt(0)?.toUpperCase() || "";
+  if (!str2) return str1?.charAt(0)?.toUpperCase() || "";
+
   const firstLetter1 = str1?.charAt(0).toUpperCase();
   const firstLetter2 = str2?.charAt(0).toUpperCase();
 
@@ -102,30 +106,24 @@ export const formatNumber = (input: any) => {
 
 export const calculateAmount = (formData: any) => {
   const updatedFormData = formData.map((employee: any) => {
-    // Convert hourlyRate from string to number and remove the dollar sign
     let hourlyRate = parseFloat(employee.hourlyRate.replace("$", "")) || 0;
 
-    // Convert other fields to numbers, removing 'h' and 'w' and defaulting to 0 if NaN
     let hoursPerWeek = parseFloat(employee.hoursPerWeek.replace("h", "")) || 0;
     let workingWeeks = parseFloat(employee.workingWeeks.replace("w", "")) || 0;
     let benefitPercentage = parseFloat(employee.benefit) || 0;
 
-    // Calculate the total pay
     let totalPay = hourlyRate * hoursPerWeek * workingWeeks;
 
-    // Apply the benefit percentage
     let benefitAmount = totalPay * (benefitPercentage / 100);
 
     let total = Number(benefitAmount) + Number(totalPay);
 
-    // Update the amount field with the calculated benefit amount
     return {
       ...employee,
       amount: "$" + total.toFixed(2), // rounding to 2 decimal places and adding dollar sign
     };
   });
   return updatedFormData;
-  // setFormData(updatedFormData);
 };
 
 export const calculatePercentage = (part: any, whole: any) => {
@@ -180,13 +178,11 @@ export const liveUrl = "http://20.151.79.66";
 export const transformString = (input: string) => {
   let result = "";
   if (input == "Drafts") {
-    // Remove 's' from the end of the string
     result = input.endsWith("s") ? input.slice(0, -1) : input;
     if (result == "Draft") {
       result = "drafted";
     }
 
-    // Convert the resulting string to lowercase
     result = result.toLowerCase();
 
     return result;

@@ -94,7 +94,7 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
         },
 
         ".MuiInputBase-input ": {
-          fontSize: '14px',
+          fontSize: "14px",
         },
       },
 
@@ -109,7 +109,7 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
           "& .MuiTableCell-body": {
             borderTop: "1px solid #494949",
             color: "#000",
-            // fontWeight: "600",
+
             letterSpacing: "0.4px",
           },
 
@@ -118,9 +118,9 @@ const TabsProgramAreas = styled(Box)(({ theme }) => ({
           },
 
           ".MuiInputBase-input ": {
-            paddingTop: '0',
-            paddingBottom: '0',
-            height: '20px',
+            paddingTop: "0",
+            paddingBottom: "0",
+            height: "20px",
             color: "#000",
             fontWeight: 700,
           },
@@ -184,7 +184,7 @@ export default function TabsProgramArea({
   handleSalaryExpenseReceived,
   handleSupplyExpenseReceived,
   disabled,
-  // singleProgram,
+
   allComments,
   fetchComments,
 }: Props) {

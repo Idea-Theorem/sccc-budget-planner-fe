@@ -136,7 +136,6 @@ const CommunityModal: React.FC<IDepartmentInfo> = ({
   singleCenter,
   setSingleCenter,
 }) => {
-  console.log(heading);
   const [statusData, setStatusData] = useState<any>(null);
 
   const formik = useFormik<any>({

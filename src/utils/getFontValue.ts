@@ -1,10 +1,7 @@
-// @mui
 import { useTheme } from "@mui/material/styles";
 import { Variant } from "@mui/material/styles/createTypography";
-// hooks
-import useResponsive from "../hooks/useResponsive";
 
-// ----------------------------------------------------------------------
+import useResponsive from "../hooks/useResponsive";
 
 export default function GetFontValue(variant: Variant) {
   const theme = useTheme();
@@ -37,8 +34,6 @@ export default function GetFontValue(variant: Variant) {
   return { fontSize, lineHeight, fontWeight, letterSpacing };
 }
 
-// ----------------------------------------------------------------------
-
 export function remToPx(value: string) {
   return Math.round(parseFloat(value) * 16);
 }
@@ -69,8 +64,6 @@ export function responsiveFontSizes({
   };
 }
 
-// ----------------------------------------------------------------------
-
 function useWidth() {
   const theme = useTheme();
 
@@ -78,7 +71,6 @@ function useWidth() {
 
   return (
     keys.reduce((output: any, key: any) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const matches = useResponsive("up", key);
 
       return !output && matches ? key : output;

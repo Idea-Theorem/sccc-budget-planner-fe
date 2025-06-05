@@ -30,13 +30,7 @@ const SuperAdminProgramScreen = () => {
         editable: false,
         flex: 1,
       },
-      // {
-      //   field: "lYearBudget",
-      //   headerName: "Last Year Budget",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "budget",
         headerName: "Budget",
@@ -44,20 +38,7 @@ const SuperAdminProgramScreen = () => {
         editable: false,
         flex: 1,
       },
-      // {
-      //   field: "profit",
-      //   headerName: "Profit",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
-      // {
-      //   field: "nPrograms",
-      //   headerName: "No. Programs",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "sDate",
         headerName: "Submission Date",
@@ -88,13 +69,7 @@ const SuperAdminProgramScreen = () => {
         editable: false,
         flex: 1,
       },
-      // {
-      //   field: "lYearBudget",
-      //   headerName: "Last Year Budget",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "budget",
         headerName: "Budget",
@@ -102,20 +77,7 @@ const SuperAdminProgramScreen = () => {
         editable: false,
         flex: 1,
       },
-      // {
-      //   field: "profit",
-      //   headerName: "Profit",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
-      // {
-      //   field: "nPrograms",
-      //   headerName: "No. Programs",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "sDate",
         headerName: "Submission Date",
@@ -146,13 +108,7 @@ const SuperAdminProgramScreen = () => {
         editable: false,
         flex: 1,
       },
-      // {
-      //   field: "lYearBudget",
-      //   headerName: "Last Year Budget",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "budget",
         headerName: "Budget",
@@ -160,20 +116,7 @@ const SuperAdminProgramScreen = () => {
         editable: false,
         flex: 1,
       },
-      // {
-      //   field: "profit",
-      //   headerName: "Profit",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
-      // {
-      //   field: "nPrograms",
-      //   headerName: "No. Programs",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "sDate",
         headerName: "Submission Date",
@@ -211,7 +154,6 @@ const SuperAdminProgramScreen = () => {
           { title: "Rejected" },
           { title: "Approved" },
           { title: "Drafts" },
-          // { title: "History" },
         ]}
         table={tableColumnsTitleArray}
       />

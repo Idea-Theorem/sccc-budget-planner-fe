@@ -26,7 +26,7 @@ const AdminScreen = () => {
   const [programs, setPrograms] = React.useState<any>({});
   const [department, setDepartment] = React.useState<any>([]);
   const [departmentLoading, setDepartmentLoading] = React.useState<any>(false);
-  const [isOpen, setIsOpen] = React.useState<any>(false);
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const [totalBudget, setTotalBudget] = React.useState<any>("");
   const { user } = useAuth();
 

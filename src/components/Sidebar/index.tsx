@@ -11,7 +11,6 @@ import { filterSidebarActionsWithMore } from "../../utils/filterSideBarActios";
 import { SIDEBARACTIONS } from "../../utils/sideBarActions";
 import { useNavigate, useLocation } from "react-router-dom";
 import LogoImg from "../../assets/logo.png";
-// import { SidebarAction } from "../../types/common";
 import { useAuth } from "../../contexts/AuthContext";
 import { Button, Collapse, Grid } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
@@ -19,7 +18,6 @@ import { getCapitalizedFirstLetters, handleRole } from "../../utils";
 import { useDispatch } from "react-redux";
 import { storeSideBarCheck } from "../../store/reducers/programSlice";
 import SidebarSelect from "../SidebarSelect";
-// import SelectDemo from "../Select";
 
 const SideArea = styled(Box)(({ theme }) => ({
   background: theme.palette.primary.main,
@@ -74,7 +72,6 @@ const SideArea = styled(Box)(({ theme }) => ({
   "& .MuiListItemButton-root": {
     transition: "0.3s",
     color: theme.palette.background.ContentArea,
-    // padding: "8px 19px",
 
     "&:hover": {
       background: theme.palette.background.lightGray,
@@ -127,7 +124,6 @@ const SideArea = styled(Box)(({ theme }) => ({
   },
 
   ".MuiButtonBase-root": {
-    // color: "#303030",
     color: "#fff",
     padding: "8px 19px",
 
@@ -215,18 +211,13 @@ export default function ResponsiveDrawer(props: Props) {
   };
   React.useEffect(() => {
     switch (currentRole) {
-      case "Program_Head":
-        navigate("/program-head");
-        break;
       case "Admin":
         navigate("/admin");
         break;
       case "Super_Admin":
         navigate("/super-admin");
         break;
-      case "Department_Head":
-        navigate("/department-head/review-budgets");
-        break;
+
       case "/super-admin/review-budgets":
         navigate("/super-admin/review-budgets");
         break;
@@ -245,14 +236,13 @@ export default function ResponsiveDrawer(props: Props) {
       case "/hr/role":
         navigate("/hr/role");
         break;
-
       case "HR":
         navigate("/hr/employees");
         break;
       default:
-      // navigate("/hr");
     }
-  }, [currentRole]);
+  }, [currentRole, navigate]);
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("currentRole");
@@ -298,7 +288,6 @@ export default function ResponsiveDrawer(props: Props) {
                       key={nestedIndex}
                       disablePadding
                       onClick={() => {
-                        // handleReceive(nestedItem);
                         navigate(nestedItem.path ?? "");
                       }}
                       className={

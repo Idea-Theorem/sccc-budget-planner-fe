@@ -9,7 +9,6 @@ const StyledBox = styled(Box)(() => ({
     justifyContent: "space-between",
     margin: "0 -12px",
   },
-  // Color: theme.palette.secondary.light,
 }));
 
 interface IProps {

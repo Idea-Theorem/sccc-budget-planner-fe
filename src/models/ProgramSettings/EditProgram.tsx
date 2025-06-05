@@ -7,7 +7,7 @@ import { Clear, Save } from "@mui/icons-material";
 import Grid from "@mui/material/Grid";
 import { Button } from "@mui/material";
 import Modal from "@mui/material/Modal";
-// import SelectDepartments from "../../components/SelectDepartment";
+
 import ProgramDatePicker from "../../components/ProgramDatePicker";
 
 const EmployeeInfoArea = styled(Box)(({ theme }) => ({
@@ -82,9 +82,6 @@ const EditProgramModal: React.FC<IHrAddEmployee> = ({
     formik.setFieldValue("to_date", value);
   };
 
-  // const handleDepartmentChange = (value: any) => {
-  //   formik.setFieldValue("department_id", value);
-  // };
   return (
     <Modal
       open={open}

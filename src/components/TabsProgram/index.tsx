@@ -38,11 +38,11 @@ function a11yProps(index: number) {
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
-// .
+
 const TabsProgram = ({
   handleReceived,
   handleSupplyExpenseReceived,
-  // handleSalaryExpenseReceived,
+
   formik,
   disabled,
   employee,
@@ -53,7 +53,6 @@ const TabsProgram = ({
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    console.log("event", event);
     setValue(newValue);
   };
 

@@ -152,7 +152,7 @@ function Row(props: {
     benefit,
   } = props;
   const [open, setOpen] = React.useState(false);
-  // const [isOpen, setIsOpen] = React.useState<any>(false);
+
   const [titles, setTitles] = React.useState<any>([]);
 
   const closeModel = () => {
@@ -281,21 +281,6 @@ function Row(props: {
     </React.Fragment>
   );
 }
-
-// const rows = [
-//   createData(
-//     "Tomohiro Komase",
-//     "Program Head",
-//     "Recreation & Culture",
-//     "02-Mar-2024"
-//   ),
-//   createData(
-//     "Vishesh Thind",
-//     "Department Head",
-//     "Recreation & Culture",
-//     "02-Mar-2024"
-//   ),
-// ];
 
 export default function HrCollapsibleTable({
   handleClick,

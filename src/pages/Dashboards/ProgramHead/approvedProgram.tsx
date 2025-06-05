@@ -32,7 +32,6 @@ const ApprovedProgram = ({
   const [programs, setPrograms] = React.useState<any>({});
   const [attentionModal, setAttentionModal] = useState<any>(false);
 
-  console.log(programs);
   useEffect(() => {
     fetchProgram();
   }, []);

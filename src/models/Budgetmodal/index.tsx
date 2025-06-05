@@ -11,7 +11,7 @@ import * as yup from "yup";
 import { TextField } from "@mui/material";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import {
-  // addTotalbudget,
+  addTotalbudget,
   updateTotalbudget,
 } from "../../services/adminServices";
 const DepartmentInfoArea = styled(Box)(({ theme }) => ({
@@ -158,8 +158,9 @@ const BudgetModal: React.FC<IDepartmentInfo> = ({
     onSubmit: async (values) => {
       if (totalBudget?.total_value) {
         await updateTotalbudget(values);
+      } else {
+        await addTotalbudget(values);
       }
-      // await addTotalbudget(values);
       fetchTotalbudget();
       handleClose();
       try {

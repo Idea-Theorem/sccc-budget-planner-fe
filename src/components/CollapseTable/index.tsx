@@ -19,7 +19,6 @@ import {
   formatNumber,
 } from "../../utils";
 
-// Define StyledInputSearch using styled component
 const CollapseableTable = styled(Box)(({ theme }) => ({
   ".MuiTableCell-root": {
     background: "none",

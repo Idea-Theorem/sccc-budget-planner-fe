@@ -250,7 +250,7 @@ const TabsComponent: React.FC<TabProps> = ({ tabNames }) => {
                       ? "Department"
                       : tabNames[value] === "Employees"
                       ? "Employee"
-                      : null
+                      : ""
                   }`}
                 />
               )}

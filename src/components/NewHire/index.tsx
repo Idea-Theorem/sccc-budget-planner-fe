@@ -65,8 +65,6 @@ export default function TabsNewHire({ employee, formik }: any) {
     const response = calculateAmount(newFormData);
     formik.setFieldValue("employee", response);
   };
-  console.log("🚀 ~ handleInputChange ~ formik:", formik);
-
   return (
     <EmployeeInfoArea>
       <table className="salary-table">

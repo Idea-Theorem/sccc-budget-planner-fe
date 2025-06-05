@@ -28,18 +28,17 @@ const StyledStack = styled(Stack)(() => ({
       fontFamily: "Roboto",
     },
   },
-  // Color: theme.palette.secondary.light,
 }));
- 
+
 interface Props {
   text?: string;
-  color?: any
-  handleBtnClick?: any
+  color?: any;
+  handleBtnClick?: any;
 }
-const DepartmentButton: React.FC<Props> = ({text, color, handleBtnClick}) => {
+const DepartmentButton: React.FC<Props> = ({ text, color, handleBtnClick }) => {
   return (
     <StyledStack className="statsTag" onClick={handleBtnClick}>
-      <Box bgcolor={color}/> 
+      <Box bgcolor={color} />
       <Typography>{text}</Typography>
     </StyledStack>
   );

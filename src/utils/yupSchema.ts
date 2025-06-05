@@ -13,18 +13,6 @@ export const createEmployeeSchema = yup.object().shape({
     .array()
     .min(1, "At least one role is required!")
     .required("Roles is required!"),
-  // department_id: yup
-  //   .string()
-  //   .required("Departments is required!"),
-  // employment_type: yup
-  //   .string()
-  //   .required("Employement Type is required!"),
-  // compensation_type: yup
-  //   .string()
-  //   .required("Compensation Type is required!"),
-  // salary_rate: yup
-  //   .number()
-  //   .required("Salary Rates is required!"),
 });
 
 export const editEmployeeSchema = yup.object().shape({
@@ -39,18 +27,6 @@ export const editEmployeeSchema = yup.object().shape({
     .array()
     .min(1, "At least one role is required!")
     .required("Roles is required!"),
-  // department_id: yup
-  //   .string()
-  //   .required("Departments is required!"),
-  // employment_type: yup
-  //   .string()
-  //   .required("Employement Type is required!"),
-  // compensation_type: yup
-  //   .string()
-  //   .required("Compensation Type is required!"),
-  // salary_rate: yup
-  //   .number()
-  //   .required("Salary Rates is required!"),
 });
 export const programSchema = yup.object().shape({
   name: yup.string().required("Program Name is required"),
@@ -63,7 +39,7 @@ export const programSchema = yup.object().shape({
         emp_id: yup.string().required("required"),
         employee: yup.string().required("required"),
         hourlyRate: yup.string().required("required"),
-        // .positive("Hourly rate must be a positive number"),
+
         hoursPerWeek: yup
           .string()
           .required("required")

@@ -24,7 +24,6 @@ const StyledBox = styled(Box)(() => ({
     justifyContent: "space-between",
     margin: "0 -12px",
   },
-  // Color: theme.palette.secondary.light,
 }));
 const ReviewBudgetScreen = () => {
   const tableColumnsTitleArray = [
@@ -50,13 +49,7 @@ const ReviewBudgetScreen = () => {
           );
         },
       },
-      // {
-      //   field: "lYearBudget",
-      //   headerName: "Last Year Budget",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "budget",
         headerName: "Budget",
@@ -64,13 +57,7 @@ const ReviewBudgetScreen = () => {
         editable: false,
         flex: 1,
       },
-      // {
-      //   field: "profit",
-      //   headerName: "Profit",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "nPrograms",
         headerName: "No. Programs",
@@ -122,13 +109,7 @@ const ReviewBudgetScreen = () => {
           );
         },
       },
-      // {
-      //   field: "lYearBudget",
-      //   headerName: "Last Year Budget",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "budget",
         headerName: "Budget",
@@ -136,13 +117,7 @@ const ReviewBudgetScreen = () => {
         editable: false,
         flex: 1,
       },
-      // {
-      //   field: "profit",
-      //   headerName: "Profit",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "nPrograms",
         headerName: "No. Programs",
@@ -194,13 +169,7 @@ const ReviewBudgetScreen = () => {
           );
         },
       },
-      // {
-      //   field: "lYearBudget",
-      //   headerName: "Last Year Budget",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "budget",
         headerName: "Budget",
@@ -208,13 +177,7 @@ const ReviewBudgetScreen = () => {
         editable: false,
         flex: 1,
       },
-      // {
-      //   field: "profit",
-      //   headerName: "Profit",
-      //   sortable: false,
-      //   editable: false,
-      //   flex: 1,
-      // },
+
       {
         field: "nPrograms",
         headerName: "No. Programs",
@@ -313,10 +276,8 @@ const ReviewBudgetScreen = () => {
         title="Review Budgets"
         btnTitle="Actions"
         subTitle={`Total Budget: $${formatNumber(totalBudget)}`}
-        // subTitle={`Total Budget: 0`}
         onStatusChange={handleStatusChange}
         subHeader={true}
-        // handleUpdate={handleUpdate}
       />
       <TabsArea
         setTabstatus={setTabstatus}
@@ -324,8 +285,6 @@ const ReviewBudgetScreen = () => {
           { title: "Pending" },
           { title: "Approved" },
           { title: "Rejected" },
-          // { title: "Drafts" },
-          // { title: "History" },
         ]}
         table={tableColumnsTitleArray}
         row={departmentList?.departments}
@@ -339,7 +298,6 @@ const ReviewBudgetScreen = () => {
         open={attentionModal}
         handleClose={() => setAttentionModal(false)}
         handleOK={handleOK}
-        // loading={isSubmitting}
         heading="Attention"
         text="You are changing the status of the program"
       />

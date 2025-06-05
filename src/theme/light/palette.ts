@@ -6,16 +6,13 @@ import {
 } from "../../theme/common";
 import shadows, { customShadows } from "../../theme/shadows.ts";
 import { defaultLightTheme } from "../palette";
-// const defaultPalette = defaultLightTheme.palette;
+
 export const lightPallete: any = {
-  // ...defaultPalette,
   mode: "light",
   primary: {
-    // ...defaultPalette.primary,
     main: "rgba(42, 157, 143, 1)",
     light: "rgba(42, 157, 143, 1)",
 
-    // contrastText: "rgba(0, 0, 0, 0.12)",
     shades: {
       "4p": "rgba(140, 59, 45, 0.04)",
       "8p": "rgba(140, 59, 45, 0.08)",
@@ -25,12 +22,10 @@ export const lightPallete: any = {
     },
   },
   secondary: {
-    // ...defaultPalette.secondary,
     main: "rgba(231, 111, 81, 1)",
     light: "rgba(231, 111, 81, 1)",
     mainLight: "rgba(231, 111, 81, 1)",
 
-    // contrastText: "rgba(0, 0, 0, 0.12)",
     shades: {
       "4p": "rgba(33, 150, 243, 0.4)",
       "8p": "rgba(10, 140, 164, 0.08)",
@@ -40,10 +35,9 @@ export const lightPallete: any = {
     },
   },
   error: {
-    // ...defaultPalette.error,
     main: "rgba(211, 47, 47, 1)",
     light: "rgba(198, 40, 40, 1)",
-    // contrastText: "rgba(0, 0, 0, 0.12)",
+
     shades: {
       "4p": "rgba(211, 47, 175, 0.04)",
       "12p": "rgba(211, 47, 175, 0.12)",
@@ -55,11 +49,9 @@ export const lightPallete: any = {
   },
 
   warning: {
-    // ...defaultPalette.warning,
     main: "rgba(239, 108, 0, 1)",
     light: "rgba(198, 40, 40, 1)",
 
-    // contrastText: "rgba(0, 0, 0, 0.12)",
     shades: {
       "4p": "rgba(239, 108, 0, 1)",
       "12p": "rgba(161, 146, 5, 0.12)",
@@ -70,11 +62,9 @@ export const lightPallete: any = {
     },
   },
   success: {
-    // ...defaultPalette.success,
     main: "rgba(46, 125, 50, 1)",
     light: "rgba(27, 94, 32, 1)",
 
-    // contrastText: "rgba(0, 0, 0, 0.12)",
     shades: {
       "4p": "rgba(46, 125, 50, 1)",
       "12p": "rgba(18, 166, 25, 0.12)",
@@ -86,11 +76,9 @@ export const lightPallete: any = {
   },
 
   info: {
-    // ...defaultPalette.info,
     main: "rgba(2, 136, 209, 1)",
     light: "rgba(1, 87, 155, 1)",
 
-    // contrastText: "rgba(0, 0, 0, 0.12)",
     shades: {
       "4p": "rgba(2, 136, 209, 1)",
       "12p": "rgba(10, 140, 164, 0.12)",
@@ -101,7 +89,6 @@ export const lightPallete: any = {
     },
   },
   text: {
-    // ...defaultPalette.text,
     primary: "rgba(0, 0, 0, 0.87)",
     secondary: "rgba(0, 0, 0, 0.7)",
     disabled: "rgba(152, 152, 152, 1)",
@@ -109,7 +96,6 @@ export const lightPallete: any = {
   },
 
   action: {
-    // ...defaultPalette.action,
     active: "rgba(0, 0, 0, 0.54)",
     hover: "rgba(255, 255, 255, 0.08)",
     selected: "rgba(0, 0, 0, 0.6)",
@@ -118,7 +104,6 @@ export const lightPallete: any = {
     focus: "rgba(0, 0, 0, 0.12)",
   },
   background: {
-    // ...defaultPalette.background,
     DarkGray: "rgba(65, 65, 88, 1)",
     lightGray: "rgba(65, 65, 88, 0.8)",
     default: "rgba(255, 255, 255, 1)",
@@ -132,8 +117,7 @@ export const lightPallete: any = {
     LeftNavBody: "rgba(234, 238, 244, 1)",
     GFRightNavBackground: "rgba(234, 238, 244, 1)",
     GFRightNavForeground: "rgba(212, 218, 226, 1)",
-    // GFRightNavBackground: 'rgba(255, 255, 255, 1)',
-    // GFRightNavForeground: 'rgba(50, 45, 65, 1)',
+
     GFSearch: "rgba(52, 52, 57, 1)",
     GFOverlay: "rgba(50, 46, 61, 1)",
     GFOutlineNav: "rgba(41, 41, 46, 1)",
@@ -155,7 +139,7 @@ export const lightPallete: any = {
     Setting: "rgba(64, 64, 69, 1)",
     LinearGF: "rgba(29,29,35,1)",
     Dashboard: "rgba(29,26,38,1)",
-    // the following 2 are custom created colors need to be updated in each theme
+
     TableBG: "rgba(31,31,38,1)",
     TableCustomBG: "rgba(89, 89, 95, 1)",
     CardsCustomBG: "rgba(0, 0, 0, 0.1)",
@@ -165,8 +149,6 @@ export const lightPallete: any = {
     cardsBG: "rgba(212, 218, 226, 0.2)",
   },
   common: {
-    // ...defaultPalette.common,
-    // Need to confirm shades
     blackshades: {
       "4p": "rgba(0, 0, 0, 0.87)",
       "12p": "rgba(0, 0, 0, 0.6)",
@@ -260,11 +242,9 @@ export const lightPallete: any = {
 };
 
 export const lightTheme: Theme = createTheme({
-  // ...defaultLightTheme,
   palette: lightPallete,
   shadows: shadows.light as typeof defaultLightTheme.shadows,
   typography: {
-    // ...defaultLightTheme.typography,
     fontRaboto: "Roboto",
     ...commonTypography,
   } as any,

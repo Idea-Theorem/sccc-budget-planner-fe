@@ -1,4 +1,4 @@
-import { Link,TextField } from "@mui/material";
+import { Link, TextField } from "@mui/material";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 import { styled } from "@mui/material/styles";
@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import LogoImg from "../../assets/logo.png";
 import Buttons from "../../components/Button";
 import { useAuth } from "../../contexts/AuthContext";
-import {  useFormik } from "formik";
+import { useFormik } from "formik";
 import * as yup from "yup";
 import { useLocation } from "react-router-dom";
 
@@ -49,7 +49,6 @@ const LoginArea = styled(Box)(({ theme }) => ({
   },
 
   ".MuiButtonBase-root": {
-    // color: theme.palette.common.whiteshades["30p"],
     margin: "0 0 15px",
   },
 
@@ -114,20 +113,19 @@ const LoginArea = styled(Box)(({ theme }) => ({
 }));
 
 const validationSchema = yup.object().shape({
-    newPassword: yup.string()
-    .required('New Password is required'),
-  confirmPassword: yup.string()
-    .oneOf([yup.ref('newPassword'), undefined], 'Passwords must match')
-    .required('Confirm Password is required'),
+  newPassword: yup.string().required("New Password is required"),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("newPassword"), undefined], "Passwords must match")
+    .required("Confirm Password is required"),
 });
 
 const ResetPasswordScreen = () => {
-  const { handleResetPassword, resetLoading} = useAuth();
+  const { handleResetPassword, resetLoading } = useAuth();
   const location = useLocation();
 
-  // Extract the token from the URL
   const queryParams = new URLSearchParams(location.search);
-  const token = queryParams.get('token');
+  const token = queryParams.get("token");
   const formik: any = useFormik<any>({
     validateOnBlur: false,
     validateOnChange: false,
@@ -136,7 +134,7 @@ const ResetPasswordScreen = () => {
       newPassword: "",
     },
     onSubmit: async (values) => {
-      const data = {...values,resetToken:token}
+      const data = { ...values, resetToken: token };
       handleResetPassword(data);
     },
   });
@@ -161,12 +159,13 @@ const ResetPasswordScreen = () => {
               name="newPassword"
               onChange={handleChange}
               type="password"
-              helperText={errors.newPassword ? errors.newPassword : touched.newPassword}
+              helperText={
+                errors.newPassword ? errors.newPassword : touched.newPassword
+              }
             />
-           
           </FormControl>
           <FormControl className="loginFormItem">
-          <TextField
+            <TextField
               error={errors.confirmPassword ? true : false}
               label="Confirm Password"
               variant="outlined"
@@ -175,9 +174,13 @@ const ResetPasswordScreen = () => {
               name="confirmPassword"
               onChange={handleChange}
               type="password"
-              helperText={errors.confirmPassword ? errors.confirmPassword : touched.confirmPassword}
+              helperText={
+                errors.confirmPassword
+                  ? errors.confirmPassword
+                  : touched.confirmPassword
+              }
             />
-            </FormControl>
+          </FormControl>
           <Buttons
             loading={resetLoading}
             btntext="Action"
@@ -190,16 +193,10 @@ const ResetPasswordScreen = () => {
             Back to login
           </Link>
         </form>
-        <Box>
-        
-        </Box>
+        <Box></Box>
       </Box>
     </LoginArea>
   );
 };
 
 export default ResetPasswordScreen;
-
-
-
-
