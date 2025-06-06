@@ -547,7 +547,7 @@ const PHProgramsScreen = () => {
 
   React.useEffect(() => {
     const socket = io(liveUrl); // Replace with your server URL
-    socket.on("programStatusUpdated", ({ programId, newStatus }: any) => {
+    socket.on("programStatusUpdated", ({ newStatus }: any) => {
       updateTabTitle(newStatus);
     });
 

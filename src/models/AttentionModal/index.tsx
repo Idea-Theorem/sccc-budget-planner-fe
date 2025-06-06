@@ -61,7 +61,6 @@ interface IAttentionModal {
 }
 
 const AttentionModal: React.FC<IAttentionModal> = ({
-  heading,
   handleClose,
   open,
   loading,
