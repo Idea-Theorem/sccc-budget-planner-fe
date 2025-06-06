@@ -16,7 +16,7 @@ const useThemeToggle = (props: Props) => {
   const routeModule = useRouteModule();
 
   const theme = useMemo(() => {
-    const theme = getThemeMode(themeMode, routeModule);
+    const theme = getThemeMode(themeMode);
 
     const newTheme = {
       ...theme.theme,

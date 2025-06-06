@@ -1,6 +1,6 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
-const SecureLayout = ({ allowedRoles }: { allowedRoles?: string[] }) => {
+const SecureLayout = () => {
   const location = useLocation();
 
   const token = localStorage.getItem("authToken");

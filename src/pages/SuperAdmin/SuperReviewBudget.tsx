@@ -7,7 +7,7 @@ import {
   getDepartmentInCenters,
   getProgramInDepartment,
 } from "../../services/centersServices";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Status from "../../utils/dumpData";
 import { getPrograms } from "../../services/adminServices";
 import { formatNumber } from "../../utils";
@@ -33,7 +33,6 @@ const SuperReviewBudget = () => {
   const [center, setCenters] = useState([]);
   const [currenttitle, setCurrentTitle] = useState("");
   const [totalBudget, settotalBudget] = useState("");
-  const [tabstatus, setTabstatus] = React.useState(Status.PENDING);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -286,7 +285,6 @@ const SuperReviewBudget = () => {
         step={step}
       />
       <TabsArea
-        setTabstatus={setTabstatus}
         tabsTitleArray={[
           { title: "Pending" },
           { title: "Approved" },

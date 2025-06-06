@@ -152,7 +152,6 @@ const StyleDataGrid = styled(DataGrid)(({ theme }) => ({
 }));
 
 const Benefit = () => {
-  const [loading, setLoading] = useState<boolean>(false);
   const [singleCenter, setSingleCenter] = useState<any>(null);
   const [center, setCenter] = useState<any>([]);
   const [isCommunityOpen, setCommunityModal] = useState(false);
@@ -188,13 +187,9 @@ const Benefit = () => {
 
   const handleDelete = async (data: any) => {
     try {
-      setLoading(true);
       await deleteBenefit(data?.id);
       fetchCenters();
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-    }
+    } catch (error) { /* empty */ }
   };
 
   const handleClick = () => {

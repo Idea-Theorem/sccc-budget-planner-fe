@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Status from "../../../utils/dumpData";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getPrograms } from "../../../services/adminServices";
 import { getProgram } from "../../../services/programServices";
 import { AddIcCallOutlined } from "@mui/icons-material";
@@ -29,7 +29,6 @@ const ApprovedProgram = ({
   totalCount,
   handleClick,
 }: any) => {
-  const [programs, setPrograms] = React.useState<any>({});
   const [attentionModal, setAttentionModal] = useState<any>(false);
 
   useEffect(() => {
@@ -37,10 +36,9 @@ const ApprovedProgram = ({
   }, []);
   const fetchProgram = async () => {
     try {
-      const response = await getPrograms();
+      await getPrograms();
       await getProgram(Status.PENDING);
-      setPrograms(response?.data);
-    } catch (error) {}
+    } catch (error) { /* empty */ }
   };
 
   const handleOK = async () => {

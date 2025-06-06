@@ -6,7 +6,6 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { Button, Stack } from "@mui/material";
 import { deleteCenter } from "../../../../services/centersServices";
-import { useState } from "react";
 const StyledBox = styled(Box)(({ theme }) => ({
   "&.mainTableBlock": {
     width: "100%",
@@ -146,17 +145,12 @@ const CommunityTableComponent: React.FC<HRTableProps> = ({
   refresh,
   onChange,
 }) => {
-  const [loading, setLoading] = useState<boolean>(false);
 
   const handleDelete = async (data: any) => {
     try {
-      setLoading(true);
       await deleteCenter(data?.id);
-      setLoading(false);
       refresh();
-    } catch (error) {
-      setLoading(false);
-    }
+    } catch (error) { /* empty */ }
   };
   const columns: GridColDef[] = [
     {

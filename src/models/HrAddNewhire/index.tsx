@@ -248,7 +248,6 @@ const HrAddNewHire: React.FC<IHrAddEmployee> = ({
   const [benefit, setBenefit] = useState<any>([]);
   const [departments, setDepartments] = useState<any>([]);
   const [titles, setTitles] = useState<any>([]);
-  const [activeDepartment, setActiveDepartment] = useState<any>(null);
   const [statusData, setStatusData] = useState<any>(null);
   const [data, setData] = useState([
     {
@@ -289,7 +288,6 @@ const HrAddNewHire: React.FC<IHrAddEmployee> = ({
         handleClose();
         setPersonName([]);
         setDepartments([]);
-        setActiveDepartment(null);
         setSingleEmployeeData(null);
         setData([
           {
