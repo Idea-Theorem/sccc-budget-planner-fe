@@ -51,7 +51,7 @@ const ReviewBudgetScreen = () => {
       },
 
       {
-        field: "budget",
+        field: "totalBudget",
         headerName: "Budget",
         sortable: false,
         editable: false,
@@ -59,7 +59,7 @@ const ReviewBudgetScreen = () => {
       },
 
       {
-        field: "nPrograms",
+        field: "_count.Program",
         headerName: "No. Programs",
         sortable: false,
         editable: false,
@@ -80,7 +80,7 @@ const ReviewBudgetScreen = () => {
         },
       },
       {
-        field: "comments",
+        field: "totalComments",
         headerName: "Comments",
         sortable: false,
         editable: false,
@@ -111,7 +111,7 @@ const ReviewBudgetScreen = () => {
       },
 
       {
-        field: "budget",
+        field: "totalBudget",
         headerName: "Budget",
         sortable: false,
         editable: false,
@@ -119,7 +119,7 @@ const ReviewBudgetScreen = () => {
       },
 
       {
-        field: "nPrograms",
+        field: "_count.Program",
         headerName: "No. Programs",
         sortable: false,
         editable: false,
@@ -140,7 +140,7 @@ const ReviewBudgetScreen = () => {
         },
       },
       {
-        field: "comments",
+        field: "totalComments",
         headerName: "Comments",
         sortable: false,
         editable: false,
@@ -171,7 +171,7 @@ const ReviewBudgetScreen = () => {
       },
 
       {
-        field: "budget",
+        field: "totalBudget",
         headerName: "Budget",
         sortable: false,
         editable: false,
@@ -179,7 +179,7 @@ const ReviewBudgetScreen = () => {
       },
 
       {
-        field: "nPrograms",
+        field: "_count.Program",
         headerName: "No. Programs",
         sortable: false,
         editable: false,
@@ -200,7 +200,7 @@ const ReviewBudgetScreen = () => {
         },
       },
       {
-        field: "comments",
+        field: "totalComments",
         headerName: "Comments",
         sortable: false,
         editable: false,
