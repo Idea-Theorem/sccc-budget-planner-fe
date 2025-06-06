@@ -162,7 +162,16 @@ const HRTableComponent: React.FC<HRTableProps> = ({
       editable: false,
       flex: 1,
     },
-
+    {
+      field: "employeeCount",
+      headerName: "Employee Count",
+      sortable: false,
+      editable: false,
+      flex: 1,
+      valueGetter: (params) => {
+        return params.row._count?.EmployeeDepartment || 0;
+      },
+    },
     {
       field: "created_at",
       headerName: "Date Created",

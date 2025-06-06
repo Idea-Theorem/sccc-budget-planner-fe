@@ -289,9 +289,9 @@ const RecreationAndCultureScreen = ({}: any) => {
   };
   return (
     <StyledBox className="appContainer">
-      <Box className="back">
+      <Box className="back" onClick={() => goBack()}>
         <ArrowBackIosIcon className="right-arrow" />
-        <Typography onClick={() => goBack()}>Back</Typography>
+        <Typography>Back</Typography>
       </Box>
       <Typography className="name">{singleDepartName?.name}</Typography>
       <Typography className="amount-text">

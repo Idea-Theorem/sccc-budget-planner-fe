@@ -224,9 +224,6 @@ export default function ResponsiveDrawer(props: Props) {
       case "/super-admin":
         navigate("/super-admin");
         break;
-      case "/admin/review-budget":
-        navigate("/admin/review-budget");
-        break;
       case "/admin":
         navigate("/admin");
         break;
@@ -235,9 +232,6 @@ export default function ResponsiveDrawer(props: Props) {
         break;
       case "/hr/role":
         navigate("/hr/role");
-        break;
-      case "HR":
-        navigate("/hr/employees");
         break;
       default:
     }
