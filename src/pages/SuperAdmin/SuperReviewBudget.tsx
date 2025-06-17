@@ -61,21 +61,41 @@ const SuperReviewBudget = () => {
       },
 
       {
-        field: "budget",
+        field: "programBudget",
         headerName: "Budget",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>
+                {params?.row?.programBudget ||
+                  params?.row?.totalAmount ||
+                  params?.row?.totalIncomeSum}
+              </Box>
+            </Stack>
+          );
+        },
       },
 
       {
-        field: "nPrograms",
+        field: "programCount",
         headerName:
           step == 0 ? "No. Dept." : step == 1 ? "No. Programs" : "No. Programs",
 
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>
+                {params?.row?.programCount || params?.row?.Department?.length}
+              </Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "created_at",
@@ -97,6 +117,15 @@ const SuperReviewBudget = () => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>
+                {params?.row?.commentCount || params?.row?.totalComments || 0}
+              </Box>
+            </Stack>
+          );
+        },
       },
     ],
     [
@@ -116,19 +145,39 @@ const SuperReviewBudget = () => {
       },
 
       {
-        field: "budget",
+        field: "programBudget",
         headerName: "Budget",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>
+                {params?.row?.programBudget ||
+                  params?.row?.totalAmount ||
+                  params?.row?.totalIncomeSum}
+              </Box>
+            </Stack>
+          );
+        },
       },
 
       {
-        field: "nPrograms",
+        field: "programCount",
         headerName: "No. Dept.",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>
+                {params?.row?.programCount || params?.row?.Department?.length}
+              </Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "created_at",
@@ -150,12 +199,21 @@ const SuperReviewBudget = () => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>
+                {params?.row?.commentCount || params?.row?.totalComments || 0}
+              </Box>
+            </Stack>
+          );
+        },
       },
     ],
     [
       {
         field: "name",
-        headerName: "Center Name",
+        headerName: "Center Name!!",
         sortable: false,
         editable: false,
         flex: 1,
@@ -169,19 +227,39 @@ const SuperReviewBudget = () => {
       },
 
       {
-        field: "budget",
+        field: "programBudget",
         headerName: "Budget",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>
+                {params?.row?.programBudget ||
+                  params?.row?.totalAmount ||
+                  params?.row?.totalIncomeSum}
+              </Box>
+            </Stack>
+          );
+        },
       },
 
       {
-        field: "nPrograms",
+        field: "programCount",
         headerName: "No. Dept.",
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>
+                {params?.row?.programCount || params?.row?.Department?.length}
+              </Box>
+            </Stack>
+          );
+        },
       },
       {
         field: "created_at",
@@ -203,6 +281,15 @@ const SuperReviewBudget = () => {
         sortable: false,
         editable: false,
         flex: 1,
+        renderCell: (params: any) => {
+          return (
+            <Stack>
+              <Box>
+                {params?.row?.commentCount || params?.row?.totalComments || 0}
+              </Box>
+            </Stack>
+          );
+        },
       },
     ],
   ];
